@@ -90,6 +90,7 @@ const RadioLabel = styled.label<{ gap: gapType }>`
 `;
 
 const CheckedLabel = styled(RadioLabel)`
+  color: ${({ theme }) => theme.colors.b4};
   &::before {
     background-color: transparent;
     border: 1.5px solid ${({ theme }) => theme.colors.c1};
@@ -106,6 +107,7 @@ const CheckedLabel = styled(RadioLabel)`
 `;
 
 const UnCheckedLabel = styled(RadioLabel)`
+  color: ${({ theme }) => theme.colors.b4};
   &::before {
     background-color: ${({ theme }) => theme.colors.l2};
   }

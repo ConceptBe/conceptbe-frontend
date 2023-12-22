@@ -6,11 +6,11 @@ import { ReactNode, forwardRef, ComponentPropsWithoutRef } from 'react';
 //   onClick: () => void;
 // }
 
-type NonStyleButtonProp = ComponentPropsWithoutRef<'button'> & {
+type UnStyleButtonProp = ComponentPropsWithoutRef<'button'> & {
   children: ReactNode;
 };
 
-const NonStyleButton = forwardRef<HTMLButtonElement, NonStyleButtonProp>(({ children, ...props }, ref) => {
+const UnStyleButton = forwardRef<HTMLButtonElement, UnStyleButtonProp>(({ children, ...props }, ref) => {
   return (
     <NonStyledButton ref={ref} {...props}>
       {children}
@@ -18,7 +18,7 @@ const NonStyleButton = forwardRef<HTMLButtonElement, NonStyleButtonProp>(({ chil
   );
 });
 
-export default NonStyleButton;
+export default UnStyleButton;
 
 const NonStyledButton = styled.button`
   border: none;

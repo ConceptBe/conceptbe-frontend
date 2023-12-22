@@ -52,6 +52,7 @@ const CheckboxLabel = styled.label<{ checked: boolean }>`
   justify-content: center;
   align-items: center;
   padding: 11px 16px 12px;
+  height: 40px;
   box-sizing: border-box;
   border: 1px solid ${({ theme }) => theme.colors.l2};
   border-radius: 6px;

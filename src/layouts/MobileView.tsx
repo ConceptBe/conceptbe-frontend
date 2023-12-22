@@ -2,14 +2,16 @@ import styled from '@emotion/styled';
 import { Outlet } from 'react-router-dom';
 
 import Navigation from '../components/Navigation';
+import useRouteMatched from '../hooks/useRouteMatch';
 
 const MobileView = () => {
+  const isMatch = useRouteMatched('/profile/:id', '/login', '/write', '/agreement', '/auth', '/feed/:id');
   return (
     <Container>
       <Wrapper>
         <Outlet />
       </Wrapper>
-      <Navigation />
+      {!isMatch && <Navigation />}
     </Container>
   );
 };
@@ -18,10 +20,8 @@ export default MobileView;
 
 const Container = styled.main`
   height: 100%;
-  //피그마 크기인 375px로 조정했습니다. 확인 후 주석은 지우셔도 됩니다~
   max-width: 375px;
   width: auto;
-  position: relative;
   margin: 0 auto;
   min-height: 100%;
   overflow: hidden;
@@ -29,8 +29,11 @@ const Container = styled.main`
 `;
 
 const Wrapper = styled.div`
-  /* height: calc(100% - 30px); */
-  height: 100%;
+  /* height: calc(100% - 50px); */
+  height: 100dvh;
+  /* height: calc(var(--vh, 1vh) * 100); */
+  /* height: -webkit-fill-available; */
+  /* height: fill-available; */
   overflow: auto;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */

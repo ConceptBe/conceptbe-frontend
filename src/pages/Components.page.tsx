@@ -134,7 +134,7 @@ const Components = () => {
 
       <div>
         <Checkbox options={checkboxOptions} onChange={handleCheckboxChange} />
-        <p>선택한 옵션: {checkboxOptions.map(({ text, checked }) => checked && text + ' ')}</p>
+        <p>선택한 옵션!: {checkboxOptions.map(({ text, checked }) => checked && text + ' ')}</p>
       </div>
 
       <div>
