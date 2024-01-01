@@ -1,8 +1,6 @@
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
-import { useEffect } from 'react';
 
-import { AuthKakao } from '../api/api';
 import { ReactComponent as Kakao } from '../assets/svg/login/kakao.svg';
 import { ReactComponent as Naver } from '../assets/svg/login/naver.svg';
 import { ReactComponent as Logo } from '../assets/svg/login_main.svg';
@@ -10,32 +8,22 @@ import Spacer from '../components/Spacer';
 import Text from '../components/Text';
 import UnStyleButton from '../components/UnStyleButton';
 
+// const REST_API_KEY = 'da0c8695d73803f2fbd834906a0d96d0';
+const REDIRECT_URI = 'http://localhost:3020/api/auth/idpresponse/kakao';
+const REQUEST_URL = `http://localhost:8080/oauth/kakao`;
+
 const Login = () => {
   const theme = useTheme();
 
-  const REST_API_KEY = 'da0c8695d73803f2fbd834906a0d96d0';
-  // const REDIRECT_URI = 'http://localhost:3020/auth';
-  const REDIRECT_URI = 'http://15.164.242.20/api/auth/idpresponse/kakao';
-  const link = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-  const onClickKakao = () => {
-    window.location.href = link;
+  const onClickOauthKakao = () => {
+    window.location.href = REQUEST_URL;
   };
-
-  // useEffect(() => {
-  //   AuthKakao()
-  //     .then((res) => {
-  //       console.log('res', res);
-  //     })
-  //     .catch((err) => {
-  //       console.log('err', err);
-  //     });
-  // }, []);
 
   return (
     <Container>
       <Logo />
       <Spacer top={40} />
-      <UnStyleButton onClick={onClickKakao}>
+      <UnStyleButton onClick={onClickOauthKakao}>
         <ButtonWrapper>
           <LogoBox color="#FAE100">
             <Kakao />

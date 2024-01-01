@@ -19,7 +19,7 @@ export default defineConfig({
   ],
   server: {
     // https: true,
-    port: 3020,
+    port: 3000,
     proxy: {
       // 경로가 "/api" 로 시작하는 요청을 대상으로 proxy 설정
       '/api': {

@@ -15,14 +15,15 @@
     "@tanstack/react-query": "^4.32.6",
     "@tanstack/react-query-devtools": "^4.32.6",
     "axios": "^1.5.1",
-    "prettier": "^3.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.15.0",
     "zustand": "^4.4.1"
   },
   "devDependencies": {
+    "prettier": "^3.0.3",
     "@emotion/babel-plugin": "^11.11.0",
+    "@types/node": "^20.10.6",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
@@ -39,6 +40,5 @@
     "vite": "^4.4.5",
     "vite-plugin-mkcert": "^1.16.0",
     "vite-plugin-svgr": "^3.2.0"
-  },
-  "proxy": "http://15.164.242.20"
+  }
 }
