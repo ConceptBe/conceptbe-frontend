@@ -12,8 +12,6 @@ const KakaoRedirect = () => {
     async (code: string | null) => {
       if (!code) throw new Error('CODE ERROR');
 
-      console.log(code);
-
       const member = await getIsMember('kakao', code);
 
       if (member.isMember) {
@@ -30,7 +28,6 @@ const KakaoRedirect = () => {
   );
 
   useEffect(() => {
-    console.log('hrer');
     getCode(code);
   }, [code, getCode]);
 
