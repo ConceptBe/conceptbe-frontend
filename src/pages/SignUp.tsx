@@ -13,11 +13,10 @@ import Dropdown from '../components/Inputs/Dropdown/Dropdown.tsx';
 import InputWithLabel from '../components/Inputs/InputWithLabel.tsx';
 import Radio, { radioOptions } from '../components/Inputs/Radio.tsx';
 import Text from '../components/Text.tsx';
-
 // svg
 import { memberSelect, memberSelectDetails } from '../modules/constants.tsx';
 
-const Components = () => {
+const SignUp = () => {
   const theme = useTheme();
   //라디오
   const [selectedRadio, setSelectedRadio] = useState<string>('');
@@ -237,4 +236,4 @@ const Components = () => {
   );
 };
 
-export default Components;
+export default SignUp;
