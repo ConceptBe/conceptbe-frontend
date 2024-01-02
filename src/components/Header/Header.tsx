@@ -27,7 +27,7 @@ export { Header };
 const Container = styled.header<{ main?: boolean }>`
   padding: 25px 22px;
   height: 24px;
-  background: ${(props) => (props.main ? props.theme.colors.c1 : props.theme.colors.w1)};
+  background: ${(props) => (props.main ? props.theme.color.c1 : props.theme.color.w1)};
   display: flex;
   justify-content: space-between;
   align-items: center;

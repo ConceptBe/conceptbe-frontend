@@ -1,5 +1,4 @@
 import { useTheme } from '@emotion/react';
-import styled from '@emotion/styled';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -20,6 +19,7 @@ import {
 import { ReactComponent as Back } from '../../assets/svg/back_24_B.svg';
 import { ReactComponent as Dot } from '../../assets/svg/dot.svg';
 import { ReactComponent as Write } from '../../assets/svg/image_write.svg';
+import Text from '../../components/@common/Text/Text';
 import Button from '../../components/Button';
 import Tag from '../../components/CustomTag/Tag';
 import { Header } from '../../components/Header/Header';
@@ -27,7 +27,6 @@ import Checkbox, { checkboxOptions } from '../../components/Inputs/Checkbox';
 import Dropdown from '../../components/Inputs/Dropdown/Dropdown';
 import InputWithLabel from '../../components/Inputs/InputWithLabel';
 import Spacer from '../../components/Spacer';
-import Text from '../../components/Text';
 import UnStyleButton from '../../components/UnStyleButton';
 import { skillOneDepth, skillTwoDepth, filterSubOptions, regionOptions } from '../../modules/constants';
 
@@ -81,12 +80,12 @@ const Setting = () => {
     <Container>
       <Header main emptyEnd>
         <Header.Item>
-          <UnStyleButton style={{ color: theme.colors.w1 }} onClick={() => navigate(-1)}>
+          <UnStyleButton style={{ color: theme.color.w1 }} onClick={() => navigate(-1)}>
             <Back />
           </UnStyleButton>
         </Header.Item>
         <Header.Item>
-          <Text font={theme.typography.suit16sb} color={theme.colors.w1}>
+          <Text font="suit16sb" color="w1">
             프로필 설정
           </Text>
         </Header.Item>
@@ -119,7 +118,7 @@ const Setting = () => {
 
           <Spacer top={35} />
           <SettingWrapper>
-            <Text required font={theme.typography.suit15m} color={theme.colors.b9}>
+            <Text required font="suit15m" color="b9">
               스킬 (최대 3개)
             </Text>
             <SettingBox>
@@ -154,7 +153,7 @@ const Setting = () => {
 
           <Spacer top={35} />
           <SettingWrapper>
-            <Text required font={theme.typography.suit15m} color={theme.colors.b9}>
+            <Text required font="suit15m" color="b9">
               목적 (최대 3개)
             </Text>
             <Checkbox options={purposeOptions} setState={setPurposeOptions} onChange={handleCheckboxChange} />
@@ -162,7 +161,7 @@ const Setting = () => {
 
           <Spacer top={35} />
           <SettingWrapper>
-            <Text font={theme.typography.suit15m} color={theme.colors.b9}>
+            <Text font="suit15m" color="b9">
               지역
             </Text>
             <Dropdown onClick={(value) => setResion(value)} items={regionOptions} initialValue={'시/도/광역시'} />

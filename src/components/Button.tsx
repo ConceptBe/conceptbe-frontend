@@ -20,8 +20,8 @@ const StyledButton = styled.button<{ isActive: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${({ isActive, theme }) => (isActive ? theme.colors.c1 : theme.colors.bg1)};
-  color: ${({ isActive, theme }) => (isActive ? theme.colors.w1 : theme.colors.b)};
+  background-color: ${({ isActive, theme }) => (isActive ? theme.color.c1 : theme.color.bg1)};
+  color: ${({ isActive, theme }) => (isActive ? theme.color.w1 : theme.color.b)};
   border: none;
   border-radius: 6px;
   font-size: 16px;

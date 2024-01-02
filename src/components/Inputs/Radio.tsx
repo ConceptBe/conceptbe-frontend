@@ -90,10 +90,10 @@ const RadioLabel = styled.label<{ gap: gapType }>`
 `;
 
 const CheckedLabel = styled(RadioLabel)`
-  color: ${({ theme }) => theme.colors.b4};
+  color: ${({ theme }) => theme.color.b4};
   &::before {
     background-color: transparent;
-    border: 1.5px solid ${({ theme }) => theme.colors.c1};
+    border: 1.5px solid ${({ theme }) => theme.color.c1};
     box-sizing: border-box;
   }
 
@@ -102,17 +102,17 @@ const CheckedLabel = styled(RadioLabel)`
     height: 12px;
     top: 5px;
     left: 5px;
-    background-color: ${({ theme }) => theme.colors.c1};
+    background-color: ${({ theme }) => theme.color.c1};
   }
 `;
 
 const UnCheckedLabel = styled(RadioLabel)`
-  color: ${({ theme }) => theme.colors.b4};
+  color: ${({ theme }) => theme.color.b4};
   &::before {
-    background-color: ${({ theme }) => theme.colors.l2};
+    background-color: ${({ theme }) => theme.color.l2};
   }
 
   &::after {
-    background-color: ${({ theme }) => theme.colors.w1};
+    background-color: ${({ theme }) => theme.color.w1};
   }
 `;

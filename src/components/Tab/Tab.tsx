@@ -30,7 +30,7 @@ const Container = styled.div<TabProps>`
   width: 100%;
   user-select: none;
   border-bottom-width: 2px;
-  border-bottom-color: ${({ theme, active }) => (active ? theme.colors.b : theme.colors.w1)};
+  border-bottom-color: ${({ theme, active }) => (active ? theme.color.b : theme.color.w1)};
   border-bottom-style: solid;
   transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 `;

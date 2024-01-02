@@ -15,6 +15,6 @@ const SpacerBox = styled.div<ITextDivider>`
   width: 1px;
   height: 10px;
   margin-left: ${(props) => props.margin}px;
-  background-color: ${(props) => (props.color ? props.color : props.theme.colors.b)};
+  background-color: ${(props) => (props.color ? props.color : props.theme.color.b)};
   margin-right: ${(props) => props.margin}px;
 `;

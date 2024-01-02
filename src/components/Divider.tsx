@@ -19,5 +19,5 @@ const SpacerBox = styled.hr<IDivider>`
   margin-top: ${(props) => props.top}px;
   margin-bottom: ${(props) => props.bottom}px;
   border: none;
-  background-color: ${(props) => (props.color ? props.color : props.theme.colors.b)};
+  background-color: ${(props) => (props.color ? props.color : props.theme.color.b)};
 `;

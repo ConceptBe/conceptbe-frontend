@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { ReactComponent as Logo } from '../../assets/svg/main_logo.svg';
 import { ReactComponent as Setting } from '../../assets/svg/setting.svg';
+import Text from '../../components/@common/Text/Text';
 import IdeaCard from '../../components/Card/IdeaCard';
 import { Header } from '../../components/Header/Header';
 import Padding from '../../components/Padding';
@@ -13,7 +14,6 @@ import Tab from '../../components/Tab/Tab';
 import TabPannel from '../../components/Tab/TabPannel';
 import Tabs from '../../components/Tab/Tabs';
 import Tag from '../../components/Tag';
-import Text from '../../components/Text';
 import UnStyleButton from '../../components/UnStyleButton';
 
 const skillTags = ['퍼포먼스 마케팅, 상', '광고/크리에이티브, 중', '콘텐츠 마케팅, 하'];
@@ -52,34 +52,34 @@ const Profile = () => {
           {/* 프로필설정 */}
           <ProfileMainBox>
             <div>
-              <Text font={theme.typography.suit15sb} color={theme.colors.c1}>
+              <Text font="suit15sb" color="c1">
                 마케팅/영업
               </Text>
               <Spacer top={6} />
-              <Text font={theme.typography.suit22sb}>일이삼사오육칠팔구</Text>
+              <Text font="suit22sb">일이삼사오육칠팔구</Text>
               <Spacer top={6} />
-              <Text font={theme.typography.suit15rb} color={theme.colors.b9}>
+              <Text font="suit15rb" color="b9">
                 외국계 스타트업 | 강원특별자치도
               </Text>
             </div>
             <EditButton>
               <UnStyleButton
                 onClick={() => navigate(`/profile/1`)}
-                style={{ border: `1px solid ${theme.colors.l2}`, borderRadius: 100, padding: '8px 14px' }}
+                style={{ border: `1px solid $"l2"`, borderRadius: 100, padding: '8px 14px' }}
               >
                 프로필 수정
               </UnStyleButton>
             </EditButton>
           </ProfileMainBox>
           {/* 프로필 설명 */}
-          <Text font={theme.typography.suit15rb} color={theme.colors.b4} style={{ lineHeight: 1.5 }}>
+          <Text font="suit15rb" color="b4" customStyle={{ lineHeight: 1.5 }}>
             안녕하세요! 8년차 일이삼사오육칠팔구십이예요😊 무신사, 에이블리, 29cm 등 핫한 커머스부터, 카카오뱅크에
             이르기까지! 디지털마케팅의 A부터 Z까지 모든것을 직접 경험한 올라운드 마케터입니다!🤩 이번에 다양한 실무
             경험을 통해 퍼포머스마케터로의 직무 전환에도 성공했어요!
           </Text>
           {/* 스킬 */}
           <div>
-            <Text font={theme.typography.suit14m}>스킬</Text>
+            <Text font="suit14m">스킬</Text>
             <Spacer top={10} />
             <TagWrapper>
               <Tag tags={skillTags} select />
@@ -87,10 +87,10 @@ const Profile = () => {
           </div>
           {/* 목적 */}
           <div>
-            <Text font={theme.typography.suit14m}>목적</Text>
+            <Text font="suit14m">목적</Text>
             <Spacer top={10} />
             <TagWrapper>
-              <Tag style={{ color: theme.colors.b4 }} tags={tags} />
+              <Tag style={{ color: theme.color.b4 }} tags={tags} />
             </TagWrapper>
           </div>
         </ProfileBox>
@@ -148,7 +148,7 @@ const ProfileBox = styled.div`
   gap: 18px;
   border-radius: 16px 16px 0 0;
   padding: 35px 22px;
-  background-color: ${(props) => props.theme.colors.w1};
+  background-color: ${(props) => props.theme.color.w1};
 `;
 
 const ProfileMainBox = styled.div`
@@ -166,7 +166,7 @@ const TagWrapper = styled.div`
 
 const TabPannelBox = styled.div`
   padding: 30px 20px 60px 20px;
-  background-color: ${({ theme }) => theme.colors.bg1};
+  background-color: ${({ theme }) => theme.color.bg1};
   display: flex;
   flex-direction: column;
   gap: 20px;

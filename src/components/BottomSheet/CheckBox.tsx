@@ -58,10 +58,10 @@ const CheckboxLabel = styled.label<{ checked: boolean }>`
   align-items: center;
   padding: 11px 16px 12px;
   box-sizing: border-box;
-  border: 1px solid ${({ theme }) => theme.colors.l2};
+  border: 1px solid ${({ theme }) => theme.color.l2};
   border-radius: 6px;
-  background-color: ${({ checked, theme }) => (checked ? theme.colors.c1 : theme.colors.w1)};
-  color: ${({ checked, theme }) => (checked ? theme.colors.w1 : theme.colors.b4)};
+  background-color: ${({ checked, theme }) => (checked ? theme.color.c1 : theme.color.w1)};
+  color: ${({ checked, theme }) => (checked ? theme.color.w1 : theme.color.b4)};
   font-size: 14px;
   font-weight: 500;
   cursor: pointer; */

@@ -94,7 +94,7 @@ const LabelWrapper = styled.div`
 const Label = styled.label`
   font-size: 15px;
   font-weight: 500;
-  color: ${({ theme }) => theme.colors.b9};
+  color: ${({ theme }) => theme.color.b9};
   padding-right: 10px;
   position: relative;
 `;
@@ -109,11 +109,11 @@ const DotWrapper = styled.div`
 const TextLimit = styled.div``;
 
 const Count = styled.span`
-  color: ${({ theme }) => theme.colors.c1};
+  color: ${({ theme }) => theme.color.c1};
 `;
 
 const MaxCount = styled.span`
-  color: ${({ theme }) => theme.colors.b9};
+  color: ${({ theme }) => theme.color.b9};
 `;
 
 const Input = styled.input`
@@ -124,13 +124,13 @@ const Input = styled.input`
   padding: 11px 16px;
   font-size: 14px;
   font-weight: 400;
-  border: 1px solid ${({ theme }) => theme.colors.l2};
+  border: 1px solid ${({ theme }) => theme.color.l2};
   outline: none;
-  color: ${({ theme }) => theme.colors.b4};
-  background: ${({ theme }) => theme.colors.w1};
+  color: ${({ theme }) => theme.color.b4};
+  background: ${({ theme }) => theme.color.w1};
 
   &:focus {
-    border-color: ${({ theme }) => theme.colors.c1};
+    border-color: ${({ theme }) => theme.color.c1};
   }
 `;
 
@@ -142,13 +142,13 @@ const TextArea = styled.textarea`
   padding: 11px 16px;
   font-size: 14px;
   font-weight: 400;
-  border: 1px solid ${({ theme }) => theme.colors.l2};
+  border: 1px solid ${({ theme }) => theme.color.l2};
   outline: none;
-  color: ${({ theme }) => theme.colors.b4};
-  background: ${({ theme }) => theme.colors.w1};
+  color: ${({ theme }) => theme.color.b4};
+  background: ${({ theme }) => theme.color.w1};
 
   &:focus {
-    border-color: ${({ theme }) => theme.colors.c1};
+    border-color: ${({ theme }) => theme.color.c1};
   }
 `;
 

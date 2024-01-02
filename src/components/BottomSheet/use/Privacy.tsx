@@ -1,9 +1,8 @@
-import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 
+import Text from '../../@common/Text/Text';
 import Button from '../../Button';
 import Spacer from '../../Spacer';
-import Text from '../../Text';
 
 interface props {
   isOpen: boolean;
@@ -11,7 +10,6 @@ interface props {
 }
 
 const Privacy = ({ isOpen, onClose }: props) => {
-  const theme = useTheme();
   const CollectionWrapper = styled.div`
     display: flex;
     flex-direction: column;
@@ -25,7 +23,7 @@ const Privacy = ({ isOpen, onClose }: props) => {
 
   const ListItem = styled.li`
     list-style: disc;
-    color: ${(props) => props.theme.colors.b6};
+    color: ${(props) => props.theme.color.b6};
     list-style-position: inside;
     font-size: 14px;
     font-weight: 400;
@@ -35,7 +33,7 @@ const Privacy = ({ isOpen, onClose }: props) => {
   `;
 
   const OrderedList = styled.ol`
-    color: ${(props) => props.theme.colors.b6};
+    color: ${(props) => props.theme.color.b6};
     font-size: 14px;
     font-weight: 400;
   `;
@@ -56,16 +54,16 @@ const Privacy = ({ isOpen, onClose }: props) => {
 
   return (
     <CollectionWrapper>
-      <Text font={theme.typography.suit18sb} color={theme.colors.b2}>
+      <Text font="suit18sb" color="b2">
         개인정보 수집 및 이용 동의
       </Text>
       <Spacer bottom={16} />
-      <Text font={theme.typography.suit14r} color={theme.colors.b6} style={{ lineHeight: '22px' }}>
+      <Text font="suit14r" color="b6" customStyle={{ lineHeight: '22px' }}>
         본 개인정보처리방침은 컨셉BE에서 제공하는 서비스 이용과 관련하여 사용자의 개인정보 보호에 대한 내용을
         설명합니다. 서비스를 이용함으로써 사용자는 본 방침에 동의하는 것으로 간주됩니다.
       </Text>
       <Spacer bottom={20} />
-      <Text font={theme.typography.suit14sm} color={theme.colors.b2}>
+      <Text font="suit14sm" color="b2">
         1. 수집하는 개인정보의 종류 및 목적
       </Text>
       <Spacer bottom={10} />
@@ -80,7 +78,7 @@ const Privacy = ({ isOpen, onClose }: props) => {
         <ListItem> 서비스 개선 및 사용자 경험 향상 </ListItem>
       </UnorderedList>
       <Spacer bottom={20} />
-      <Text font={theme.typography.suit14sm} color={theme.colors.b2}>
+      <Text font="suit14sm" color="b2">
         2. 개인정보의 보유 및 이용 기간
       </Text>
       <Spacer bottom={10} />
@@ -91,7 +89,7 @@ const Privacy = ({ isOpen, onClose }: props) => {
         </ListItem>
       </UnorderedList>
       <Spacer bottom={20} />
-      <Text font={theme.typography.suit14sm} color={theme.colors.b2}>
+      <Text font="suit14sm" color="b2">
         3. 개인정보의 제3자 제공
       </Text>
       <Spacer bottom={10} />
@@ -102,7 +100,7 @@ const Privacy = ({ isOpen, onClose }: props) => {
         </ListItem>
       </UnorderedList>
       <Spacer bottom={20} />
-      <Text font={theme.typography.suit14sm} color={theme.colors.b2}>
+      <Text font="suit14sm" color="b2">
         4. 개인정보의 보안 조치
       </Text>
       <Spacer bottom={10} />
@@ -111,7 +109,7 @@ const Privacy = ({ isOpen, onClose }: props) => {
         <ListItem>개인정보의 무단 접근, 유출, 변조, 손상 등을 방지하기 위한 노력을 기울이고 있습니다.</ListItem>
       </UnorderedList>
       <Spacer bottom={20} />
-      <Text font={theme.typography.suit14sm} color={theme.colors.b2}>
+      <Text font="suit14sm" color="b2">
         5. 개인정보에 대한 사용자의 권리
       </Text>
       <Spacer bottom={10} />
@@ -125,7 +123,7 @@ const Privacy = ({ isOpen, onClose }: props) => {
       </UnorderedList>
       <Spacer bottom={20} />
 
-      <Text font={theme.typography.suit14sm} color={theme.colors.b6}>
+      <Text font="suit14sm" color="b6">
         본 이용약관의 내용은 23.08.24에 업데이트되었습니다.
       </Text>
 

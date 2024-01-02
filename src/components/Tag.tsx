@@ -29,8 +29,8 @@ const StyledTag = styled.div<{ select: boolean }>`
   display: flex;
   align-items: center;
   height: 27px;
-  background-color: ${({ theme, select }) => (select ? theme.colors.c1 : theme.colors.bg1)};
-  color: ${({ theme, select }) => (select ? theme.colors.w1 : theme.colors.b9)};
+  background-color: ${({ theme, select }) => (select ? theme.color.c1 : theme.color.bg1)};
+  color: ${({ theme, select }) => (select ? theme.color.w1 : theme.color.b9)};
   font-size: 12px;
   font-weight: 500;
   padding: 0px 10px;

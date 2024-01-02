@@ -7,7 +7,6 @@ import BottomBg from '../assets/images/bottom_bg.png';
 // import { ReactComponent as ActiveProfile } from '../assets/svg/active_profile.svg';
 // import { ReactComponent as Feed } from '../assets/svg/feed.svg';
 // import { ReactComponent as Profile } from '../assets/svg/profile.svg';
-
 import { ReactComponent as Feed } from '../assets/svg/navigation/feed.svg';
 import { ReactComponent as ActiveFeed } from '../assets/svg/navigation/feed_active.svg';
 import { ReactComponent as Profile } from '../assets/svg/navigation/profile.svg';
@@ -75,14 +74,9 @@ const NavItem = styled.div`
   cursor: pointer;
 `;
 
-const NavItemText = styled.span`
-  font-size: 9px;
-  font-weight: 700;
-`;
-
 const NavCenterItem = styled.div`
   position: absolute;
-  background-color: ${({ theme }) => theme.colors.c1};
+  background-color: ${({ theme }) => theme.color.c1};
   border-radius: 50%;
   bottom: -3px;
   transform: translate(-50%, -50%);

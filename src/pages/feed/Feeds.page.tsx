@@ -1,10 +1,10 @@
-import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 
 import { ReactComponent as Filter } from '../../assets/svg/filter.svg';
 import { ReactComponent as Logo } from '../../assets/svg/main_logo.svg';
 import { ReactComponent as Write } from '../../assets/svg/writeicon40.svg';
+import Text from '../../components/@common/Text/Text';
 import BottomSheet from '../../components/BottomSheet/BottomSheet';
 import FilterBox from '../../components/BottomSheet/FilterBox';
 import Button from '../../components/Button';
@@ -16,7 +16,6 @@ import Dropdown from '../../components/Inputs/Dropdown/Dropdown';
 import Radio, { radioOptions } from '../../components/Inputs/Radio';
 import Padding from '../../components/Padding';
 import Spacer from '../../components/Spacer';
-import Text from '../../components/Text';
 import UnStyleButton from '../../components/UnStyleButton';
 import { filterOptions, filterSubOptions, filterRadio } from '../../modules/constants';
 
@@ -40,7 +39,6 @@ const dropdownItems = [
 ];
 
 const Feeds = () => {
-  const theme = useTheme();
   const [isFilter, setIsFilter] = useState(false);
 
   // 필터 체크박스
@@ -87,26 +85,26 @@ const Feeds = () => {
 
           <Spacer top={27} />
           <FeedFixTextWrapper>
-            <Text font={theme.typography.suit22sb} color={theme.colors.w1}>
+            <Text font="suit22sb" color="w1">
               일이삼사오육칠팔구십
             </Text>
-            <Text font={theme.typography.suit22r} color={theme.colors.w1}>
+            <Text font="suit22r" color="w1">
               님,
             </Text>
           </FeedFixTextWrapper>
 
           <Spacer top={8} />
-          <Text font={theme.typography.suit22r} color={theme.colors.w1}>
+          <Text font="suit22r" color="w1">
             재밌는 아이디어를 들려주세요!
           </Text>
           <Spacer top={14} />
 
-          <Text font={theme.typography.suit15ra} color={theme.colors.w2}>{`아이디어 적으러 가기 >`}</Text>
+          <Text font="suit15ra" color="w2">{`아이디어 적으러 가기 >`}</Text>
         </FeedFixBox>
 
         <FeedBox>
           <FeedWrapper style={{ padding: '47px 0 0 22px' }}>
-            <Text font={theme.typography.suit16sb} color={theme.colors.b4}>
+            <Text font="suit16sb" color="b4">
               현재 인기 있는 아이디어
             </Text>
             <Spacer top={18} />
@@ -118,7 +116,7 @@ const Feeds = () => {
           </FeedWrapper>
 
           <FeedWrapper style={{ padding: '47px 22px 0 22px' }}>
-            <Text font={theme.typography.suit16sb} color={theme.colors.b4}>
+            <Text font="suit16sb" color="b4">
               피드 영역 타이틀입니다
             </Text>
             <Spacer top={20} />
@@ -137,7 +135,7 @@ const Feeds = () => {
         <FilterBox>
           <FilterContent>
             <FilterWrapper>
-              <Text font={theme.typography.suit15m} color={theme.colors.b9}>
+              <Text font="suit15m" color="b9">
                 분야
               </Text>
               <Spacer top={12} />
@@ -145,7 +143,7 @@ const Feeds = () => {
             </FilterWrapper>
 
             <FilterWrapper>
-              <Text font={theme.typography.suit15m} color={theme.colors.b9}>
+              <Text font="suit15m" color="b9">
                 목적
               </Text>
               <Spacer top={12} />
@@ -153,7 +151,7 @@ const Feeds = () => {
             </FilterWrapper>
 
             <FilterWrapper>
-              <Text font={theme.typography.suit15m} color={theme.colors.b9}>
+              <Text font="suit15m" color="b9">
                 협업 방식
               </Text>
               <Spacer top={12} />
@@ -161,7 +159,7 @@ const Feeds = () => {
             </FilterWrapper>
 
             <FilterWrapper>
-              <Text font={theme.typography.suit15m} color={theme.colors.b9}>
+              <Text font="suit15m" color="b9">
                 지역
               </Text>
               <Spacer top={12} />
@@ -169,7 +167,7 @@ const Feeds = () => {
             </FilterWrapper>
 
             <FilterWrapper>
-              <Text font={theme.typography.suit15m} color={theme.colors.b9}>
+              <Text font="suit15m" color="b9">
                 팀원 모집
               </Text>
               <Spacer top={12} />
@@ -192,7 +190,7 @@ const Feeds = () => {
 export default Feeds;
 
 const Wrapper = styled.section`
-  background-color: ${(props) => props.theme.colors.c1};
+  background-color: ${(props) => props.theme.color.c1};
   height: 100%;
 `;
 
@@ -200,8 +198,8 @@ const FeedFixBox = styled.div`
   padding: 90px 30px 50px 30px;
   display: flex;
   flex-direction: column;
-  background-color: ${(props) => props.theme.colors.c1};
-  color: ${(props) => props.theme.colors.w1};
+  background-color: ${(props) => props.theme.color.c1};
+  color: ${(props) => props.theme.color.w1};
 `;
 
 const FeedFixWrapper = styled.div`
@@ -218,7 +216,7 @@ const FeedFixTextWrapper = styled.div`
 `;
 
 const FeedBox = styled.div`
-  background-color: ${(props) => props.theme.colors.bg1};
+  background-color: ${(props) => props.theme.color.bg1};
   border-radius: 16px 16px 0 0;
   /* padding: 0 22px; */
 `;
@@ -243,7 +241,7 @@ const FilterBottom = styled.div`
   position: sticky;
   bottom: 0;
   padding: 0 22px 22px;
-  background-color: ${({ theme }) => theme.colors.w1};
+  background-color: ${({ theme }) => theme.color.w1};
 `;
 
 const FilterWrapper = styled.div``;

@@ -38,5 +38,5 @@ export default Tabs;
 
 const Container = styled.div`
   display: flex;
-  background: ${({ theme }) => theme.colors.w1};
+  background: ${({ theme }) => theme.color.w1};
 `;

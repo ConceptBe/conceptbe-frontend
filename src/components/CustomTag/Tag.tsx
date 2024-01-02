@@ -2,8 +2,8 @@ import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { ReactComponent as Cross } from '../../assets/svg/x.svg';
+import Text from '../@common/Text/Text';
 import Spacer from '../Spacer';
-import Text from '../Text';
 import UnStyleButton from '../UnStyleButton';
 
 interface TagProps {
@@ -12,10 +12,9 @@ interface TagProps {
 }
 
 const Tag = ({ text, onDelete }: TagProps) => {
-  const theme = useTheme();
   return (
     <TagContainer>
-      <Text font={theme.typography.suit13m} color={theme.colors.w1}>
+      <Text font="suit13m" color="w1">
         {text}
       </Text>
       <Spacer left={10} />
@@ -23,7 +22,7 @@ const Tag = ({ text, onDelete }: TagProps) => {
         onClick={() => onDelete(text)}
         style={{ display: 'flex', justifyContent: 'center', alignContent: 'center' }}
       >
-        <Cross color={theme.colors.w1} />
+        <Cross color="w1" />
       </UnStyleButton>
     </TagContainer>
   );
@@ -37,5 +36,5 @@ const TagContainer = styled.div`
   justify-content: space-between;
   padding: 6px 10px;
   border-radius: 4px;
-  background-color: ${({ theme }) => theme.colors.c1};
+  background-color: ${({ theme }) => theme.color.c1};
 `;

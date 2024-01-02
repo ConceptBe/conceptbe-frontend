@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 
 import { ReactComponent as Check } from '../assets/svg/check_24.svg';
 import { ReactComponent as Close } from '../assets/svg/close_24.svg';
+import Text from '../components/@common/Text/Text.tsx';
 import BottomSheet from '../components/BottomSheet/BottomSheet.tsx';
 import CheckBoxModal from '../components/BottomSheet/CheckBox.tsx';
 import Button from '../components/Button.tsx';
@@ -12,7 +13,6 @@ import Checkbox, { checkboxOptions } from '../components/Inputs/Checkbox.tsx';
 import Dropdown from '../components/Inputs/Dropdown/Dropdown.tsx';
 import InputWithLabel from '../components/Inputs/InputWithLabel.tsx';
 import Radio, { radioOptions } from '../components/Inputs/Radio.tsx';
-import Text from '../components/Text.tsx';
 // svg
 import { memberSelect, memberSelectDetails } from '../modules/constants.tsx';
 
@@ -207,7 +207,7 @@ const SignUp = () => {
       <BottomSheet isOpen={isModal} onClose={() => setIsModal(false)}>
         <div style={{ display: 'flex', justifyContent: 'space-between', padding: 22 }}>
           <Close onClick={() => setIsModal(false)} />
-          <Text font={theme.typography.suit16sb}>타이틀</Text>
+          <Text font="suit16sb">타이틀</Text>
           <Check />
         </div>
         <div style={{ display: 'flex', height: '100%' }}>
@@ -217,12 +217,12 @@ const SignUp = () => {
                 <div
                   style={{
                     padding: '18px 22px',
-                    color: selectMain.text === select.text ? theme.colors.b2 : theme.colors.ba,
-                    background: selectMain.text === select.text ? theme.colors.w1 : theme.colors.bg1,
+                    color: selectMain.text === select.text ? theme.color.b2 : theme.color.ba,
+                    background: selectMain.text === select.text ? theme.color.w1 : theme.color.bg1,
                   }}
                   onClick={() => setSelectMain(select)}
                 >
-                  <Text font={theme.typography.suit14m}>{select.text}</Text>
+                  <Text font="suit14m">{select.text}</Text>
                 </div>
               );
             })}

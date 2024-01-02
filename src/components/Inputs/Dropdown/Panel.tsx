@@ -47,7 +47,7 @@ const PanelWrapper = styled.ul`
   /* z-index: 100; */
   width: -webkit-fill-available;
 
-  background-color: ${({ theme }) => theme.colors.w1};
+  background-color: ${({ theme }) => theme.color.w1};
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
   border-radius: 6px;
   max-height: 125px;
@@ -62,9 +62,9 @@ const PanelItem = styled.li<{ defaultValue: boolean }>`
   white-space: nowrap;
   padding: 11px 15px 12px;
   box-sizing: border-box;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.l3};
+  border-bottom: 1px solid ${({ theme }) => theme.color.l3};
   cursor: ${({ defaultValue }) => (defaultValue ? 'auto' : 'pointer')};
-  color: ${({ theme, defaultValue }) => (defaultValue ? theme.colors.b9 : theme.colors.b6)};
+  color: ${({ theme, defaultValue }) => (defaultValue ? theme.color.b9 : theme.color.b6)};
   font-size: 12px;
   font-weight: 400;
 
