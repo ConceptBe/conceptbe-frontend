@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 
-interface Spacer {
+interface Props {
   size: number;
 }
 
-const Spacer = styled.div<Spacer>`
+const Spacer = styled.div<Props>`
   min-width: ${({ size }) => size}px;
   min-height: ${({ size }) => size}px;
 `;

@@ -1,4 +1,5 @@
-import { Wrapper } from './Divider.style';
+import styled from '@emotion/styled';
+
 import { ColorKeyType } from '../../../styles/theme';
 
 interface Props {
@@ -8,8 +9,13 @@ interface Props {
   height?: number;
 }
 
-const Divider = ({ top = 0, bottom = 0, color = 'b', height = 1 }: Props) => {
-  return <Wrapper top={top} bottom={bottom} divideColor={color} height={height} />;
-};
+const Divider = styled.hr<Props>`
+  width: 100%;
+  height: ${({ height }) => height || 1}px;
+  margin-top: ${({ top }) => top}px;
+  margin-bottom: ${({ bottom }) => bottom}px;
+  border: none;
+  background-color: ${({ theme, color: divideColor }) => (divideColor ? theme.color[divideColor] : theme.color.b)};
+`;
 
 export default Divider;

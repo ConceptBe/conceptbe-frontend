@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { ReactComponent as Back } from '../../assets/svg/back_24_B.svg';
 import Divider from '../../components/@common/Divider/Divider';
-import Spacer from '../../components/@common/Spacer';
+import Spacer from '../../components/@common/Spacer/Spacer';
 import Text from '../../components/@common/Text/Text';
 import BottomSheet from '../../components/BottomSheet/BottomSheet';
 import Privacy from '../../components/BottomSheet/use/Privacy';

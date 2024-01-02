@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import AgreementImg from '../assets/images/agreement_bg.png';
 import Button from '../components/@common/Button/Button';
-import Spacer from '../components/@common/Spacer';
+import Spacer from '../components/@common/Spacer/Spacer';
 import Text from '../components/@common/Text/Text';
 import BottomSheet from '../components/BottomSheet/BottomSheet';
 

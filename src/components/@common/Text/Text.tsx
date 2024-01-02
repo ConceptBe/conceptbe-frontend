@@ -1,6 +1,6 @@
+import styled from '@emotion/styled';
 import { ReactNode, CSSProperties, ElementType, ComponentPropsWithoutRef } from 'react';
 
-import { RequiredWrapper, TextWrapper } from './Text.style';
 import { ReactComponent as Required } from '../../../assets/svg/text_required.svg';
 import { ColorKeyType, FontKeyType } from '../../../styles/theme';
 
@@ -25,15 +25,30 @@ const Text = <T extends ElementType>({
   const tag = as || 'span';
 
   return (
-    <TextWrapper as={tag} textColor={color} textFont={font} style={{ ...customStyle }} {...attributes}>
+    <Wrapper as={tag} textColor={color} textFont={font} style={{ ...customStyle }} {...attributes}>
       {children}
       {required && (
         <RequiredWrapper>
           <Required />
         </RequiredWrapper>
       )}
-    </TextWrapper>
+    </Wrapper>
   );
 };
+
+export const Wrapper = styled.span<{ textColor: ColorKeyType; textFont: FontKeyType }>`
+  display: flex;
+  user-select: none;
+  flex-direction: row;
+  color: ${({ theme, textColor }) => theme.color[textColor]};
+  font-size: ${({ theme, textFont }) => theme.font[textFont].fontSize}px;
+  font-weight: ${({ theme, textFont }) => theme.font[textFont].fontWeight};
+`;
+
+export const RequiredWrapper = styled.div`
+  margin-left: 2px;
+  display: flex;
+  align-items: start;
+`;
 
 export default Text;

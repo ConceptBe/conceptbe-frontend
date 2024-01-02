@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { ReactComponent as Kakao } from '../assets/svg/login/kakao.svg';
 import { ReactComponent as Naver } from '../assets/svg/login/naver.svg';
 import { ReactComponent as Logo } from '../assets/svg/login_main.svg';
-import Spacer from '../components/@common/Spacer';
+import Spacer from '../components/@common/Spacer/Spacer';
 import Text from '../components/@common/Text/Text';
 import UnStyleButton from '../components/UnStyleButton';
 

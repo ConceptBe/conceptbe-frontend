@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { ReactComponent as Logo } from '../../assets/svg/main_logo.svg';
 import { ReactComponent as Setting } from '../../assets/svg/setting.svg';
-import Spacer from '../../components/@common/Spacer';
+import Spacer from '../../components/@common/Spacer/Spacer';
 import Text from '../../components/@common/Text/Text';
 import IdeaCard from '../../components/Card/IdeaCard';
 import { Header } from '../../components/Header/Header';

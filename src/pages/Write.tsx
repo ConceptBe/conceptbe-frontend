@@ -10,7 +10,7 @@ import { ReactComponent as Check } from '../assets/svg/check_24.svg';
 import { ReactComponent as UnCheck } from '../assets/svg/unCheck_24.svg';
 import { ReactComponent as Xmark } from '../assets/svg/x.svg';
 import Divider from '../components/@common/Divider/Divider';
-import Spacer from '../components/@common/Spacer';
+import Spacer from '../components/@common/Spacer/Spacer';
 import Text from '../components/@common/Text/Text';
 import BottomSheet from '../components/BottomSheet/BottomSheet';
 import { checkboxOptions, getDomain } from '../components/BottomSheet/CheckBox';

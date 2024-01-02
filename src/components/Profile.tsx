@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import Spacer from './@common/Spacer/index.ts';
+import Spacer from './@common/Spacer/Spacer.tsx';
 import Text from './@common/Text/Text.tsx';
 import TextDivider from './@common/TextDivider/TextDivider.tsx';
 import { ReactComponent as Profile } from '../assets/svg/default_profile.svg';
