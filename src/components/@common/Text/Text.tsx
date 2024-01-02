@@ -14,14 +14,17 @@ type Props<T extends ElementType> = {
 } & ComponentPropsWithoutRef<T>;
 
 const Text = <T extends ElementType>({
+  as,
   children,
   font = 'suit14sm',
   color = 'b',
   customStyle,
   required = false,
 }: Props<T>) => {
+  const tag = as || 'span';
+
   return (
-    <TextWrapper textColor={color} textFont={font} style={{ ...customStyle }}>
+    <TextWrapper as={tag} textColor={color} textFont={font} style={{ ...customStyle }}>
       {children}
       {required && (
         <RequiredWrapper>
