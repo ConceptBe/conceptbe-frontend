@@ -4,11 +4,11 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { ReactComponent as Back } from '../../assets/svg/back_24_B.svg';
+import Divider from '../../components/@common/Divider/Divider';
 import Text from '../../components/@common/Text/Text';
 import BottomSheet from '../../components/BottomSheet/BottomSheet';
 import Privacy from '../../components/BottomSheet/use/Privacy';
 import Terms from '../../components/BottomSheet/use/Terms';
-import Divider from '../../components/Divider';
 import { Header } from '../../components/Header/Header';
 import Spacer from '../../components/Spacer';
 import UnStyleButton from '../../components/UnStyleButton';

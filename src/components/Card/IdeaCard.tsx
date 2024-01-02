@@ -9,8 +9,8 @@ import { ReactComponent as UnScrap } from '../../assets/svg/scrap.svg';
 import { ReactComponent as ScrapView } from '../../assets/svg/scrap_14.svg';
 // footer
 import { ReactComponent as View } from '../../assets/svg/view_14.svg';
+import Divider from '../@common/Divider/Divider.tsx';
 import Text from '../@common/Text/Text.tsx';
-import Divider from '../Divider.tsx';
 import Spacer from '../Spacer.tsx';
 import Tag, { TagProps } from '../Tag.tsx';
 

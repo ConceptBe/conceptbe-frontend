@@ -11,8 +11,8 @@ import { ReactComponent as UnLike } from '../../assets/svg/FeedDetail/unLike.svg
 import { ReactComponent as UnScrap } from '../../assets/svg/FeedDetail/unScrap.svg';
 import { ReactComponent as Logo } from '../../assets/svg/main_logo.svg';
 import { ReactComponent as X } from '../../assets/svg/x.svg';
+import Divider from '../../components/@common/Divider/Divider';
 import Text from '../../components/@common/Text/Text';
-import Divider from '../../components/Divider';
 import { Header } from '../../components/Header/Header';
 import ProfileComponent from '../../components/Profile';
 import Spacer from '../../components/Spacer';
