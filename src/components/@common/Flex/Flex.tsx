@@ -91,14 +91,14 @@ const Flex = styled.div<Props>`
   background-color: ${({ backgroundColor, theme }) => backgroundColor && theme.color[backgroundColor]};
   color: ${({ color: textColor, theme }) => textColor && theme.color[textColor]};
   overflow: ${({ overflow }) => overflow};
-  position: ${({ position }) => position && position};
+  position: ${({ position }) => position};
   top: ${({ top }) => top && convertCSS(top)};
   left: ${({ left }) => left && convertCSS(left)};
   right: ${({ right }) => right && convertCSS(right)};
   bottom: ${({ bottom }) => bottom && convertCSS(bottom)};
-  cursor: ${({ cursor }) => cursor && cursor};
-  opacity: ${({ opacity }) => opacity && opacity};
-  z-index: ${({ zIndex }) => zIndex && zIndex};
+  cursor: ${({ cursor }) => cursor};
+  opacity: ${({ opacity }) => opacity};
+  z-index: ${({ zIndex }) => zIndex};
 `;
 
 export default Flex;
