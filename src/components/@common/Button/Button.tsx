@@ -16,11 +16,12 @@ const Button = <T extends ElementType>({
   isGrayOut = false,
   customStyle,
   children,
+  ...attributes
 }: Props<T>) => {
   const tag = as || 'button';
 
   return (
-    <Wrapper as={tag} onClick={onClick} style={customStyle} isGrayOut={isGrayOut}>
+    <Wrapper as={tag} onClick={onClick} style={customStyle} isGrayOut={isGrayOut} {...attributes}>
       {children}
     </Wrapper>
   );

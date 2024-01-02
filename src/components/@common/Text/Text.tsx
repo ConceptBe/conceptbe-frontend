@@ -20,11 +20,12 @@ const Text = <T extends ElementType>({
   color = 'b',
   customStyle,
   required = false,
+  ...attributes
 }: Props<T>) => {
   const tag = as || 'span';
 
   return (
-    <TextWrapper as={tag} textColor={color} textFont={font} style={{ ...customStyle }}>
+    <TextWrapper as={tag} textColor={color} textFont={font} style={{ ...customStyle }} {...attributes}>
       {children}
       {required && (
         <RequiredWrapper>
