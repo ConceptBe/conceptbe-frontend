@@ -20,13 +20,13 @@ import { ReactComponent as Back } from '../../assets/svg/back_24_B.svg';
 import { ReactComponent as Dot } from '../../assets/svg/dot.svg';
 import { ReactComponent as Write } from '../../assets/svg/image_write.svg';
 import Button from '../../components/@common/Button/Button';
+import Spacer from '../../components/@common/Spacer';
 import Text from '../../components/@common/Text/Text';
 import Tag from '../../components/CustomTag/Tag';
 import { Header } from '../../components/Header/Header';
 import Checkbox, { checkboxOptions } from '../../components/Inputs/Checkbox';
 import Dropdown from '../../components/Inputs/Dropdown/Dropdown';
 import InputWithLabel from '../../components/Inputs/InputWithLabel';
-import Spacer from '../../components/Spacer';
 import UnStyleButton from '../../components/UnStyleButton';
 import { skillOneDepth, skillTwoDepth, filterSubOptions, regionOptions } from '../../modules/constants';
 
@@ -116,7 +116,7 @@ const Setting = () => {
             onChange={(value) => setNickName(value)}
           />
 
-          <Spacer top={35} />
+          <Spacer size={35} />
           <SettingWrapper>
             <Text required font="suit15m" color="b9">
               스킬 (최대 3개)
@@ -151,7 +151,7 @@ const Setting = () => {
             </TagBox>
           </SettingWrapper>
 
-          <Spacer top={35} />
+          <Spacer size={35} />
           <SettingWrapper>
             <Text required font="suit15m" color="b9">
               목적 (최대 3개)
@@ -159,7 +159,7 @@ const Setting = () => {
             <Checkbox options={purposeOptions} setState={setPurposeOptions} onChange={handleCheckboxChange} />
           </SettingWrapper>
 
-          <Spacer top={35} />
+          <Spacer size={35} />
           <SettingWrapper>
             <Text font="suit15m" color="b9">
               지역
@@ -167,7 +167,7 @@ const Setting = () => {
             <Dropdown onClick={(value) => setResion(value)} items={regionOptions} initialValue={'시/도/광역시'} />
           </SettingWrapper>
 
-          <Spacer top={35} />
+          <Spacer size={35} />
           <InputWithLabel
             label="직장명"
             limit={10}
@@ -179,7 +179,7 @@ const Setting = () => {
             onChange={(value) => setCompany(value)}
           />
 
-          <Spacer top={35} />
+          <Spacer size={35} />
           <InputWithLabel
             multiline
             label="자기소개"

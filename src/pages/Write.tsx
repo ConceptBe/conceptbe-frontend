@@ -10,13 +10,13 @@ import { ReactComponent as Check } from '../assets/svg/check_24.svg';
 import { ReactComponent as UnCheck } from '../assets/svg/unCheck_24.svg';
 import { ReactComponent as Xmark } from '../assets/svg/x.svg';
 import Divider from '../components/@common/Divider/Divider';
+import Spacer from '../components/@common/Spacer';
 import Text from '../components/@common/Text/Text';
 import BottomSheet from '../components/BottomSheet/BottomSheet';
 import { checkboxOptions, getDomain } from '../components/BottomSheet/CheckBox';
 import Checkbox from '../components/Inputs/Checkbox';
 import Dropdown from '../components/Inputs/Dropdown/Dropdown';
 import Radio, { radioOptions } from '../components/Inputs/Radio';
-import Spacer from '../components/Spacer';
 import Tag from '../components/Tag';
 import {
   filterOptions,
@@ -158,7 +158,7 @@ const Write = () => {
             분야
           </Text>
 
-          <Spacer bottom={20} />
+          <Spacer size={20} />
           <Checkbox options={getDomain} onChange={handleCheckboxChange} setState={setDomain} />
         </BottomBox>
         <BottomBox>
@@ -166,7 +166,7 @@ const Write = () => {
             목적
           </Text>
 
-          <Spacer bottom={20} />
+          <Spacer size={20} />
           <Checkbox options={getpurpose} onChange={handleCheckboxChange} setState={setpurpose} />
         </BottomBox>
         <BottomBox>
@@ -174,7 +174,7 @@ const Write = () => {
             협업방식
           </Text>
 
-          <Spacer bottom={20} />
+          <Spacer size={20} />
           <Radio defaultValue="all" options={filterRadio} onChange={(e) => setCollaboration(e)} gap={'large'} />
         </BottomBox>
         <BottomBox>
@@ -182,7 +182,7 @@ const Write = () => {
             모집 지역
           </Text>
 
-          <Spacer bottom={20} />
+          <Spacer size={20} />
           <Dropdown onClick={handleDropdownClick} items={regionOptions} initialValue={'전국'} value={getArea} />
         </BottomBox>
         <BottomBox>
@@ -201,7 +201,7 @@ const Write = () => {
             </div>
           </div>
 
-          <Spacer bottom={12} />
+          <Spacer size={12} />
           <TeamLabelBox>
             {get2Depth.map((item) => {
               return (
@@ -213,7 +213,7 @@ const Write = () => {
             })}
           </TeamLabelBox>
 
-          <Spacer bottom={40} />
+          <Spacer size={40} />
         </BottomBox>
       </BottomWrapper>
 

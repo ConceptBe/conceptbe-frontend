@@ -10,8 +10,8 @@ import { ReactComponent as ScrapView } from '../../assets/svg/scrap_14.svg';
 // footer
 import { ReactComponent as View } from '../../assets/svg/view_14.svg';
 import Divider from '../@common/Divider/Divider.tsx';
+import Spacer from '../@common/Spacer/index.ts';
 import Text from '../@common/Text/Text.tsx';
-import Spacer from '../Spacer.tsx';
 import Tag, { TagProps } from '../Tag.tsx';
 
 interface IdeaCardProps {
@@ -30,15 +30,15 @@ const IdeaCard = ({ mine, tags }: TagProps) => {
             <Text font="suit14m" color="b4">
               일이삼사오육칠팔구
             </Text>
-            <Spacer top={7} />
+            <Spacer size={7} />
 
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <Text font="suit12r" color="b9">
                 스킬
               </Text>
-              <Spacer left={6} />
+              <Spacer size={6} />
               <div style={{ width: 1, height: 10, backgroundColor: theme.color.l2 }} />
-              <Spacer left={6} />
+              <Spacer size={6} />
               <Text font="suit12r" color="b9">
                 작성시간
               </Text>
@@ -52,16 +52,16 @@ const IdeaCard = ({ mine, tags }: TagProps) => {
         <Text font="suit14m" color="c1">
           분야 / 분야 / 분야
         </Text>
-        <Spacer top={7} />
+        <Spacer size={7} />
 
         <Text font="suit16sb">20자 내외의 제목이 들어가는 영역입니다.</Text>
-        <Spacer top={10} />
+        <Spacer size={10} />
 
         <ContentText>
           3줄의 아이디어 내용이 들어가는 영역입니다. 3줄 이상부터는 말줄임표로 노출합니다. 3줄의 아이디어 내용이
           들어가는 영역입니다. 3줄 이상부터는 말줄임표로 노출합니다.
         </ContentText>
-        <Spacer top={14} />
+        <Spacer size={14} />
 
         <TagWrapper>
           <Tag tags={tags} />

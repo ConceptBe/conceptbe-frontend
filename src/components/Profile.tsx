@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
+import Spacer from './@common/Spacer/index.ts';
 import Text from './@common/Text/Text.tsx';
-import Spacer from './Spacer.tsx';
 import TextDivider from './TextDivider.tsx';
 import { ReactComponent as Profile } from '../assets/svg/default_profile.svg';
 import { ReactComponent as UnScrap } from '../assets/svg/scrap.svg';
@@ -14,7 +14,7 @@ const ProfileComponent = () => {
         <Text font="suit14m" color="b4">
           일이삼사오육칠팔구
         </Text>
-        <Spacer bottom="6px" />
+        <Spacer size={6} />
         <Profile_info>
           <Text font="suit12r" color="b9">
             UXUI

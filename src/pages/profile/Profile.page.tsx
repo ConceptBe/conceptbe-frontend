@@ -5,11 +5,11 @@ import { useNavigate } from 'react-router-dom';
 
 import { ReactComponent as Logo } from '../../assets/svg/main_logo.svg';
 import { ReactComponent as Setting } from '../../assets/svg/setting.svg';
+import Spacer from '../../components/@common/Spacer';
 import Text from '../../components/@common/Text/Text';
 import IdeaCard from '../../components/Card/IdeaCard';
 import { Header } from '../../components/Header/Header';
 import Padding from '../../components/Padding';
-import Spacer from '../../components/Spacer';
 import Tab from '../../components/Tab/Tab';
 import TabPannel from '../../components/Tab/TabPannel';
 import Tabs from '../../components/Tab/Tabs';
@@ -55,9 +55,9 @@ const Profile = () => {
               <Text font="suit15sb" color="c1">
                 마케팅/영업
               </Text>
-              <Spacer top={6} />
+              <Spacer size={6} />
               <Text font="suit22sb">일이삼사오육칠팔구</Text>
-              <Spacer top={6} />
+              <Spacer size={6} />
               <Text font="suit15rb" color="b9">
                 외국계 스타트업 | 강원특별자치도
               </Text>
@@ -80,7 +80,7 @@ const Profile = () => {
           {/* 스킬 */}
           <div>
             <Text font="suit14m">스킬</Text>
-            <Spacer top={10} />
+            <Spacer size={10} />
             <TagWrapper>
               <Tag tags={skillTags} select />
             </TagWrapper>
@@ -88,7 +88,7 @@ const Profile = () => {
           {/* 목적 */}
           <div>
             <Text font="suit14m">목적</Text>
-            <Spacer top={10} />
+            <Spacer size={10} />
             <TagWrapper>
               <Tag style={{ color: theme.color.b4 }} tags={tags} />
             </TagWrapper>

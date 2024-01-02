@@ -2,8 +2,8 @@ import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { ReactComponent as Cross } from '../../assets/svg/x.svg';
+import Spacer from '../@common/Spacer';
 import Text from '../@common/Text/Text';
-import Spacer from '../Spacer';
 import UnStyleButton from '../UnStyleButton';
 
 interface TagProps {
@@ -17,7 +17,7 @@ const Tag = ({ text, onDelete }: TagProps) => {
       <Text font="suit13m" color="w1">
         {text}
       </Text>
-      <Spacer left={10} />
+      <Spacer size={10} />
       <UnStyleButton
         onClick={() => onDelete(text)}
         style={{ display: 'flex', justifyContent: 'center', alignContent: 'center' }}

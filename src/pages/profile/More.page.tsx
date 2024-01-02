@@ -5,12 +5,12 @@ import { useNavigate } from 'react-router-dom';
 
 import { ReactComponent as Back } from '../../assets/svg/back_24_B.svg';
 import Divider from '../../components/@common/Divider/Divider';
+import Spacer from '../../components/@common/Spacer';
 import Text from '../../components/@common/Text/Text';
 import BottomSheet from '../../components/BottomSheet/BottomSheet';
 import Privacy from '../../components/BottomSheet/use/Privacy';
 import Terms from '../../components/BottomSheet/use/Terms';
 import { Header } from '../../components/Header/Header';
-import Spacer from '../../components/Spacer';
 import UnStyleButton from '../../components/UnStyleButton';
 
 const More = () => {
@@ -71,7 +71,7 @@ const More = () => {
             기타 문의 사항
           </Text>
 
-          <Spacer top={8} />
+          <Spacer size={8} />
           <Text customStyle={{ lineHeight: '22px' }} font="suit14r" color="b6">
             기타 문의사항이 있으실 경우, ABCDEFG123456@gmail.com으로 연락주세요
           </Text>

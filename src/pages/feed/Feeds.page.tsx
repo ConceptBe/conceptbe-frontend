@@ -5,6 +5,7 @@ import { ReactComponent as Filter } from '../../assets/svg/filter.svg';
 import { ReactComponent as Logo } from '../../assets/svg/main_logo.svg';
 import { ReactComponent as Write } from '../../assets/svg/writeicon40.svg';
 import Button from '../../components/@common/Button/Button';
+import Spacer from '../../components/@common/Spacer';
 import Text from '../../components/@common/Text/Text';
 import BottomSheet from '../../components/BottomSheet/BottomSheet';
 import FilterBox from '../../components/BottomSheet/FilterBox';
@@ -15,7 +16,6 @@ import Checkbox, { checkboxOptions } from '../../components/Inputs/Checkbox';
 import Dropdown from '../../components/Inputs/Dropdown/Dropdown';
 import Radio, { radioOptions } from '../../components/Inputs/Radio';
 import Padding from '../../components/Padding';
-import Spacer from '../../components/Spacer';
 import UnStyleButton from '../../components/UnStyleButton';
 import { filterOptions, filterSubOptions, filterRadio } from '../../modules/constants';
 
@@ -83,7 +83,7 @@ const Feeds = () => {
         <FeedFixBox>
           <Write />
 
-          <Spacer top={27} />
+          <Spacer size={27} />
           <FeedFixTextWrapper>
             <Text font="suit22sb" color="w1">
               일이삼사오육칠팔구십
@@ -93,11 +93,11 @@ const Feeds = () => {
             </Text>
           </FeedFixTextWrapper>
 
-          <Spacer top={8} />
+          <Spacer size={8} />
           <Text font="suit22r" color="w1">
             재밌는 아이디어를 들려주세요!
           </Text>
-          <Spacer top={14} />
+          <Spacer size={14} />
 
           <Text font="suit15ra" color="w2">{`아이디어 적으러 가기 >`}</Text>
         </FeedFixBox>
@@ -107,7 +107,7 @@ const Feeds = () => {
             <Text font="suit16sb" color="b4">
               현재 인기 있는 아이디어
             </Text>
-            <Spacer top={18} />
+            <Spacer size={18} />
             <FeedFixWrapper>
               {ideas.map((idea, idx) => {
                 return <PopCard key={idx} category={idea.category} title={idea.title} />;
@@ -119,11 +119,11 @@ const Feeds = () => {
             <Text font="suit16sb" color="b4">
               피드 영역 타이틀입니다
             </Text>
-            <Spacer top={20} />
+            <Spacer size={20} />
             {Array.from({ length: 20 }, (_, idx) => (
               <>
                 <IdeaCard key={idx} tags={tags} />
-                <Spacer bottom={20} />
+                <Spacer size={20} />
               </>
             ))}
           </FeedWrapper>
@@ -138,7 +138,7 @@ const Feeds = () => {
               <Text font="suit15m" color="b9">
                 분야
               </Text>
-              <Spacer top={12} />
+              <Spacer size={12} />
               <Checkbox options={filedOptions} setState={setFiledOptions} onChange={handleCheckboxChange} />
             </FilterWrapper>
 
@@ -146,7 +146,7 @@ const Feeds = () => {
               <Text font="suit15m" color="b9">
                 목적
               </Text>
-              <Spacer top={12} />
+              <Spacer size={12} />
               <Checkbox options={purposeOptions} setState={setPurposeOptions} onChange={handleCheckboxChange} />
             </FilterWrapper>
 
@@ -154,7 +154,7 @@ const Feeds = () => {
               <Text font="suit15m" color="b9">
                 협업 방식
               </Text>
-              <Spacer top={12} />
+              <Spacer size={12} />
               <Radio defaultValue="all" options={radioOptions} onChange={handleOptionChange} gap={'large'} />
             </FilterWrapper>
 
@@ -162,7 +162,7 @@ const Feeds = () => {
               <Text font="suit15m" color="b9">
                 지역
               </Text>
-              <Spacer top={12} />
+              <Spacer size={12} />
               <Dropdown onClick={handleDropdownClick} items={dropdownItems} initialValue={'다운'} />
             </FilterWrapper>
 
@@ -170,7 +170,7 @@ const Feeds = () => {
               <Text font="suit15m" color="b9">
                 팀원 모집
               </Text>
-              <Spacer top={12} />
+              <Spacer size={12} />
               <div style={{ display: 'flex', gap: 8 }}>
                 <Dropdown onClick={handleDropdownClick} items={dropdownItems} initialValue={'다운'} />
                 <Dropdown onClick={handleDropdownClick} items={dropdownItems} initialValue={'다운'} />

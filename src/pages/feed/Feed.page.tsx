@@ -12,10 +12,10 @@ import { ReactComponent as UnScrap } from '../../assets/svg/FeedDetail/unScrap.s
 import { ReactComponent as Logo } from '../../assets/svg/main_logo.svg';
 import { ReactComponent as X } from '../../assets/svg/x.svg';
 import Divider from '../../components/@common/Divider/Divider';
+import Spacer from '../../components/@common/Spacer';
 import Text from '../../components/@common/Text/Text';
 import { Header } from '../../components/Header/Header';
 import ProfileComponent from '../../components/Profile';
-import Spacer from '../../components/Spacer';
 import Tag from '../../components/Tag';
 import TextDivider from '../../components/TextDivider';
 const FeedDetailPage = () => {
@@ -63,18 +63,18 @@ const FeedDetailPage = () => {
       </Header>
       <ContantWrapper>
         <ProfileComponent />
-        <Spacer bottom={20} />
+        <Spacer size={20} />
 
         <TitleWrapper>
           <div>
             <Text font="suit14sm" color="c1">
               IT / 유튜브 컨텐츠
             </Text>
-            <Spacer top={8} />
+            <Spacer size={8} />
             <Text font="suit18sb" color="b4">
               쇼츠 전용 뉴스를 함께 제작하실 분!
             </Text>
-            <Spacer top={8} />
+            <Spacer size={8} />
             <TitleWrapper_info>
               <Text font="suit12r" color="b9">
                 2023.09.09 23:23
@@ -123,7 +123,7 @@ const FeedDetailPage = () => {
                   <Text font="suit14m" color="b9">
                     {item.indexName}
                   </Text>
-                  <Spacer top={12} />
+                  <Spacer size={12} />
                   <Tag tags={item.tag} style={{ color: 'black' }} />
                 </div>
               )}
@@ -170,17 +170,17 @@ const FeedDetailPage = () => {
           {/* <Textarea placeholder="Your message here..." value={textareaValue} onChange={handleTextareaChange} /> */}
         </InputBox>
 
-        <Spacer top={20} />
+        <Spacer size={20} />
 
         <CommentsBox>
           <ProfileComponent />
-          <Spacer top={20} />
+          <Spacer size={20} />
           <Text font="suit14m" color="t" customStyle={{ lineHeight: '22px' }}>
             댓글 내용, 한 번에 최대 500자 까지 입력 가능. 댓글 내용, 한 번에 최대 500자 까지 입력 가능. 댓글 내용, 한
             번에 최대 500자 까지 입력 가능. 댓글 내용, 한 번에 최대 500자 까지 입력 가능. 댓글 내용, 한 번에 최대 500자
             까지 입력 가능. 댓글 내용, 한 번에 최대 500자 까지 입력 가능.
           </Text>
-          <Spacer top={10} />
+          <Spacer size={10} />
           <CommnetsBottomBox>
             <IndexBox>
               <Message />
@@ -191,7 +191,7 @@ const FeedDetailPage = () => {
                 60
               </Text>
             </IndexBox>
-            <Spacer left={14} />
+            <Spacer size={14} />
             <IndexBox>
               <UnLike />
               <Text font="suit12r" color="b9">
@@ -210,13 +210,13 @@ const FeedDetailPage = () => {
           </div>
           <CommentsBox>
             <ProfileComponent />
-            <Spacer top={20} />
+            <Spacer size={20} />
             <Text font="suit14m" color="t" customStyle={{ lineHeight: '22px' }}>
               댓글 내용, 한 번에 최대 500자 까지 입력 가능. 댓글 내용, 한 번에 최대 500자 까지 입력 가능. 댓글 내용, 한
               번에 최대 500자 까지 입력 가능. 댓글 내용, 한 번에 최대 500자 까지 입력 가능. 댓글 내용, 한 번에 최대
               500자 까지 입력 가능. 댓글 내용, 한 번에 최대 500자 까지 입력 가능.
             </Text>
-            <Spacer top={10} />
+            <Spacer size={10} />
             <CommnetsBottomBox>
               <IndexBox>
                 <UnLike />
