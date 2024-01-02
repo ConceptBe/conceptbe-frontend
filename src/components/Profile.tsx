@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import Spacer from './@common/Spacer/index.ts';
 import Text from './@common/Text/Text.tsx';
-import TextDivider from './TextDivider.tsx';
+import TextDivider from './@common/TextDivider/TextDivider.tsx';
 import { ReactComponent as Profile } from '../assets/svg/default_profile.svg';
 import { ReactComponent as UnScrap } from '../assets/svg/scrap.svg';
 
@@ -19,7 +19,7 @@ const ProfileComponent = () => {
           <Text font="suit12r" color="b9">
             UXUI
           </Text>
-          <TextDivider margin={6} color="l2" />
+          <TextDivider left={6} right={6} color="l2" />
           <Text font="suit12r" color="b9">
             영상디자인
           </Text>

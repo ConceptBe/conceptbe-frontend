@@ -14,10 +14,10 @@ import { ReactComponent as X } from '../../assets/svg/x.svg';
 import Divider from '../../components/@common/Divider/Divider';
 import Spacer from '../../components/@common/Spacer';
 import Text from '../../components/@common/Text/Text';
+import TextDivider from '../../components/@common/TextDivider/TextDivider';
 import { Header } from '../../components/Header/Header';
 import ProfileComponent from '../../components/Profile';
 import Tag from '../../components/Tag';
-import TextDivider from '../../components/TextDivider';
 const FeedDetailPage = () => {
   const infoIndex = [
     { indexName: '분야', tag: ['IT', '유튜브 컨텐츠'] },
@@ -79,7 +79,7 @@ const FeedDetailPage = () => {
               <Text font="suit12r" color="b9">
                 2023.09.09 23:23
               </Text>
-              <TextDivider margin={6} color="l2" />
+              <TextDivider left={6} right={6} color="l2" />
               <Text font="suit12r" color="b9">
                 조회수 999+
               </Text>
