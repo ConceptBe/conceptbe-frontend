@@ -19,8 +19,8 @@ import {
 import { ReactComponent as Back } from '../../assets/svg/back_24_B.svg';
 import { ReactComponent as Dot } from '../../assets/svg/dot.svg';
 import { ReactComponent as Write } from '../../assets/svg/image_write.svg';
+import Button from '../../components/@common/Button/Button';
 import Text from '../../components/@common/Text/Text';
-import Button from '../../components/Button';
 import Tag from '../../components/CustomTag/Tag';
 import { Header } from '../../components/Header/Header';
 import Checkbox, { checkboxOptions } from '../../components/Inputs/Checkbox';
@@ -192,7 +192,7 @@ const Setting = () => {
           />
         </MainBox>
         <BottomWrapper>
-          <Button text="프로필 저장하기" onClick={() => {}} isActive={true} />
+          <Button onClick={() => {}}>프로필 저장하기</Button>
         </BottomWrapper>
       </MainWrapper>
     </Container>

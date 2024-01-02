@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
+import Button from '../../@common/Button/Button';
 import Text from '../../@common/Text/Text';
-import Button from '../../Button';
 import Spacer from '../../Spacer';
 
 interface props {
@@ -142,7 +142,7 @@ const Terms = ({ isOpen, onClose }: props) => {
         본 이용약관의 내용은 23.08.24에 업데이트되었습니다.
       </Text>
       <ButtonWrapper>
-        <Button text="확인" onClick={onClose} isActive={true} />
+        <Button onClick={onClose}>확인</Button>
       </ButtonWrapper>
     </CollectionWrapper>
   );

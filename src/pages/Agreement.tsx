@@ -2,9 +2,9 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 
 import AgreementImg from '../assets/images/agreement_bg.png';
+import Button from '../components/@common/Button/Button';
 import Text from '../components/@common/Text/Text';
 import BottomSheet from '../components/BottomSheet/BottomSheet';
-import Button from '../components/Button';
 import Spacer from '../components/Spacer';
 
 const Agreement = () => {
@@ -160,13 +160,13 @@ const Agreement = () => {
           </Text>
           <BtnDiv>
             <Button
-              text="확인"
-              isActive
-              style={{
+              customStyle={{
                 width: '100%',
               }}
               onClick={() => setIsOpenCollection(false)}
-            />
+            >
+              확인
+            </Button>
           </BtnDiv>
         </CollectionWrapper>
       </BottomSheet>
@@ -293,13 +293,13 @@ const Agreement = () => {
           </Text>
           <BtnDiv>
             <Button
-              text="확인"
-              isActive
-              style={{
+              customStyle={{
                 width: '100%',
               }}
               onClick={() => setIsOpenTerms(false)}
-            />
+            >
+              확인
+            </Button>
           </BtnDiv>
         </CollectionWrapper>
       </BottomSheet>
@@ -375,7 +375,7 @@ const Agreement = () => {
         </div>
       </Text>
       <Spacer bottom={24} />
-      <Button onClick={() => {}} isActive={true} text="동의하고 시작하기" />
+      <Button onClick={() => {}}>동의하고 시작하기</Button>
 
       {collectionBottomSheet()}
       {termsBottomSheet()}

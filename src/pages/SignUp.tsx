@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react';
 
 import { ReactComponent as Check } from '../assets/svg/check_24.svg';
 import { ReactComponent as Close } from '../assets/svg/close_24.svg';
+import Button from '../components/@common/Button/Button.tsx';
 import Text from '../components/@common/Text/Text.tsx';
 import BottomSheet from '../components/BottomSheet/BottomSheet.tsx';
 import CheckBoxModal from '../components/BottomSheet/CheckBox.tsx';
-import Button from '../components/Button.tsx';
 import IdeaCard from '../components/Card/IdeaCard.tsx';
 import PopCard from '../components/Card/PopCard.tsx';
 import Checkbox, { checkboxOptions } from '../components/Inputs/Checkbox.tsx';
@@ -137,9 +137,11 @@ const SignUp = () => {
       </div>
 
       <div>
-        <Button text={'필터'} onClick={toggleBottomSheet} isActive={true} />
-        <Button text={'팀원추가'} onClick={toggleAddMember} isActive={true} />
-        <Button text={'버튼'} onClick={buttonClick} isActive={false} />
+        <Button onClick={toggleBottomSheet}>필터</Button>
+        <Button onClick={toggleAddMember}>팀원추가</Button>
+        <Button onClick={buttonClick} isGrayOut>
+          버튼
+        </Button>
       </div>
 
       <div>
@@ -198,8 +200,12 @@ const SignUp = () => {
         >
           <div>콘텐츠부분!</div>
           <div style={{ display: 'flex', alignItems: 'flex-end', gap: 7, marginBottom: 50 }}>
-            <Button style={{ flex: 1 }} text={'닫기'} onClick={toggleBottomSheet} isActive={false} />
-            <Button style={{ flex: 2 }} text={'적용'} onClick={buttonClick} isActive={true} />
+            <Button customStyle={{ flex: 1 }} onClick={toggleBottomSheet} isGrayOut>
+              닫기
+            </Button>
+            <Button customStyle={{ flex: 2 }} onClick={buttonClick}>
+              적용
+            </Button>
           </div>
         </div>
       </BottomSheet>

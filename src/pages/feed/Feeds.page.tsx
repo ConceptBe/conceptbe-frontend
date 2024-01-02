@@ -4,10 +4,10 @@ import { useState } from 'react';
 import { ReactComponent as Filter } from '../../assets/svg/filter.svg';
 import { ReactComponent as Logo } from '../../assets/svg/main_logo.svg';
 import { ReactComponent as Write } from '../../assets/svg/writeicon40.svg';
+import Button from '../../components/@common/Button/Button';
 import Text from '../../components/@common/Text/Text';
 import BottomSheet from '../../components/BottomSheet/BottomSheet';
 import FilterBox from '../../components/BottomSheet/FilterBox';
-import Button from '../../components/Button';
 import IdeaCard from '../../components/Card/IdeaCard';
 import PopCard from '../../components/Card/PopCard';
 import { Header } from '../../components/Header/Header';
@@ -178,8 +178,12 @@ const Feeds = () => {
             </FilterWrapper>
           </FilterContent>
           <FilterBottom>
-            <Button style={{ flex: 1 }} text={'닫기'} onClick={() => setIsFilter(false)} isActive={false} />
-            <Button style={{ flex: 2 }} text={'적용'} onClick={() => {}} isActive={true} />
+            <Button customStyle={{ flex: 1 }} onClick={() => setIsFilter(false)} isGrayOut>
+              닫기
+            </Button>
+            <Button customStyle={{ flex: 2 }} onClick={() => {}}>
+              적용
+            </Button>
           </FilterBottom>
         </FilterBox>
       </BottomSheet>
