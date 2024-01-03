@@ -19,14 +19,15 @@ import {
 import { ReactComponent as Back } from '../../assets/svg/back_24_B.svg';
 import { ReactComponent as Dot } from '../../assets/svg/dot.svg';
 import { ReactComponent as Write } from '../../assets/svg/image_write.svg';
+import useForm from '../../components/@common/@hooks/useForm';
 import Button from '../../components/@common/Button/Button';
+import InputContainer from '../../components/@common/InputContainer/InputContainer';
 import Spacer from '../../components/@common/Spacer/Spacer';
 import Text from '../../components/@common/Text/Text';
 import Tag from '../../components/CustomTag/Tag';
 import { Header } from '../../components/Header/Header';
 import Checkbox, { checkboxOptions } from '../../components/Inputs/Checkbox';
 import Dropdown from '../../components/Inputs/Dropdown/Dropdown';
-import InputWithLabel from '../../components/Inputs/InputWithLabel';
 import UnStyleButton from '../../components/UnStyleButton';
 import { skillOneDepth, skillTwoDepth, filterSubOptions, regionOptions } from '../../modules/constants';
 
@@ -37,18 +38,26 @@ const dropdownItems = [
   { text: '하', value: '하' },
 ];
 
+interface FormValueType {
+  nickName: string;
+  company: string;
+  intro: string;
+}
+
 const Setting = () => {
   const theme = useTheme();
   const navigate = useNavigate();
-  const [nickName, setNickName] = useState(''); // 닉네임
   const [skills, setSkills] = useState<string[]>([]);
   const [oneDepth, setOneDepth] = useState(''); // 스킬(대분류)
   const [twoDepth, setTwoDepth] = useState(''); // 스킬(상세분류)
   const [threeDepth, setThreeDepth] = useState(''); // 스킬(숙련도)
   const [purposeOptions, setPurposeOptions] = useState<checkboxOptions[] | []>([...filterSubOptions]); // 목적
   const [resion, setResion] = useState(''); // 지역
-  const [company, setCompany] = useState('');
-  const [intro, setIntro] = useState('');
+  const { formValue, errorValue, onChange } = useForm<FormValueType>({
+    nickName: '',
+    company: '',
+    intro: '',
+  });
 
   const handleDropdownClick = (value: string) => {
     const joinValue = `${twoDepth}_${value}`;
@@ -72,6 +81,21 @@ const Setting = () => {
     setState((prevCheckboxes) =>
       prevCheckboxes.map((checkbox) => (checkbox.value === value ? { ...checkbox, checked: !newState } : checkbox)),
     );
+  };
+
+  const validateInput = () => {
+    return [
+      {
+        regexp: /[~!@#$%";'^,&*()_+|</>=>`?:{[\]}]/g,
+        name: 'nickName',
+        errorMessage: '사용 불가한 닉네임입니다.',
+      },
+      {
+        regexp: /[1234567890]/g,
+        name: 'company',
+        errorMessage: '사용 불가한 닉네임입니다.',
+      },
+    ];
   };
 
   const validDropDown = skills.length === 3;
@@ -103,17 +127,18 @@ const Setting = () => {
               <Write />
             </ImageWrite>
           </ImageWrapper>
-          <InputWithLabel
-            required
+
+          <InputContainer
             label="닉네임"
-            limit={10}
-            value={nickName}
+            name="nickName"
+            value={formValue.nickName}
+            onChange={onChange}
+            onValidate={validateInput}
+            maxLength={10}
             placeholder="닉네임을 입력해주세요"
-            isValid={true}
-            message="테스트"
-            hideMessage={true}
-            validValue
-            onChange={(value) => setNickName(value)}
+            errorMessage={errorValue.nickName}
+            successMessage="사용 가능한 닉네임입니다."
+            isLabelRequired
           />
 
           <Spacer size={35} />
@@ -168,27 +193,28 @@ const Setting = () => {
           </SettingWrapper>
 
           <Spacer size={35} />
-          <InputWithLabel
+
+          <InputContainer
             label="직장명"
-            limit={10}
-            value={company}
+            name="company"
+            value={formValue.company}
+            onChange={onChange}
+            onValidate={validateInput}
             placeholder="직장명을 입력해주세요"
-            isValid
-            message="테스트"
-            hideMessage={true}
-            onChange={(value) => setCompany(value)}
+            errorMessage={errorValue.company}
           />
 
           <Spacer size={35} />
-          <InputWithLabel
-            multiline
+
+          <InputContainer
             label="자기소개"
-            limit={150}
-            value={intro}
-            placeholder="자기소개를 입력해주세요"
-            isValid
-            hideMessage
-            onChange={(value) => setIntro(value)}
+            name="intro"
+            value={formValue.intro}
+            onChange={onChange}
+            onValidate={validateInput}
+            maxLength={150}
+            placeholder="닉네임을 입력해주세요"
+            errorMessage={errorValue.intro}
           />
         </MainBox>
         <BottomWrapper>

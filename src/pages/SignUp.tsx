@@ -3,7 +3,9 @@ import { useEffect, useState } from 'react';
 
 import { ReactComponent as Check } from '../assets/svg/check_24.svg';
 import { ReactComponent as Close } from '../assets/svg/close_24.svg';
+import useForm from '../components/@common/@hooks/useForm.ts';
 import Button from '../components/@common/Button/Button.tsx';
+import InputContainer from '../components/@common/InputContainer/InputContainer.tsx';
 import Text from '../components/@common/Text/Text.tsx';
 import BottomSheet from '../components/BottomSheet/BottomSheet.tsx';
 import CheckBoxModal from '../components/BottomSheet/CheckBox.tsx';
@@ -11,13 +13,22 @@ import IdeaCard from '../components/Card/IdeaCard.tsx';
 import PopCard from '../components/Card/PopCard.tsx';
 import Checkbox, { checkboxOptions } from '../components/Inputs/Checkbox.tsx';
 import Dropdown from '../components/Inputs/Dropdown/Dropdown.tsx';
-import InputWithLabel from '../components/Inputs/InputWithLabel.tsx';
 import Radio, { radioOptions } from '../components/Inputs/Radio.tsx';
 // svg
 import { memberSelect, memberSelectDetails } from '../modules/constants.tsx';
 
+interface FormValueType {
+  a: string;
+  b: string;
+}
+
 const SignUp = () => {
   const theme = useTheme();
+  const { formValue, errorValue, onChange } = useForm<FormValueType>({
+    a: '',
+    b: '',
+  });
+
   //라디오
   const [selectedRadio, setSelectedRadio] = useState<string>('');
   const handleOptionChange = (value: string) => {
@@ -117,6 +128,16 @@ const SignUp = () => {
     );
   };
 
+  const validateInput = () => {
+    return [
+      {
+        regexp: /[~!@#$%";'^,&*()_+|</>=>`?:{[\]}]/g,
+        name: 'a',
+        errorMessage: '사용 불가한 닉네임입니다.',
+      },
+    ];
+  };
+
   useEffect(() => {
     setModalCheckboxOptions(memberSelectDetails.filter((detail) => detail.parent === selectMain.value));
   }, [selectMain]);
@@ -145,21 +166,29 @@ const SignUp = () => {
       </div>
 
       <div>
-        <InputWithLabel
-          label={'label'}
-          limit={20}
-          value={inputText}
-          placeholder={'placeholder'}
-          isValid={true}
-          onChange={handleInputChange}
+        <InputContainer
+          label="임시 A"
+          name="a"
+          value={formValue.a}
+          onChange={onChange}
+          onValidate={validateInput}
+          maxLength={10}
+          placeholder="닉네임을 입력해주세요"
+          errorMessage={errorValue.a}
+          successMessage="사용 가능한 닉네임입니다."
+          isLabelRequired
         />
-        <InputWithLabel
-          label={'label'}
-          limit={20}
-          value={inputText}
-          placeholder={'placeholder'}
-          isValid={false}
-          onChange={handleInputChange}
+        <InputContainer
+          label="임시 B"
+          name="b"
+          value={formValue.b}
+          onChange={onChange}
+          onValidate={validateInput}
+          maxLength={20}
+          placeholder="닉네임을 입력해주세요"
+          errorMessage={errorValue.b}
+          successMessage="사용 가능한 닉네임입니다."
+          isLabelRequired
         />
       </div>
 
