@@ -28,8 +28,8 @@ const InputContainer = ({
   successMessage = '',
   errorMessage = '',
   autoFocus = false,
-  maxLength = 0,
   placeholder = '',
+  maxLength,
   isLabelRequired = false,
 }: InputProps) => {
   return (
@@ -43,7 +43,7 @@ const InputContainer = ({
             </SVGRequiredWrapper>
           )}
         </Label>
-        {maxLength > 0 && (
+        {maxLength && (
           <div>
             <LabelLength>{value.length}</LabelLength>
             <LabelLengthLimit>/{maxLength}</LabelLengthLimit>
