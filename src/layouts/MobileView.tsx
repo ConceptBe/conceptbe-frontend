@@ -1,11 +1,12 @@
 import styled from '@emotion/styled';
 import { Outlet } from 'react-router-dom';
 
-import Navigation from '../components/Navigation';
+import Navigation from '../components/@common/Navigation/Navigation';
 import useRouteMatched from '../hooks/useRouteMatch';
 
 const MobileView = () => {
   const isMatch = useRouteMatched('/profile/:id', '/login', '/write', '/agreement', '/auth', '/feed/:id');
+
   return (
     <Container>
       <Wrapper>
