@@ -18,17 +18,18 @@ import {
 } from './Setting.style';
 import { ReactComponent as Back } from '../../assets/svg/back_24_B.svg';
 import { ReactComponent as Write } from '../../assets/svg/image_write.svg';
+import useCheckbox from '../../components/@common/@hooks/useCheckbox';
 import useForm from '../../components/@common/@hooks/useForm';
 import Button from '../../components/@common/Button/Button';
+import CheckboxContainer from '../../components/@common/CheckboxContainer/CheckboxContainer';
 import InputContainer from '../../components/@common/InputContainer/InputContainer';
 import Spacer from '../../components/@common/Spacer/Spacer';
 import Text from '../../components/@common/Text/Text';
 import Tag from '../../components/CustomTag/Tag';
 import { Header } from '../../components/Header/Header';
-import Checkbox, { checkboxOptions } from '../../components/Inputs/Checkbox';
 import Dropdown from '../../components/Inputs/Dropdown/Dropdown';
 import UnStyleButton from '../../components/UnStyleButton';
-import { skillOneDepth, skillTwoDepth, filterSubOptions, regionOptions } from '../../modules/constants';
+import { skillOneDepth, skillTwoDepth, regionOptions, filterSubOptions } from '../../modules/constants';
 
 const dropdownItems = [
   { text: '숙련도', value: '', defaultValue: true },
@@ -50,12 +51,14 @@ const Setting = () => {
   const [oneDepth, setOneDepth] = useState(''); // 스킬(대분류)
   const [twoDepth, setTwoDepth] = useState(''); // 스킬(상세분류)
   const [threeDepth, setThreeDepth] = useState(''); // 스킬(숙련도)
-  const [purposeOptions, setPurposeOptions] = useState<checkboxOptions[] | []>([...filterSubOptions]); // 목적
   const [resion, setResion] = useState(''); // 지역
   const { formValue, errorValue, onChange } = useForm<FormValueType>({
     nickName: '',
     company: '',
     intro: '',
+  });
+  const { checkboxes, onChangeCheckBox } = useCheckbox({
+    goal: filterSubOptions,
   });
 
   const handleDropdownClick = (value: string) => {
@@ -70,16 +73,6 @@ const Setting = () => {
 
   const handleDeleteSkill = (value) => {
     setSkills(skills.filter((skill) => skill !== value));
-  };
-
-  const handleCheckboxChange = (
-    value: string,
-    newState: boolean,
-    setState: React.Dispatch<React.SetStateAction<checkboxOptions[]>>,
-  ) => {
-    setState((prevCheckboxes) =>
-      prevCheckboxes.map((checkbox) => (checkbox.value === value ? { ...checkbox, checked: !newState } : checkbox)),
-    );
   };
 
   const validateInput = () => {
@@ -180,7 +173,10 @@ const Setting = () => {
             <Text required font="suit15m" color="b9">
               목적 (최대 3개)
             </Text>
-            <Checkbox options={purposeOptions} setState={setPurposeOptions} onChange={handleCheckboxChange} />
+            <CheckboxContainer
+              options={checkboxes.goal}
+              onChange={(e) => onChangeCheckBox(e, 'goal', { checkboxKey: 'goal', maxValue: 3 })}
+            />
           </SettingWrapper>
 
           <Spacer size={35} />

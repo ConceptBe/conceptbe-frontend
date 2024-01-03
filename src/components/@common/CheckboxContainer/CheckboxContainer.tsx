@@ -1,43 +1,41 @@
 import styled from '@emotion/styled';
+import { ChangeEvent, Fragment } from 'react';
 
-export type checkboxOptions = { text: string; value: string; checked: boolean };
-interface CheckboxProps {
-  options: checkboxOptions[];
-  onChange: (
-    value: string,
-    newState: boolean,
-    setState: React.Dispatch<React.SetStateAction<checkboxOptions[]>>,
-  ) => void;
-  setState: React.Dispatch<React.SetStateAction<checkboxOptions[]>>;
+interface CheckboxOptions {
+  text: string;
+  value: string;
+  checked: boolean;
 }
 
-const Checkbox = ({ options, onChange, setState }: CheckboxProps) => {
+interface Props {
+  options: CheckboxOptions[];
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+}
+
+const CheckboxContainer = ({ options, onChange }: Props) => {
   return (
-    <CheckboxWrapper>
+    <Wrapper>
       {options.map((option) => (
-        <div key={option.value}>
+        <Fragment key={option.value}>
           <CheckboxInput
             id={option.value}
             name={option.value}
             type="checkbox"
             defaultChecked={option.checked}
-            onChange={() => {
-              onChange(option.value, option.checked, setState);
-            }}
+            onChange={onChange}
           />
           <CheckboxLabel htmlFor={option.value} checked={option.checked}>
             {option.text}
           </CheckboxLabel>
-          {option.checked}
-        </div>
+        </Fragment>
       ))}
-    </CheckboxWrapper>
+    </Wrapper>
   );
 };
 
-export default Checkbox;
+export default CheckboxContainer;
 
-const CheckboxWrapper = styled.div`
+const Wrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 8px;

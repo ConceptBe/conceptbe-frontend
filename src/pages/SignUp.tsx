@@ -3,19 +3,20 @@ import { useEffect, useState } from 'react';
 
 import { ReactComponent as Check } from '../assets/svg/check_24.svg';
 import { ReactComponent as Close } from '../assets/svg/close_24.svg';
+import useCheckbox from '../components/@common/@hooks/useCheckbox.ts';
 import useForm from '../components/@common/@hooks/useForm.ts';
 import Button from '../components/@common/Button/Button.tsx';
+import CheckboxContainer from '../components/@common/CheckboxContainer/CheckboxContainer.tsx';
 import InputContainer from '../components/@common/InputContainer/InputContainer.tsx';
 import Text from '../components/@common/Text/Text.tsx';
 import BottomSheet from '../components/BottomSheet/BottomSheet.tsx';
 import CheckBoxModal from '../components/BottomSheet/CheckBox.tsx';
 import IdeaCard from '../components/Card/IdeaCard.tsx';
 import PopCard from '../components/Card/PopCard.tsx';
-import Checkbox, { checkboxOptions } from '../components/Inputs/Checkbox.tsx';
 import Dropdown from '../components/Inputs/Dropdown/Dropdown.tsx';
 import Radio, { radioOptions } from '../components/Inputs/Radio.tsx';
 // svg
-import { memberSelect, memberSelectDetails } from '../modules/constants.tsx';
+import { filterOptions, memberSelect, memberSelectDetails } from '../modules/constants.tsx';
 
 interface FormValueType {
   a: string;
@@ -46,21 +47,9 @@ const SignUp = () => {
   }, []);
 
   //체크박스
-  const [checkboxOptions, setCheckboxOptions] = useState<checkboxOptions[] | []>([]);
-
-  const handleCheckboxChange = (value: string, newState: boolean) => {
-    setCheckboxOptions((prevCheckboxes) =>
-      prevCheckboxes.map((checkbox) => (checkbox.value === value ? { ...checkbox, checked: !newState } : checkbox)),
-    );
-  };
-
-  useEffect(() => {
-    setCheckboxOptions([
-      { text: '체크 1', value: 'check1', checked: false },
-      { text: '체크 2', value: 'check2', checked: false },
-      { text: '체크 3', value: 'check3', checked: false },
-    ]);
-  }, []);
+  const { checkboxes, onChangeCheckBox } = useCheckbox({
+    field: filterOptions,
+  });
 
   //버튼
   const buttonClick = () => {
@@ -79,12 +68,6 @@ const SignUp = () => {
 
   //태그
   const tags = ['팀원모집', '팀원모집', '팀원모집', '팀원모집'];
-
-  //인풋 라벨
-  const [inputText, setInputText] = useState('');
-  const handleInputChange = (value: string) => {
-    setInputText(value);
-  };
 
   //드롭다운
   const dropdownItems = [
@@ -153,8 +136,8 @@ const SignUp = () => {
       </div>
 
       <div>
-        <Checkbox options={checkboxOptions} onChange={handleCheckboxChange} />
-        <p>선택한 옵션!: {checkboxOptions.map(({ text, checked }) => checked && text + ' ')}</p>
+        <CheckboxContainer options={checkboxes.field} onChange={(e) => onChangeCheckBox(e, 'field')} />
+        <p>선택한 옵션!: {checkboxes.field.map(({ text, checked }) => checked && text + ' ')}</p>
       </div>
 
       <div>

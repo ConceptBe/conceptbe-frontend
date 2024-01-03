@@ -1,27 +1,26 @@
 import styled from '@emotion/styled';
 import axios from 'axios';
-import { useState, ChangeEvent, useEffect } from 'react';
+import { useState, ChangeEvent } from 'react';
 
 import plus from '../../src/assets/images/plus.png';
 import { ReactComponent as RadioChecked } from '../assets/svg/active_check.svg';
 import { ReactComponent as RadioUnChecked } from '../assets/svg/active_radio_uncheck.svg';
 import { ReactComponent as Back } from '../assets/svg/back_24_B.svg';
 import { ReactComponent as Check } from '../assets/svg/check_24.svg';
-import { ReactComponent as UnCheck } from '../assets/svg/unCheck_24.svg';
 import { ReactComponent as Xmark } from '../assets/svg/x.svg';
+import useCheckbox from '../components/@common/@hooks/useCheckbox';
+import CheckboxContainer from '../components/@common/CheckboxContainer/CheckboxContainer';
 import Divider from '../components/@common/Divider/Divider';
 import Spacer from '../components/@common/Spacer/Spacer';
 import Text from '../components/@common/Text/Text';
 import BottomSheet from '../components/BottomSheet/BottomSheet';
-import { checkboxOptions, getDomain } from '../components/BottomSheet/CheckBox';
-import Checkbox from '../components/Inputs/Checkbox';
 import Dropdown from '../components/Inputs/Dropdown/Dropdown';
 import Radio, { radioOptions } from '../components/Inputs/Radio';
 import Tag from '../components/Tag';
 import {
   filterOptions,
-  filterRadio,
   filterSubOptions,
+  filterRadio,
   regionOptions,
   skillOneDepth,
   skillTwoDepth,
@@ -31,15 +30,15 @@ const Write = () => {
   const [getIndex, setIndex] = useState('');
   const [getBody, setBody] = useState('');
   const [bodyCount, setBodyCount] = useState(0);
-  const [getDomain, setDomain] = useState<getDomain[] | []>(filterOptions);
-  const [getpurpose, setpurpose] = useState<getDomain[] | []>(filterSubOptions);
   const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
   const [getArea, setArea] = useState('');
   const [getCollaboration, setCollaboration] = useState<string>('all');
   const [get1Depth, set1Depth] = useState('product');
   const [get2Depth, set2Depth] = useState([]);
-
-  console.log(get2Depth, 'get2Depth');
+  const { checkboxes, onChangeCheckBox } = useCheckbox({
+    field: filterOptions,
+    goal: filterSubOptions,
+  });
 
   const handleIndexChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length > 20) return;
@@ -51,15 +50,6 @@ const Write = () => {
     if (e.target.value.length > 2000) return;
     setBody(e.target.value);
     setBodyCount(e.target.value.length);
-  };
-  const handleCheckboxChange = (
-    value: string,
-    newState: boolean,
-    setState: React.Dispatch<React.SetStateAction<checkboxOptions[]>>,
-  ) => {
-    setState((prevCheckboxes) =>
-      prevCheckboxes.map((checkbox) => (checkbox.value === value ? { ...checkbox, checked: !newState } : checkbox)),
-    );
   };
 
   const handleDropdownClick = (value: string) => {
@@ -159,7 +149,7 @@ const Write = () => {
           </Text>
 
           <Spacer size={20} />
-          <Checkbox options={getDomain} onChange={handleCheckboxChange} setState={setDomain} />
+          <CheckboxContainer options={checkboxes.field} onChange={(e) => onChangeCheckBox(e, 'field')} />
         </BottomBox>
         <BottomBox>
           <Text font="suit15m" color="b9" required>
@@ -167,7 +157,7 @@ const Write = () => {
           </Text>
 
           <Spacer size={20} />
-          <Checkbox options={getpurpose} onChange={handleCheckboxChange} setState={setpurpose} />
+          <CheckboxContainer options={checkboxes.goal} onChange={(e) => onChangeCheckBox(e, 'goal')} />
         </BottomBox>
         <BottomBox>
           <Text font="suit15m" color="b9" required>
