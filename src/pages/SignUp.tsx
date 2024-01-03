@@ -5,16 +5,17 @@ import { ReactComponent as Check } from '../assets/svg/check_24.svg';
 import { ReactComponent as Close } from '../assets/svg/close_24.svg';
 import useCheckbox from '../components/@common/@hooks/useCheckbox.ts';
 import useInput from '../components/@common/@hooks/useInput.ts';
+import useRadio from '../components/@common/@hooks/useRadio.ts';
 import Button from '../components/@common/Button/Button.tsx';
 import CheckboxContainer from '../components/@common/CheckboxContainer/CheckboxContainer.tsx';
 import InputContainer from '../components/@common/InputContainer/InputContainer.tsx';
+import RadioContainer from '../components/@common/RadioContainer/RadioContainer.tsx';
 import Text from '../components/@common/Text/Text.tsx';
 import BottomSheet from '../components/BottomSheet/BottomSheet.tsx';
 import CheckBoxModal from '../components/BottomSheet/CheckBox.tsx';
 import IdeaCard from '../components/Card/IdeaCard.tsx';
 import PopCard from '../components/Card/PopCard.tsx';
 import Dropdown from '../components/Inputs/Dropdown/Dropdown.tsx';
-import Radio, { radioOptions } from '../components/Inputs/Radio.tsx';
 // svg
 import { filterOptions, memberSelect, memberSelectDetails } from '../modules/constants.tsx';
 
@@ -29,12 +30,13 @@ const SignUp = () => {
     a: '',
     b: '',
   });
-
-  //라디오
-  const [selectedRadio, setSelectedRadio] = useState<string>('');
-  const handleOptionChange = (value: string) => {
-    setSelectedRadio(value);
-  };
+  const { radios, onChangeRadio } = useRadio({
+    a: [
+      { text: '상관없음', value: 'all', checked: false },
+      { text: '온라인', value: 'online', checked: false },
+      { text: '오프라인', value: 'offline', checked: false },
+    ],
+  });
 
   const [radioOptions, setRadioOptions] = useState<radioOptions[] | []>([]);
 
@@ -131,8 +133,8 @@ const SignUp = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
       <div>
-        <Radio options={radioOptions} onChange={handleOptionChange} gap={'large'} />
-        <p>선택한 옵션: {selectedRadio}</p>
+        <RadioContainer options={radios.a} onChange={(e) => onChangeRadio(e, 'a')} gap="large" />
+        <p>선택한 옵션: {radios.a[0].text}</p>
       </div>
 
       <div>

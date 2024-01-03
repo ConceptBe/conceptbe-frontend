@@ -1,34 +1,33 @@
 import styled from '@emotion/styled';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent } from 'react';
 
-export type radioOptions = { text: string; value: string };
-type gapType = 'small' | 'large';
-interface RadioProps {
-  defaultValue: string;
-  options: radioOptions[];
-  onChange: (selectedValue: string) => void;
-  gap: gapType;
+type GapType = 'small' | 'large';
+
+interface RadioOptions {
+  text: string;
+  value: string;
+  checked: boolean;
 }
-const Radio = ({ defaultValue, options, onChange, gap }: RadioProps) => {
-  const [selectedValue, setSelectedValue] = useState(defaultValue);
-  const handleOptionChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSelectedValue(event.target.value);
-    onChange(event.target.value);
-  };
+interface Props {
+  options: RadioOptions[];
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  gap?: GapType;
+}
 
+const RadioContainer = ({ options, onChange, gap = 'small' }: Props) => {
   return (
-    <RadioWrapper>
+    <Wrapper>
       {options.map((option) => (
-        <RadioInner key={option.value}>
+        <RadioWrapper key={option.value}>
           <RadioInput
             type="radio"
             id={option.value}
-            name="radioOptions"
-            value={option.value}
-            checked={selectedValue === option.value}
-            onChange={handleOptionChange}
+            name={option.value}
+            // value={option.value}
+            checked={option.checked}
+            onChange={onChange}
           />
-          {selectedValue === option.value ? (
+          {option.checked ? (
             <CheckedLabel htmlFor={option.value} gap={gap}>
               {option.text}
             </CheckedLabel>
@@ -37,20 +36,20 @@ const Radio = ({ defaultValue, options, onChange, gap }: RadioProps) => {
               {option.text}
             </UnCheckedLabel>
           )}
-        </RadioInner>
+        </RadioWrapper>
       ))}
-    </RadioWrapper>
+    </Wrapper>
   );
 };
 
-export default Radio;
+export default RadioContainer;
 
-const RadioWrapper = styled.div`
+const Wrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
 `;
 
-const RadioInner = styled.div`
+const RadioWrapper = styled.div`
   display: flex;
   align-items: center;
 `;
@@ -59,7 +58,7 @@ const RadioInput = styled.input`
   display: none;
 `;
 
-const RadioLabel = styled.label<{ gap: gapType }>`
+const RadioLabel = styled.label<{ gap: GapType }>`
   position: relative;
   padding-left: 28px;
   margin-right: ${({ gap }) => (gap === 'large' ? '30px' : '18px')};

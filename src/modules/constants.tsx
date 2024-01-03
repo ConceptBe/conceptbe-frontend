@@ -67,9 +67,9 @@ const filterSubOptions = [
 
 // 필터 협업방식
 const filterRadio = [
-  { text: '상관없음', value: 'all' },
-  { text: '온라인', value: 'online' },
-  { text: '오프라인', value: 'offline' },
+  { text: '상관없음', value: 'all', checked: false },
+  { text: '온라인', value: 'online', checked: false },
+  { text: '오프라인', value: 'offline', checked: false },
 ];
 
 // 프로필 설정

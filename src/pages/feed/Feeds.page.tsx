@@ -5,8 +5,10 @@ import { ReactComponent as Filter } from '../../assets/svg/filter.svg';
 import { ReactComponent as Logo } from '../../assets/svg/main_logo.svg';
 import { ReactComponent as Write } from '../../assets/svg/writeicon40.svg';
 import useCheckbox from '../../components/@common/@hooks/useCheckbox';
+import useRadio from '../../components/@common/@hooks/useRadio';
 import Button from '../../components/@common/Button/Button';
-import CheckboxContainer, { checkboxOptions } from '../../components/@common/CheckboxContainer/CheckboxContainer';
+import CheckboxContainer from '../../components/@common/CheckboxContainer/CheckboxContainer';
+import RadioContainer from '../../components/@common/RadioContainer/RadioContainer';
 import Spacer from '../../components/@common/Spacer/Spacer';
 import Text from '../../components/@common/Text/Text';
 import BottomSheet from '../../components/BottomSheet/BottomSheet';
@@ -15,7 +17,6 @@ import IdeaCard from '../../components/Card/IdeaCard';
 import PopCard from '../../components/Card/PopCard';
 import { Header } from '../../components/Header/Header';
 import Dropdown from '../../components/Inputs/Dropdown/Dropdown';
-import Radio, { radioOptions } from '../../components/Inputs/Radio';
 import Padding from '../../components/Padding';
 import UnStyleButton from '../../components/UnStyleButton';
 import { filterOptions, filterSubOptions, filterRadio } from '../../modules/constants';
@@ -45,14 +46,9 @@ const Feeds = () => {
     field: filterOptions,
     goal: filterSubOptions,
   });
-  // 필터 체크박스
-
-  // 필터 라디오
-  const [radioOptions, setRadioOptions] = useState<radioOptions[] | []>([...filterRadio]);
-  const [selectedRadio, setSelectedRadio] = useState<string>('all');
-  const handleOptionChange = (value: string) => {
-    setSelectedRadio(value);
-  };
+  const { radios, onChangeRadio } = useRadio({
+    collaboration: filterRadio,
+  });
 
   const handleDropdownClick = (value: string) => {
     console.log(value);
@@ -147,7 +143,11 @@ const Feeds = () => {
                 협업 방식
               </Text>
               <Spacer size={12} />
-              <Radio defaultValue="all" options={radioOptions} onChange={handleOptionChange} gap={'large'} />
+              <RadioContainer
+                options={radios.collaboration}
+                onChange={(e) => onChangeRadio(e, 'collaboration')}
+                gap="large"
+              />
             </FilterWrapper>
 
             <FilterWrapper>

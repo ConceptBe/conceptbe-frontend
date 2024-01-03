@@ -9,13 +9,14 @@ import { ReactComponent as Back } from '../assets/svg/back_24_B.svg';
 import { ReactComponent as Check } from '../assets/svg/check_24.svg';
 import { ReactComponent as Xmark } from '../assets/svg/x.svg';
 import useCheckbox from '../components/@common/@hooks/useCheckbox';
+import useRadio from '../components/@common/@hooks/useRadio';
 import CheckboxContainer from '../components/@common/CheckboxContainer/CheckboxContainer';
 import Divider from '../components/@common/Divider/Divider';
+import RadioContainer from '../components/@common/RadioContainer/RadioContainer';
 import Spacer from '../components/@common/Spacer/Spacer';
 import Text from '../components/@common/Text/Text';
 import BottomSheet from '../components/BottomSheet/BottomSheet';
 import Dropdown from '../components/Inputs/Dropdown/Dropdown';
-import Radio, { radioOptions } from '../components/Inputs/Radio';
 import Tag from '../components/Tag';
 import {
   filterOptions,
@@ -32,12 +33,14 @@ const Write = () => {
   const [bodyCount, setBodyCount] = useState(0);
   const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
   const [getArea, setArea] = useState('');
-  const [getCollaboration, setCollaboration] = useState<string>('all');
   const [get1Depth, set1Depth] = useState('product');
   const [get2Depth, set2Depth] = useState([]);
   const { checkboxes, onChangeCheckBox } = useCheckbox({
     field: filterOptions,
     goal: filterSubOptions,
+  });
+  const { radios, onChangeRadio } = useRadio({
+    collaboration: filterRadio,
   });
 
   const handleIndexChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -165,7 +168,11 @@ const Write = () => {
           </Text>
 
           <Spacer size={20} />
-          <Radio defaultValue="all" options={filterRadio} onChange={(e) => setCollaboration(e)} gap={'large'} />
+          <RadioContainer
+            options={radios.collaboration}
+            onChange={(e) => onChangeRadio(e, 'collaboration')}
+            gap="large"
+          />
         </BottomBox>
         <BottomBox>
           <Text font="suit15m" color="b9">
