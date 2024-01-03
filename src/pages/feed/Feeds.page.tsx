@@ -42,11 +42,11 @@ const dropdownItems = [
 
 const Feeds = () => {
   const [isFilter, setIsFilter] = useState(false);
-  const { checkboxes, onChangeCheckBox } = useCheckbox({
+  const { checkboxValue, onChangeCheckBox } = useCheckbox({
     field: filterOptions,
     goal: filterSubOptions,
   });
-  const { radios, onChangeRadio } = useRadio({
+  const { radioValue, onChangeRadio } = useRadio({
     collaboration: filterRadio,
   });
 
@@ -127,7 +127,7 @@ const Feeds = () => {
                 분야
               </Text>
               <Spacer size={12} />
-              <CheckboxContainer options={checkboxes.field} onChange={(e) => onChangeCheckBox(e, 'field')} />
+              <CheckboxContainer options={checkboxValue.field} onChange={(e) => onChangeCheckBox(e, 'field')} />
             </FilterWrapper>
 
             <FilterWrapper>
@@ -135,7 +135,7 @@ const Feeds = () => {
                 목적
               </Text>
               <Spacer size={12} />
-              <CheckboxContainer options={checkboxes.goal} onChange={(e) => onChangeCheckBox(e, 'goal')} />
+              <CheckboxContainer options={checkboxValue.goal} onChange={(e) => onChangeCheckBox(e, 'goal')} />
             </FilterWrapper>
 
             <FilterWrapper>
@@ -144,7 +144,7 @@ const Feeds = () => {
               </Text>
               <Spacer size={12} />
               <RadioContainer
-                options={radios.collaboration}
+                options={radioValue.collaboration}
                 onChange={(e) => onChangeRadio(e, 'collaboration')}
                 gap="large"
               />

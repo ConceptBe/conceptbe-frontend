@@ -30,7 +30,7 @@ const SignUp = () => {
     a: '',
     b: '',
   });
-  const { radios, onChangeRadio } = useRadio({
+  const { radioValue, onChangeRadio } = useRadio({
     a: [
       { text: '상관없음', value: 'all', checked: false },
       { text: '온라인', value: 'online', checked: false },
@@ -49,7 +49,7 @@ const SignUp = () => {
   }, []);
 
   //체크박스
-  const { checkboxes, onChangeCheckBox } = useCheckbox({
+  const { checkboxValue, onChangeCheckBox } = useCheckbox({
     field: filterOptions,
   });
 
@@ -133,13 +133,13 @@ const SignUp = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
       <div>
-        <RadioContainer options={radios.a} onChange={(e) => onChangeRadio(e, 'a')} gap="large" />
-        <p>선택한 옵션: {radios.a[0].text}</p>
+        <RadioContainer options={radioValue.a} onChange={(e) => onChangeRadio(e, 'a')} gap="large" />
+        <p>선택한 옵션: {radioValue.a[0].text}</p>
       </div>
 
       <div>
-        <CheckboxContainer options={checkboxes.field} onChange={(e) => onChangeCheckBox(e, 'field')} />
-        <p>선택한 옵션!: {checkboxes.field.map(({ text, checked }) => checked && text + ' ')}</p>
+        <CheckboxContainer options={checkboxValue.field} onChange={(e) => onChangeCheckBox(e, 'field')} />
+        <p>선택한 옵션!: {checkboxValue.field.map(({ text, checked }) => checked && text + ' ')}</p>
       </div>
 
       <div>

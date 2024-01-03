@@ -35,11 +35,11 @@ const Write = () => {
   const [getArea, setArea] = useState('');
   const [get1Depth, set1Depth] = useState('product');
   const [get2Depth, set2Depth] = useState([]);
-  const { checkboxes, onChangeCheckBox } = useCheckbox({
+  const { checkboxValue, onChangeCheckBox } = useCheckbox({
     field: filterOptions,
     goal: filterSubOptions,
   });
-  const { radios, onChangeRadio } = useRadio({
+  const { radioValue, onChangeRadio } = useRadio({
     collaboration: filterRadio,
   });
 
@@ -152,7 +152,7 @@ const Write = () => {
           </Text>
 
           <Spacer size={20} />
-          <CheckboxContainer options={checkboxes.field} onChange={(e) => onChangeCheckBox(e, 'field')} />
+          <CheckboxContainer options={checkboxValue.field} onChange={(e) => onChangeCheckBox(e, 'field')} />
         </BottomBox>
         <BottomBox>
           <Text font="suit15m" color="b9" required>
@@ -160,7 +160,7 @@ const Write = () => {
           </Text>
 
           <Spacer size={20} />
-          <CheckboxContainer options={checkboxes.goal} onChange={(e) => onChangeCheckBox(e, 'goal')} />
+          <CheckboxContainer options={checkboxValue.goal} onChange={(e) => onChangeCheckBox(e, 'goal')} />
         </BottomBox>
         <BottomBox>
           <Text font="suit15m" color="b9" required>
@@ -169,7 +169,7 @@ const Write = () => {
 
           <Spacer size={20} />
           <RadioContainer
-            options={radios.collaboration}
+            options={radioValue.collaboration}
             onChange={(e) => onChangeRadio(e, 'collaboration')}
             gap="large"
           />

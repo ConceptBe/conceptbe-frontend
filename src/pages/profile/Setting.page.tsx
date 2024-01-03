@@ -57,7 +57,7 @@ const Setting = () => {
     company: '',
     intro: '',
   });
-  const { checkboxes, onChangeCheckBox } = useCheckbox({
+  const { checkboxValue, onChangeCheckBox } = useCheckbox({
     goal: filterSubOptions,
   });
 
@@ -174,7 +174,7 @@ const Setting = () => {
               목적 (최대 3개)
             </Text>
             <CheckboxContainer
-              options={checkboxes.goal}
+              options={checkboxValue.goal}
               onChange={(e) => onChangeCheckBox(e, 'goal', { checkboxKey: 'goal', maxValue: 3 })}
             />
           </SettingWrapper>

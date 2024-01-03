@@ -7,12 +7,12 @@ interface RadioItem {
 }
 
 const useRadio = <T extends Record<string, RadioItem[]>>(initialValue: T) => {
-  const [radios, setRadios] = useState<T>(initialValue);
+  const [radioValue, setRadioValue] = useState<T>(initialValue);
 
   const onChangeRadio = (e: ChangeEvent<HTMLInputElement>, radioKey: keyof T) => {
     const { name } = e.target;
 
-    setRadios((prev) => ({
+    setRadioValue((prev) => ({
       ...prev,
       [radioKey]: prev[radioKey].map((radio) => ({
         ...radio,
@@ -22,7 +22,7 @@ const useRadio = <T extends Record<string, RadioItem[]>>(initialValue: T) => {
   };
 
   return {
-    radios,
+    radioValue,
     onChangeRadio,
   };
 };

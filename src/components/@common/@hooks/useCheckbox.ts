@@ -12,12 +12,12 @@ interface Limit<T> {
 }
 
 const useCheckbox = <T extends Record<string, CheckboxItem[]>>(initialValue: T) => {
-  const [checkboxes, setCheckboxes] = useState<T>(initialValue);
+  const [checkboxValue, setCheckboxValue] = useState<T>(initialValue);
 
   const onChangeCheckBox = (e: ChangeEvent<HTMLInputElement>, checkBoxKey: keyof T, limit?: Limit<T>) => {
     const { name, checked } = e.target;
 
-    setCheckboxes((prev) => {
+    setCheckboxValue((prev) => {
       const currentCheckedCount = prev[checkBoxKey].filter((checkbox) => checkbox.checked).length;
 
       if (limit && checked && currentCheckedCount === limit.maxValue) {
@@ -34,7 +34,7 @@ const useCheckbox = <T extends Record<string, CheckboxItem[]>>(initialValue: T) 
   };
 
   return {
-    checkboxes,
+    checkboxValue,
     onChangeCheckBox,
   };
 };
