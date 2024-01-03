@@ -17,12 +17,11 @@ import {
   DotWrapper,
 } from './Setting.style';
 import { ReactComponent as Back } from '../../assets/svg/back_24_B.svg';
-import { ReactComponent as Dot } from '../../assets/svg/dot.svg';
 import { ReactComponent as Write } from '../../assets/svg/image_write.svg';
 import useForm from '../../components/@common/@hooks/useForm';
 import Button from '../../components/@common/Button/Button';
 import InputContainer from '../../components/@common/InputContainer/InputContainer';
-import Spacer from '../../components/@common/Spacer/Spacer';
+import Spacer from '../../components/@common/Spacer/Spacer';
 import Text from '../../components/@common/Text/Text';
 import Tag from '../../components/CustomTag/Tag';
 import { Header } from '../../components/Header/Header';

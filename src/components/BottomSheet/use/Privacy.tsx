@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 import Button from '../../@common/Button/Button';
-import Spacer from '../../@common/Spacer/Spacer';
+import Spacer from '../../@common/Spacer/Spacer';
 import Text from '../../@common/Text/Text';
 
 interface props {

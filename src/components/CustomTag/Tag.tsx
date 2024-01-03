@@ -2,7 +2,7 @@ import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { ReactComponent as Cross } from '../../assets/svg/x.svg';
-import Spacer from '../@common/Spacer/Spacer';
+import Spacer from '../@common/Spacer/Spacer';
 import Text from '../@common/Text/Text';
 import UnStyleButton from '../UnStyleButton';
 

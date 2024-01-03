@@ -12,7 +12,7 @@ import { ReactComponent as UnScrap } from '../../assets/svg/FeedDetail/unScrap.s
 import { ReactComponent as Logo } from '../../assets/svg/main_logo.svg';
 import { ReactComponent as X } from '../../assets/svg/x.svg';
 import Divider from '../../components/@common/Divider/Divider';
-import Spacer from '../../components/@common/Spacer/Spacer';
+import Spacer from '../../components/@common/Spacer/Spacer';
 import Text from '../../components/@common/Text/Text';
 import TextDivider from '../../components/@common/TextDivider/TextDivider';
 import { Header } from '../../components/Header/Header';
