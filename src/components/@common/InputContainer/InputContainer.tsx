@@ -9,6 +9,7 @@ interface InputProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, config: Config) => void;
   onValidate?: () => Validate[];
+  type?: 'input' | 'textarea';
   isSuccess?: boolean;
   successMessage?: string;
   errorMessage?: string;
@@ -24,6 +25,7 @@ const InputContainer = ({
   value,
   onChange,
   onValidate,
+  type = 'input',
   isSuccess = true,
   successMessage = '',
   errorMessage = '',
@@ -51,21 +53,38 @@ const InputContainer = ({
         )}
       </LabelWrapper>
 
-      <Input
-        name={name}
-        value={value}
-        onChange={(e) => {
-          onChange(e, {
-            isRequired: isLabelRequired,
-            maxLength,
-            onValidate,
-          });
-        }}
-        placeholder={placeholder}
-        autoFocus={autoFocus}
-        maxLength={maxLength}
-        errorMessage={errorMessage}
-      />
+      {type === 'input' ? (
+        <Input
+          name={name}
+          value={value}
+          onChange={(e) => {
+            onChange(e, {
+              isRequired: isLabelRequired,
+              maxLength,
+              onValidate,
+            });
+          }}
+          placeholder={placeholder}
+          autoFocus={autoFocus}
+          maxLength={maxLength}
+          errorMessage={errorMessage}
+        />
+      ) : (
+        <TextArea
+          name={name}
+          value={value}
+          onChange={(e) => {
+            onChange(e, {
+              isRequired: isLabelRequired,
+              maxLength,
+              onValidate,
+            });
+          }}
+          placeholder={placeholder}
+          autoFocus={autoFocus}
+          maxLength={maxLength}
+        />
+      )}
 
       <MessageWrapper>
         {!errorMessage && isSuccess && value ? (
@@ -130,23 +149,23 @@ const Input = styled.input<{ errorMessage: string }>`
   }
 `;
 
-// const TextArea = styled.textarea`
-//   box-sizing: border-box;
-//   width: 100%;
-//   height: 100px;
-//   border-radius: 6px;
-//   padding: 11px 16px;
-//   font-size: 14px;
-//   font-weight: 400;
-//   border: 1px solid ${({ theme }) => theme.color.l2};
-//   outline: none;
-//   color: ${({ theme }) => theme.color.b4};
-//   background: ${({ theme }) => theme.color.w1};
+const TextArea = styled.textarea`
+  box-sizing: border-box;
+  width: 100%;
+  height: 100px;
+  border-radius: 6px;
+  padding: 11px 16px;
+  font-size: 14px;
+  font-weight: 400;
+  border: 1px solid ${({ theme }) => theme.color.l2};
+  outline: none;
+  color: ${({ theme }) => theme.color.b4};
+  background: ${({ theme }) => theme.color.w1};
 
-//   &:focus {
-//     border-color: ${({ theme }) => theme.color.c1};
-//   }
-// `;
+  &:focus {
+    border-color: ${({ theme }) => theme.color.c1};
+  }
+`;
 
 const MessageWrapper = styled.div`
   margin-top: 12px;
