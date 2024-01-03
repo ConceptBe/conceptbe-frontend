@@ -1,4 +1,4 @@
-export interface OnChangeConfig {
+export interface Config {
   isRequired?: boolean;
   maxLength?: number;
   onValidate?: () => Validate[];

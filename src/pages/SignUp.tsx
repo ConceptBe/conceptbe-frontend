@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { ReactComponent as Check } from '../assets/svg/check_24.svg';
 import { ReactComponent as Close } from '../assets/svg/close_24.svg';
 import useCheckbox from '../components/@common/@hooks/useCheckbox.ts';
-import useForm from '../components/@common/@hooks/useForm.ts';
+import useInput from '../components/@common/@hooks/useInput.ts';
 import Button from '../components/@common/Button/Button.tsx';
 import CheckboxContainer from '../components/@common/CheckboxContainer/CheckboxContainer.tsx';
 import InputContainer from '../components/@common/InputContainer/InputContainer.tsx';
@@ -25,7 +25,7 @@ interface FormValueType {
 
 const SignUp = () => {
   const theme = useTheme();
-  const { formValue, errorValue, onChange } = useForm<FormValueType>({
+  const { inputValue, inputErrorValue, onChangeInput } = useInput<FormValueType>({
     a: '',
     b: '',
   });
@@ -152,24 +152,24 @@ const SignUp = () => {
         <InputContainer
           label="임시 A"
           name="a"
-          value={formValue.a}
-          onChange={onChange}
+          value={inputValue.a}
+          onChange={onChangeInput}
           onValidate={validateInput}
           maxLength={10}
           placeholder="닉네임을 입력해주세요"
-          errorMessage={errorValue.a}
+          errorMessage={inputErrorValue.a}
           successMessage="사용 가능한 닉네임입니다."
           isLabelRequired
         />
         <InputContainer
           label="임시 B"
           name="b"
-          value={formValue.b}
-          onChange={onChange}
+          value={inputValue.b}
+          onChange={onChangeInput}
           onValidate={validateInput}
           maxLength={20}
           placeholder="닉네임을 입력해주세요"
-          errorMessage={errorValue.b}
+          errorMessage={inputErrorValue.b}
           successMessage="사용 가능한 닉네임입니다."
           isLabelRequired
         />

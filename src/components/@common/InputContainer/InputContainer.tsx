@@ -1,13 +1,13 @@
 import styled from '@emotion/styled';
 
 import { ReactComponent as SVGRequired } from '../../../assets/svg/text_required.svg';
-import { OnChangeConfig, Validate } from '../@types/useForm';
+import { Config, Validate } from '../@types/useInput';
 
 interface InputProps {
   label: string;
   name: string;
   value: string;
-  onChange: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, config: OnChangeConfig) => void;
+  onChange: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, config: Config) => void;
   onValidate?: () => Validate[];
   isSuccess?: boolean;
   successMessage?: string;

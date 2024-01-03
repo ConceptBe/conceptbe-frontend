@@ -19,7 +19,7 @@ import {
 import { ReactComponent as Back } from '../../assets/svg/back_24_B.svg';
 import { ReactComponent as Write } from '../../assets/svg/image_write.svg';
 import useCheckbox from '../../components/@common/@hooks/useCheckbox';
-import useForm from '../../components/@common/@hooks/useForm';
+import useInput from '../../components/@common/@hooks/useInput';
 import Button from '../../components/@common/Button/Button';
 import CheckboxContainer from '../../components/@common/CheckboxContainer/CheckboxContainer';
 import InputContainer from '../../components/@common/InputContainer/InputContainer';
@@ -52,7 +52,7 @@ const Setting = () => {
   const [twoDepth, setTwoDepth] = useState(''); // 스킬(상세분류)
   const [threeDepth, setThreeDepth] = useState(''); // 스킬(숙련도)
   const [resion, setResion] = useState(''); // 지역
-  const { formValue, errorValue, onChange } = useForm<FormValueType>({
+  const { inputValue, inputErrorValue, onChangeInput } = useInput<FormValueType>({
     nickName: '',
     company: '',
     intro: '',
@@ -123,12 +123,12 @@ const Setting = () => {
           <InputContainer
             label="닉네임"
             name="nickName"
-            value={formValue.nickName}
-            onChange={onChange}
+            value={inputValue.nickName}
+            onChange={onChangeInput}
             onValidate={validateInput}
             maxLength={10}
             placeholder="닉네임을 입력해주세요"
-            errorMessage={errorValue.nickName}
+            errorMessage={inputErrorValue.nickName}
             successMessage="사용 가능한 닉네임입니다."
             isLabelRequired
           />
@@ -192,11 +192,11 @@ const Setting = () => {
           <InputContainer
             label="직장명"
             name="company"
-            value={formValue.company}
-            onChange={onChange}
+            value={inputValue.company}
+            onChange={onChangeInput}
             onValidate={validateInput}
             placeholder="직장명을 입력해주세요"
-            errorMessage={errorValue.company}
+            errorMessage={inputErrorValue.company}
           />
 
           <Spacer size={35} />
@@ -204,12 +204,12 @@ const Setting = () => {
           <InputContainer
             label="자기소개"
             name="intro"
-            value={formValue.intro}
-            onChange={onChange}
+            value={inputValue.intro}
+            onChange={onChangeInput}
             onValidate={validateInput}
             maxLength={150}
             placeholder="닉네임을 입력해주세요"
-            errorMessage={errorValue.intro}
+            errorMessage={inputErrorValue.intro}
           />
         </MainBox>
         <BottomWrapper>
