@@ -21,7 +21,7 @@ const CheckboxContainer = ({ options, onChange }: Props) => {
             id={option.value}
             name={option.value}
             type="checkbox"
-            defaultChecked={option.checked}
+            checked={option.checked}
             onChange={onChange}
           />
           <CheckboxLabel htmlFor={option.value} checked={option.checked}>

@@ -21,12 +21,7 @@ const useCheckbox = <T extends Record<string, CheckboxItem[]>>(initialValue: T) 
       const currentCheckedCount = prev[checkBoxKey].filter((checkbox) => checkbox.checked).length;
 
       if (limit && checked && currentCheckedCount === limit.maxValue) {
-        return {
-          ...prev,
-          [checkBoxKey]: prev[checkBoxKey].map((checkbox) =>
-            checkbox.value === name ? { ...checkbox, checked: false } : checkbox,
-          ),
-        };
+        return prev;
       }
 
       return {
