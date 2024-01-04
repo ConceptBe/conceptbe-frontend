@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { ReactComponent as SVGLogo } from '../../assets/svg/main_logo.svg';
@@ -7,23 +6,16 @@ import { ReactComponent as SVGSetting } from '../../assets/svg/setting.svg';
 import Badge from '../../components/@common/Badge/Badge';
 import Header from '../../components/@common/Header/Header';
 import Spacer from '../../components/@common/Spacer/Spacer';
+import TabLayout from '../../components/@common/TabLayout/TabLayout';
 import Text from '../../components/@common/Text/Text';
 import IdeaCard from '../../components/Card/IdeaCard';
 import Padding from '../../components/Padding';
-import Tab from '../../components/Tab/Tab';
-import TabPannel from '../../components/Tab/TabPannel';
-import Tabs from '../../components/Tab/Tabs';
 
 const skillTags = ['퍼포먼스 마케팅, 상', '광고/크리에이티브, 중', '콘텐츠 마케팅, 하'];
 const badges = ['사이드 프로젝트', '크라우드 펀딩', '공모전'];
 
 const Profile = () => {
   const navigate = useNavigate();
-  const [activeTab, setAtiveTab] = useState(0);
-
-  const handleTab = (event: any, newValue: any) => {
-    setAtiveTab(newValue);
-  };
 
   return (
     <ProfileContainer>
@@ -95,24 +87,22 @@ const Profile = () => {
           </div>
         </ProfileBox>
         {/* tab */}
-        <Tabs value={activeTab} onChange={handleTab}>
-          <Tab>아이디어</Tab>
-          <Tab>북마크</Tab>
-        </Tabs>
-        <TabPannel value={activeTab} active={0}>
-          <TabPannelBox>
-            {Array.from({ length: 20 }, (_, idx) => (
-              <IdeaCard mine key={idx} badges={badges} />
-            ))}
-          </TabPannelBox>
-        </TabPannel>
-        <TabPannel value={activeTab} active={1}>
-          <TabPannelBox>
-            {Array.from({ length: 20 }, (_, idx) => (
-              <IdeaCard key={idx} badges={badges} />
-            ))}
-          </TabPannelBox>
-        </TabPannel>
+        <TabLayout>
+          <TabLayout.Tab label="아이디어">
+            <TabPanelBox>
+              {Array.from({ length: 20 }, (_, idx) => (
+                <IdeaCard mine key={idx} badges={badges} />
+              ))}
+            </TabPanelBox>
+          </TabLayout.Tab>
+          <TabLayout.Tab label="북마크">
+            <TabPanelBox>
+              {Array.from({ length: 20 }, (_, idx) => (
+                <IdeaCard key={idx} badges={badges} />
+              ))}
+            </TabPanelBox>
+          </TabLayout.Tab>
+        </TabLayout>
       </ProfileWrapper>
     </ProfileContainer>
   );
@@ -175,7 +165,7 @@ const TagWrapper = styled.div`
   gap: 6px;
 `;
 
-const TabPannelBox = styled.div`
+const TabPanelBox = styled.div`
   padding: 30px 20px 60px 20px;
   background-color: ${({ theme }) => theme.color.bg1};
   display: flex;
