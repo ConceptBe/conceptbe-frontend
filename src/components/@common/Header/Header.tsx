@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { ReactNode } from 'react';
 
-import { Item } from './Item';
+import HeaderItem from './HeaderItem';
 import Spacer from '../Spacer/Spacer';
 
 interface HeaderProps {
@@ -20,7 +20,7 @@ const Header = ({ children, main, spacerPosition }: HeaderProps) => {
   );
 };
 
-Header.Item = Item;
+Header.Item = HeaderItem;
 
 export default Header;
 

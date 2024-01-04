@@ -5,7 +5,9 @@ type Props<T extends ElementType> = {
   as?: T;
 } & ComponentPropsWithoutRef<T>;
 
-export const Item = <T extends ElementType>({ children, as, ...props }: Props<T>) => {
+const HeaderItem = <T extends ElementType>({ children, as, ...props }: Props<T>) => {
   const Tag = as || 'div';
   return <Tag {...props}>{children}</Tag>;
 };
+
+export default HeaderItem;
