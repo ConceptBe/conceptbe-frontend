@@ -14,7 +14,6 @@ import {
   MainBox,
   MainWrapper,
   BottomWrapper,
-  DotWrapper,
 } from './Setting.style';
 import { ReactComponent as Back } from '../../assets/svg/back_24_B.svg';
 import { ReactComponent as Write } from '../../assets/svg/image_write.svg';
@@ -25,10 +24,9 @@ import CheckboxContainer from '../../components/@common/CheckboxContainer/Checkb
 import Header from '../../components/@common/Header/Header';
 import InputContainer from '../../components/@common/InputContainer/InputContainer';
 import Spacer from '../../components/@common/Spacer/Spacer';
+import Tag from '../../components/@common/Tag/Tag';
 import Text from '../../components/@common/Text/Text';
-import Tag from '../../components/CustomTag/Tag';
 import Dropdown from '../../components/Inputs/Dropdown/Dropdown';
-import UnStyleButton from '../../components/UnStyleButton';
 import { skillOneDepth, skillTwoDepth, regionOptions, filterSubOptions } from '../../modules/constants';
 
 const dropdownItems = [
@@ -71,7 +69,7 @@ const Setting = () => {
     }
   };
 
-  const handleDeleteSkill = (value) => {
+  const handleDeleteSkill = (value: string) => {
     setSkills(skills.filter((skill) => skill !== value));
   };
 
@@ -96,9 +94,7 @@ const Setting = () => {
     <Container>
       <Header main spacerPosition="end">
         <Header.Item>
-          <UnStyleButton style={{ color: theme.color.w1 }} onClick={() => navigate(-1)}>
-            <Back />
-          </UnStyleButton>
+          <Back style={{ color: theme.color.w1 }} onClick={() => navigate(-1)} cursor="pointer" />
         </Header.Item>
         <Header.Item>
           <Text font="suit16sb" color="w1">
