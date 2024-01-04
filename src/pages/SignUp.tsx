@@ -8,7 +8,7 @@ import useInput from '../components/@common/@hooks/useInput.ts';
 import useRadio from '../components/@common/@hooks/useRadio.ts';
 import Button from '../components/@common/Button/Button.tsx';
 import CheckboxContainer from '../components/@common/CheckboxContainer/CheckboxContainer.tsx';
-import InputContainer from '../components/@common/InputContainer/InputContainer.tsx';
+import Field from '../components/@common/Field/Field.tsx';
 import RadioContainer from '../components/@common/RadioContainer/RadioContainer.tsx';
 import Text from '../components/@common/Text/Text.tsx';
 import BottomSheet from '../components/BottomSheet/BottomSheet.tsx';
@@ -148,30 +148,33 @@ const SignUp = () => {
       </div>
 
       <div>
-        <InputContainer
-          label="임시 A"
-          name="a"
-          value={inputValue.a}
-          onChange={onChangeInput}
-          onValidate={validateInput}
-          maxLength={10}
-          placeholder="닉네임을 입력해주세요"
-          errorMessage={inputErrorValue.a}
-          successMessage="사용 가능한 닉네임입니다."
-          isLabelRequired
-        />
-        <InputContainer
-          label="임시 B"
-          name="b"
-          value={inputValue.b}
-          onChange={onChangeInput}
-          onValidate={validateInput}
-          maxLength={20}
-          placeholder="닉네임을 입력해주세요"
-          errorMessage={inputErrorValue.b}
-          successMessage="사용 가능한 닉네임입니다."
-          isLabelRequired
-        />
+        <Field label="임시 A" value={inputValue.a} maxLength={10} isRequired>
+          <Field.Input
+            name="a"
+            value={inputValue.a}
+            onChange={onChangeInput}
+            onValidate={validateInput}
+            maxLength={10}
+            placeholder="닉네임을 입력해주세요"
+            errorMessage={inputErrorValue.a}
+            successMessage="사용 가능한 닉네임입니다."
+            isRequired
+          />
+        </Field>
+
+        <Field label="임시 B" value={inputValue.b} maxLength={10} isRequired>
+          <Field.Input
+            name="b"
+            value={inputValue.b}
+            onChange={onChangeInput}
+            onValidate={validateInput}
+            maxLength={20}
+            placeholder="닉네임을 입력해주세요"
+            errorMessage={inputErrorValue.b}
+            successMessage="사용 가능한 닉네임입니다."
+            isRequired
+          />
+        </Field>
       </div>
 
       <div style={{ display: 'flex', gap: '10px' }}>

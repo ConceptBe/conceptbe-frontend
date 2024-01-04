@@ -21,8 +21,8 @@ import useCheckbox from '../../components/@common/@hooks/useCheckbox';
 import useInput from '../../components/@common/@hooks/useInput';
 import Button from '../../components/@common/Button/Button';
 import CheckboxContainer from '../../components/@common/CheckboxContainer/CheckboxContainer';
+import Field from '../../components/@common/Field/Field';
 import Header from '../../components/@common/Header/Header';
-import InputContainer from '../../components/@common/InputContainer/InputContainer';
 import Spacer from '../../components/@common/Spacer/Spacer';
 import Tag from '../../components/@common/Tag/Tag';
 import Text from '../../components/@common/Text/Text';
@@ -83,7 +83,7 @@ const Setting = () => {
       {
         regexp: /[1234567890]/g,
         name: 'company',
-        errorMessage: '사용 불가한 닉네임입니다.',
+        errorMessage: '사용 불가한 직장명입니다.',
       },
     ];
   };
@@ -116,18 +116,19 @@ const Setting = () => {
             </ImageWrite>
           </ImageWrapper>
 
-          <InputContainer
-            label="닉네임"
-            name="nickName"
-            value={inputValue.nickName}
-            onChange={onChangeInput}
-            onValidate={validateInput}
-            maxLength={10}
-            placeholder="닉네임을 입력해주세요"
-            errorMessage={inputErrorValue.nickName}
-            successMessage="사용 가능한 닉네임입니다."
-            isLabelRequired
-          />
+          <Field label="닉네임" value={inputValue.nickName} maxLength={10} isRequired>
+            <Field.Input
+              name="nickName"
+              value={inputValue.nickName}
+              onChange={onChangeInput}
+              onValidate={validateInput}
+              maxLength={10}
+              placeholder="닉네임을 입력해주세요"
+              errorMessage={inputErrorValue.nickName}
+              successMessage="사용 가능한 닉네임입니다."
+              isRequired
+            />
+          </Field>
 
           <Spacer size={35} />
           <SettingWrapper>
@@ -186,29 +187,34 @@ const Setting = () => {
 
           <Spacer size={35} />
 
-          <InputContainer
-            label="직장명"
-            name="company"
-            value={inputValue.company}
-            onChange={onChangeInput}
-            onValidate={validateInput}
-            placeholder="직장명을 입력해주세요"
-            errorMessage={inputErrorValue.company}
-          />
+          <Field label="직장명" value={inputValue.company} maxLength={10} isRequired>
+            <Field.Input
+              name="company"
+              value={inputValue.company}
+              onChange={onChangeInput}
+              onValidate={validateInput}
+              maxLength={10}
+              placeholder="직장명을 입력해주세요"
+              errorMessage={inputErrorValue.company}
+              successMessage="사용 가능한 직장명입니다."
+              isRequired
+            />
+          </Field>
 
           <Spacer size={35} />
 
-          <InputContainer
-            label="자기소개"
-            name="intro"
-            value={inputValue.intro}
-            onChange={onChangeInput}
-            onValidate={validateInput}
-            maxLength={150}
-            placeholder="닉네임을 입력해주세요"
-            type="textarea"
-            errorMessage={inputErrorValue.intro}
-          />
+          <Field label="자기소개" value={inputValue.intro} maxLength={150} isRequired>
+            <Field.Textarea
+              name="intro"
+              value={inputValue.intro}
+              onChange={onChangeInput}
+              onValidate={validateInput}
+              maxLength={150}
+              placeholder="자기소개를 입력해 주세요. (최대 150자)"
+              errorMessage={inputErrorValue.intro}
+              isRequired
+            />
+          </Field>
         </MainBox>
         <BottomWrapper>
           <Button onClick={() => {}}>프로필 저장하기</Button>
