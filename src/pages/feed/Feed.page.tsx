@@ -1,19 +1,19 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
 
-import { ReactComponent as Back } from '../../assets/svg/back_24_W.svg';
-import { ReactComponent as Dots } from '../../assets/svg/FeedDetail/dots_vertical.svg';
-import { ReactComponent as Like } from '../../assets/svg/FeedDetail/like.svg';
-import { ReactComponent as Message } from '../../assets/svg/FeedDetail/message.svg';
-import { ReactComponent as Pencil } from '../../assets/svg/FeedDetail/pencil.svg';
-import { ReactComponent as ReCommnetLine } from '../../assets/svg/FeedDetail/ReCommnetLine.svg';
-import { ReactComponent as UnLike } from '../../assets/svg/FeedDetail/unLike.svg';
-import { ReactComponent as UnScrap } from '../../assets/svg/FeedDetail/unScrap.svg';
-import { ReactComponent as Logo } from '../../assets/svg/main_logo.svg';
-import { ReactComponent as X } from '../../assets/svg/x.svg';
+import { ReactComponent as SVGDots } from '../../assets/svg/FeedDetail/dots_vertical.svg';
+import { ReactComponent as SVGLike } from '../../assets/svg/FeedDetail/like.svg';
+import { ReactComponent as SVGMessage } from '../../assets/svg/FeedDetail/message.svg';
+import { ReactComponent as SVGPencil } from '../../assets/svg/FeedDetail/pencil.svg';
+import { ReactComponent as SVGReCommnetLine } from '../../assets/svg/FeedDetail/ReCommnetLine.svg';
+import { ReactComponent as SVGUnLike } from '../../assets/svg/FeedDetail/unLike.svg';
+import { ReactComponent as SVGUnScrap } from '../../assets/svg/FeedDetail/unScrap.svg';
+import { ReactComponent as SVGCancel } from '../../assets/svg/x.svg';
+import Back from '../../components/@common/Back/Back';
 import Badge from '../../components/@common/Badge/Badge';
 import Divider from '../../components/@common/Divider/Divider';
 import Header from '../../components/@common/Header/Header';
+import Logo from '../../components/@common/Logo/Logo';
 import Spacer from '../../components/@common/Spacer/Spacer';
 import Text from '../../components/@common/Text/Text';
 import TextDivider from '../../components/@common/TextDivider/TextDivider';
@@ -40,14 +40,14 @@ const FeedDetailPage = () => {
         <Back />
         <Logo />
         <DotsBox>
-          <Dots onClick={onClickDots} />
+          <SVGDots onClick={onClickDots} />
           {isClickDots && (
             <DropDownBox>
               <DropDownSelect>
                 <Text font="suit12r" color="b6">
                   수정하기
                 </Text>
-                <Pencil />
+                <SVGPencil />
               </DropDownSelect>
 
               <Divider color="bg1" height={0.1} />
@@ -56,7 +56,7 @@ const FeedDetailPage = () => {
                 <Text font="suit12r" color="b6">
                   삭제하기
                 </Text>
-                <X />
+                <SVGCancel />
               </DropDownSelect>
             </DropDownBox>
           )}
@@ -140,7 +140,7 @@ const FeedDetailPage = () => {
         <Divider color="l3" />
         <InfoBottomBox>
           <IndexBox>
-            <Message />
+            <SVGMessage />
             <Text font="suit12r" color="b9">
               댓글
             </Text>
@@ -149,7 +149,7 @@ const FeedDetailPage = () => {
             </Text>
           </IndexBox>
           <IndexBox>
-            <Like />
+            <SVGLike />
             <Text font="suit12r" color="b9">
               좋아요
             </Text>
@@ -158,7 +158,7 @@ const FeedDetailPage = () => {
             </Text>
           </IndexBox>
           <IndexBox>
-            <UnScrap />
+            <SVGUnScrap />
             <Text font="suit12r" color="b9">
               스크랩
             </Text>
@@ -190,7 +190,7 @@ const FeedDetailPage = () => {
           <Spacer size={10} />
           <CommnetsBottomBox>
             <IndexBox>
-              <Message />
+              <SVGMessage />
               <Text font="suit12r" color="b9">
                 댓글
               </Text>
@@ -200,7 +200,7 @@ const FeedDetailPage = () => {
             </IndexBox>
             <Spacer size={14} />
             <IndexBox>
-              <UnLike />
+              <SVGUnLike />
               <Text font="suit12r" color="b9">
                 좋아요
               </Text>
@@ -213,7 +213,7 @@ const FeedDetailPage = () => {
 
         <ReCommandBox>
           <div>
-            <ReCommnetLine />
+            <SVGReCommnetLine />
           </div>
           <CommentsBox>
             <ProfileComponent />
@@ -226,7 +226,7 @@ const FeedDetailPage = () => {
             <Spacer size={10} />
             <CommnetsBottomBox>
               <IndexBox>
-                <UnLike />
+                <SVGUnLike />
                 <Text font="suit12r" color="b9">
                   좋아요
                 </Text>

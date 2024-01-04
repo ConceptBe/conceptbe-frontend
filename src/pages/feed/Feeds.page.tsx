@@ -1,14 +1,14 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
 
-import { ReactComponent as Filter } from '../../assets/svg/filter.svg';
-import { ReactComponent as Logo } from '../../assets/svg/main_logo.svg';
-import { ReactComponent as Write } from '../../assets/svg/writeicon40.svg';
+import { ReactComponent as SVGFilter } from '../../assets/svg/filter.svg';
+import { ReactComponent as SVGWrite } from '../../assets/svg/writeicon40.svg';
 import useCheckbox from '../../components/@common/@hooks/useCheckbox';
 import useRadio from '../../components/@common/@hooks/useRadio';
 import Button from '../../components/@common/Button/Button';
 import CheckboxContainer from '../../components/@common/CheckboxContainer/CheckboxContainer';
 import Header from '../../components/@common/Header/Header';
+import Logo from '../../components/@common/Logo/Logo';
 import RadioContainer from '../../components/@common/RadioContainer/RadioContainer';
 import Spacer from '../../components/@common/Spacer/Spacer';
 import Text from '../../components/@common/Text/Text';
@@ -60,13 +60,13 @@ const Feeds = () => {
           <Logo />
         </Header.Item>
         <Header.Item>
-          <Filter onClick={() => setIsFilter(true)} cursor="pointer" />
+          <SVGFilter onClick={() => setIsFilter(true)} cursor="pointer" />
         </Header.Item>
       </Header>
 
       <Wrapper>
         <FeedFixBox>
-          <Write />
+          <SVGWrite />
 
           <Spacer size={27} />
           <FeedFixTextWrapper>

@@ -1,6 +1,5 @@
 import { useTheme } from '@emotion/react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import {
   Container,
@@ -15,10 +14,10 @@ import {
   MainWrapper,
   BottomWrapper,
 } from './Setting.style';
-import { ReactComponent as Back } from '../../assets/svg/back_24_B.svg';
-import { ReactComponent as Write } from '../../assets/svg/image_write.svg';
+import { ReactComponent as SVGWrite } from '../../assets/svg/image_write.svg';
 import useCheckbox from '../../components/@common/@hooks/useCheckbox';
 import useInput from '../../components/@common/@hooks/useInput';
+import Back from '../../components/@common/Back/Back';
 import Button from '../../components/@common/Button/Button';
 import CheckboxContainer from '../../components/@common/CheckboxContainer/CheckboxContainer';
 import Field from '../../components/@common/Field/Field';
@@ -44,7 +43,6 @@ interface FormValueType {
 
 const Setting = () => {
   const theme = useTheme();
-  const navigate = useNavigate();
   const [skills, setSkills] = useState<string[]>([]);
   const [oneDepth, setOneDepth] = useState(''); // 스킬(대분류)
   const [twoDepth, setTwoDepth] = useState(''); // 스킬(상세분류)
@@ -94,7 +92,7 @@ const Setting = () => {
     <Container>
       <Header main spacerPosition="end">
         <Header.Item>
-          <Back style={{ color: theme.color.w1 }} onClick={() => navigate(-1)} cursor="pointer" />
+          <Back customStyle={{ color: theme.color.w1 }} />
         </Header.Item>
         <Header.Item>
           <Text font="suit16sb" color="w1">
@@ -112,7 +110,7 @@ const Setting = () => {
               <Img src="https://image.toast.com/aaaaaqx/catchtable/shopinfo/sR1B6qa4fT537GjL6KO9bHg/r1b6qa4ft537gjl6ko9bhg_2371016411290157.jpg?detail750" />
             </ImageBox>
             <ImageWrite>
-              <Write />
+              <SVGWrite />
             </ImageWrite>
           </ImageWrapper>
 

@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 
-import { ReactComponent as Kakao } from '../assets/svg/login/kakao.svg';
-import { ReactComponent as Naver } from '../assets/svg/login/naver.svg';
-import { ReactComponent as Logo } from '../assets/svg/login_main.svg';
+import { ReactComponent as SVGKakao } from '../assets/svg/login/kakao.svg';
+import { ReactComponent as SVGNaver } from '../assets/svg/login/naver.svg';
+import { ReactComponent as SVGLogo } from '../assets/svg/login_main.svg';
 import Spacer from '../components/@common/Spacer/Spacer';
 import Text from '../components/@common/Text/Text';
 
@@ -15,11 +15,11 @@ const Login = () => {
 
   return (
     <Container>
-      <Logo />
+      <SVGLogo />
       <Spacer size={40} />
       <ButtonWrapper onClick={onClickOauthKakao}>
         <LogoBox color="#FAE100">
-          <Kakao />
+          <SVGKakao />
         </LogoBox>
         <TextWrapper>
           <Text font="suit15rb">카카오 로그인</Text>
@@ -29,7 +29,7 @@ const Login = () => {
       <Spacer size={10} />
       <ButtonWrapper>
         <LogoBox color="#03C75A">
-          <Naver />
+          <SVGNaver />
         </LogoBox>
         <TextWrapper>
           <Text font="suit15rb">네이버 로그인</Text>

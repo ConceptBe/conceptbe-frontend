@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
-import { ReactComponent as SVGLogo } from '../../assets/svg/main_logo.svg';
 import { ReactComponent as SVGSetting } from '../../assets/svg/setting.svg';
 import Badge from '../../components/@common/Badge/Badge';
 import Header from '../../components/@common/Header/Header';
+import Logo from '../../components/@common/Logo/Logo';
 import Spacer from '../../components/@common/Spacer/Spacer';
 import TabLayout from '../../components/@common/TabLayout/TabLayout';
 import Text from '../../components/@common/Text/Text';
@@ -21,7 +21,7 @@ const Profile = () => {
     <ProfileContainer>
       <Header main>
         <Header.Item>
-          <SVGLogo />
+          <Logo />
         </Header.Item>
         <Header.Item>
           <SVGSetting onClick={() => navigate(`/profile/1/more`)} cursor="pointer" />
