@@ -1,5 +1,5 @@
 import { useTheme } from '@emotion/react';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import {
   Container,
@@ -20,16 +20,16 @@ import useInput from '../../components/@common/@hooks/useInput';
 import Back from '../../components/@common/Back/Back';
 import Button from '../../components/@common/Button/Button';
 import CheckboxContainer from '../../components/@common/CheckboxContainer/CheckboxContainer';
+import Dropdown from '../../components/@common/Dropdown/Dropdown';
 import Field from '../../components/@common/Field/Field';
 import Header from '../../components/@common/Header/Header';
 import Spacer from '../../components/@common/Spacer/Spacer';
 import Tag from '../../components/@common/Tag/Tag';
 import Text from '../../components/@common/Text/Text';
-import Dropdown from '../../components/Inputs/Dropdown/Dropdown';
 import { skillOneDepth, skillTwoDepth, regionOptions, filterSubOptions } from '../../modules/constants';
 
 const dropdownItems = [
-  { text: '숙련도', value: '', defaultValue: true },
+  { text: '숙련도', value: '', placeValue: true },
   { text: '상', value: '상' },
   { text: '중', value: '중' },
   { text: '하', value: '하' },
@@ -47,7 +47,7 @@ const Setting = () => {
   const [oneDepth, setOneDepth] = useState(''); // 스킬(대분류)
   const [twoDepth, setTwoDepth] = useState(''); // 스킬(상세분류)
   const [threeDepth, setThreeDepth] = useState(''); // 스킬(숙련도)
-  const [resion, setResion] = useState(''); // 지역
+  const [, setRegion] = useState(''); // 지역
   const { inputValue, inputErrorValue, onChangeInput } = useInput<FormValueType>({
     nickName: '',
     company: '',
@@ -56,16 +56,18 @@ const Setting = () => {
   const { checkboxValue, onChangeCheckBox } = useCheckbox({
     goal: filterSubOptions,
   });
+  const validDropDown = skills.length === 3;
 
-  const handleDropdownClick = (value: string) => {
-    const joinValue = `${twoDepth}_${value}`;
+  const handleDropdownClick = useCallback(() => {
+    const joinValue = `${twoDepth}_${threeDepth}`;
+
     if (skills.length < 3) {
       setSkills([...skills, joinValue]);
       setOneDepth('');
       setTwoDepth('');
       setThreeDepth('');
     }
-  };
+  }, [skills, threeDepth, twoDepth]);
 
   const handleDeleteSkill = (value: string) => {
     setSkills(skills.filter((skill) => skill !== value));
@@ -86,7 +88,10 @@ const Setting = () => {
     ];
   };
 
-  const validDropDown = skills.length === 3;
+  useEffect(() => {
+    if (threeDepth === '' || !twoDepth) return;
+    handleDropdownClick();
+  }, [threeDepth, handleDropdownClick, twoDepth]);
 
   return (
     <Container>
@@ -151,14 +156,14 @@ const Setting = () => {
               <Dropdown
                 disabled={validDropDown}
                 value={threeDepth}
-                onClick={handleDropdownClick}
+                onClick={(value) => setThreeDepth(value)}
                 items={dropdownItems}
                 initialValue={'숙련도'}
               />
             </SettingBox>
             <TagBox>
-              {skills.map((skill) => {
-                return <Tag text={skill} onDelete={handleDeleteSkill} />;
+              {skills.map((skill, idx) => {
+                return <Tag key={idx} text={skill} onDelete={handleDeleteSkill} />;
               })}
             </TagBox>
           </SettingWrapper>
@@ -180,7 +185,7 @@ const Setting = () => {
             <Text font="suit15m" color="b9">
               지역
             </Text>
-            <Dropdown onClick={(value) => setResion(value)} items={regionOptions} initialValue={'시/도/광역시'} />
+            <Dropdown onClick={(value) => setRegion(value)} items={regionOptions} initialValue={'시/도/광역시'} />
           </SettingWrapper>
 
           <Spacer size={35} />

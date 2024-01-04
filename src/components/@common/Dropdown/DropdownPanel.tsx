@@ -1,33 +1,31 @@
 import styled from '@emotion/styled';
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 
-export interface Item {
-  text: string;
-  value: string;
-  defaultValue?: boolean;
-}
+import { DropdownItem } from '../@types/Dropdown';
 
 export interface PanelProps {
-  items: Item[];
+  items: DropdownItem[];
   setSelectedText: Dispatch<SetStateAction<string>>;
   toggleActive: () => void;
   onClick: (value: string) => void;
 }
 
-const Panel = ({ items, setSelectedText, toggleActive, onClick }: PanelProps) => {
+const DropdownPanel = ({ items, setSelectedText, toggleActive, onClick }: PanelProps) => {
   const handleItemClick = (value: string, text: string) => {
     onClick(value);
     toggleActive();
     setSelectedText(() => text);
   };
+
   return (
     <PanelWrapper>
-      {items.map(({ text, value, defaultValue }) => (
+      {items.map(({ text, value, placeValue }) => (
         <PanelItem
           key={value}
-          defaultValue={defaultValue}
+          value={value}
+          placeValue={placeValue}
           onClick={() => {
-            !defaultValue ? handleItemClick(value, text) : null;
+            !placeValue ? handleItemClick(value, text) : null;
           }}
         >
           {text}
@@ -37,14 +35,13 @@ const Panel = ({ items, setSelectedText, toggleActive, onClick }: PanelProps) =>
   );
 };
 
-export default Panel;
+export default DropdownPanel;
 
 const PanelWrapper = styled.ul`
   position: absolute;
   left: 0;
   bottom: 0;
   transform: translateY(calc(100% + 5px));
-  /* z-index: 100; */
   width: -webkit-fill-available;
 
   background-color: ${({ theme }) => theme.color.w1};
@@ -55,7 +52,7 @@ const PanelWrapper = styled.ul`
   z-index: 1;
 `;
 
-const PanelItem = styled.li<{ defaultValue: boolean }>`
+const PanelItem = styled.li<{ placeValue?: boolean }>`
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -63,8 +60,8 @@ const PanelItem = styled.li<{ defaultValue: boolean }>`
   padding: 11px 15px 12px;
   box-sizing: border-box;
   border-bottom: 1px solid ${({ theme }) => theme.color.l3};
-  cursor: ${({ defaultValue }) => (defaultValue ? 'auto' : 'pointer')};
-  color: ${({ theme, defaultValue }) => (defaultValue ? theme.color.b9 : theme.color.b6)};
+  cursor: ${({ placeValue }) => (placeValue ? 'auto' : 'pointer')};
+  color: ${({ theme, placeValue }) => (placeValue ? theme.color.b9 : theme.color.b6)};
   font-size: 12px;
   font-weight: 400;
 

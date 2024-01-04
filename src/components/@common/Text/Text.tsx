@@ -46,7 +46,7 @@ export const Wrapper = styled.span<{ textColor: ColorKeyType; textFont: FontKeyT
 `;
 
 export const RequiredWrapper = styled.div`
-  margin-left: 2px;
+  margin-left: 6px;
   display: flex;
   align-items: start;
 `;

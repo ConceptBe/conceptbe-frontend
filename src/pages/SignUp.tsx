@@ -8,6 +8,7 @@ import useInput from '../components/@common/@hooks/useInput.ts';
 import useRadio from '../components/@common/@hooks/useRadio.ts';
 import Button from '../components/@common/Button/Button.tsx';
 import CheckboxContainer from '../components/@common/CheckboxContainer/CheckboxContainer.tsx';
+import Dropdown from '../components/@common/Dropdown/Dropdown.tsx';
 import Field from '../components/@common/Field/Field.tsx';
 import RadioContainer from '../components/@common/RadioContainer/RadioContainer.tsx';
 import Text from '../components/@common/Text/Text.tsx';
@@ -15,7 +16,6 @@ import BottomSheet from '../components/BottomSheet/BottomSheet.tsx';
 import CheckBoxModal from '../components/BottomSheet/CheckBox.tsx';
 import IdeaCard from '../components/Card/IdeaCard.tsx';
 import PopCard from '../components/Card/PopCard.tsx';
-import Dropdown from '../components/Inputs/Dropdown/Dropdown.tsx';
 // svg
 import { filterOptions, memberSelect, memberSelectDetails } from '../modules/constants.tsx';
 
@@ -68,7 +68,7 @@ const SignUp = () => {
 
   //드롭다운
   const dropdownItems = [
-    { value: '1', text: 'Dropdown item1 asdasddas' },
+    { value: '1', text: 'Dropdown item1' },
     { value: '2', text: 'Dropdown item2' },
   ];
 
@@ -92,15 +92,15 @@ const SignUp = () => {
 
   // 모달 체크박스
   const [selectMain, setSelectMain] = useState({ text: '기획', value: '기획' });
-  const [modalCheckboxOptions, setModalCheckboxOptions] = useState<checkboxOptions[] | []>([]);
+  const [modalCheckboxOptions, setModalCheckboxOptions] = useState([]);
 
   const handleModalCheckboxChange = (value: string, newState: boolean) => {
-    setModalCheckboxOptions((prevCheckboxes) =>
+    setModalCheckboxOptions((prevCheckboxes: any) =>
       prevCheckboxes.map(
-        (checkbox) =>
+        (checkbox: any) =>
           checkbox.parent === selectMain.text && {
             ...checkbox,
-            options: checkbox.options.map((option) =>
+            options: checkbox.options.map((option: any) =>
               option.value === value ? { ...option, checked: !newState } : option,
             ),
           },
@@ -178,7 +178,7 @@ const SignUp = () => {
       </div>
 
       <div style={{ display: 'flex', gap: '10px' }}>
-        <Dropdown onClick={handleDropdownClick} items={dropdownItems} initialValue={'다운'} />
+        <Dropdown onClick={handleDropdownClick} items={dropdownItems} initialValue="다운" />
       </div>
 
       <div

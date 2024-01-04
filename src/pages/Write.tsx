@@ -12,11 +12,11 @@ import useCheckbox from '../components/@common/@hooks/useCheckbox';
 import useRadio from '../components/@common/@hooks/useRadio';
 import CheckboxContainer from '../components/@common/CheckboxContainer/CheckboxContainer';
 import Divider from '../components/@common/Divider/Divider';
+import Dropdown from '../components/@common/Dropdown/Dropdown';
 import RadioContainer from '../components/@common/RadioContainer/RadioContainer';
 import Spacer from '../components/@common/Spacer/Spacer';
 import Text from '../components/@common/Text/Text';
 import BottomSheet from '../components/BottomSheet/BottomSheet';
-import Dropdown from '../components/Inputs/Dropdown/Dropdown';
 import {
   filterOptions,
   filterSubOptions,
@@ -188,7 +188,7 @@ const Write = () => {
           </Text>
 
           <Spacer size={20} />
-          <Dropdown onClick={handleDropdownClick} items={regionOptions} initialValue={'전국'} value={getArea} />
+          <Dropdown onClick={handleDropdownClick} items={regionOptions} initialValue="전국" value={getArea} />
         </BottomBox>
         <BottomBox>
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>

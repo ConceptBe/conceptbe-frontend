@@ -1,52 +1,52 @@
 import styled from '@emotion/styled';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
-import Panel, { Item } from './Panel.tsx';
-import { ReactComponent as Arrow } from '../../../assets/svg/arrow.svg';
+import DropdownPanel from './DropdownPanel.tsx';
+import { ReactComponent as SVGArrow } from '../../../assets/svg/arrow.svg';
+import useHandleClickOutside from '../@hooks/useHandleClickOutside.ts';
+import { DropdownItem } from '../@types/Dropdown.ts';
 
 interface DropdownProps {
-  items: Item[];
+  items: DropdownItem[] | [];
   initialValue: string;
   onClick: (value: string) => void;
+  value?: string;
   disabled?: boolean;
-  value: string;
 }
 
-const Dropdown = ({ items, initialValue, onClick, disabled, value }: DropdownProps) => {
-  const containerRef = useRef(null);
+const Dropdown = ({ items, initialValue, onClick, disabled, value = '' }: DropdownProps) => {
   const [isActive, setIsActive] = useState(false);
   const [selectedText, setSelectedText] = useState(initialValue);
+  const { ref } = useHandleClickOutside(
+    useCallback(() => {
+      setIsActive(false);
+    }, []),
+  );
 
   const toggleActive = () => {
     setIsActive(!isActive);
   };
 
-  useEffect(() => {
+  const initText = (value: string, initialValue: string) => {
     value === '' && setSelectedText(initialValue);
-  }, [value, onClick]);
+  };
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (containerRef.current && !containerRef.current.contains(event.target)) {
-        setIsActive(false);
-      }
-    };
-    // Attach the event listener
-    document.addEventListener('mousedown', handleClickOutside);
-
-    return () => {
-      // Cleanup on component unmount
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
+    if (typeof value === 'string') {
+      initText(value, initialValue);
+    }
+  }, [value, initialValue]);
 
   return (
-    <DropdownWrapper ref={containerRef} onBlur={() => setIsActive(false)}>
+    <DropdownWrapper ref={ref} onBlur={() => setIsActive(false)}>
       <Trigger disabled={disabled} onClick={!disabled ? toggleActive : () => {}}>
-        {selectedText} <ArrowIcon disabled={disabled} isActive={isActive} />
+        {selectedText}
+        <ArrowWrapper isActive={isActive}>
+          <SVGArrow />
+        </ArrowWrapper>
       </Trigger>
       {isActive && (
-        <Panel onClick={onClick} toggleActive={toggleActive} setSelectedText={setSelectedText} items={items} />
+        <DropdownPanel onClick={onClick} toggleActive={toggleActive} setSelectedText={setSelectedText} items={items} />
       )}
     </DropdownWrapper>
   );
@@ -58,7 +58,9 @@ const DropdownWrapper = styled.div`
   position: relative;
 `;
 
-const ArrowIcon = styled(Arrow)<{ isActive: boolean; disabled?: boolean }>`
+const ArrowWrapper = styled.div<{ isActive: boolean }>`
+  width: min-content;
+  height: 16px;
   transform: ${({ isActive }) => (isActive ? 'rotate(180deg)' : 'rotate(0)')};
 `;
 

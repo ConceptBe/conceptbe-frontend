@@ -7,6 +7,7 @@ import useCheckbox from '../../components/@common/@hooks/useCheckbox';
 import useRadio from '../../components/@common/@hooks/useRadio';
 import Button from '../../components/@common/Button/Button';
 import CheckboxContainer from '../../components/@common/CheckboxContainer/CheckboxContainer';
+import Dropdown from '../../components/@common/Dropdown/Dropdown';
 import Header from '../../components/@common/Header/Header';
 import Logo from '../../components/@common/Logo/Logo';
 import RadioContainer from '../../components/@common/RadioContainer/RadioContainer';
@@ -16,7 +17,6 @@ import BottomSheet from '../../components/BottomSheet/BottomSheet';
 import FilterBox from '../../components/BottomSheet/FilterBox';
 import IdeaCard from '../../components/Card/IdeaCard';
 import PopCard from '../../components/Card/PopCard';
-import Dropdown from '../../components/Inputs/Dropdown/Dropdown';
 import Padding from '../../components/Padding';
 import { filterOptions, filterSubOptions, filterRadio } from '../../modules/constants';
 
@@ -161,7 +161,7 @@ const Feeds = () => {
                 지역
               </Text>
               <Spacer size={12} />
-              <Dropdown onClick={handleDropdownClick} items={dropdownItems} initialValue={'다운'} />
+              <Dropdown onClick={handleDropdownClick} items={dropdownItems} initialValue="다운" />
             </FilterWrapper>
 
             <FilterWrapper>
@@ -170,8 +170,8 @@ const Feeds = () => {
               </Text>
               <Spacer size={12} />
               <div style={{ display: 'flex', gap: 8 }}>
-                <Dropdown onClick={handleDropdownClick} items={dropdownItems} initialValue={'다운'} />
-                <Dropdown onClick={handleDropdownClick} items={dropdownItems} initialValue={'다운'} />
+                <Dropdown onClick={handleDropdownClick} items={dropdownItems} initialValue="다운" />
+                <Dropdown onClick={handleDropdownClick} items={dropdownItems} initialValue="다운" />
               </div>
             </FilterWrapper>
           </FilterContent>
