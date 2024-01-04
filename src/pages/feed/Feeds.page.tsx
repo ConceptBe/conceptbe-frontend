@@ -18,7 +18,6 @@ import IdeaCard from '../../components/Card/IdeaCard';
 import PopCard from '../../components/Card/PopCard';
 import Dropdown from '../../components/Inputs/Dropdown/Dropdown';
 import Padding from '../../components/Padding';
-import UnStyleButton from '../../components/UnStyleButton';
 import { filterOptions, filterSubOptions, filterRadio } from '../../modules/constants';
 
 // 아이디어
@@ -61,9 +60,7 @@ const Feeds = () => {
           <Logo />
         </Header.Item>
         <Header.Item>
-          <UnStyleButton onClick={() => setIsFilter(true)}>
-            <Filter />
-          </UnStyleButton>
+          <Filter onClick={() => setIsFilter(true)} cursor="pointer" />
         </Header.Item>
       </Header>
 

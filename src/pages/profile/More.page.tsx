@@ -1,9 +1,8 @@
-import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { ReactComponent as Back } from '../../assets/svg/back_24_B.svg';
+import { ReactComponent as SVGBack } from '../../assets/svg/back_24_B.svg';
 import Divider from '../../components/@common/Divider/Divider';
 import Header from '../../components/@common/Header/Header';
 import Spacer from '../../components/@common/Spacer/Spacer';
@@ -11,10 +10,8 @@ import Text from '../../components/@common/Text/Text';
 import BottomSheet from '../../components/BottomSheet/BottomSheet';
 import Privacy from '../../components/BottomSheet/use/Privacy';
 import Terms from '../../components/BottomSheet/use/Terms';
-import UnStyleButton from '../../components/UnStyleButton';
 
 const More = () => {
-  const theme = useTheme();
   const navigate = useNavigate();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -34,9 +31,9 @@ const More = () => {
       <Container>
         <Header spacerPosition="end">
           <Header.Item>
-            <UnStyleButton style={{ color: theme.color.b4 }} onClick={() => navigate(-1)}>
-              <Back />
-            </UnStyleButton>
+            <SVGBackWrapper>
+              <SVGBack onClick={() => navigate(-1)} />
+            </SVGBackWrapper>
           </Header.Item>
           <Header.Item>
             <Text font="suit16sb" color="b4">
@@ -114,7 +111,13 @@ const MainWrapper = styled.section`
   overflow: hidden;
 `;
 
-const MoreButton = styled(UnStyleButton)`
+const MoreButton = styled.button`
   width: 100%;
   text-align: left;
+  cursor: pointer;
+`;
+
+const SVGBackWrapper = styled.button`
+  color: ${({ theme }) => theme.color.b4};
+  cursor: pointer;
 `;

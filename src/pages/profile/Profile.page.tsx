@@ -2,8 +2,8 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { ReactComponent as Logo } from '../../assets/svg/main_logo.svg';
-import { ReactComponent as Setting } from '../../assets/svg/setting.svg';
+import { ReactComponent as SVGLogo } from '../../assets/svg/main_logo.svg';
+import { ReactComponent as SVGSetting } from '../../assets/svg/setting.svg';
 import Badge from '../../components/@common/Badge/Badge';
 import Header from '../../components/@common/Header/Header';
 import Spacer from '../../components/@common/Spacer/Spacer';
@@ -13,7 +13,6 @@ import Padding from '../../components/Padding';
 import Tab from '../../components/Tab/Tab';
 import TabPannel from '../../components/Tab/TabPannel';
 import Tabs from '../../components/Tab/Tabs';
-import UnStyleButton from '../../components/UnStyleButton';
 
 const skillTags = ['퍼포먼스 마케팅, 상', '광고/크리에이티브, 중', '콘텐츠 마케팅, 하'];
 const badges = ['사이드 프로젝트', '크라우드 펀딩', '공모전'];
@@ -30,12 +29,10 @@ const Profile = () => {
     <ProfileContainer>
       <Header main>
         <Header.Item>
-          <Logo />
+          <SVGLogo />
         </Header.Item>
         <Header.Item>
-          <UnStyleButton onClick={() => navigate(`/profile/1/more`)}>
-            <Setting />
-          </UnStyleButton>
+          <SVGSetting onClick={() => navigate(`/profile/1/more`)} cursor="pointer" />
         </Header.Item>
       </Header>
 
@@ -60,14 +57,7 @@ const Profile = () => {
                 외국계 스타트업 | 강원특별자치도
               </Text>
             </div>
-            <EditButton>
-              <UnStyleButton
-                onClick={() => navigate(`/profile/1`)}
-                style={{ border: `1px solid $"l2"`, borderRadius: 100, padding: '8px 14px' }}
-              >
-                프로필 수정
-              </UnStyleButton>
-            </EditButton>
+            <EditButton>프로필 수정</EditButton>
           </ProfileMainBox>
           {/* 프로필 설명 */}
           <Text font="suit15rb" color="b4" customStyle={{ lineHeight: 1.5 }}>
@@ -164,9 +154,20 @@ const ProfileBox = styled.div`
 const ProfileMainBox = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: start;
 `;
 
-const EditButton = styled.div``;
+const EditButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: 1px solid ${({ theme }) => theme.color.l2};
+  font-size: ${({ theme }) => theme.font.suit13m.fontSize}px;
+  font-weight: ${({ theme }) => theme.font.suit13m.fontWeight};
+  border-radius: 100px;
+  padding: 8px 14px;
+`;
 
 const TagWrapper = styled.div`
   display: flex;
