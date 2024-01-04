@@ -124,7 +124,11 @@ const Feeds = () => {
                 분야
               </Text>
               <Spacer size={12} />
-              <CheckboxContainer options={checkboxValue.field} onChange={(e) => onChangeCheckBox(e, 'field')} />
+              <CheckboxContainer
+                nameKey="field"
+                options={checkboxValue.field}
+                onChange={(e) => onChangeCheckBox(e, 'field')}
+              />
             </FilterWrapper>
 
             <FilterWrapper>
@@ -132,7 +136,11 @@ const Feeds = () => {
                 목적
               </Text>
               <Spacer size={12} />
-              <CheckboxContainer options={checkboxValue.goal} onChange={(e) => onChangeCheckBox(e, 'goal')} />
+              <CheckboxContainer
+                nameKey="goal"
+                options={checkboxValue.goal}
+                onChange={(e) => onChangeCheckBox(e, 'goal')}
+              />
             </FilterWrapper>
 
             <FilterWrapper>
@@ -141,6 +149,7 @@ const Feeds = () => {
               </Text>
               <Spacer size={12} />
               <RadioContainer
+                nameKey="collaboration"
                 options={radioValue.collaboration}
                 onChange={(e) => onChangeRadio(e, 'collaboration')}
                 gap="large"

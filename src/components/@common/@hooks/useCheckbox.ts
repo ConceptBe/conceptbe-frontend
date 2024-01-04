@@ -15,7 +15,7 @@ const useCheckbox = <T extends Record<string, CheckboxItem[]>>(initialValue: T) 
   const [checkboxValue, setCheckboxValue] = useState<T>(initialValue);
 
   const onChangeCheckBox = (e: ChangeEvent<HTMLInputElement>, checkBoxKey: keyof T, limit?: Limit<T>) => {
-    const { name, checked } = e.target;
+    const { value, checked } = e.target;
 
     setCheckboxValue((prev) => {
       const currentCheckedCount = prev[checkBoxKey].filter((checkbox) => checkbox.checked).length;
@@ -27,7 +27,7 @@ const useCheckbox = <T extends Record<string, CheckboxItem[]>>(initialValue: T) 
       return {
         ...prev,
         [checkBoxKey]: prev[checkBoxKey].map((checkbox) =>
-          checkbox.value === name ? { ...checkbox, checked } : checkbox,
+          checkbox.value === value ? { ...checkbox, checked } : checkbox,
         ),
       };
     });

@@ -170,6 +170,7 @@ const Setting = () => {
               목적 (최대 3개)
             </Text>
             <CheckboxContainer
+              nameKey="goal"
               options={checkboxValue.goal}
               onChange={(e) => onChangeCheckBox(e, 'goal', { checkboxKey: 'goal', maxValue: 3 })}
             />

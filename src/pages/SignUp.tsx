@@ -131,7 +131,11 @@ const SignUp = () => {
       </div>
 
       <div>
-        <CheckboxContainer options={checkboxValue.field} onChange={(e) => onChangeCheckBox(e, 'field')} />
+        <CheckboxContainer
+          nameKey="field"
+          options={checkboxValue.field}
+          onChange={(e) => onChangeCheckBox(e, 'field')}
+        />
         <p>선택한 옵션!: {checkboxValue.field.map(({ text, checked }) => checked && text + ' ')}</p>
       </div>
 

@@ -151,7 +151,11 @@ const Write = () => {
           </Text>
 
           <Spacer size={20} />
-          <CheckboxContainer options={checkboxValue.field} onChange={(e) => onChangeCheckBox(e, 'field')} />
+          <CheckboxContainer
+            nameKey="field"
+            options={checkboxValue.field}
+            onChange={(e) => onChangeCheckBox(e, 'field')}
+          />
         </BottomBox>
         <BottomBox>
           <Text font="suit15m" color="b9" required>
@@ -159,7 +163,11 @@ const Write = () => {
           </Text>
 
           <Spacer size={20} />
-          <CheckboxContainer options={checkboxValue.goal} onChange={(e) => onChangeCheckBox(e, 'goal')} />
+          <CheckboxContainer
+            nameKey="goal"
+            options={checkboxValue.goal}
+            onChange={(e) => onChangeCheckBox(e, 'goal')}
+          />
         </BottomBox>
         <BottomBox>
           <Text font="suit15m" color="b9" required>
