@@ -9,12 +9,13 @@ interface RadioOptions {
   checked: boolean;
 }
 interface Props {
+  nameKey: string;
   options: RadioOptions[];
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   gap?: GapType;
 }
 
-const RadioContainer = ({ options, onChange, gap = 'small' }: Props) => {
+const RadioContainer = ({ nameKey, options, onChange, gap = 'small' }: Props) => {
   return (
     <Wrapper>
       {options.map((option) => (
@@ -22,8 +23,8 @@ const RadioContainer = ({ options, onChange, gap = 'small' }: Props) => {
           <RadioInput
             type="radio"
             id={option.value}
-            name={option.value}
-            // value={option.value}
+            name={nameKey}
+            value={option.value}
             checked={option.checked}
             onChange={onChange}
           />

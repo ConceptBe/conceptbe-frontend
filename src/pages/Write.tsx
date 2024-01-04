@@ -168,6 +168,7 @@ const Write = () => {
 
           <Spacer size={20} />
           <RadioContainer
+            nameKey="collaboration"
             options={radioValue.collaboration}
             onChange={(e) => onChangeRadio(e, 'collaboration')}
             gap="large"

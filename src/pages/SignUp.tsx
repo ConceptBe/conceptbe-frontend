@@ -36,6 +36,11 @@ const SignUp = () => {
       { text: '온라인', value: 'online', checked: false },
       { text: '오프라인', value: 'offline', checked: false },
     ],
+    b: [
+      { text: '상관없음', value: 'all1', checked: false },
+      { text: '온라인', value: 'online1', checked: false },
+      { text: '오프라인', value: 'offline1', checked: false },
+    ],
   });
 
   //체크박스
@@ -117,13 +122,11 @@ const SignUp = () => {
     setModalCheckboxOptions(memberSelectDetails.filter((detail) => detail.parent === selectMain.value));
   }, [selectMain]);
 
-  console.log('selectMain', selectMain);
-  console.log('modalCheckboxOptions', modalCheckboxOptions[0]?.options);
-
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
       <div>
-        <RadioContainer options={radioValue.a} onChange={(e) => onChangeRadio(e, 'a')} gap="large" />
+        <RadioContainer nameKey="a" options={radioValue.a} onChange={(e) => onChangeRadio(e, 'a')} gap="large" />
+        <RadioContainer nameKey="b" options={radioValue.b} onChange={(e) => onChangeRadio(e, 'b')} gap="large" />
         <p>선택한 옵션: {radioValue.a[0].text}</p>
       </div>
 
