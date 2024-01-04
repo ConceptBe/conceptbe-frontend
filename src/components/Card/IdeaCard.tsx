@@ -9,17 +9,17 @@ import { ReactComponent as UnScrap } from '../../assets/svg/scrap.svg';
 import { ReactComponent as ScrapView } from '../../assets/svg/scrap_14.svg';
 // footer
 import { ReactComponent as View } from '../../assets/svg/view_14.svg';
+import Badge from '../@common/Badge/Badge.tsx';
 import Divider from '../@common/Divider/Divider.tsx';
 import Spacer from '../@common/Spacer/Spacer.tsx';
 import Text from '../@common/Text/Text.tsx';
-import Tag, { TagProps } from '../Tag.tsx';
 
-interface IdeaCardProps {
+interface Props {
   mine?: boolean;
-  tags: TagProps;
+  badges: string[];
 }
 
-const IdeaCard = ({ mine, tags }: TagProps) => {
+const IdeaCard = ({ mine, badges }: Props) => {
   const theme = useTheme();
   return (
     <CardContainer>
@@ -64,7 +64,11 @@ const IdeaCard = ({ mine, tags }: TagProps) => {
         <Spacer size={14} />
 
         <TagWrapper>
-          <Tag tags={tags} />
+          <Badge>
+            {badges.map((badge) => (
+              <Badge.Item key={badge}>{badge}</Badge.Item>
+            ))}
+          </Badge>
         </TagWrapper>
       </ContentWrapper>
 

@@ -38,16 +38,6 @@ const SignUp = () => {
     ],
   });
 
-  const [radioOptions, setRadioOptions] = useState<radioOptions[] | []>([]);
-
-  useEffect(() => {
-    setRadioOptions([
-      { text: '옵션 1', value: 'option1' },
-      { text: '옵션 2', value: 'option2' },
-      { text: '옵션 3', value: 'option3' },
-    ]);
-  }, []);
-
   //체크박스
   const { checkboxValue, onChangeCheckBox } = useCheckbox({
     field: filterOptions,
@@ -199,7 +189,7 @@ const SignUp = () => {
 
       <div style={{ padding: 20 }}>
         {Array.from({ length: 20 }, (_, idx) => (
-          <IdeaCard key={idx} tags={tags} />
+          <IdeaCard key={idx} badges={tags} />
         ))}
       </div>
       <BottomSheet isOpen={isOpen} onClose={() => setIsOpen(false)}>

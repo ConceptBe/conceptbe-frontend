@@ -11,13 +11,14 @@ import { ReactComponent as UnLike } from '../../assets/svg/FeedDetail/unLike.svg
 import { ReactComponent as UnScrap } from '../../assets/svg/FeedDetail/unScrap.svg';
 import { ReactComponent as Logo } from '../../assets/svg/main_logo.svg';
 import { ReactComponent as X } from '../../assets/svg/x.svg';
+import Badge from '../../components/@common/Badge/Badge';
 import Divider from '../../components/@common/Divider/Divider';
 import Header from '../../components/@common/Header/Header';
 import Spacer from '../../components/@common/Spacer/Spacer';
 import Text from '../../components/@common/Text/Text';
 import TextDivider from '../../components/@common/TextDivider/TextDivider';
 import ProfileComponent from '../../components/Profile';
-import Tag from '../../components/Tag';
+
 const FeedDetailPage = () => {
   const infoIndex = [
     { indexName: '분야', tag: ['IT', '유튜브 컨텐츠'] },
@@ -124,7 +125,13 @@ const FeedDetailPage = () => {
                     {item.indexName}
                   </Text>
                   <Spacer size={12} />
-                  <Tag tags={item.tag} style={{ color: 'black' }} />
+                  <Badge>
+                    {item.tag.map((badge) => (
+                      <Badge.Item key={badge} fontColor="b4">
+                        {badge}
+                      </Badge.Item>
+                    ))}
+                  </Badge>
                 </div>
               )}
             </div>

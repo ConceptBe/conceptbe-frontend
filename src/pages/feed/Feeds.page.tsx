@@ -110,7 +110,7 @@ const Feeds = () => {
             <Spacer size={20} />
             {Array.from({ length: 20 }, (_, idx) => (
               <>
-                <IdeaCard key={idx} tags={tags} />
+                <IdeaCard key={idx} badges={tags} />
                 <Spacer size={20} />
               </>
             ))}

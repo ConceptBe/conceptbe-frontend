@@ -1,10 +1,10 @@
-import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { ReactComponent as Logo } from '../../assets/svg/main_logo.svg';
 import { ReactComponent as Setting } from '../../assets/svg/setting.svg';
+import Badge from '../../components/@common/Badge/Badge';
 import Header from '../../components/@common/Header/Header';
 import Spacer from '../../components/@common/Spacer/Spacer';
 import Text from '../../components/@common/Text/Text';
@@ -13,14 +13,12 @@ import Padding from '../../components/Padding';
 import Tab from '../../components/Tab/Tab';
 import TabPannel from '../../components/Tab/TabPannel';
 import Tabs from '../../components/Tab/Tabs';
-import Tag from '../../components/Tag';
 import UnStyleButton from '../../components/UnStyleButton';
 
 const skillTags = ['퍼포먼스 마케팅, 상', '광고/크리에이티브, 중', '콘텐츠 마케팅, 하'];
-const tags = ['사이드 프로젝트', '크라우드 펀딩', '공모전'];
+const badges = ['사이드 프로젝트', '크라우드 펀딩', '공모전'];
 
 const Profile = () => {
-  const theme = useTheme();
   const navigate = useNavigate();
   const [activeTab, setAtiveTab] = useState(0);
 
@@ -82,7 +80,13 @@ const Profile = () => {
             <Text font="suit14m">스킬</Text>
             <Spacer size={10} />
             <TagWrapper>
-              <Tag tags={skillTags} select />
+              <Badge>
+                {badges.map((badge) => (
+                  <Badge.Item key={badge} backgroundColor="c1" fontColor="w1">
+                    {badge}
+                  </Badge.Item>
+                ))}
+              </Badge>
             </TagWrapper>
           </div>
           {/* 목적 */}
@@ -90,7 +94,13 @@ const Profile = () => {
             <Text font="suit14m">목적</Text>
             <Spacer size={10} />
             <TagWrapper>
-              <Tag style={{ color: theme.color.b4 }} tags={tags} />
+              <Badge>
+                {badges.map((badge) => (
+                  <Badge.Item key={badge} fontColor="b4">
+                    {badge}
+                  </Badge.Item>
+                ))}
+              </Badge>
             </TagWrapper>
           </div>
         </ProfileBox>
@@ -102,14 +112,14 @@ const Profile = () => {
         <TabPannel value={activeTab} active={0}>
           <TabPannelBox>
             {Array.from({ length: 20 }, (_, idx) => (
-              <IdeaCard mine key={idx} tags={tags} />
+              <IdeaCard mine key={idx} badges={badges} />
             ))}
           </TabPannelBox>
         </TabPannel>
         <TabPannel value={activeTab} active={1}>
           <TabPannelBox>
             {Array.from({ length: 20 }, (_, idx) => (
-              <IdeaCard key={idx} tags={tags} />
+              <IdeaCard key={idx} badges={badges} />
             ))}
           </TabPannelBox>
         </TabPannel>

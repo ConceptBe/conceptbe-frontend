@@ -17,7 +17,6 @@ import Spacer from '../components/@common/Spacer/Spacer';
 import Text from '../components/@common/Text/Text';
 import BottomSheet from '../components/BottomSheet/BottomSheet';
 import Dropdown from '../components/Inputs/Dropdown/Dropdown';
-import Tag from '../components/Tag';
 import {
   filterOptions,
   filterSubOptions,
