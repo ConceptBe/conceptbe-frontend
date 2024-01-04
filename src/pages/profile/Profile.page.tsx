@@ -5,10 +5,10 @@ import { useNavigate } from 'react-router-dom';
 
 import { ReactComponent as Logo } from '../../assets/svg/main_logo.svg';
 import { ReactComponent as Setting } from '../../assets/svg/setting.svg';
+import Header from '../../components/@common/Header/Header';
 import Spacer from '../../components/@common/Spacer/Spacer';
 import Text from '../../components/@common/Text/Text';
 import IdeaCard from '../../components/Card/IdeaCard';
-import { Header } from '../../components/Header/Header';
 import Padding from '../../components/Padding';
 import Tab from '../../components/Tab/Tab';
 import TabPannel from '../../components/Tab/TabPannel';

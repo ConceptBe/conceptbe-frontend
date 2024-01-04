@@ -22,11 +22,11 @@ import useCheckbox from '../../components/@common/@hooks/useCheckbox';
 import useInput from '../../components/@common/@hooks/useInput';
 import Button from '../../components/@common/Button/Button';
 import CheckboxContainer from '../../components/@common/CheckboxContainer/CheckboxContainer';
+import Header from '../../components/@common/Header/Header';
 import InputContainer from '../../components/@common/InputContainer/InputContainer';
 import Spacer from '../../components/@common/Spacer/Spacer';
 import Text from '../../components/@common/Text/Text';
 import Tag from '../../components/CustomTag/Tag';
-import { Header } from '../../components/Header/Header';
 import Dropdown from '../../components/Inputs/Dropdown/Dropdown';
 import UnStyleButton from '../../components/UnStyleButton';
 import { skillOneDepth, skillTwoDepth, regionOptions, filterSubOptions } from '../../modules/constants';
@@ -94,7 +94,7 @@ const Setting = () => {
 
   return (
     <Container>
-      <Header main emptyEnd>
+      <Header main spacerPosition="end">
         <Header.Item>
           <UnStyleButton style={{ color: theme.color.w1 }} onClick={() => navigate(-1)}>
             <Back />

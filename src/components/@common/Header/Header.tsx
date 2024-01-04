@@ -2,27 +2,27 @@ import styled from '@emotion/styled';
 import { ReactNode } from 'react';
 
 import { Item } from './Item';
+import Spacer from '../Spacer/Spacer';
 
 interface HeaderProps {
   children: ReactNode;
+  spacerPosition?: 'start' | 'end';
   main?: boolean;
-  emptyStart?: boolean;
-  emptyEnd?: boolean;
 }
 
-const Header = ({ children, main, emptyStart, emptyEnd }: HeaderProps) => {
+const Header = ({ children, main, spacerPosition }: HeaderProps) => {
   return (
     <Container main={main}>
-      {emptyStart && <EmptyBox />}
+      {spacerPosition === 'start' && <Spacer size={24} />}
       {children}
-      {emptyEnd && <EmptyBox />}
+      {spacerPosition === 'end' && <Spacer size={24} />}
     </Container>
   );
 };
 
 Header.Item = Item;
 
-export { Header };
+export default Header;
 
 const Container = styled.header<{ main?: boolean }>`
   padding: 25px 22px;
@@ -37,9 +37,4 @@ const Container = styled.header<{ main?: boolean }>`
   max-width: 375px;
   top: 0;
   z-index: 1;
-`;
-
-const EmptyBox = styled.div`
-  width: 24px;
-  height: 24px;
 `;

@@ -5,12 +5,12 @@ import { useNavigate } from 'react-router-dom';
 
 import { ReactComponent as Back } from '../../assets/svg/back_24_B.svg';
 import Divider from '../../components/@common/Divider/Divider';
+import Header from '../../components/@common/Header/Header';
 import Spacer from '../../components/@common/Spacer/Spacer';
 import Text from '../../components/@common/Text/Text';
 import BottomSheet from '../../components/BottomSheet/BottomSheet';
 import Privacy from '../../components/BottomSheet/use/Privacy';
 import Terms from '../../components/BottomSheet/use/Terms';
-import { Header } from '../../components/Header/Header';
 import UnStyleButton from '../../components/UnStyleButton';
 
 const More = () => {
@@ -32,7 +32,7 @@ const More = () => {
   return (
     <>
       <Container>
-        <Header emptyEnd>
+        <Header spacerPosition="end">
           <Header.Item>
             <UnStyleButton style={{ color: theme.color.b4 }} onClick={() => navigate(-1)}>
               <Back />
