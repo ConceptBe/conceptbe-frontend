@@ -1,20 +1,17 @@
-import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { ReactComponent as Back } from '../../assets/svg/back_24_B.svg';
-import BottomSheet from '../../components/BottomSheet/BottomSheet';
+import { ReactComponent as SVGBack } from '../../assets/svg/back_24_B.svg';
+import BottomSheet from '../../components/@common/BottomSheet/BottomSheet';
+import Divider from '../../components/@common/Divider/Divider';
+import Header from '../../components/@common/Header/Header';
+import Spacer from '../../components/@common/Spacer/Spacer';
+import Text from '../../components/@common/Text/Text';
 import Privacy from '../../components/BottomSheet/use/Privacy';
 import Terms from '../../components/BottomSheet/use/Terms';
-import Divider from '../../components/Divider';
-import { Header } from '../../components/Header/Header';
-import Spacer from '../../components/Spacer';
-import Text from '../../components/Text';
-import UnStyleButton from '../../components/UnStyleButton';
 
 const More = () => {
-  const theme = useTheme();
   const navigate = useNavigate();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -32,14 +29,14 @@ const More = () => {
   return (
     <>
       <Container>
-        <Header emptyEnd>
+        <Header spacerPosition="end">
           <Header.Item>
-            <UnStyleButton style={{ color: theme.colors.b4 }} onClick={() => navigate(-1)}>
-              <Back />
-            </UnStyleButton>
+            <SVGBackWrapper>
+              <SVGBack onClick={() => navigate(-1)} />
+            </SVGBackWrapper>
           </Header.Item>
           <Header.Item>
-            <Text font={theme.typography.suit16sb} color={theme.colors.b4}>
+            <Text font="suit16sb" color="b4">
               더보기
             </Text>
           </Header.Item>
@@ -47,44 +44,44 @@ const More = () => {
 
         <MainWrapper>
           <MoreButton>
-            <Text font={theme.typography.suit15m} color={theme.colors.b4}>
+            <Text font="suit15m" color="b4">
               로그인/회원가입
             </Text>
           </MoreButton>
-          <Divider color={theme.colors.l3} top={22} bottom={22} />
+          <Divider color="l3" top={22} bottom={22} />
 
           <MoreButton onClick={() => onMoreClick('이용약관')}>
-            <Text font={theme.typography.suit15m} color={theme.colors.b4}>
+            <Text font="suit15m" color="b4">
               이용약관
             </Text>
           </MoreButton>
-          <Divider color={theme.colors.l3} top={22} bottom={22} />
+          <Divider color="l3" top={22} bottom={22} />
 
           <MoreButton onClick={() => onMoreClick('개인정보')}>
-            <Text font={theme.typography.suit15m} color={theme.colors.b4}>
+            <Text font="suit15m" color="b4">
               개인정보처리방침
             </Text>
           </MoreButton>
-          <Divider color={theme.colors.l3} top={22} bottom={22} />
+          <Divider color="l3" top={22} bottom={22} />
 
-          <Text font={theme.typography.suit15m} color={theme.colors.b4}>
+          <Text font="suit15m" color="b4">
             기타 문의 사항
           </Text>
 
-          <Spacer top={8} />
-          <Text style={{ lineHeight: '22px' }} font={theme.typography.suit14r} color={theme.colors.b6}>
+          <Spacer size={8} />
+          <Text customStyle={{ lineHeight: '22px' }} font="suit14r" color="b6">
             기타 문의사항이 있으실 경우, ABCDEFG123456@gmail.com으로 연락주세요
           </Text>
 
-          <Divider color={theme.colors.l3} top={22} bottom={22} />
+          <Divider color="l3" top={22} bottom={22} />
           <MoreButton>
-            <Text font={theme.typography.suit15rb} color={theme.colors.ba}>
+            <Text font="suit15rb" color="ba">
               회원탈퇴
             </Text>
           </MoreButton>
         </MainWrapper>
       </Container>
-      <BottomSheet scroll isOpen={isOpen} onClose={() => setIsOpen(false)}>
+      <BottomSheet isOpen={isOpen} onClose={() => setIsOpen(false)}>
         {isOpen &&
           (moreState === '개인정보' ? (
             <Privacy isOpen={isOpen} onClose={() => setIsOpen(false)} />
@@ -104,17 +101,23 @@ const Container = styled.div`
   height: 100%;
   /* height: calc(var(--vh, 1vh) * 100); */
   overflow: hidden;
-  background-color: ${({ theme }) => theme.colors.bg1};
+  background-color: ${({ theme }) => theme.color.bg1};
 `;
 
 const MainWrapper = styled.section`
-  /* background-color: ${({ theme }) => theme.colors.bg1}; */
+  /* background-color: ${({ theme }) => theme.color.bg1}; */
   /* height: 100svh; */
   padding: 84px 30px 0 30px;
   overflow: hidden;
 `;
 
-const MoreButton = styled(UnStyleButton)`
+const MoreButton = styled.button`
   width: 100%;
   text-align: left;
+  cursor: pointer;
+`;
+
+const SVGBackWrapper = styled.button`
+  color: ${({ theme }) => theme.color.b4};
+  cursor: pointer;
 `;

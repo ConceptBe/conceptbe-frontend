@@ -1,23 +1,23 @@
-import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 
-import { ReactComponent as Filter } from '../../assets/svg/filter.svg';
-import { ReactComponent as Logo } from '../../assets/svg/main_logo.svg';
-import { ReactComponent as Write } from '../../assets/svg/writeicon40.svg';
-import BottomSheet from '../../components/BottomSheet/BottomSheet';
+import { ReactComponent as SVGFilter } from '../../assets/svg/filter.svg';
+import { ReactComponent as SVGWrite } from '../../assets/svg/writeicon40.svg';
+import useCheckbox from '../../components/@common/@hooks/useCheckbox';
+import useRadio from '../../components/@common/@hooks/useRadio';
+import BottomSheet from '../../components/@common/BottomSheet/BottomSheet';
+import Button from '../../components/@common/Button/Button';
+import CheckboxContainer from '../../components/@common/CheckboxContainer/CheckboxContainer';
+import Dropdown from '../../components/@common/Dropdown/Dropdown';
+import Header from '../../components/@common/Header/Header';
+import Logo from '../../components/@common/Logo/Logo';
+import RadioContainer from '../../components/@common/RadioContainer/RadioContainer';
+import Spacer from '../../components/@common/Spacer/Spacer';
+import Text from '../../components/@common/Text/Text';
 import FilterBox from '../../components/BottomSheet/FilterBox';
-import Button from '../../components/Button';
 import IdeaCard from '../../components/Card/IdeaCard';
 import PopCard from '../../components/Card/PopCard';
-import { Header } from '../../components/Header/Header';
-import Checkbox, { checkboxOptions } from '../../components/Inputs/Checkbox';
-import Dropdown from '../../components/Inputs/Dropdown/Dropdown';
-import Radio, { radioOptions } from '../../components/Inputs/Radio';
 import Padding from '../../components/Padding';
-import Spacer from '../../components/Spacer';
-import Text from '../../components/Text';
-import UnStyleButton from '../../components/UnStyleButton';
 import { filterOptions, filterSubOptions, filterRadio } from '../../modules/constants';
 
 // 아이디어
@@ -40,29 +40,14 @@ const dropdownItems = [
 ];
 
 const Feeds = () => {
-  const theme = useTheme();
   const [isFilter, setIsFilter] = useState(false);
-
-  // 필터 체크박스
-  const [filedOptions, setFiledOptions] = useState<checkboxOptions[] | []>([...filterOptions]); // 분야
-  const [purposeOptions, setPurposeOptions] = useState<checkboxOptions[] | []>([...filterSubOptions]); // 목적
-
-  // 필터 라디오
-  const [radioOptions, setRadioOptions] = useState<radioOptions[] | []>([...filterRadio]);
-  const [selectedRadio, setSelectedRadio] = useState<string>('all');
-  const handleOptionChange = (value: string) => {
-    setSelectedRadio(value);
-  };
-
-  const handleCheckboxChange = (
-    value: string,
-    newState: boolean,
-    setState: React.Dispatch<React.SetStateAction<checkboxOptions[]>>,
-  ) => {
-    setState((prevCheckboxes) =>
-      prevCheckboxes.map((checkbox) => (checkbox.value === value ? { ...checkbox, checked: !newState } : checkbox)),
-    );
-  };
+  const { checkboxValue, onChangeCheckBox } = useCheckbox({
+    field: filterOptions,
+    goal: filterSubOptions,
+  });
+  const { radioValue, onChangeRadio } = useRadio({
+    collaboration: filterRadio,
+  });
 
   const handleDropdownClick = (value: string) => {
     console.log(value);
@@ -75,41 +60,39 @@ const Feeds = () => {
           <Logo />
         </Header.Item>
         <Header.Item>
-          <UnStyleButton onClick={() => setIsFilter(true)}>
-            <Filter />
-          </UnStyleButton>
+          <SVGFilter onClick={() => setIsFilter(true)} cursor="pointer" />
         </Header.Item>
       </Header>
 
       <Wrapper>
         <FeedFixBox>
-          <Write />
+          <SVGWrite />
 
-          <Spacer top={27} />
+          <Spacer size={27} />
           <FeedFixTextWrapper>
-            <Text font={theme.typography.suit22sb} color={theme.colors.w1}>
+            <Text font="suit22sb" color="w1">
               일이삼사오육칠팔구십
             </Text>
-            <Text font={theme.typography.suit22r} color={theme.colors.w1}>
+            <Text font="suit22r" color="w1">
               님,
             </Text>
           </FeedFixTextWrapper>
 
-          <Spacer top={8} />
-          <Text font={theme.typography.suit22r} color={theme.colors.w1}>
+          <Spacer size={8} />
+          <Text font="suit22r" color="w1">
             재밌는 아이디어를 들려주세요!
           </Text>
-          <Spacer top={14} />
+          <Spacer size={14} />
 
-          <Text font={theme.typography.suit15ra} color={theme.colors.w2}>{`아이디어 적으러 가기 >`}</Text>
+          <Text font="suit15ra" color="w2">{`아이디어 적으러 가기 >`}</Text>
         </FeedFixBox>
 
         <FeedBox>
           <FeedWrapper style={{ padding: '47px 0 0 22px' }}>
-            <Text font={theme.typography.suit16sb} color={theme.colors.b4}>
+            <Text font="suit16sb" color="b4">
               현재 인기 있는 아이디어
             </Text>
-            <Spacer top={18} />
+            <Spacer size={18} />
             <FeedFixWrapper>
               {ideas.map((idea, idx) => {
                 return <PopCard key={idx} category={idea.category} title={idea.title} />;
@@ -118,14 +101,14 @@ const Feeds = () => {
           </FeedWrapper>
 
           <FeedWrapper style={{ padding: '47px 22px 0 22px' }}>
-            <Text font={theme.typography.suit16sb} color={theme.colors.b4}>
+            <Text font="suit16sb" color="b4">
               피드 영역 타이틀입니다
             </Text>
-            <Spacer top={20} />
+            <Spacer size={20} />
             {Array.from({ length: 20 }, (_, idx) => (
               <>
-                <IdeaCard key={idx} tags={tags} />
-                <Spacer bottom={20} />
+                <IdeaCard key={idx} badges={tags} />
+                <Spacer size={20} />
               </>
             ))}
           </FeedWrapper>
@@ -137,51 +120,68 @@ const Feeds = () => {
         <FilterBox>
           <FilterContent>
             <FilterWrapper>
-              <Text font={theme.typography.suit15m} color={theme.colors.b9}>
+              <Text font="suit15m" color="b9">
                 분야
               </Text>
-              <Spacer top={12} />
-              <Checkbox options={filedOptions} setState={setFiledOptions} onChange={handleCheckboxChange} />
+              <Spacer size={12} />
+              <CheckboxContainer
+                nameKey="field"
+                options={checkboxValue.field}
+                onChange={(e) => onChangeCheckBox(e, 'field')}
+              />
             </FilterWrapper>
 
             <FilterWrapper>
-              <Text font={theme.typography.suit15m} color={theme.colors.b9}>
+              <Text font="suit15m" color="b9">
                 목적
               </Text>
-              <Spacer top={12} />
-              <Checkbox options={purposeOptions} setState={setPurposeOptions} onChange={handleCheckboxChange} />
+              <Spacer size={12} />
+              <CheckboxContainer
+                nameKey="goal"
+                options={checkboxValue.goal}
+                onChange={(e) => onChangeCheckBox(e, 'goal')}
+              />
             </FilterWrapper>
 
             <FilterWrapper>
-              <Text font={theme.typography.suit15m} color={theme.colors.b9}>
+              <Text font="suit15m" color="b9">
                 협업 방식
               </Text>
-              <Spacer top={12} />
-              <Radio defaultValue="all" options={radioOptions} onChange={handleOptionChange} gap={'large'} />
+              <Spacer size={12} />
+              <RadioContainer
+                nameKey="collaboration"
+                options={radioValue.collaboration}
+                onChange={(e) => onChangeRadio(e, 'collaboration')}
+                gap="large"
+              />
             </FilterWrapper>
 
             <FilterWrapper>
-              <Text font={theme.typography.suit15m} color={theme.colors.b9}>
+              <Text font="suit15m" color="b9">
                 지역
               </Text>
-              <Spacer top={12} />
-              <Dropdown onClick={handleDropdownClick} items={dropdownItems} initialValue={'다운'} />
+              <Spacer size={12} />
+              <Dropdown onClick={handleDropdownClick} items={dropdownItems} initialValue="다운" />
             </FilterWrapper>
 
             <FilterWrapper>
-              <Text font={theme.typography.suit15m} color={theme.colors.b9}>
+              <Text font="suit15m" color="b9">
                 팀원 모집
               </Text>
-              <Spacer top={12} />
+              <Spacer size={12} />
               <div style={{ display: 'flex', gap: 8 }}>
-                <Dropdown onClick={handleDropdownClick} items={dropdownItems} initialValue={'다운'} />
-                <Dropdown onClick={handleDropdownClick} items={dropdownItems} initialValue={'다운'} />
+                <Dropdown onClick={handleDropdownClick} items={dropdownItems} initialValue="다운" />
+                <Dropdown onClick={handleDropdownClick} items={dropdownItems} initialValue="다운" />
               </div>
             </FilterWrapper>
           </FilterContent>
           <FilterBottom>
-            <Button style={{ flex: 1 }} text={'닫기'} onClick={() => setIsFilter(false)} isActive={false} />
-            <Button style={{ flex: 2 }} text={'적용'} onClick={() => {}} isActive={true} />
+            <Button customStyle={{ flex: 1 }} onClick={() => setIsFilter(false)} isGrayOut>
+              닫기
+            </Button>
+            <Button customStyle={{ flex: 2 }} onClick={() => {}}>
+              적용
+            </Button>
           </FilterBottom>
         </FilterBox>
       </BottomSheet>
@@ -192,7 +192,7 @@ const Feeds = () => {
 export default Feeds;
 
 const Wrapper = styled.section`
-  background-color: ${(props) => props.theme.colors.c1};
+  background-color: ${(props) => props.theme.color.c1};
   height: 100%;
 `;
 
@@ -200,8 +200,8 @@ const FeedFixBox = styled.div`
   padding: 90px 30px 50px 30px;
   display: flex;
   flex-direction: column;
-  background-color: ${(props) => props.theme.colors.c1};
-  color: ${(props) => props.theme.colors.w1};
+  background-color: ${(props) => props.theme.color.c1};
+  color: ${(props) => props.theme.color.w1};
 `;
 
 const FeedFixWrapper = styled.div`
@@ -218,14 +218,12 @@ const FeedFixTextWrapper = styled.div`
 `;
 
 const FeedBox = styled.div`
-  background-color: ${(props) => props.theme.colors.bg1};
+  background-color: ${(props) => props.theme.color.bg1};
   border-radius: 16px 16px 0 0;
-  /* padding: 0 22px; */
 `;
 
 const FeedWrapper = styled.div`
   padding-top: 47px;
-  /* padding: 0 22px; */
 `;
 
 const FilterContent = styled.div`
@@ -233,7 +231,6 @@ const FilterContent = styled.div`
   flex-direction: column;
   gap: 25px;
   padding: 22px;
-  padding-bottom: 50px;
 `;
 
 const FilterBottom = styled.div`
@@ -243,7 +240,7 @@ const FilterBottom = styled.div`
   position: sticky;
   bottom: 0;
   padding: 0 22px 22px;
-  background-color: ${({ theme }) => theme.colors.w1};
+  background-color: ${({ theme }) => theme.color.w1};
 `;
 
 const FilterWrapper = styled.div``;

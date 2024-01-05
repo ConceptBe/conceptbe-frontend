@@ -5,12 +5,12 @@ const Container = styled.div`
 `;
 
 const MainWrapper = styled.div`
-  background-color: ${({ theme }) => theme.colors.c1};
+  background-color: ${({ theme }) => theme.color.c1};
   height: 100%;
 `;
 
 const MainBox = styled.section`
-  background-color: ${(props) => props.theme.colors.w1};
+  background-color: ${(props) => props.theme.color.w1};
   border-radius: 16px 16px 0 0;
   padding: 0 22px;
   margin-top: 107px;
@@ -63,7 +63,7 @@ const ImageWrite = styled.div`
   position: absolute;
   bottom: 0;
   right: 0;
-  background: ${({ theme }) => theme.colors.w1};
+  background: ${({ theme }) => theme.color.w1};
   /* padding: 7px; */
   width: 32px;
   height: 32px;
@@ -77,7 +77,7 @@ const ImageWrite = styled.div`
 
 const BottomWrapper = styled.div`
   padding: 0 22px;
-  background: ${({ theme }) => theme.colors.w1};
+  background: ${({ theme }) => theme.color.w1};
 `;
 
 const DotWrapper = styled.div`

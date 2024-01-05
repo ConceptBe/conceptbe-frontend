@@ -9,17 +9,17 @@ import { ReactComponent as UnScrap } from '../../assets/svg/scrap.svg';
 import { ReactComponent as ScrapView } from '../../assets/svg/scrap_14.svg';
 // footer
 import { ReactComponent as View } from '../../assets/svg/view_14.svg';
-import Divider from '../Divider.tsx';
-import Spacer from '../Spacer.tsx';
-import Tag, { TagProps } from '../Tag.tsx';
-import Text from '../Text.tsx';
+import Badge from '../@common/Badge/Badge.tsx';
+import Divider from '../@common/Divider/Divider.tsx';
+import Spacer from '../@common/Spacer/Spacer.tsx';
+import Text from '../@common/Text/Text.tsx';
 
-interface IdeaCardProps {
+interface Props {
   mine?: boolean;
-  tags: TagProps;
+  badges: string[];
 }
 
-const IdeaCard = ({ mine, tags }: TagProps) => {
+const IdeaCard = ({ mine, badges }: Props) => {
   const theme = useTheme();
   return (
     <CardContainer>
@@ -27,48 +27,52 @@ const IdeaCard = ({ mine, tags }: TagProps) => {
         <ProfileBox>
           <Profile />
           <div>
-            <Text font={theme.typography.suit14m} color={theme.colors.b4}>
+            <Text font="suit14m" color="b4">
               일이삼사오육칠팔구
             </Text>
-            <Spacer top={7} />
+            <Spacer size={7} />
 
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <Text font={theme.typography.suit12r} color={theme.colors.b9}>
+              <Text font="suit12r" color="b9">
                 스킬
               </Text>
-              <Spacer left={6} />
-              <div style={{ width: 1, height: 10, backgroundColor: theme.colors.l2 }} />
-              <Spacer left={6} />
-              <Text font={theme.typography.suit12r} color={theme.colors.b9}>
+              <Spacer size={6} />
+              <div style={{ width: 1, height: 10, backgroundColor: theme.color.l2 }} />
+              <Spacer size={6} />
+              <Text font="suit12r" color="b9">
                 작성시간
               </Text>
             </div>
           </div>
         </ProfileBox>
-        {mine ? <Dots color={theme.colors.ba} /> : <UnScrap />}
+        {mine ? <Dots color="ba" /> : <UnScrap />}
       </ProfileWrapper>
 
       <ContentWrapper>
-        <Text font={theme.typography.suit14m} color={theme.colors.c1}>
+        <Text font="suit14m" color="c1">
           분야 / 분야 / 분야
         </Text>
-        <Spacer top={7} />
+        <Spacer size={7} />
 
-        <Text font={theme.typography.suit16sb}>20자 내외의 제목이 들어가는 영역입니다.</Text>
-        <Spacer top={10} />
+        <Text font="suit16sb">20자 내외의 제목이 들어가는 영역입니다.</Text>
+        <Spacer size={10} />
 
         <ContentText>
           3줄의 아이디어 내용이 들어가는 영역입니다. 3줄 이상부터는 말줄임표로 노출합니다. 3줄의 아이디어 내용이
           들어가는 영역입니다. 3줄 이상부터는 말줄임표로 노출합니다.
         </ContentText>
-        <Spacer top={14} />
+        <Spacer size={14} />
 
         <TagWrapper>
-          <Tag tags={tags} />
+          <Badge>
+            {badges.map((badge) => (
+              <Badge.Item key={badge}>{badge}</Badge.Item>
+            ))}
+          </Badge>
         </TagWrapper>
       </ContentWrapper>
 
-      <Divider top={18} bottom={16} color={theme.colors.l3} />
+      <Divider top={18} bottom={16} color="l3" />
       <FooterWrapper>
         <FooterText>
           <View />
@@ -97,7 +101,7 @@ const CardContainer = styled.div`
   padding: 30px 20px;
   border-radius: 8px;
   box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.08);
-  background-color: ${({ theme }) => theme.colors.w1};
+  background-color: ${({ theme }) => theme.color.w1};
 `;
 
 const ProfileWrapper = styled.div`
@@ -121,7 +125,7 @@ const ContentWrapper = styled.div`
 const ContentText = styled.div`
   font-size: 14px;
   line-height: 22px;
-  color: ${(props) => props.theme.colors.b6};
+  color: ${(props) => props.theme.color.b6};
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   word-break: keep-all;
@@ -148,6 +152,6 @@ const FooterText = styled.span`
   align-items: center;
   gap: 4px;
   font-size: 12px;
-  color: ${(props) => props.theme.colors.b9};
+  color: ${(props) => props.theme.color.b9};
   margin-right: 10px;
 `;

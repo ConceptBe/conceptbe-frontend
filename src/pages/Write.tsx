@@ -1,47 +1,46 @@
-import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import axios from 'axios';
-import { useState, ChangeEvent, useEffect } from 'react';
+import { useState, ChangeEvent } from 'react';
 
 import plus from '../../src/assets/images/plus.png';
 import { ReactComponent as RadioChecked } from '../assets/svg/active_check.svg';
 import { ReactComponent as RadioUnChecked } from '../assets/svg/active_radio_uncheck.svg';
 import { ReactComponent as Back } from '../assets/svg/back_24_B.svg';
 import { ReactComponent as Check } from '../assets/svg/check_24.svg';
-import { ReactComponent as UnCheck } from '../assets/svg/unCheck_24.svg';
 import { ReactComponent as Xmark } from '../assets/svg/x.svg';
-import BottomSheet from '../components/BottomSheet/BottomSheet';
-import { checkboxOptions, getDomain } from '../components/BottomSheet/CheckBox';
-import Divider from '../components/Divider';
-import Checkbox from '../components/Inputs/Checkbox';
-import Dropdown from '../components/Inputs/Dropdown/Dropdown';
-import Radio, { radioOptions } from '../components/Inputs/Radio';
-import Spacer from '../components/Spacer';
-import Tag from '../components/Tag';
-import Text from '../components/Text';
+import useCheckbox from '../components/@common/@hooks/useCheckbox';
+import useRadio from '../components/@common/@hooks/useRadio';
+import BottomSheet from '../components/@common/BottomSheet/BottomSheet';
+import CheckboxContainer from '../components/@common/CheckboxContainer/CheckboxContainer';
+import Divider from '../components/@common/Divider/Divider';
+import Dropdown from '../components/@common/Dropdown/Dropdown';
+import RadioContainer from '../components/@common/RadioContainer/RadioContainer';
+import Spacer from '../components/@common/Spacer/Spacer';
+import Text from '../components/@common/Text/Text';
 import {
   filterOptions,
-  filterRadio,
   filterSubOptions,
+  filterRadio,
   regionOptions,
   skillOneDepth,
   skillTwoDepth,
 } from '../modules/constants';
 
 const Write = () => {
-  const theme = useTheme();
   const [getIndex, setIndex] = useState('');
   const [getBody, setBody] = useState('');
   const [bodyCount, setBodyCount] = useState(0);
-  const [getDomain, setDomain] = useState<getDomain[] | []>(filterOptions);
-  const [getpurpose, setpurpose] = useState<getDomain[] | []>(filterSubOptions);
   const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
   const [getArea, setArea] = useState('');
-  const [getCollaboration, setCollaboration] = useState<string>('all');
   const [get1Depth, set1Depth] = useState('product');
   const [get2Depth, set2Depth] = useState([]);
-
-  console.log(get2Depth, 'get2Depth');
+  const { checkboxValue, onChangeCheckBox } = useCheckbox({
+    field: filterOptions,
+    goal: filterSubOptions,
+  });
+  const { radioValue, onChangeRadio } = useRadio({
+    collaboration: filterRadio,
+  });
 
   const handleIndexChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length > 20) return;
@@ -53,15 +52,6 @@ const Write = () => {
     if (e.target.value.length > 2000) return;
     setBody(e.target.value);
     setBodyCount(e.target.value.length);
-  };
-  const handleCheckboxChange = (
-    value: string,
-    newState: boolean,
-    setState: React.Dispatch<React.SetStateAction<checkboxOptions[]>>,
-  ) => {
-    setState((prevCheckboxes) =>
-      prevCheckboxes.map((checkbox) => (checkbox.value === value ? { ...checkbox, checked: !newState } : checkbox)),
-    );
   };
 
   const handleDropdownClick = (value: string) => {
@@ -130,66 +120,79 @@ const Write = () => {
       <HeaderBox>
         <Back />
         <button onClick={() => aaa()}></button>
-        <Text font={theme.typography.suit16sb} color={theme.colors.b4}>
+        <Text font="suit16sb" color="b4">
           글쓰기
         </Text>
         <Check />
       </HeaderBox>
 
-      <Divider color={theme.colors.l3} />
+      <Divider color="l3" />
       {/* 제목인풋 */}
 
       <HeaderInput placeholder="제목을 입력해 주세요 (최대20자)" value={getIndex} onChange={handleIndexChange} />
 
-      <Divider color={theme.colors.l3} />
+      <Divider color="l3" />
       {/* 내용인풋 */}
       <div>
         <BodyTextarea placeholder="내용을 작성해주세요 (최대 2000자)" value={getBody} onChange={handleBodyChange} />
 
         <TextareaCountBox>
-          <Text font={theme.typography.suit15m} color={theme.colors.c1}>
+          <Text font="suit15m" color="c1">
             {bodyCount}
           </Text>
           /2,000
         </TextareaCountBox>
       </div>
-      <Divider color={theme.colors.bg1} height={8} bottom={30} />
+      <Divider color="bg1" height={8} bottom={30} />
       <BottomWrapper>
         <BottomBox>
-          <Text font={theme.typography.suit15m} color={theme.colors.b9} required>
+          <Text font="suit15m" color="b9" required>
             분야
           </Text>
 
-          <Spacer bottom={20} />
-          <Checkbox options={getDomain} onChange={handleCheckboxChange} setState={setDomain} />
+          <Spacer size={20} />
+          <CheckboxContainer
+            nameKey="field"
+            options={checkboxValue.field}
+            onChange={(e) => onChangeCheckBox(e, 'field')}
+          />
         </BottomBox>
         <BottomBox>
-          <Text font={theme.typography.suit15m} color={theme.colors.b9} required>
+          <Text font="suit15m" color="b9" required>
             목적
           </Text>
 
-          <Spacer bottom={20} />
-          <Checkbox options={getpurpose} onChange={handleCheckboxChange} setState={setpurpose} />
+          <Spacer size={20} />
+          <CheckboxContainer
+            nameKey="goal"
+            options={checkboxValue.goal}
+            onChange={(e) => onChangeCheckBox(e, 'goal')}
+          />
         </BottomBox>
         <BottomBox>
-          <Text font={theme.typography.suit15m} color={theme.colors.b9} required>
+          <Text font="suit15m" color="b9" required>
             협업방식
           </Text>
 
-          <Spacer bottom={20} />
-          <Radio defaultValue="all" options={filterRadio} onChange={(e) => setCollaboration(e)} gap={'large'} />
+          <Spacer size={20} />
+          <RadioContainer
+            nameKey="collaboration"
+            options={radioValue.collaboration}
+            onChange={(e) => onChangeRadio(e, 'collaboration')}
+            gap="large"
+          />
         </BottomBox>
         <BottomBox>
-          <Text font={theme.typography.suit15m} color={theme.colors.b9}>
+          <Text font="suit15m" color="b9">
             모집 지역
           </Text>
 
-          <Spacer bottom={20} />
-          <Dropdown onClick={handleDropdownClick} items={regionOptions} initialValue={'전국'} value={getArea} />
+          <Spacer size={20} />
+          <Dropdown onClick={handleDropdownClick} items={regionOptions} initialValue="전국" value={getArea} />
         </BottomBox>
         <BottomBox>
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Text font={theme.typography.suit15m} color={theme.colors.b9}>
+            <Text font="suit15m" color="b9">
               팀원 모집
             </Text>
             <div
@@ -197,13 +200,13 @@ const Write = () => {
                 setIsOpenBottomSheet(true);
               }}
             >
-              <Text font={theme.typography.suit13m} color={theme.colors.b9} style={{ lineHeight: '20px' }}>
+              <Text font="suit13m" color="b9" customStyle={{ lineHeight: '20px' }}>
                 <img src={plus} /> 팀원추가
               </Text>
             </div>
           </div>
 
-          <Spacer bottom={12} />
+          <Spacer size={12} />
           <TeamLabelBox>
             {get2Depth.map((item) => {
               return (
@@ -215,14 +218,14 @@ const Write = () => {
             })}
           </TeamLabelBox>
 
-          <Spacer bottom={40} />
+          <Spacer size={40} />
         </BottomBox>
       </BottomWrapper>
 
       <BottomSheet isOpen={isOpenBottomSheet} onClose={() => setIsOpenBottomSheet(false)}>
         <Sheet_TopBox>
           <Xmark />
-          <Text font={theme.typography.suit16sb} color={theme.colors.b4}>
+          <Text font="suit16sb" color="b4">
             팀원선택
           </Text>
           <Check
@@ -240,7 +243,7 @@ const Write = () => {
               .map((e, index) => {
                 return (
                   <Sheet_leftItem key={index} onClick={() => set1Depth(e.value)} checked={get1Depth === e.value}>
-                    <Text font={theme.typography.suit14m} color={theme.colors.ba}>
+                    <Text font="suit14m" color="ba">
                       {e.text}
                     </Text>
                   </Sheet_leftItem>
@@ -255,7 +258,7 @@ const Write = () => {
               .map((e: { text: string; checked: boolean; value: never }, index: string) => {
                 return (
                   <Sheet_radioDiv key={index} onClick={() => onClick2Depth(e.value)}>
-                    <Text font={theme.typography.suit14m} color={theme.colors.b4}>
+                    <Text font="suit14m" color="b4">
                       {e.text}
                     </Text>
 
@@ -295,7 +298,7 @@ const HeaderInput = styled.input`
   outline: none;
   font-size: 15px;
   font-weight: 400;
-  color: ${(props) => props.theme.colors.b4};
+  color: ${(props) => props.theme.color.b4};
 
   &:focus {
     ::placeholder {
@@ -304,7 +307,7 @@ const HeaderInput = styled.input`
   }
 
   ::placeholder {
-    color: ${(props) => props.theme.colors.ba};
+    color: ${(props) => props.theme.color.ba};
   }
 `;
 
@@ -318,10 +321,10 @@ const BodyTextarea = styled.textarea`
   font-size: 15px;
   font-weight: 400;
   resize: none;
-  color: ${(props) => props.theme.colors.b4};
+  color: ${(props) => props.theme.color.b4};
 
   ::placeholder {
-    color: ${(props) => props.theme.colors.ba};
+    color: ${(props) => props.theme.color.ba};
   }
   &:focus {
     ::placeholder {
@@ -334,7 +337,7 @@ const TextareaCountBox = styled.div`
   display: flex;
   justify-content: end;
   padding: 0px 22px 25px 22px;
-  color: ${(props) => props.theme.colors.b9};
+  color: ${(props) => props.theme.color.b9};
   font-size: 15px;
   font-weight: 500;
 `;
@@ -371,7 +374,7 @@ const Sheet_Left = styled.div`
 const Sheet_leftItem = styled.div<{ checked: boolean }>`
   padding: 10px 22px;
 
-  background-color: ${(props) => (props.checked ? '' : props.theme.colors.bg1)};
+  background-color: ${(props) => (props.checked ? '' : props.theme.color.bg1)};
   display: flex;
   flex-direction: row;
   justify-content: start;
@@ -410,10 +413,10 @@ const TeamLabel = styled.label`
   padding: 11px 16px 12px;
   height: 40px;
   box-sizing: border-box;
-  border: 1px solid ${({ theme }) => theme.colors.l2};
+  border: 1px solid ${({ theme }) => theme.color.l2};
   border-radius: 6px;
-  background-color: ${(props) => props.theme.colors.c1};
-  color: ${(props) => props.theme.colors.w1};
+  background-color: ${(props) => props.theme.color.c1};
+  color: ${(props) => props.theme.color.w1};
   font-size: 14px;
   font-weight: 500;
   width: fit-content;

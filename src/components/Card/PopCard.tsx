@@ -1,4 +1,3 @@
-import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import IdeaBack from '../../assets/images/idea_back.png';
@@ -6,7 +5,7 @@ import IdeaBack2 from '../../assets/images/idea_back2.png';
 import IdeaBack3 from '../../assets/images/idea_back3.png';
 import IdeaBack4 from '../../assets/images/idea_back4.png';
 import IdeaBack5 from '../../assets/images/idea_back5.png';
-import Text from '../Text';
+import Text from '../@common/Text/Text';
 
 interface IdeaCardProps {
   category: string;
@@ -17,8 +16,6 @@ interface IdeaCardProps {
 const randomImages = [IdeaBack, IdeaBack2, IdeaBack3, IdeaBack4, IdeaBack5];
 
 const PopCard = ({ category, title, image }: IdeaCardProps) => {
-  const theme = useTheme();
-
   const randomNumber = Math.floor(Math.random() * 5) + 1;
   const test = randomImages[randomNumber];
   console.log('test', test);
@@ -27,10 +24,10 @@ const PopCard = ({ category, title, image }: IdeaCardProps) => {
       <img src={image ?? IdeaBack} />
       <CardBoxBack />
       <CardBox>
-        <Text style={{ fontSize: 13, fontWeight: 800 }} color={theme.colors.w1}>
+        <Text customStyle={{ fontSize: 13, fontWeight: 800 }} color="w1">
           {category}
         </Text>
-        <Text style={{ fontSize: 14, fontWeight: 600, lineHeight: '20px' }} color={theme.colors.w1}>
+        <Text customStyle={{ fontSize: 14, fontWeight: 600, lineHeight: '20px' }} color="w1">
           {title}
         </Text>
       </CardBox>
@@ -47,7 +44,7 @@ const IdeaCardWrapper = styled.div`
   height: 180px;
   position: relative;
   overflow: hidden;
-  background-color: ${({ theme }) => theme.colors.c1};
+  background-color: ${({ theme }) => theme.color.c1};
 `;
 
 const CardBoxBack = styled.div`
@@ -60,7 +57,7 @@ const CardBoxBack = styled.div`
 `;
 
 const CardBox = styled.div`
-  color: ${(props) => props.theme.colors.w1};
+  color: ${(props) => props.theme.color.w1};
   position: absolute;
   bottom: 0;
   display: flex;

@@ -1,6 +1,7 @@
-const colors = {
+const color = {
   c1: '#5F27FF',
   c2: '#0DE361',
+  c3: '#E84C4C',
   bg1: '#F5F6F8',
   b: '#000000',
   t: '#666',
@@ -15,9 +16,9 @@ const colors = {
   w1: '#FFFFFF',
   w2: 'rgba(255, 255, 255, 0.90)',
   disabled: 'rgba(245, 246, 248, 1)',
-};
+} as const;
 
-const typography = {
+const font = {
   suit12r: {
     fontSize: 12,
     fontWeight: 400,
@@ -86,14 +87,16 @@ const typography = {
     fontSize: 22,
     fontWeight: 600,
   },
-};
+} as const;
 
-export type ColorsType = typeof colors;
-export type TypoType = typeof typography;
+export type ColorType = typeof color;
+export type FontType = typeof font;
+export type ColorKeyType = keyof typeof color;
+export type FontKeyType = keyof typeof font;
 
 const theme = {
-  colors,
-  typography,
-};
+  color,
+  font,
+} as const;
 
 export default theme;

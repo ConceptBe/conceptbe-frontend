@@ -1,32 +1,21 @@
-import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { ReactComponent as Logo } from '../../assets/svg/main_logo.svg';
-import { ReactComponent as Setting } from '../../assets/svg/setting.svg';
+import { ReactComponent as SVGSetting } from '../../assets/svg/setting.svg';
+import Badge from '../../components/@common/Badge/Badge';
+import Header from '../../components/@common/Header/Header';
+import Logo from '../../components/@common/Logo/Logo';
+import Spacer from '../../components/@common/Spacer/Spacer';
+import TabLayout from '../../components/@common/TabLayout/TabLayout';
+import Text from '../../components/@common/Text/Text';
 import IdeaCard from '../../components/Card/IdeaCard';
-import { Header } from '../../components/Header/Header';
 import Padding from '../../components/Padding';
-import Spacer from '../../components/Spacer';
-import Tab from '../../components/Tab/Tab';
-import TabPannel from '../../components/Tab/TabPannel';
-import Tabs from '../../components/Tab/Tabs';
-import Tag from '../../components/Tag';
-import Text from '../../components/Text';
-import UnStyleButton from '../../components/UnStyleButton';
 
 const skillTags = ['퍼포먼스 마케팅, 상', '광고/크리에이티브, 중', '콘텐츠 마케팅, 하'];
-const tags = ['사이드 프로젝트', '크라우드 펀딩', '공모전'];
+const badges = ['사이드 프로젝트', '크라우드 펀딩', '공모전'];
 
 const Profile = () => {
-  const theme = useTheme();
   const navigate = useNavigate();
-  const [activeTab, setAtiveTab] = useState(0);
-
-  const handleTab = (event: any, newValue: any) => {
-    setAtiveTab(newValue);
-  };
 
   return (
     <ProfileContainer>
@@ -35,9 +24,7 @@ const Profile = () => {
           <Logo />
         </Header.Item>
         <Header.Item>
-          <UnStyleButton onClick={() => navigate(`/profile/1/more`)}>
-            <Setting />
-          </UnStyleButton>
+          <SVGSetting onClick={() => navigate(`/profile/1/more`)} cursor="pointer" />
         </Header.Item>
       </Header>
 
@@ -52,67 +39,70 @@ const Profile = () => {
           {/* 프로필설정 */}
           <ProfileMainBox>
             <div>
-              <Text font={theme.typography.suit15sb} color={theme.colors.c1}>
+              <Text font="suit15sb" color="c1">
                 마케팅/영업
               </Text>
-              <Spacer top={6} />
-              <Text font={theme.typography.suit22sb}>일이삼사오육칠팔구</Text>
-              <Spacer top={6} />
-              <Text font={theme.typography.suit15rb} color={theme.colors.b9}>
+              <Spacer size={6} />
+              <Text font="suit22sb">일이삼사오육칠팔구</Text>
+              <Spacer size={6} />
+              <Text font="suit15rb" color="b9">
                 외국계 스타트업 | 강원특별자치도
               </Text>
             </div>
-            <EditButton>
-              <UnStyleButton
-                onClick={() => navigate(`/profile/1`)}
-                style={{ border: `1px solid ${theme.colors.l2}`, borderRadius: 100, padding: '8px 14px' }}
-              >
-                프로필 수정
-              </UnStyleButton>
-            </EditButton>
+            <EditButton>프로필 수정</EditButton>
           </ProfileMainBox>
           {/* 프로필 설명 */}
-          <Text font={theme.typography.suit15rb} color={theme.colors.b4} style={{ lineHeight: 1.5 }}>
+          <Text font="suit15rb" color="b4" customStyle={{ lineHeight: 1.5 }}>
             안녕하세요! 8년차 일이삼사오육칠팔구십이예요😊 무신사, 에이블리, 29cm 등 핫한 커머스부터, 카카오뱅크에
             이르기까지! 디지털마케팅의 A부터 Z까지 모든것을 직접 경험한 올라운드 마케터입니다!🤩 이번에 다양한 실무
             경험을 통해 퍼포머스마케터로의 직무 전환에도 성공했어요!
           </Text>
           {/* 스킬 */}
           <div>
-            <Text font={theme.typography.suit14m}>스킬</Text>
-            <Spacer top={10} />
+            <Text font="suit14m">스킬</Text>
+            <Spacer size={10} />
             <TagWrapper>
-              <Tag tags={skillTags} select />
+              <Badge>
+                {badges.map((badge) => (
+                  <Badge.Item key={badge} backgroundColor="c1" fontColor="w1">
+                    {badge}
+                  </Badge.Item>
+                ))}
+              </Badge>
             </TagWrapper>
           </div>
           {/* 목적 */}
           <div>
-            <Text font={theme.typography.suit14m}>목적</Text>
-            <Spacer top={10} />
+            <Text font="suit14m">목적</Text>
+            <Spacer size={10} />
             <TagWrapper>
-              <Tag style={{ color: theme.colors.b4 }} tags={tags} />
+              <Badge>
+                {badges.map((badge) => (
+                  <Badge.Item key={badge} fontColor="b4">
+                    {badge}
+                  </Badge.Item>
+                ))}
+              </Badge>
             </TagWrapper>
           </div>
         </ProfileBox>
         {/* tab */}
-        <Tabs value={activeTab} onChange={handleTab}>
-          <Tab>아이디어</Tab>
-          <Tab>북마크</Tab>
-        </Tabs>
-        <TabPannel value={activeTab} active={0}>
-          <TabPannelBox>
-            {Array.from({ length: 20 }, (_, idx) => (
-              <IdeaCard mine key={idx} tags={tags} />
-            ))}
-          </TabPannelBox>
-        </TabPannel>
-        <TabPannel value={activeTab} active={1}>
-          <TabPannelBox>
-            {Array.from({ length: 20 }, (_, idx) => (
-              <IdeaCard key={idx} tags={tags} />
-            ))}
-          </TabPannelBox>
-        </TabPannel>
+        <TabLayout>
+          <TabLayout.Tab label="아이디어">
+            <TabPanelBox>
+              {Array.from({ length: 20 }, (_, idx) => (
+                <IdeaCard mine key={idx} badges={badges} />
+              ))}
+            </TabPanelBox>
+          </TabLayout.Tab>
+          <TabLayout.Tab label="북마크">
+            <TabPanelBox>
+              {Array.from({ length: 20 }, (_, idx) => (
+                <IdeaCard key={idx} badges={badges} />
+              ))}
+            </TabPanelBox>
+          </TabLayout.Tab>
+        </TabLayout>
       </ProfileWrapper>
     </ProfileContainer>
   );
@@ -148,15 +138,26 @@ const ProfileBox = styled.div`
   gap: 18px;
   border-radius: 16px 16px 0 0;
   padding: 35px 22px;
-  background-color: ${(props) => props.theme.colors.w1};
+  background-color: ${(props) => props.theme.color.w1};
 `;
 
 const ProfileMainBox = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: start;
 `;
 
-const EditButton = styled.div``;
+const EditButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: 1px solid ${({ theme }) => theme.color.l2};
+  font-size: ${({ theme }) => theme.font.suit13m.fontSize}px;
+  font-weight: ${({ theme }) => theme.font.suit13m.fontWeight};
+  border-radius: 100px;
+  padding: 8px 14px;
+`;
 
 const TagWrapper = styled.div`
   display: flex;
@@ -164,9 +165,9 @@ const TagWrapper = styled.div`
   gap: 6px;
 `;
 
-const TabPannelBox = styled.div`
+const TabPanelBox = styled.div`
   padding: 30px 20px 60px 20px;
-  background-color: ${({ theme }) => theme.colors.bg1};
+  background-color: ${({ theme }) => theme.color.bg1};
   display: flex;
   flex-direction: column;
   gap: 20px;

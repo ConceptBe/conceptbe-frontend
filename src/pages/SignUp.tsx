@@ -3,53 +3,50 @@ import { useEffect, useState } from 'react';
 
 import { ReactComponent as Check } from '../assets/svg/check_24.svg';
 import { ReactComponent as Close } from '../assets/svg/close_24.svg';
-import BottomSheet from '../components/BottomSheet/BottomSheet.tsx';
+import useCheckbox from '../components/@common/@hooks/useCheckbox.ts';
+import useInput from '../components/@common/@hooks/useInput.ts';
+import useRadio from '../components/@common/@hooks/useRadio.ts';
+import BottomSheet from '../components/@common/BottomSheet/BottomSheet.tsx';
+import Button from '../components/@common/Button/Button.tsx';
+import CheckboxContainer from '../components/@common/CheckboxContainer/CheckboxContainer.tsx';
+import Dropdown from '../components/@common/Dropdown/Dropdown.tsx';
+import Field from '../components/@common/Field/Field.tsx';
+import RadioContainer from '../components/@common/RadioContainer/RadioContainer.tsx';
+import Text from '../components/@common/Text/Text.tsx';
 import CheckBoxModal from '../components/BottomSheet/CheckBox.tsx';
-import Button from '../components/Button.tsx';
 import IdeaCard from '../components/Card/IdeaCard.tsx';
 import PopCard from '../components/Card/PopCard.tsx';
-import Checkbox, { checkboxOptions } from '../components/Inputs/Checkbox.tsx';
-import Dropdown from '../components/Inputs/Dropdown/Dropdown.tsx';
-import InputWithLabel from '../components/Inputs/InputWithLabel.tsx';
-import Radio, { radioOptions } from '../components/Inputs/Radio.tsx';
-import Text from '../components/Text.tsx';
 // svg
-import { memberSelect, memberSelectDetails } from '../modules/constants.tsx';
+import { filterOptions, memberSelect, memberSelectDetails } from '../modules/constants.tsx';
+
+interface FormValueType {
+  a: string;
+  b: string;
+}
 
 const SignUp = () => {
   const theme = useTheme();
-  //라디오
-  const [selectedRadio, setSelectedRadio] = useState<string>('');
-  const handleOptionChange = (value: string) => {
-    setSelectedRadio(value);
-  };
-
-  const [radioOptions, setRadioOptions] = useState<radioOptions[] | []>([]);
-
-  useEffect(() => {
-    setRadioOptions([
-      { text: '옵션 1', value: 'option1' },
-      { text: '옵션 2', value: 'option2' },
-      { text: '옵션 3', value: 'option3' },
-    ]);
-  }, []);
+  const { inputValue, inputErrorValue, onChangeInput } = useInput<FormValueType>({
+    a: '',
+    b: '',
+  });
+  const { radioValue, onChangeRadio } = useRadio({
+    a: [
+      { text: '상관없음', value: 'all', checked: false },
+      { text: '온라인', value: 'online', checked: false },
+      { text: '오프라인', value: 'offline', checked: false },
+    ],
+    b: [
+      { text: '상관없음', value: 'all1', checked: false },
+      { text: '온라인', value: 'online1', checked: false },
+      { text: '오프라인', value: 'offline1', checked: false },
+    ],
+  });
 
   //체크박스
-  const [checkboxOptions, setCheckboxOptions] = useState<checkboxOptions[] | []>([]);
-
-  const handleCheckboxChange = (value: string, newState: boolean) => {
-    setCheckboxOptions((prevCheckboxes) =>
-      prevCheckboxes.map((checkbox) => (checkbox.value === value ? { ...checkbox, checked: !newState } : checkbox)),
-    );
-  };
-
-  useEffect(() => {
-    setCheckboxOptions([
-      { text: '체크 1', value: 'check1', checked: false },
-      { text: '체크 2', value: 'check2', checked: false },
-      { text: '체크 3', value: 'check3', checked: false },
-    ]);
-  }, []);
+  const { checkboxValue, onChangeCheckBox } = useCheckbox({
+    field: filterOptions,
+  });
 
   //버튼
   const buttonClick = () => {
@@ -69,15 +66,9 @@ const SignUp = () => {
   //태그
   const tags = ['팀원모집', '팀원모집', '팀원모집', '팀원모집'];
 
-  //인풋 라벨
-  const [inputText, setInputText] = useState('');
-  const handleInputChange = (value: string) => {
-    setInputText(value);
-  };
-
   //드롭다운
   const dropdownItems = [
-    { value: '1', text: 'Dropdown item1 asdasddas' },
+    { value: '1', text: 'Dropdown item1' },
     { value: '2', text: 'Dropdown item2' },
   ];
 
@@ -101,15 +92,15 @@ const SignUp = () => {
 
   // 모달 체크박스
   const [selectMain, setSelectMain] = useState({ text: '기획', value: '기획' });
-  const [modalCheckboxOptions, setModalCheckboxOptions] = useState<checkboxOptions[] | []>([]);
+  const [modalCheckboxOptions, setModalCheckboxOptions] = useState([]);
 
   const handleModalCheckboxChange = (value: string, newState: boolean) => {
-    setModalCheckboxOptions((prevCheckboxes) =>
+    setModalCheckboxOptions((prevCheckboxes: any) =>
       prevCheckboxes.map(
-        (checkbox) =>
+        (checkbox: any) =>
           checkbox.parent === selectMain.text && {
             ...checkbox,
-            options: checkbox.options.map((option) =>
+            options: checkbox.options.map((option: any) =>
               option.value === value ? { ...option, checked: !newState } : option,
             ),
           },
@@ -117,52 +108,77 @@ const SignUp = () => {
     );
   };
 
+  const validateInput = () => {
+    return [
+      {
+        regexp: /[~!@#$%";'^,&*()_+|</>=>`?:{[\]}]/g,
+        name: 'a',
+        errorMessage: '사용 불가한 닉네임입니다.',
+      },
+    ];
+  };
+
   useEffect(() => {
     setModalCheckboxOptions(memberSelectDetails.filter((detail) => detail.parent === selectMain.value));
   }, [selectMain]);
 
-  console.log('selectMain', selectMain);
-  console.log('modalCheckboxOptions', modalCheckboxOptions[0]?.options);
-
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
       <div>
-        <Radio options={radioOptions} onChange={handleOptionChange} gap={'large'} />
-        <p>선택한 옵션: {selectedRadio}</p>
+        <RadioContainer nameKey="a" options={radioValue.a} onChange={(e) => onChangeRadio(e, 'a')} gap="large" />
+        <RadioContainer nameKey="b" options={radioValue.b} onChange={(e) => onChangeRadio(e, 'b')} gap="large" />
+        <p>선택한 옵션: {radioValue.a[0].text}</p>
       </div>
 
       <div>
-        <Checkbox options={checkboxOptions} onChange={handleCheckboxChange} />
-        <p>선택한 옵션!: {checkboxOptions.map(({ text, checked }) => checked && text + ' ')}</p>
-      </div>
-
-      <div>
-        <Button text={'필터'} onClick={toggleBottomSheet} isActive={true} />
-        <Button text={'팀원추가'} onClick={toggleAddMember} isActive={true} />
-        <Button text={'버튼'} onClick={buttonClick} isActive={false} />
-      </div>
-
-      <div>
-        <InputWithLabel
-          label={'label'}
-          limit={20}
-          value={inputText}
-          placeholder={'placeholder'}
-          isValid={true}
-          onChange={handleInputChange}
+        <CheckboxContainer
+          nameKey="field"
+          options={checkboxValue.field}
+          onChange={(e) => onChangeCheckBox(e, 'field')}
         />
-        <InputWithLabel
-          label={'label'}
-          limit={20}
-          value={inputText}
-          placeholder={'placeholder'}
-          isValid={false}
-          onChange={handleInputChange}
-        />
+        <p>선택한 옵션!: {checkboxValue.field.map(({ text, checked }) => checked && text + ' ')}</p>
+      </div>
+
+      <div>
+        <Button onClick={toggleBottomSheet}>필터</Button>
+        <Button onClick={toggleAddMember}>팀원추가</Button>
+        <Button onClick={buttonClick} isGrayOut>
+          버튼
+        </Button>
+      </div>
+
+      <div>
+        <Field label="임시 A" value={inputValue.a} maxLength={10} isRequired>
+          <Field.Input
+            name="a"
+            value={inputValue.a}
+            onChange={onChangeInput}
+            onValidate={validateInput}
+            maxLength={10}
+            placeholder="닉네임을 입력해주세요"
+            errorMessage={inputErrorValue.a}
+            successMessage="사용 가능한 닉네임입니다."
+            isRequired
+          />
+        </Field>
+
+        <Field label="임시 B" value={inputValue.b} maxLength={10} isRequired>
+          <Field.Input
+            name="b"
+            value={inputValue.b}
+            onChange={onChangeInput}
+            onValidate={validateInput}
+            maxLength={20}
+            placeholder="닉네임을 입력해주세요"
+            errorMessage={inputErrorValue.b}
+            successMessage="사용 가능한 닉네임입니다."
+            isRequired
+          />
+        </Field>
       </div>
 
       <div style={{ display: 'flex', gap: '10px' }}>
-        <Dropdown onClick={handleDropdownClick} items={dropdownItems} initialValue={'다운'} />
+        <Dropdown onClick={handleDropdownClick} items={dropdownItems} initialValue="다운" />
       </div>
 
       <div
@@ -183,7 +199,7 @@ const SignUp = () => {
 
       <div style={{ padding: 20 }}>
         {Array.from({ length: 20 }, (_, idx) => (
-          <IdeaCard key={idx} tags={tags} />
+          <IdeaCard key={idx} badges={tags} />
         ))}
       </div>
       <BottomSheet isOpen={isOpen} onClose={() => setIsOpen(false)}>
@@ -198,8 +214,12 @@ const SignUp = () => {
         >
           <div>콘텐츠부분!</div>
           <div style={{ display: 'flex', alignItems: 'flex-end', gap: 7, marginBottom: 50 }}>
-            <Button style={{ flex: 1 }} text={'닫기'} onClick={toggleBottomSheet} isActive={false} />
-            <Button style={{ flex: 2 }} text={'적용'} onClick={buttonClick} isActive={true} />
+            <Button customStyle={{ flex: 1 }} onClick={toggleBottomSheet} isGrayOut>
+              닫기
+            </Button>
+            <Button customStyle={{ flex: 2 }} onClick={buttonClick}>
+              적용
+            </Button>
           </div>
         </div>
       </BottomSheet>
@@ -207,7 +227,7 @@ const SignUp = () => {
       <BottomSheet isOpen={isModal} onClose={() => setIsModal(false)}>
         <div style={{ display: 'flex', justifyContent: 'space-between', padding: 22 }}>
           <Close onClick={() => setIsModal(false)} />
-          <Text font={theme.typography.suit16sb}>타이틀</Text>
+          <Text font="suit16sb">타이틀</Text>
           <Check />
         </div>
         <div style={{ display: 'flex', height: '100%' }}>
@@ -217,12 +237,12 @@ const SignUp = () => {
                 <div
                   style={{
                     padding: '18px 22px',
-                    color: selectMain.text === select.text ? theme.colors.b2 : theme.colors.ba,
-                    background: selectMain.text === select.text ? theme.colors.w1 : theme.colors.bg1,
+                    color: selectMain.text === select.text ? theme.color.b2 : theme.color.ba,
+                    background: selectMain.text === select.text ? theme.color.w1 : theme.color.bg1,
                   }}
                   onClick={() => setSelectMain(select)}
                 >
-                  <Text font={theme.typography.suit14m}>{select.text}</Text>
+                  <Text font="suit14m">{select.text}</Text>
                 </div>
               );
             })}

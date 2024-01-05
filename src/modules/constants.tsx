@@ -1,3 +1,5 @@
+import { DropdownItem } from '../components/@common/@types/Dropdown';
+
 // 멤버 선택 대분류
 const memberSelect = [
   { text: '기획', value: '기획' },
@@ -67,15 +69,15 @@ const filterSubOptions = [
 
 // 필터 협업방식
 const filterRadio = [
-  { text: '상관없음', value: 'all' },
-  { text: '온라인', value: 'online' },
-  { text: '오프라인', value: 'offline' },
+  { text: '상관없음', value: 'all', checked: false },
+  { text: '온라인', value: 'online', checked: false },
+  { text: '오프라인', value: 'offline', checked: false },
 ];
 
 // 프로필 설정
 // 스킬 1뎁스
 const skillOneDepth = [
-  { text: '대분류', value: '', defaultValue: true },
+  { text: '대분류', value: '', placeValue: true },
   { text: '기획', value: 'product' },
   { text: '디자이너', value: 'designer' },
   { text: '개발자', value: 'developer' },
@@ -85,16 +87,16 @@ const skillOneDepth = [
 ];
 
 // 스킬 2뎁스
-const skillTwoDepth = {
+const skillTwoDepth: { [key: string]: DropdownItem[] } = {
   product: [
-    { text: '상세분류', value: '', defaultValue: true },
+    { text: '상세분류', value: '', placeValue: true },
     { text: 'IT기획', value: 'IT기획' },
     { text: '게임기획', value: '게임기획' },
     { text: '제품기획', value: '제품기획' },
     { text: '사업기획', value: '사업기획' },
   ],
   designer: [
-    { text: '상세분류', value: '', defaultValue: true },
+    { text: '상세분류', value: '', placeValue: true },
     { text: 'UXUI', value: 'UXUI' },
     { text: '게임디자인', value: '게임디자인' },
     { text: '캐릭터디자인', value: '캐릭터디자인' },
@@ -105,7 +107,7 @@ const skillTwoDepth = {
     { text: '출판디자인', value: '출판디자인' },
   ],
   developer: [
-    { text: '상세분류', value: '', defaultValue: true },
+    { text: '상세분류', value: '', placeValue: true },
     { text: 'BE', value: 'BE' },
     { text: 'FE', value: 'FE' },
     { text: 'AOS', value: 'AOS' },
@@ -115,12 +117,12 @@ const skillTwoDepth = {
     { text: '게임개발', value: '게임개발' },
   ],
   data: [
-    { text: '상세분류', value: '', defaultValue: true },
+    { text: '상세분류', value: '', placeValue: true },
     { text: '데이터엔지니어', value: '데이터엔지니어' },
     { text: '데이터분석', value: '데이터분석' },
   ],
   marketing: [
-    { text: '상세분류', value: '', defaultValue: true },
+    { text: '상세분류', value: '', placeValue: true },
     { text: '퍼포먼스마케팅', value: '퍼포먼스마케팅' },
     { text: '콘텐츠마케팅', value: '콘텐츠마케팅' },
     { text: '광고/크리에이티브', value: '광고/크리에이티브' },
@@ -128,7 +130,7 @@ const skillTwoDepth = {
     { text: '세일즈', value: '세일즈' },
   ],
   media: [
-    { text: '상세분류', value: '', defaultValue: true },
+    { text: '상세분류', value: '', placeValue: true },
     { text: 'PD', value: 'PD' },
     { text: '작가', value: '작가' },
     { text: '음악', value: '음악' },
