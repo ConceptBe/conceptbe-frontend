@@ -3,11 +3,11 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { ReactComponent as SVGBack } from '../../assets/svg/back_24_B.svg';
+import BottomSheet from '../../components/@common/BottomSheet/BottomSheet';
 import Divider from '../../components/@common/Divider/Divider';
 import Header from '../../components/@common/Header/Header';
 import Spacer from '../../components/@common/Spacer/Spacer';
 import Text from '../../components/@common/Text/Text';
-import BottomSheet from '../../components/BottomSheet/BottomSheet';
 import Privacy from '../../components/BottomSheet/use/Privacy';
 import Terms from '../../components/BottomSheet/use/Terms';
 
@@ -81,7 +81,7 @@ const More = () => {
           </MoreButton>
         </MainWrapper>
       </Container>
-      <BottomSheet scroll isOpen={isOpen} onClose={() => setIsOpen(false)}>
+      <BottomSheet isOpen={isOpen} onClose={() => setIsOpen(false)}>
         {isOpen &&
           (moreState === '개인정보' ? (
             <Privacy isOpen={isOpen} onClose={() => setIsOpen(false)} />

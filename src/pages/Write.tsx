@@ -10,13 +10,13 @@ import { ReactComponent as Check } from '../assets/svg/check_24.svg';
 import { ReactComponent as Xmark } from '../assets/svg/x.svg';
 import useCheckbox from '../components/@common/@hooks/useCheckbox';
 import useRadio from '../components/@common/@hooks/useRadio';
+import BottomSheet from '../components/@common/BottomSheet/BottomSheet';
 import CheckboxContainer from '../components/@common/CheckboxContainer/CheckboxContainer';
 import Divider from '../components/@common/Divider/Divider';
 import Dropdown from '../components/@common/Dropdown/Dropdown';
 import RadioContainer from '../components/@common/RadioContainer/RadioContainer';
 import Spacer from '../components/@common/Spacer/Spacer';
 import Text from '../components/@common/Text/Text';
-import BottomSheet from '../components/BottomSheet/BottomSheet';
 import {
   filterOptions,
   filterSubOptions,

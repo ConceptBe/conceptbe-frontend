@@ -5,6 +5,7 @@ import { ReactComponent as SVGFilter } from '../../assets/svg/filter.svg';
 import { ReactComponent as SVGWrite } from '../../assets/svg/writeicon40.svg';
 import useCheckbox from '../../components/@common/@hooks/useCheckbox';
 import useRadio from '../../components/@common/@hooks/useRadio';
+import BottomSheet from '../../components/@common/BottomSheet/BottomSheet';
 import Button from '../../components/@common/Button/Button';
 import CheckboxContainer from '../../components/@common/CheckboxContainer/CheckboxContainer';
 import Dropdown from '../../components/@common/Dropdown/Dropdown';
@@ -13,7 +14,6 @@ import Logo from '../../components/@common/Logo/Logo';
 import RadioContainer from '../../components/@common/RadioContainer/RadioContainer';
 import Spacer from '../../components/@common/Spacer/Spacer';
 import Text from '../../components/@common/Text/Text';
-import BottomSheet from '../../components/BottomSheet/BottomSheet';
 import FilterBox from '../../components/BottomSheet/FilterBox';
 import IdeaCard from '../../components/Card/IdeaCard';
 import PopCard from '../../components/Card/PopCard';
@@ -220,12 +220,10 @@ const FeedFixTextWrapper = styled.div`
 const FeedBox = styled.div`
   background-color: ${(props) => props.theme.color.bg1};
   border-radius: 16px 16px 0 0;
-  /* padding: 0 22px; */
 `;
 
 const FeedWrapper = styled.div`
   padding-top: 47px;
-  /* padding: 0 22px; */
 `;
 
 const FilterContent = styled.div`
@@ -233,7 +231,6 @@ const FilterContent = styled.div`
   flex-direction: column;
   gap: 25px;
   padding: 22px;
-  padding-bottom: 50px;
 `;
 
 const FilterBottom = styled.div`

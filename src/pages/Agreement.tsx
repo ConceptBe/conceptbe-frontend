@@ -2,10 +2,10 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 
 import AgreementImg from '../assets/images/agreement_bg.png';
+import BottomSheet from '../components/@common/BottomSheet/BottomSheet';
 import Button from '../components/@common/Button/Button';
 import Spacer from '../components/@common/Spacer/Spacer';
 import Text from '../components/@common/Text/Text';
-import BottomSheet from '../components/BottomSheet/BottomSheet';
 
 const Agreement = () => {
   const [isOpenCollection, setIsOpenCollection] = useState(false);
@@ -56,7 +56,6 @@ const Agreement = () => {
 
     return (
       <BottomSheet
-        scroll
         isOpen={isOpenCollection}
         onClose={() => {
           setIsOpenCollection(false);
@@ -178,7 +177,6 @@ const Agreement = () => {
       display: flex;
       flex-direction: column;
       padding: 22px;
-      padding-bottom: 72px;
     `;
 
     const UnorderedList = styled.ul`
@@ -204,15 +202,14 @@ const Agreement = () => {
     `;
 
     const BtnDiv = styled.div`
-      position: fixed;
-      width: 330px;
-      margin-right: 22px;
+      position: sticky;
       bottom: 24px;
+      width: 330px;
+      margin-top: 20px;
     `;
 
     return (
       <BottomSheet
-        scroll
         isOpen={isOpenTerms}
         onClose={() => {
           setIsOpenTerms(false);
@@ -222,16 +219,16 @@ const Agreement = () => {
           <Text font="suit18sb" color="b2">
             개인정보 수집 및 이용 동의
           </Text>
-          <Spacer bottom={16} />
+          <Spacer size={16} />
           <Text font="suit14r" color="b6" customStyle={{ lineHeight: '22px' }}>
             본 개인정보처리방침은 컨셉BE에서 제공하는 서비스 이용과 관련하여 사용자의 개인정보 보호에 대한 내용을
             설명합니다. 서비스를 이용함으로써 사용자는 본 방침에 동의하는 것으로 간주됩니다.
           </Text>
-          <Spacer bottom={20} />
+          <Spacer size={20} />
           <Text font="suit14sm" color="b2">
             1. 수집하는 개인정보의 종류 및 목적
           </Text>
-          <Spacer bottom={10} />
+          <Spacer size={10} />
 
           <UnorderedList>
             <OrderedList>서비스는 다음과 같은 개인정보를 수집할 수 있습니다:</OrderedList>
@@ -242,42 +239,42 @@ const Agreement = () => {
             <ListItem> 사용자에게 서비스 관련 정보 제공 </ListItem>
             <ListItem> 서비스 개선 및 사용자 경험 향상 </ListItem>
           </UnorderedList>
-          <Spacer bottom={20} />
+          <Spacer size={20} />
           <Text font="suit14sm" color="b2">
             2. 개인정보의 보유 및 이용 기간
           </Text>
-          <Spacer bottom={10} />
+          <Spacer size={10} />
           <UnorderedList>
             <ListItem>
               개인정보는 사용자가 서비스를 이용하는 동안에 한하여 보유되며, 서비스 이용 종료 시에는 관련 법령과 내부
               방침에 따라 즉시 파기됩니다.{' '}
             </ListItem>
           </UnorderedList>
-          <Spacer bottom={20} />
+          <Spacer size={20} />
           <Text font="suit14sm" color="b2">
             3. 개인정보의 제3자 제공
           </Text>
-          <Spacer bottom={10} />
+          <Spacer size={10} />
           <UnorderedList>
             <ListItem>서비스는 사용자의 개인정보를 제3자에게 제공하지 않습니다.</ListItem>
             <ListItem>
               다만, 법률적인 의무를 준수하거나 사용자의 동의가 있는 경우에는 예외적으로 제공될 수 있습니다.
             </ListItem>
           </UnorderedList>
-          <Spacer bottom={20} />
+          <Spacer size={20} />
           <Text font="suit14sm" color="b2">
             4. 개인정보의 보안 조치
           </Text>
-          <Spacer bottom={10} />
+          <Spacer size={10} />
           <UnorderedList>
             <ListItem>서비스는 개인정보를 보호하기 위해 적절한 보안 조치를 취합니다.</ListItem>
             <ListItem>개인정보의 무단 접근, 유출, 변조, 손상 등을 방지하기 위한 노력을 기울이고 있습니다.</ListItem>
           </UnorderedList>
-          <Spacer bottom={20} />
+          <Spacer size={20} />
           <Text font="suit14sm" color="b2">
             5. 개인정보에 대한 사용자의 권리
           </Text>
-          <Spacer bottom={10} />
+          <Spacer size={10} />
           <UnorderedList>
             <ListItem>사용자는 자신의 개인정보에 대한 열람, 수정, 삭제를 요청할 수 있습니다.</ListItem>
             <ListItem>또한 개인정보 처리에 대한 동의 철회도 가능합니다. </ListItem>
@@ -286,7 +283,7 @@ const Agreement = () => {
               본 개인정보처리방침의 내용은 변경될 수 있으며, 변경 시에는 서비스를 통해 사전 공지할 것입니다.
             </ListItem>
           </UnorderedList>
-          <Spacer bottom={20} />
+          <Spacer size={20} />
 
           <Text font="suit14sm" color="b6">
             본 이용약관의 내용은 23.08.24에 업데이트되었습니다.
@@ -309,7 +306,7 @@ const Agreement = () => {
   return (
     <AgreementWrapper>
       <img src={AgreementImg} />
-      <Spacer bottom={50} />
+      <Spacer size={50} />
 
       <Text
         font="suit22sb"
@@ -327,7 +324,7 @@ const Agreement = () => {
         </div>
         보호하는 플랫폼입니다.
       </Text>
-      <Spacer bottom={20} />
+      <Spacer size={20} />
       <Text
         font="suit14r"
         color="b6"
@@ -343,7 +340,7 @@ const Agreement = () => {
         아이디어 표절이나 도용 시 해당 사실을 근거로 <br />
         불이익이 발생할 수 있습니다.
       </Text>
-      <Spacer bottom={50} />
+      <Spacer size={50} />
       <Text
         font="suit13m"
         color="b4"
@@ -374,7 +371,7 @@ const Agreement = () => {
           에 동의하시나요?
         </div>
       </Text>
-      <Spacer bottom={24} />
+      <Spacer size={24} />
       <Button onClick={() => {}}>동의하고 시작하기</Button>
 
       {collectionBottomSheet()}
