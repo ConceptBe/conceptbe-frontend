@@ -13,6 +13,11 @@ import {
   theme,
   SVGFilter,
   SVGWrite40,
+  PNGIdeaBackground1,
+  PNGIdeaBackground2,
+  PNGIdeaBackground3,
+  PNGIdeaBackground4,
+  PNGIdeaBackground5,
 } from 'concept-be-design-system';
 import { useState } from 'react';
 
@@ -24,12 +29,12 @@ import { filterOptions, filterSubOptions, filterRadio } from '../../modules/cons
 
 // 아이디어
 const ideas = [
-  { id: 1, title: '제목입니다. 제목입니다. 제목입니다.', category: 'IT' },
-  { id: 2, title: '제목입니다. 제목입니다. 제목입니다.', category: '디자인' },
-  { id: 3, title: '제목입니다. 제목입니다. 제목입니다.', category: '기획' },
-  { id: 3, title: '제목입니다. 제목입니다. 제목입니다.', category: '기획' },
-  { id: 3, title: '제목입니다. 제목입니다. 제목입니다.', category: '기획' },
-  { id: 3, title: '제목입니다. 제목입니다. 제목입니다.', category: '기획' },
+  { id: 1, image: PNGIdeaBackground1, title: '제목입니다. 제목입니다. 제목입니다.', category: 'IT' },
+  { id: 2, image: PNGIdeaBackground2, title: '제목입니다. 제목입니다. 제목입니다.', category: '디자인' },
+  { id: 3, image: PNGIdeaBackground3, title: '제목입니다. 제목입니다. 제목입니다.', category: '기획' },
+  { id: 4, image: PNGIdeaBackground4, title: '제목입니다. 제목입니다. 제목입니다.', category: '영상' },
+  { id: 5, image: PNGIdeaBackground5, title: '제목입니다. 제목입니다. 제목입니다.', category: '개발' },
+  { id: 6, image: PNGIdeaBackground1, title: '제목입니다. 제목입니다. 제목입니다.', category: '기획' },
 ];
 
 //태그
@@ -97,7 +102,7 @@ const Feed = () => {
             <Spacer size={18} />
             <FeedFixWrapper>
               {ideas.map((idea, idx) => {
-                return <PopCard key={idx} category={idea.category} title={idea.title} />;
+                return <PopCard key={idx} image={idea.image} category={idea.category} title={idea.title} />;
               })}
             </FeedFixWrapper>
           </FeedWrapper>
