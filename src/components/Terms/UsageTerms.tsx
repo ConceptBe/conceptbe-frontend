@@ -101,6 +101,9 @@ const UsageTerms = ({ onClose }: props) => {
       <Text font="suit14sm" color="b6">
         본 이용약관의 내용은 23.08.24에 업데이트되었습니다.
       </Text>
+
+      <Spacer size={20} />
+
       <ButtonWrapper>
         <Button onClick={onClose}>확인</Button>
       </ButtonWrapper>
@@ -111,7 +114,7 @@ const UsageTerms = ({ onClose }: props) => {
 const CollectionWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 22px 22px 75px 22px;
+  padding: 22px 22px 0 22px;
 `;
 
 const UnorderedList = styled.ul`
@@ -131,15 +134,12 @@ const ListItem = styled.li`
 `;
 
 const ButtonWrapper = styled.div`
-  position: fixed;
+  position: sticky;
   box-sizing: border-box;
   width: auto;
   bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
   display: flex;
   padding: 0 22px 20px 22px;
-  max-width: 375px;
   width: 100%;
   background-color: #fff;
 `;
