@@ -2,7 +2,6 @@ import styled from '@emotion/styled';
 import {
   useCheckbox,
   useInput,
-  Back,
   Button,
   CheckboxContainer,
   Dropdown,
@@ -12,10 +11,10 @@ import {
   Tag,
   Text,
   theme,
-  // SVGImageWrite,
 } from 'concept-be-design-system';
 import { useCallback, useEffect, useState } from 'react';
 
+import Back from '../../layouts/Back';
 import { skillOneDepth, skillTwoDepth, regionOptions, filterSubOptions } from '../../modules/constants';
 
 const dropdownItems = [
@@ -86,7 +85,7 @@ const Setting = () => {
     <Container>
       <Header main spacerPosition="end">
         <Header.Item>
-          <Back customStyle={{ color: theme.color.w1 }} />
+          <Back />
         </Header.Item>
         <Header.Item>
           <Text font="suit16sb" color="w1">

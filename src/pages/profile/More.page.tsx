@@ -1,14 +1,12 @@
 import styled from '@emotion/styled';
-import { BottomSheet, Divider, Header, Spacer, Text, theme, SVGBack24B } from 'concept-be-design-system';
+import { BottomSheet, Divider, Header, Spacer, Text, theme } from 'concept-be-design-system';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import Privacy from './Terms/Privacy';
 import UsageTerms from './Terms/UsageTerms';
+import Back from '../../layouts/Back';
 
 const More = () => {
-  const navigate = useNavigate();
-
   const [isOpen, setIsOpen] = useState(false);
   const [moreState, setMoreState] = useState('');
 
@@ -26,9 +24,7 @@ const More = () => {
       <Container>
         <Header spacerPosition="end">
           <Header.Item>
-            <SVGBackWrapper>
-              <SVGBack24B onClick={() => navigate(-1)} />
-            </SVGBackWrapper>
+            <Back />
           </Header.Item>
           <Header.Item>
             <Text font="suit16sb" color="b4">
@@ -109,10 +105,5 @@ const MainWrapper = styled.section`
 const MoreButton = styled.button`
   width: 100%;
   text-align: left;
-  cursor: pointer;
-`;
-
-const SVGBackWrapper = styled.button`
-  color: ${theme.color.b4};
   cursor: pointer;
 `;

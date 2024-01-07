@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import axios from 'axios';
 import {
   useCheckbox,
   useRadio,
@@ -12,12 +11,14 @@ import {
   Text,
   theme,
   PNGPlus,
-  SVGBack24B,
   SVGCheck24,
   SVGCancel,
+  SVGActiveCheck,
+  SVGActiveUncheckRadio,
 } from 'concept-be-design-system';
 import { useState, ChangeEvent } from 'react';
 
+import Back from '../layouts/Back';
 import {
   filterOptions,
   filterSubOptions,
@@ -81,46 +82,11 @@ const Write = () => {
     }
   };
 
-  const options = {
-    method: 'POST',
-    url: 'http://15.164.242.20/api/posts',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-      Authorization: 'Bearer 123',
-    },
-    data: {
-      title: 'string',
-      content: 'string',
-      domain: 'IT',
-      purpose: '사이드프로젝트',
-      collaboration: '상관없음',
-      area: '서울특별시',
-      members: ['string'],
-    },
-  };
-
-  const aaa = async () => {
-    console.log('ddfㅁㄴㅇㄹㅇㅇ');
-
-    const { data } = await axios.request(options);
-    console.log(data, 'dㅁㄴㅇㄹd');
-
-    try {
-      const { data } = await axios.request(options);
-      console.log(data, 'data');
-    } catch (error) {
-      console.error(error, 'error');
-    }
-  };
-
   return (
     <MainWrapper>
-      {/* <div onClick={aaa}>ddd</div> */}
       {/* 헤더 */}
       <HeaderBox>
-        <SVGBack24B />
-        <button onClick={() => aaa()}></button>
+        <Back />
         <Text font="suit16sb" color="b4">
           글쓰기
         </Text>
@@ -263,7 +229,7 @@ const Write = () => {
                       {e.text}
                     </Text>
 
-                    {/* {get2Depth.includes(e.value) ? <SVGActiveCheck /> : <SVGActiveUncheckRadio />} */}
+                    {get2Depth.includes(e.value) ? <SVGActiveCheck /> : <SVGActiveUncheckRadio />}
                   </Sheet_radioDiv>
                 );
               })}
