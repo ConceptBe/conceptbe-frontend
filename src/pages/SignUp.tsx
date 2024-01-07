@@ -12,13 +12,12 @@ import {
   SVGActiveCheck,
   theme,
 } from 'concept-be-design-system';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-import CheckBoxModal from '../components/BottomSheet/CheckBox.tsx';
 import IdeaCard from '../components/Card/IdeaCard.tsx';
 import PopCard from '../components/Card/PopCard.tsx';
 // svg
-import { filterOptions, memberSelect, memberSelectDetails } from '../modules/constants.tsx';
+import { filterOptions, memberSelect } from '../modules/constants.tsx';
 
 interface FormValueType {
   a: string;
@@ -103,10 +102,6 @@ const SignUp = () => {
       },
     ];
   };
-
-  useEffect(() => {
-    setModalCheckboxOptions(memberSelectDetails.filter((detail) => detail.parent === selectMain.value));
-  }, [selectMain]);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
