@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Spacer, Text, TextDivider, SVGDefaultProfile } from 'concept-be-design-system';
 
-const ProfileComponent = () => {
+const ProfileInfo = () => {
   return (
     <ProfileWrapper>
       <SVGDefaultProfile />
@@ -24,7 +24,7 @@ const ProfileComponent = () => {
   );
 };
 
-export default ProfileComponent;
+export default ProfileInfo;
 
 const ProfileWrapper = styled.div`
   display: flex;

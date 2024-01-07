@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { getIsMember, getOauthKaKao } from '../api';
+import { getIsMember, getOauthKaKao } from '../../api';
 
 const KakaoRedirect = () => {
   const navigate = useNavigate();

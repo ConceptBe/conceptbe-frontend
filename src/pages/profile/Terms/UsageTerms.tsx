@@ -2,11 +2,10 @@ import styled from '@emotion/styled';
 import { Button, Spacer, Text, theme } from 'concept-be-design-system';
 
 interface props {
-  isOpen: boolean;
   onClose: () => void;
 }
 
-const Terms = ({ isOpen, onClose }: props) => {
+const UsageTerms = ({ onClose }: props) => {
   const CollectionWrapper = styled.div`
     display: flex;
     flex-direction: column;
@@ -145,4 +144,4 @@ const Terms = ({ isOpen, onClose }: props) => {
   );
 };
 
-export default Terms;
+export default UsageTerms;

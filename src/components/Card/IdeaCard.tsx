@@ -13,6 +13,7 @@ import {
   SVGScrap14,
   SVGView14,
 } from 'concept-be-design-system';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   mine?: boolean;
@@ -20,8 +21,10 @@ interface Props {
 }
 
 const IdeaCard = ({ mine, badges }: Props) => {
+  const navigate = useNavigate();
+
   return (
-    <CardContainer>
+    <CardContainer onClick={() => navigate('/feed/1')}>
       <ProfileWrapper>
         <ProfileBox>
           <SVGDefaultProfile />
@@ -101,6 +104,7 @@ const CardContainer = styled.div`
   border-radius: 8px;
   box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.08);
   background-color: ${theme.color.w1};
+  cursor: pointer;
 `;
 
 const ProfileWrapper = styled.div`

@@ -1,34 +1,18 @@
 import styled from '@emotion/styled';
-import {
-  Text,
-  theme,
-  PNGIdeaBackground1,
-  PNGIdeaBackground2,
-  PNGIdeaBackground3,
-  PNGIdeaBackground4,
-  PNGIdeaBackground5,
-} from 'concept-be-design-system';
+import { Text, theme, PNGIdeaBackground1 } from 'concept-be-design-system';
+import { useNavigate } from 'react-router-dom';
 
 interface IdeaCardProps {
   category: string;
   title: string;
-  image?: string;
+  image: string;
 }
 
-const randomImages = [
-  PNGIdeaBackground1,
-  PNGIdeaBackground2,
-  PNGIdeaBackground3,
-  PNGIdeaBackground4,
-  PNGIdeaBackground5,
-];
-
 const PopCard = ({ category, title, image }: IdeaCardProps) => {
-  const randomNumber = Math.floor(Math.random() * 5) + 1;
-  const test = randomImages[randomNumber];
-  console.log('test', test);
+  const navigate = useNavigate();
+
   return (
-    <IdeaCardWrapper>
+    <IdeaCardWrapper onClick={() => navigate('/feed/1')}>
       <img src={image ?? PNGIdeaBackground1} />
       <CardBoxBack />
       <CardBox>
@@ -53,6 +37,7 @@ const IdeaCardWrapper = styled.div`
   position: relative;
   overflow: hidden;
   background-color: ${theme.color.c1};
+  cursor: pointer;
 `;
 
 const CardBoxBack = styled.div`

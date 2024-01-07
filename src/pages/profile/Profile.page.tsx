@@ -1,9 +1,10 @@
 import styled from '@emotion/styled';
-import { Badge, Header, Logo, Spacer, TabLayout, Text, theme, SVGSetting } from 'concept-be-design-system';
+import { Badge, Header, Spacer, TabLayout, Text, theme, SVGSetting } from 'concept-be-design-system';
 import { useNavigate } from 'react-router-dom';
 
 import IdeaCard from '../../components/Card/IdeaCard';
 import Padding from '../../components/Padding';
+import Logo from '../../layouts/Logo';
 
 // const skillTags = ['퍼포먼스 마케팅, 상', '광고/크리에이티브, 중', '콘텐츠 마케팅, 하'];
 const badges = ['사이드 프로젝트', '크라우드 펀딩', '공모전'];
@@ -43,7 +44,7 @@ const Profile = () => {
                 외국계 스타트업 | 강원특별자치도
               </Text>
             </div>
-            <EditButton>프로필 수정</EditButton>
+            <EditButton onClick={() => navigate('/profile/1')}>프로필 수정</EditButton>
           </ProfileMainBox>
           {/* 프로필 설명 */}
           <Text font="suit15rb" color="b4" customStyle={{ lineHeight: 1.5 }}>

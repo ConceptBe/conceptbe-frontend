@@ -2,11 +2,10 @@ import styled from '@emotion/styled';
 import { Button, Spacer, Text, theme } from 'concept-be-design-system';
 
 interface props {
-  isOpen: boolean;
   onClose: () => void;
 }
 
-const Privacy = ({ isOpen, onClose }: props) => {
+const Privacy = ({ onClose }: props) => {
   const CollectionWrapper = styled.div`
     display: flex;
     flex-direction: column;
