@@ -18,7 +18,7 @@ import {
 } from 'concept-be-design-system';
 import { useState } from 'react';
 
-import ProfileComponent from '../../components/Profile';
+import ProfileInfo from '../../components/ProfileInfo';
 import Back from '../../layouts/Back';
 import Logo from '../../layouts/Logo';
 
@@ -66,7 +66,7 @@ const FeedDetail = () => {
         </DotsBox>
       </Header>
       <ContantWrapper>
-        <ProfileComponent />
+        <ProfileInfo />
         <Spacer size={20} />
 
         <TitleWrapper>
@@ -183,7 +183,7 @@ const FeedDetail = () => {
         <Spacer size={20} />
 
         <CommentsBox>
-          <ProfileComponent />
+          <ProfileInfo />
           <Spacer size={20} />
           <Text font="suit14m" color="t" customStyle={{ lineHeight: '22px' }}>
             댓글 내용, 한 번에 최대 500자 까지 입력 가능. 댓글 내용, 한 번에 최대 500자 까지 입력 가능. 댓글 내용, 한
@@ -219,7 +219,7 @@ const FeedDetail = () => {
             <SVGFeedReCommentLine />
           </div>
           <CommentsBox>
-            <ProfileComponent />
+            <ProfileInfo />
             <Spacer size={20} />
             <Text font="suit14m" color="t" customStyle={{ lineHeight: '22px' }}>
               댓글 내용, 한 번에 최대 500자 까지 입력 가능. 댓글 내용, 한 번에 최대 500자 까지 입력 가능. 댓글 내용, 한
