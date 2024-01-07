@@ -1,11 +1,14 @@
-import styled from '@emotion/styled';
 import { BottomSheet, Button, Spacer, Text, PNGAgreementBackground, Flex } from 'concept-be-design-system';
 import { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import Privacy from '../../components/Terms/Privacy';
 import UsageTerms from '../../components/Terms/UsageTerms';
+import { OauthMemberInfo } from '../../types/login';
 
 const Agreement = () => {
+  const { state: memberInfo }: { state: OauthMemberInfo } = useLocation();
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isOpenPrivacy, setIsOpenPrivacy] = useState(false);
 
@@ -24,7 +27,7 @@ const Agreement = () => {
   };
 
   return (
-    <AgreementWrapper>
+    <Flex direction="column" padding="20px 22px">
       <img src={PNGAgreementBackground} />
       <Spacer size={50} />
 
@@ -99,21 +102,14 @@ const Agreement = () => {
         </Flex>
       </Text>
       <Spacer size={24} />
-      <Button onClick={() => {}}>동의하고 시작하기</Button>
+      <Button onClick={() => navigate('/sign-up', { state: memberInfo })}>동의하고 시작하기</Button>
 
       <BottomSheet isOpen={isOpen} onClose={onCloseBottomSheet}>
         {isOpenPrivacy && <Privacy onClose={onCloseBottomSheet} />}
         {!isOpenPrivacy && <UsageTerms onClose={onCloseBottomSheet} />}
       </BottomSheet>
-    </AgreementWrapper>
+    </Flex>
   );
 };
 
 export default Agreement;
-
-const AgreementWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  padding: 20px 22px;
-`;
