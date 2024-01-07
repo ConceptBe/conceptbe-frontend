@@ -82,7 +82,7 @@ const Agreement = () => {
           <Text
             font="suit13m"
             color="c1"
-            onClick={onClickOpenUsageTerms}
+            onClick={onClickOpenPrivacy}
             customStyle={{ cursor: 'pointer', textDecoration: 'underline', textUnderlineOffset: '2px' }}
           >
             개인정보 수집 및 이용 동의
@@ -93,7 +93,7 @@ const Agreement = () => {
           <Text
             font="suit13m"
             color="c1"
-            onClick={onClickOpenPrivacy}
+            onClick={onClickOpenUsageTerms}
             style={{ cursor: 'pointer', textDecoration: 'underline', textUnderlineOffset: '2px' }}
           >
             서비스 이용약관
