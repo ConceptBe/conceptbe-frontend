@@ -14,10 +14,10 @@ import {
 } from 'concept-be-design-system';
 import { useState } from 'react';
 
-import IdeaCard from '../components/Card/IdeaCard.tsx';
-import PopCard from '../components/Card/PopCard.tsx';
+import IdeaCard from '../../components/Card/IdeaCard.tsx';
+import PopCard from '../../components/Card/PopCard.tsx';
 // svg
-import { filterOptions, memberSelect } from '../modules/constants.tsx';
+import { filterOptions, memberSelect } from '../../modules/constants.tsx';
 
 interface FormValueType {
   a: string;

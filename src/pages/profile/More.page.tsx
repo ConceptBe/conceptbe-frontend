@@ -3,8 +3,8 @@ import { BottomSheet, Divider, Header, Spacer, Text, theme, SVGBack24B } from 'c
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import Privacy from './Privacy';
-import Terms from './Terms';
+import Privacy from './Terms/Privacy';
+import UsageTerms from './Terms/UsageTerms';
 
 const More = () => {
   const navigate = useNavigate();
@@ -79,9 +79,9 @@ const More = () => {
       <BottomSheet isOpen={isOpen} onClose={() => setIsOpen(false)}>
         {isOpen &&
           (moreState === '개인정보' ? (
-            <Privacy isOpen={isOpen} onClose={() => setIsOpen(false)} />
+            <Privacy onClose={() => setIsOpen(false)} />
           ) : (
-            <Terms isOpen={isOpen} onClose={() => setIsOpen(false)} />
+            <UsageTerms onClose={() => setIsOpen(false)} />
           ))}
       </BottomSheet>
     </>

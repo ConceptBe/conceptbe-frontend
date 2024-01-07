@@ -1,340 +1,261 @@
 import styled from '@emotion/styled';
 import {
-  Back,
-  Badge,
-  Divider,
+  useCheckbox,
+  useRadio,
+  BottomSheet,
+  Button,
+  CheckboxContainer,
+  Dropdown,
   Header,
   Logo,
+  RadioContainer,
   Spacer,
   Text,
-  TextDivider,
   theme,
-  SVGFeedDotsVertical,
-  SVGFeedLike,
-  SVGFeedMessage,
-  SVGFeedPencil,
-  SVGFeedReCommentLine,
-  SVGFeedUnLike,
-  SVGFeedUnScrap,
-  SVGCancel,
+  SVGFilter,
+  SVGWrite40,
 } from 'concept-be-design-system';
 import { useState } from 'react';
 
-import ProfileComponent from '../../components/Profile';
+import IdeaCard from '../../components/Card/IdeaCard';
+import PopCard from '../../components/Card/PopCard';
+import Padding from '../../components/Padding';
+import { filterOptions, filterSubOptions, filterRadio } from '../../modules/constants';
 
-const FeedDetailPage = () => {
-  const infoIndex = [
-    { indexName: '분야', tag: ['IT', '유튜브 컨텐츠'] },
-    { indexName: '목적', tag: ['사이드 프로잭트', '창업', '크라우드편딩'] },
-    { indexName: '협업 방식', tag: '상관없음' },
-    { indexName: '모집 지역', tag: '서울특별시' },
-    { indexName: '팀원모집', tag: ['서비스기획23', '서비스기5획', '서비기획', '서비스fdsa기획', '서비획'] },
-  ];
+// 아이디어
+const ideas = [
+  { id: 1, title: '제목입니다. 제목입니다. 제목입니다.', category: 'IT' },
+  { id: 2, title: '제목입니다. 제목입니다. 제목입니다.', category: '디자인' },
+  { id: 3, title: '제목입니다. 제목입니다. 제목입니다.', category: '기획' },
+  { id: 3, title: '제목입니다. 제목입니다. 제목입니다.', category: '기획' },
+  { id: 3, title: '제목입니다. 제목입니다. 제목입니다.', category: '기획' },
+  { id: 3, title: '제목입니다. 제목입니다. 제목입니다.', category: '기획' },
+];
 
-  const [isClickDots, setIsClickDots] = useState(false);
+//태그
+const tags = ['팀원모집', '팀원모집', '팀원모집', '팀원모집'];
 
-  const onClickDots = () => {
-    setIsClickDots(!isClickDots);
+//드롭다운
+const dropdownItems = [
+  { value: '1', text: 'Dropdown item1 asdasddas' },
+  { value: '2', text: 'Dropdown item2' },
+];
+
+const Feed = () => {
+  const [isFilter, setIsFilter] = useState(false);
+  const { checkboxValue, onChangeCheckBox } = useCheckbox({
+    field: filterOptions,
+    goal: filterSubOptions,
+  });
+  const { radioValue, onChangeRadio } = useRadio({
+    collaboration: filterRadio,
+  });
+
+  const handleDropdownClick = (value: string) => {
+    console.log(value);
   };
 
   return (
     <>
       <Header main>
-        <Back />
-        <Logo />
-        <DotsBox>
-          <SVGFeedDotsVertical onClick={onClickDots} />
-          {isClickDots && (
-            <DropDownBox>
-              <DropDownSelect>
-                <Text font="suit12r" color="b6">
-                  수정하기
-                </Text>
-                <SVGFeedPencil />
-              </DropDownSelect>
-
-              <Divider color="bg1" height={0.1} />
-
-              <DropDownSelect>
-                <Text font="suit12r" color="b6">
-                  삭제하기
-                </Text>
-                <SVGCancel />
-              </DropDownSelect>
-            </DropDownBox>
-          )}
-        </DotsBox>
+        <Header.Item>
+          <Logo />
+        </Header.Item>
+        <Header.Item>
+          <SVGFilter onClick={() => setIsFilter(true)} cursor="pointer" />
+        </Header.Item>
       </Header>
-      <ContantWrapper>
-        <ProfileComponent />
-        <Spacer size={20} />
 
-        <TitleWrapper>
-          <div>
-            <Text font="suit14sm" color="c1">
-              IT / 유튜브 컨텐츠
+      <Wrapper>
+        <FeedFixBox>
+          <SVGWrite40 />
+
+          <Spacer size={27} />
+          <FeedFixTextWrapper>
+            <Text font="suit22sb" color="w1">
+              일이삼사오육칠팔구십
             </Text>
-            <Spacer size={8} />
-            <Text font="suit18sb" color="b4">
-              쇼츠 전용 뉴스를 함께 제작하실 분!
+            <Text font="suit22r" color="w1">
+              님,
             </Text>
-            <Spacer size={8} />
-            <TitleWrapper_info>
-              <Text font="suit12r" color="b9">
-                2023.09.09 23:23
-              </Text>
-              <TextDivider left={6} right={6} color="l2" />
-              <Text font="suit12r" color="b9">
-                조회수 999+
-              </Text>
-            </TitleWrapper_info>
-          </div>
-        </TitleWrapper>
-        <Divider color="l3" top={16} bottom={16} />
+          </FeedFixTextWrapper>
 
-        <Text font="suit15ra" color="b6" customStyle={{ lineHeight: '24px' }}>
-          현재 저희 팀은 유튜브 컨텐츠를 위해 프로젝트를 진행하고 있습니다.
-          <br />
-          인원 충원을 위해 멤버를 모집하고 있어요. <br />
-          아래 항목을 보시고 희망하시면 문의주세요! 현재 1차 범위 진행중에 있습니다. <br /> 새로운 멤버를 찾게 되면 1차
-          이후 or 범위 확장하여 연이어 진행에 들어갈 예정입니다. <br />
-          <br />
-          프로젝트 상세내용 여헹 정보 제공 앱 서비스 <br /> 현재 함께하는 멤버 <br /> <br />- UI 기획/ 디자인/ 마케터:
-          1명 <br />
-          - 브랜딩 외 디자인: 1명 <br />- 풀스택: 1명 <br />- 백엔드 개발자: 2명 프로젝트 <br /> <br />
-          기간 2023년 MVP 1차 런칭 목표로 합니다.
-        </Text>
-      </ContantWrapper>
-
-      <Divider color="bg1" height={8} />
-
-      <InfoWrapper>
-        {infoIndex.map((item, idx) => {
-          return (
-            <div key={idx}>
-              {typeof item.tag === 'string' ? (
-                <div style={{ display: 'flex', gap: '12px' }}>
-                  <Text font="suit14m" color="b9">
-                    {item.indexName}
-                  </Text>
-
-                  <Text font="suit14m" color="b4">
-                    {item.tag}
-                  </Text>
-                </div>
-              ) : (
-                <div>
-                  <Text font="suit14m" color="b9">
-                    {item.indexName}
-                  </Text>
-                  <Spacer size={12} />
-                  <Badge>
-                    {item.tag.map((badge) => (
-                      <Badge.Item key={badge} fontColor="b4">
-                        {badge}
-                      </Badge.Item>
-                    ))}
-                  </Badge>
-                </div>
-              )}
-            </div>
-          );
-        })}
-        <Divider color="l3" />
-        <InfoBottomBox>
-          <IndexBox>
-            <SVGFeedMessage />
-            <Text font="suit12r" color="b9">
-              댓글
-            </Text>
-            <Text font="suit12b" color="b9">
-              60
-            </Text>
-          </IndexBox>
-          <IndexBox>
-            <SVGFeedLike />
-            <Text font="suit12r" color="b9">
-              좋아요
-            </Text>
-            <Text font="suit12b" color="b9">
-              192
-            </Text>
-          </IndexBox>
-          <IndexBox>
-            <SVGFeedUnScrap />
-            <Text font="suit12r" color="b9">
-              스크랩
-            </Text>
-            <Text font="suit12b" color="b9">
-              430324
-            </Text>
-          </IndexBox>
-        </InfoBottomBox>
-      </InfoWrapper>
-
-      <Divider color="bg1" height={8} />
-
-      <CommentWrapper>
-        <InputBox>
-          <Input placeholder="댓글을 입력해 주세요." />
-          {/* <Textarea placeholder="Your message here..." value={textareaValue} onChange={handleTextareaChange} /> */}
-        </InputBox>
-
-        <Spacer size={20} />
-
-        <CommentsBox>
-          <ProfileComponent />
-          <Spacer size={20} />
-          <Text font="suit14m" color="t" customStyle={{ lineHeight: '22px' }}>
-            댓글 내용, 한 번에 최대 500자 까지 입력 가능. 댓글 내용, 한 번에 최대 500자 까지 입력 가능. 댓글 내용, 한
-            번에 최대 500자 까지 입력 가능. 댓글 내용, 한 번에 최대 500자 까지 입력 가능. 댓글 내용, 한 번에 최대 500자
-            까지 입력 가능. 댓글 내용, 한 번에 최대 500자 까지 입력 가능.
+          <Spacer size={8} />
+          <Text font="suit22r" color="w1">
+            재밌는 아이디어를 들려주세요!
           </Text>
-          <Spacer size={10} />
-          <CommnetsBottomBox>
-            <IndexBox>
-              <SVGFeedMessage />
-              <Text font="suit12r" color="b9">
-                댓글
-              </Text>
-              <Text font="suit12b" color="b9">
-                60
-              </Text>
-            </IndexBox>
-            <Spacer size={14} />
-            <IndexBox>
-              <SVGFeedUnLike />
-              <Text font="suit12r" color="b9">
-                좋아요
-              </Text>
-              <Text font="suit12b" color="b9">
-                192
-              </Text>
-            </IndexBox>
-          </CommnetsBottomBox>
-        </CommentsBox>
+          <Spacer size={14} />
 
-        <ReCommandBox>
-          <div>
-            <SVGFeedReCommentLine />
-          </div>
-          <CommentsBox>
-            <ProfileComponent />
-            <Spacer size={20} />
-            <Text font="suit14m" color="t" customStyle={{ lineHeight: '22px' }}>
-              댓글 내용, 한 번에 최대 500자 까지 입력 가능. 댓글 내용, 한 번에 최대 500자 까지 입력 가능. 댓글 내용, 한
-              번에 최대 500자 까지 입력 가능. 댓글 내용, 한 번에 최대 500자 까지 입력 가능. 댓글 내용, 한 번에 최대
-              500자 까지 입력 가능. 댓글 내용, 한 번에 최대 500자 까지 입력 가능.
+          <Text font="suit15ra" color="w2">{`아이디어 적으러 가기 >`}</Text>
+        </FeedFixBox>
+
+        <FeedBox>
+          <FeedWrapper style={{ padding: '47px 0 0 22px' }}>
+            <Text font="suit16sb" color="b4">
+              현재 인기 있는 아이디어
             </Text>
-            <Spacer size={10} />
-            <CommnetsBottomBox>
-              <IndexBox>
-                <SVGFeedUnLike />
-                <Text font="suit12r" color="b9">
-                  좋아요
-                </Text>
-                <Text font="suit12b" color="b9">
-                  192
-                </Text>
-              </IndexBox>
-            </CommnetsBottomBox>
-          </CommentsBox>
-        </ReCommandBox>
-      </CommentWrapper>
+            <Spacer size={18} />
+            <FeedFixWrapper>
+              {ideas.map((idea, idx) => {
+                return <PopCard key={idx} category={idea.category} title={idea.title} />;
+              })}
+            </FeedFixWrapper>
+          </FeedWrapper>
+
+          <FeedWrapper style={{ padding: '47px 22px 0 22px' }}>
+            <Text font="suit16sb" color="b4">
+              피드 영역 타이틀입니다
+            </Text>
+            <Spacer size={20} />
+            {Array.from({ length: 20 }, (_, idx) => (
+              <>
+                <IdeaCard key={idx} badges={tags} />
+                <Spacer size={20} />
+              </>
+            ))}
+          </FeedWrapper>
+          <Padding bottom={80} />
+        </FeedBox>
+      </Wrapper>
+
+      <BottomSheet isOpen={isFilter} onClose={() => setIsFilter(false)}>
+        <FilterBox>
+          <FilterContent>
+            <FilterWrapper>
+              <Text font="suit15m" color="b9">
+                분야
+              </Text>
+              <Spacer size={12} />
+              <CheckboxContainer
+                nameKey="field"
+                options={checkboxValue.field}
+                onChange={(e) => onChangeCheckBox(e, 'field')}
+              />
+            </FilterWrapper>
+
+            <FilterWrapper>
+              <Text font="suit15m" color="b9">
+                목적
+              </Text>
+              <Spacer size={12} />
+              <CheckboxContainer
+                nameKey="goal"
+                options={checkboxValue.goal}
+                onChange={(e) => onChangeCheckBox(e, 'goal')}
+              />
+            </FilterWrapper>
+
+            <FilterWrapper>
+              <Text font="suit15m" color="b9">
+                협업 방식
+              </Text>
+              <Spacer size={12} />
+              <RadioContainer
+                nameKey="collaboration"
+                options={radioValue.collaboration}
+                onChange={(e) => onChangeRadio(e, 'collaboration')}
+                gap="large"
+              />
+            </FilterWrapper>
+
+            <FilterWrapper>
+              <Text font="suit15m" color="b9">
+                지역
+              </Text>
+              <Spacer size={12} />
+              <Dropdown onClick={handleDropdownClick} items={dropdownItems} initialValue="다운" />
+            </FilterWrapper>
+
+            <FilterWrapper>
+              <Text font="suit15m" color="b9">
+                팀원 모집
+              </Text>
+              <Spacer size={12} />
+              <div style={{ display: 'flex', gap: 8 }}>
+                <Dropdown onClick={handleDropdownClick} items={dropdownItems} initialValue="다운" />
+                <Dropdown onClick={handleDropdownClick} items={dropdownItems} initialValue="다운" />
+              </div>
+            </FilterWrapper>
+          </FilterContent>
+          <FilterBottom>
+            <Button customStyle={{ flex: 1 }} onClick={() => setIsFilter(false)} isGrayOut>
+              닫기
+            </Button>
+            <Button customStyle={{ flex: 2 }} onClick={() => {}}>
+              적용
+            </Button>
+          </FilterBottom>
+        </FilterBox>
+      </BottomSheet>
     </>
   );
 };
 
-export default FeedDetailPage;
+export default Feed;
 
-const DotsBox = styled.div`
-  position: relative;
+const Wrapper = styled.section`
+  background-color: ${theme.color.c1};
+  height: 100%;
 `;
 
-const DropDownBox = styled.div`
-  position: absolute;
+const FeedFixBox = styled.div`
+  padding: 90px 30px 50px 30px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  background-color: ${theme.color.w1};
-  width: 88px;
-  height: 70px;
-  border-radius: 6px;
-  padding: 10.5px 10px;
-  translate: -67px 2px;
+  background-color: ${theme.color.c1};
+  color: ${theme.color.w1};
 `;
-const DropDownSelect = styled.div`
+
+const FeedFixWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-// ContantWrapper
-const ContantWrapper = styled.div`
-  padding: 30px 22px 30px 22px;
-  margin-top: 48px;
-`;
-const TitleWrapper = styled.div``;
-const TitleWrapper_info = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-`;
-
-// InfoWrapper
-const InfoWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 35px;
-  padding: 30px 22px 20px 22px;
-`;
-
-const InfoBottomBox = styled.div`
-  margin: 18px, 0px;
-  display: flex;
-  justify-content: space-between;
-`;
-const IndexBox = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 4px;
-`;
-
-// CommentWrapper
-const CommentWrapper = styled.div`
-  padding: 20px 22px 20px 22px;
-`;
-
-const InputBox = styled.div`
-  position: relative;
-`;
-
-const Input = styled.input`
-  border-radius: 6px;
-  width: 100%;
-  padding: 10px 20px;
-  box-sizing: border-box;
-  border: none;
-  background-color: ${theme.color.bg1};
-  color: ${theme.color.t};
-  font-style: normal;
-  font-family: SUIT;
-  font-weight: 400;
-  line-height: normal;
-  ::placeholder {
-    color: ${theme.color.ba};
-  }
-`;
-
-const CommentsBox = styled.div`
-  margin: 20px 0px;
-`;
-
-const CommnetsBottomBox = styled.div`
-  display: flex;
-`;
-
-const ReCommandBox = styled.div`
-  display: flex;
+  flex-wrap: nowrap;
   gap: 10px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+`;
+
+const FeedFixTextWrapper = styled.div`
+  display: flex;
+  gap: 5px;
+`;
+
+const FeedBox = styled.div`
+  background-color: ${theme.color.bg1};
+  border-radius: 16px 16px 0 0;
+`;
+
+const FeedWrapper = styled.div`
+  padding-top: 47px;
+`;
+
+const FilterContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  padding: 22px;
+`;
+
+const FilterBottom = styled.div`
+  display: flex;
+  align-items: flex-end;
+  gap: 7px;
+  position: sticky;
+  bottom: 0;
+  padding: 0 22px 22px;
+  background-color: ${theme.color.w1};
+`;
+
+const FilterWrapper = styled.div``;
+
+const FilterBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  overflow: auto;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
