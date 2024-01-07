@@ -6,42 +6,6 @@ interface props {
 }
 
 const UsageTerms = ({ onClose }: props) => {
-  const CollectionWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    padding: 22px 22px 75px 22px;
-  `;
-
-  const UnorderedList = styled.ul`
-    width: 100%;
-    line-height: 22px;
-  `;
-
-  const ListItem = styled.li`
-    list-style: disc;
-    color: ${theme.color.b6};
-    list-style-position: inside;
-    font-size: 14px;
-    font-weight: 400;
-    padding-left: 20px;
-    text-indent: -20px;
-    margin: 0;
-  `;
-
-  const ButtonWrapper = styled.div`
-    position: fixed;
-    box-sizing: border-box;
-    width: auto; /* changed this to auto */
-    bottom: 0;
-    left: 50%; /* centering the wrapper */
-    transform: translateX(-50%); /* ensuring it's centered */
-    display: flex;
-    padding: 0 22px 20px 22px;
-    max-width: 375px;
-    width: 100%;
-    background-color: #fff;
-  `;
-
   return (
     <CollectionWrapper>
       <Text font="suit18sb" color="b2">
@@ -143,5 +107,41 @@ const UsageTerms = ({ onClose }: props) => {
     </CollectionWrapper>
   );
 };
+
+const CollectionWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 22px 22px 75px 22px;
+`;
+
+const UnorderedList = styled.ul`
+  width: 100%;
+  line-height: 22px;
+`;
+
+const ListItem = styled.li`
+  list-style: disc;
+  color: ${theme.color.b6};
+  list-style-position: inside;
+  font-size: 14px;
+  font-weight: 400;
+  padding-left: 20px;
+  text-indent: -20px;
+  margin: 0;
+`;
+
+const ButtonWrapper = styled.div`
+  position: fixed;
+  box-sizing: border-box;
+  width: auto;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  padding: 0 22px 20px 22px;
+  max-width: 375px;
+  width: 100%;
+  background-color: #fff;
+`;
 
 export default UsageTerms;

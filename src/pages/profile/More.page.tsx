@@ -2,8 +2,8 @@ import styled from '@emotion/styled';
 import { BottomSheet, Divider, Header, Spacer, Text, theme } from 'concept-be-design-system';
 import { useState } from 'react';
 
-import Privacy from './Terms/Privacy';
-import UsageTerms from './Terms/UsageTerms';
+import Privacy from '../../components/Terms/Privacy';
+import UsageTerms from '../../components/Terms/UsageTerms';
 import Back from '../../layouts/Back';
 
 const More = () => {
