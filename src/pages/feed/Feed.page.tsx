@@ -7,7 +7,6 @@ import {
   CheckboxContainer,
   Dropdown,
   Header,
-  Logo,
   RadioContainer,
   Spacer,
   Text,
@@ -20,6 +19,7 @@ import { useState } from 'react';
 import IdeaCard from '../../components/Card/IdeaCard';
 import PopCard from '../../components/Card/PopCard';
 import Padding from '../../components/Padding';
+import Logo from '../../layouts/Logo';
 import { filterOptions, filterSubOptions, filterRadio } from '../../modules/constants';
 
 // 아이디어

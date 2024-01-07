@@ -1,10 +1,8 @@
 import styled from '@emotion/styled';
 import {
-  Back,
   Badge,
   Divider,
   Header,
-  Logo,
   Spacer,
   Text,
   TextDivider,
@@ -21,6 +19,8 @@ import {
 import { useState } from 'react';
 
 import ProfileComponent from '../../components/Profile';
+import Back from '../../layouts/Back';
+import Logo from '../../layouts/Logo';
 
 const FeedDetail = () => {
   const infoIndex = [
