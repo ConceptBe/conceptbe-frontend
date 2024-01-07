@@ -1,22 +1,23 @@
 import styled from '@emotion/styled';
 import axios from 'axios';
+import {
+  useCheckbox,
+  useRadio,
+  BottomSheet,
+  CheckboxContainer,
+  Divider,
+  Dropdown,
+  RadioContainer,
+  Spacer,
+  Text,
+  theme,
+  PNGPlus,
+  SVGBack24B,
+  SVGCheck24,
+  SVGCancel,
+} from 'concept-be-design-system';
 import { useState, ChangeEvent } from 'react';
 
-import plus from '../../src/assets/images/plus.png';
-import { ReactComponent as RadioChecked } from '../assets/svg/active_check.svg';
-import { ReactComponent as RadioUnChecked } from '../assets/svg/active_radio_uncheck.svg';
-import { ReactComponent as Back } from '../assets/svg/back_24_B.svg';
-import { ReactComponent as Check } from '../assets/svg/check_24.svg';
-import { ReactComponent as Xmark } from '../assets/svg/x.svg';
-import useCheckbox from '../components/@common/@hooks/useCheckbox';
-import useRadio from '../components/@common/@hooks/useRadio';
-import BottomSheet from '../components/@common/BottomSheet/BottomSheet';
-import CheckboxContainer from '../components/@common/CheckboxContainer/CheckboxContainer';
-import Divider from '../components/@common/Divider/Divider';
-import Dropdown from '../components/@common/Dropdown/Dropdown';
-import RadioContainer from '../components/@common/RadioContainer/RadioContainer';
-import Spacer from '../components/@common/Spacer/Spacer';
-import Text from '../components/@common/Text/Text';
 import {
   filterOptions,
   filterSubOptions,
@@ -118,12 +119,12 @@ const Write = () => {
       {/* <div onClick={aaa}>ddd</div> */}
       {/* 헤더 */}
       <HeaderBox>
-        <Back />
+        <SVGBack24B />
         <button onClick={() => aaa()}></button>
         <Text font="suit16sb" color="b4">
           글쓰기
         </Text>
-        <Check />
+        <SVGCheck24 />
       </HeaderBox>
 
       <Divider color="l3" />
@@ -201,7 +202,7 @@ const Write = () => {
               }}
             >
               <Text font="suit13m" color="b9" customStyle={{ lineHeight: '20px' }}>
-                <img src={plus} /> 팀원추가
+                <img src={PNGPlus} /> 팀원추가
               </Text>
             </div>
           </div>
@@ -212,7 +213,7 @@ const Write = () => {
               return (
                 <TeamLabel>
                   {item}
-                  <Xmark onClick={() => onClick2DepthDelete(item)} />
+                  <SVGCancel onClick={() => onClick2DepthDelete(item)} />
                 </TeamLabel>
               );
             })}
@@ -224,11 +225,11 @@ const Write = () => {
 
       <BottomSheet isOpen={isOpenBottomSheet} onClose={() => setIsOpenBottomSheet(false)}>
         <Sheet_TopBox>
-          <Xmark />
+          <SVGCancel />
           <Text font="suit16sb" color="b4">
             팀원선택
           </Text>
-          <Check
+          <SVGCheck24
             onClick={() => {
               setIsOpenBottomSheet(false);
             }}
@@ -262,7 +263,7 @@ const Write = () => {
                       {e.text}
                     </Text>
 
-                    {get2Depth.includes(e.value) ? <RadioChecked /> : <RadioUnChecked />}
+                    {/* {get2Depth.includes(e.value) ? <SVGActiveCheck /> : <SVGActiveUncheckRadio />} */}
                   </Sheet_radioDiv>
                 );
               })}
@@ -298,7 +299,7 @@ const HeaderInput = styled.input`
   outline: none;
   font-size: 15px;
   font-weight: 400;
-  color: ${(props) => props.theme.color.b4};
+  color: ${theme.color.b4};
 
   &:focus {
     ::placeholder {
@@ -307,7 +308,7 @@ const HeaderInput = styled.input`
   }
 
   ::placeholder {
-    color: ${(props) => props.theme.color.ba};
+    color: ${theme.color.ba};
   }
 `;
 
@@ -321,10 +322,10 @@ const BodyTextarea = styled.textarea`
   font-size: 15px;
   font-weight: 400;
   resize: none;
-  color: ${(props) => props.theme.color.b4};
+  color: ${theme.color.b4};
 
   ::placeholder {
-    color: ${(props) => props.theme.color.ba};
+    color: ${theme.color.ba};
   }
   &:focus {
     ::placeholder {
@@ -337,7 +338,7 @@ const TextareaCountBox = styled.div`
   display: flex;
   justify-content: end;
   padding: 0px 22px 25px 22px;
-  color: ${(props) => props.theme.color.b9};
+  color: ${theme.color.b9};
   font-size: 15px;
   font-weight: 500;
 `;
@@ -374,7 +375,7 @@ const Sheet_Left = styled.div`
 const Sheet_leftItem = styled.div<{ checked: boolean }>`
   padding: 10px 22px;
 
-  background-color: ${(props) => (props.checked ? '' : props.theme.color.bg1)};
+  background-color: ${({ checked }) => (checked ? '' : theme.color.bg1)};
   display: flex;
   flex-direction: row;
   justify-content: start;
@@ -413,10 +414,10 @@ const TeamLabel = styled.label`
   padding: 11px 16px 12px;
   height: 40px;
   box-sizing: border-box;
-  border: 1px solid ${({ theme }) => theme.color.l2};
+  border: 1px solid ${theme.color.l2};
   border-radius: 6px;
-  background-color: ${(props) => props.theme.color.c1};
-  color: ${(props) => props.theme.color.w1};
+  background-color: ${theme.color.c1};
+  color: ${theme.color.w1};
   font-size: 14px;
   font-weight: 500;
   width: fit-content;

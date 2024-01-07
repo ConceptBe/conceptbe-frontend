@@ -1,4 +1,18 @@
-import { useTheme } from '@emotion/react';
+import {
+  useCheckbox,
+  useInput,
+  Back,
+  Button,
+  CheckboxContainer,
+  Dropdown,
+  Field,
+  Header,
+  Spacer,
+  Tag,
+  Text,
+  theme,
+  // SVGImageWrite,
+} from 'concept-be-design-system';
 import { useCallback, useEffect, useState } from 'react';
 
 import {
@@ -14,18 +28,6 @@ import {
   MainWrapper,
   BottomWrapper,
 } from './Setting.style';
-import { ReactComponent as SVGWrite } from '../../assets/svg/image_write.svg';
-import useCheckbox from '../../components/@common/@hooks/useCheckbox';
-import useInput from '../../components/@common/@hooks/useInput';
-import Back from '../../components/@common/Back/Back';
-import Button from '../../components/@common/Button/Button';
-import CheckboxContainer from '../../components/@common/CheckboxContainer/CheckboxContainer';
-import Dropdown from '../../components/@common/Dropdown/Dropdown';
-import Field from '../../components/@common/Field/Field';
-import Header from '../../components/@common/Header/Header';
-import Spacer from '../../components/@common/Spacer/Spacer';
-import Tag from '../../components/@common/Tag/Tag';
-import Text from '../../components/@common/Text/Text';
 import { skillOneDepth, skillTwoDepth, regionOptions, filterSubOptions } from '../../modules/constants';
 
 const dropdownItems = [
@@ -42,7 +44,6 @@ interface FormValueType {
 }
 
 const Setting = () => {
-  const theme = useTheme();
   const [skills, setSkills] = useState<string[]>([]);
   const [oneDepth, setOneDepth] = useState(''); // 스킬(대분류)
   const [twoDepth, setTwoDepth] = useState(''); // 스킬(상세분류)
@@ -114,9 +115,7 @@ const Setting = () => {
             <ImageBox>
               <Img src="https://image.toast.com/aaaaaqx/catchtable/shopinfo/sR1B6qa4fT537GjL6KO9bHg/r1b6qa4ft537gjl6ko9bhg_2371016411290157.jpg?detail750" />
             </ImageBox>
-            <ImageWrite>
-              <SVGWrite />
-            </ImageWrite>
+            <ImageWrite>{/* <SVGImageWrite /> */}</ImageWrite>
           </ImageWrapper>
 
           <Field label="닉네임" value={inputValue.nickName} maxLength={10} isRequired>

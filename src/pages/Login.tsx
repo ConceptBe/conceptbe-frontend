@@ -1,10 +1,5 @@
 import styled from '@emotion/styled';
-
-import { ReactComponent as SVGKakao } from '../assets/svg/login/kakao.svg';
-import { ReactComponent as SVGNaver } from '../assets/svg/login/naver.svg';
-import { ReactComponent as SVGLogo } from '../assets/svg/login_main.svg';
-import Spacer from '../components/@common/Spacer/Spacer';
-import Text from '../components/@common/Text/Text';
+import { Spacer, Text, theme, SVGLoginKakao, SVGLoginNaver, SVGLoginLogo } from 'concept-be-design-system';
 
 const REQUEST_URL = `http://localhost:8080/oauth/kakao`;
 
@@ -15,11 +10,11 @@ const Login = () => {
 
   return (
     <Container>
-      <SVGLogo />
+      <SVGLoginLogo />
       <Spacer size={40} />
       <ButtonWrapper onClick={onClickOauthKakao}>
         <LogoBox color="#FAE100">
-          <SVGKakao />
+          <SVGLoginKakao />
         </LogoBox>
         <TextWrapper>
           <Text font="suit15rb">카카오 로그인</Text>
@@ -29,7 +24,7 @@ const Login = () => {
       <Spacer size={10} />
       <ButtonWrapper>
         <LogoBox color="#03C75A">
-          <SVGNaver />
+          <SVGLoginNaver />
         </LogoBox>
         <TextWrapper>
           <Text font="suit15rb">네이버 로그인</Text>
@@ -64,8 +59,8 @@ const LogoBox = styled.div<{ color: string }>`
 
 const TextWrapper = styled.div`
   padding: 15px 66px;
-  border-top: 1px solid ${({ theme }) => theme.color.l1};
-  border-bottom: 1px solid ${({ theme }) => theme.color.l1};
-  border-right: 1px solid ${({ theme }) => theme.color.l1};
+  border-top: 1px solid ${theme.color.l1};
+  border-bottom: 1px solid ${theme.color.l1};
+  border-right: 1px solid ${theme.color.l1};
   border-radius: 0 8px 8px 0;
 `;

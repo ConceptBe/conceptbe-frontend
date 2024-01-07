@@ -1,15 +1,10 @@
 import styled from '@emotion/styled';
+import { BottomSheet, Divider, Header, Spacer, Text, theme, SVGBack24B } from 'concept-be-design-system';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { ReactComponent as SVGBack } from '../../assets/svg/back_24_B.svg';
-import BottomSheet from '../../components/@common/BottomSheet/BottomSheet';
-import Divider from '../../components/@common/Divider/Divider';
-import Header from '../../components/@common/Header/Header';
-import Spacer from '../../components/@common/Spacer/Spacer';
-import Text from '../../components/@common/Text/Text';
-import Privacy from '../../components/BottomSheet/use/Privacy';
-import Terms from '../../components/BottomSheet/use/Terms';
+import Privacy from './Privacy';
+import Terms from './Terms';
 
 const More = () => {
   const navigate = useNavigate();
@@ -32,7 +27,7 @@ const More = () => {
         <Header spacerPosition="end">
           <Header.Item>
             <SVGBackWrapper>
-              <SVGBack onClick={() => navigate(-1)} />
+              <SVGBack24B onClick={() => navigate(-1)} />
             </SVGBackWrapper>
           </Header.Item>
           <Header.Item>
@@ -101,11 +96,11 @@ const Container = styled.div`
   height: 100%;
   /* height: calc(var(--vh, 1vh) * 100); */
   overflow: hidden;
-  background-color: ${({ theme }) => theme.color.bg1};
+  background-color: ${theme.color.bg1};
 `;
 
 const MainWrapper = styled.section`
-  /* background-color: ${({ theme }) => theme.color.bg1}; */
+  /* background-color: ${theme.color.bg1}; */
   /* height: 100svh; */
   padding: 84px 30px 0 30px;
   overflow: hidden;
@@ -118,6 +113,6 @@ const MoreButton = styled.button`
 `;
 
 const SVGBackWrapper = styled.button`
-  color: ${({ theme }) => theme.color.b4};
+  color: ${theme.color.b4};
   cursor: pointer;
 `;

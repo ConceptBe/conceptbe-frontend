@@ -1,5 +1,3 @@
-import { DropdownItem } from '../components/@common/@types/Dropdown';
-
 // 멤버 선택 대분류
 const memberSelect = [
   { text: '기획', value: '기획' },
@@ -87,7 +85,13 @@ const skillOneDepth = [
 ];
 
 // 스킬 2뎁스
-const skillTwoDepth: { [key: string]: DropdownItem[] } = {
+const skillTwoDepth: {
+  [key: string]: {
+    text: string;
+    value: string;
+    placeValue?: boolean;
+  }[];
+} = {
   product: [
     { text: '상세분류', value: '', placeValue: true },
     { text: 'IT기획', value: 'IT기획' },

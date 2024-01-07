@@ -1,17 +1,11 @@
 import styled from '@emotion/styled';
+import { Badge, Header, Logo, Spacer, TabLayout, Text, theme, SVGSetting } from 'concept-be-design-system';
 import { useNavigate } from 'react-router-dom';
 
-import { ReactComponent as SVGSetting } from '../../assets/svg/setting.svg';
-import Badge from '../../components/@common/Badge/Badge';
-import Header from '../../components/@common/Header/Header';
-import Logo from '../../components/@common/Logo/Logo';
-import Spacer from '../../components/@common/Spacer/Spacer';
-import TabLayout from '../../components/@common/TabLayout/TabLayout';
-import Text from '../../components/@common/Text/Text';
 import IdeaCard from '../../components/Card/IdeaCard';
 import Padding from '../../components/Padding';
 
-const skillTags = ['퍼포먼스 마케팅, 상', '광고/크리에이티브, 중', '콘텐츠 마케팅, 하'];
+// const skillTags = ['퍼포먼스 마케팅, 상', '광고/크리에이티브, 중', '콘텐츠 마케팅, 하'];
 const badges = ['사이드 프로젝트', '크라우드 펀딩', '공모전'];
 
 const Profile = () => {
@@ -138,7 +132,7 @@ const ProfileBox = styled.div`
   gap: 18px;
   border-radius: 16px 16px 0 0;
   padding: 35px 22px;
-  background-color: ${(props) => props.theme.color.w1};
+  background-color: ${theme.color.w1};
 `;
 
 const ProfileMainBox = styled.div`
@@ -152,9 +146,9 @@ const EditButton = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  border: 1px solid ${({ theme }) => theme.color.l2};
-  font-size: ${({ theme }) => theme.font.suit13m.fontSize}px;
-  font-weight: ${({ theme }) => theme.font.suit13m.fontWeight};
+  border: 1px solid ${theme.color.l2};
+  font-size: ${theme.font.suit13m.fontSize}px;
+  font-weight: ${theme.font.suit13m.fontWeight};
   border-radius: 100px;
   padding: 8px 14px;
 `;
@@ -167,7 +161,7 @@ const TagWrapper = styled.div`
 
 const TabPanelBox = styled.div`
   padding: 30px 20px 60px 20px;
-  background-color: ${({ theme }) => theme.color.bg1};
+  background-color: ${theme.color.bg1};
   display: flex;
   flex-direction: column;
   gap: 20px;

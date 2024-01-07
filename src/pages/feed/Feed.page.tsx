@@ -1,22 +1,25 @@
 import styled from '@emotion/styled';
+import {
+  Back,
+  Badge,
+  Divider,
+  Header,
+  Logo,
+  Spacer,
+  Text,
+  TextDivider,
+  theme,
+  SVGFeedDotsVertical,
+  SVGFeedLike,
+  SVGFeedMessage,
+  SVGFeedPencil,
+  SVGFeedReCommentLine,
+  SVGFeedUnLike,
+  SVGFeedUnScrap,
+  SVGCancel,
+} from 'concept-be-design-system';
 import { useState } from 'react';
 
-import { ReactComponent as SVGDots } from '../../assets/svg/FeedDetail/dots_vertical.svg';
-import { ReactComponent as SVGLike } from '../../assets/svg/FeedDetail/like.svg';
-import { ReactComponent as SVGMessage } from '../../assets/svg/FeedDetail/message.svg';
-import { ReactComponent as SVGPencil } from '../../assets/svg/FeedDetail/pencil.svg';
-import { ReactComponent as SVGReCommnetLine } from '../../assets/svg/FeedDetail/ReCommnetLine.svg';
-import { ReactComponent as SVGUnLike } from '../../assets/svg/FeedDetail/unLike.svg';
-import { ReactComponent as SVGUnScrap } from '../../assets/svg/FeedDetail/unScrap.svg';
-import { ReactComponent as SVGCancel } from '../../assets/svg/x.svg';
-import Back from '../../components/@common/Back/Back';
-import Badge from '../../components/@common/Badge/Badge';
-import Divider from '../../components/@common/Divider/Divider';
-import Header from '../../components/@common/Header/Header';
-import Logo from '../../components/@common/Logo/Logo';
-import Spacer from '../../components/@common/Spacer/Spacer';
-import Text from '../../components/@common/Text/Text';
-import TextDivider from '../../components/@common/TextDivider/TextDivider';
 import ProfileComponent from '../../components/Profile';
 
 const FeedDetailPage = () => {
@@ -40,14 +43,14 @@ const FeedDetailPage = () => {
         <Back />
         <Logo />
         <DotsBox>
-          <SVGDots onClick={onClickDots} />
+          <SVGFeedDotsVertical onClick={onClickDots} />
           {isClickDots && (
             <DropDownBox>
               <DropDownSelect>
                 <Text font="suit12r" color="b6">
                   수정하기
                 </Text>
-                <SVGPencil />
+                <SVGFeedPencil />
               </DropDownSelect>
 
               <Divider color="bg1" height={0.1} />
@@ -140,7 +143,7 @@ const FeedDetailPage = () => {
         <Divider color="l3" />
         <InfoBottomBox>
           <IndexBox>
-            <SVGMessage />
+            <SVGFeedMessage />
             <Text font="suit12r" color="b9">
               댓글
             </Text>
@@ -149,7 +152,7 @@ const FeedDetailPage = () => {
             </Text>
           </IndexBox>
           <IndexBox>
-            <SVGLike />
+            <SVGFeedLike />
             <Text font="suit12r" color="b9">
               좋아요
             </Text>
@@ -158,7 +161,7 @@ const FeedDetailPage = () => {
             </Text>
           </IndexBox>
           <IndexBox>
-            <SVGUnScrap />
+            <SVGFeedUnScrap />
             <Text font="suit12r" color="b9">
               스크랩
             </Text>
@@ -190,7 +193,7 @@ const FeedDetailPage = () => {
           <Spacer size={10} />
           <CommnetsBottomBox>
             <IndexBox>
-              <SVGMessage />
+              <SVGFeedMessage />
               <Text font="suit12r" color="b9">
                 댓글
               </Text>
@@ -200,7 +203,7 @@ const FeedDetailPage = () => {
             </IndexBox>
             <Spacer size={14} />
             <IndexBox>
-              <SVGUnLike />
+              <SVGFeedUnLike />
               <Text font="suit12r" color="b9">
                 좋아요
               </Text>
@@ -213,7 +216,7 @@ const FeedDetailPage = () => {
 
         <ReCommandBox>
           <div>
-            <SVGReCommnetLine />
+            <SVGFeedReCommentLine />
           </div>
           <CommentsBox>
             <ProfileComponent />
@@ -226,7 +229,7 @@ const FeedDetailPage = () => {
             <Spacer size={10} />
             <CommnetsBottomBox>
               <IndexBox>
-                <SVGUnLike />
+                <SVGFeedUnLike />
                 <Text font="suit12r" color="b9">
                   좋아요
                 </Text>
@@ -253,7 +256,7 @@ const DropDownBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  background-color: ${(props) => props.theme.color.w1};
+  background-color: ${theme.color.w1};
   width: 88px;
   height: 70px;
   border-radius: 6px;
@@ -312,14 +315,14 @@ const Input = styled.input`
   padding: 10px 20px;
   box-sizing: border-box;
   border: none;
-  background-color: ${(props) => props.theme.color.bg1};
-  color: ${(props) => props.theme.color.t};
+  background-color: ${theme.color.bg1};
+  color: ${theme.color.t};
   font-style: normal;
   font-family: SUIT;
   font-weight: 400;
   line-height: normal;
   ::placeholder {
-    color: ${(props) => props.theme.color.ba};
+    color: ${theme.color.ba};
   }
 `;
 

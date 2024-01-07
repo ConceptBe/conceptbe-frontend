@@ -1,11 +1,6 @@
 import styled from '@emotion/styled';
+import { BottomSheet, Button, Spacer, Text, theme, PNGAgreementBackground } from 'concept-be-design-system';
 import { useState } from 'react';
-
-import AgreementImg from '../assets/images/agreement_bg.png';
-import BottomSheet from '../components/@common/BottomSheet/BottomSheet';
-import Button from '../components/@common/Button/Button';
-import Spacer from '../components/@common/Spacer/Spacer';
-import Text from '../components/@common/Text/Text';
 
 const Agreement = () => {
   const [isOpenCollection, setIsOpenCollection] = useState(false);
@@ -38,7 +33,7 @@ const Agreement = () => {
 
     const ListItem = styled.li`
       list-style: disc;
-      color: ${(props) => props.theme.color.b6};
+      color: ${theme.color.b6};
       list-style-position: inside;
       font-size: 14px;
       font-weight: 400;
@@ -186,7 +181,7 @@ const Agreement = () => {
 
     const ListItem = styled.li`
       list-style: disc;
-      color: ${(props) => props.theme.color.b6};
+      color: ${theme.color.b6};
       list-style-position: inside;
       font-size: 14px;
       font-weight: 400;
@@ -196,7 +191,7 @@ const Agreement = () => {
     `;
 
     const OrderedList = styled.ol`
-      color: ${(props) => props.theme.color.b6};
+      color: ${theme.color.b6};
       font-size: 14px;
       font-weight: 400;
     `;
@@ -305,7 +300,7 @@ const Agreement = () => {
 
   return (
     <AgreementWrapper>
-      <img src={AgreementImg} />
+      <img src={PNGAgreementBackground} />
       <Spacer size={50} />
 
       <Text

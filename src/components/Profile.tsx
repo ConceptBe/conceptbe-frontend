@@ -1,15 +1,10 @@
 import styled from '@emotion/styled';
-
-import Spacer from './@common/Spacer/Spacer.tsx';
-import Text from './@common/Text/Text.tsx';
-import TextDivider from './@common/TextDivider/TextDivider.tsx';
-import { ReactComponent as Profile } from '../assets/svg/default_profile.svg';
-import { ReactComponent as UnScrap } from '../assets/svg/scrap.svg';
+import { Spacer, Text, TextDivider, SVGDefaultProfile } from 'concept-be-design-system';
 
 const ProfileComponent = () => {
   return (
     <ProfileWrapper>
-      <Profile />
+      <SVGDefaultProfile />
       <ProfileBox>
         <Text font="suit14m" color="b4">
           일이삼사오육칠팔구
