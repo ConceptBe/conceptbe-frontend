@@ -1276,6 +1276,16 @@ concat-map@0.0.1:
   resolved "https://registry.npmjs.org/concat-map/-/concat-map-0.0.1.tgz"
   integrity sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==
 
+concept-be-design-system@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.npmjs.org/concept-be-design-system/-/concept-be-design-system-0.2.0.tgz"
+  integrity sha512-z+yirqmQQceAgODgWrXLwnX3EDCeEU/0qyvtKupal1yaidw0u9vWUiXnKKQHzHlRwYBW6iZIq6J79PTYUQQOXA==
+  dependencies:
+    "@emotion/react" "^11.11.1"
+    "@emotion/styled" "^11.11.0"
+    react "^18.2.0"
+    react-dom "^18.2.0"
+
 convert-source-map@^1.5.0, convert-source-map@^1.7.0:
   version "1.9.0"
   resolved "https://registry.npmjs.org/convert-source-map/-/convert-source-map-1.9.0.tgz"

@@ -1,18 +1,18 @@
-import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
-
-import { ReactComponent as Comment } from '../../assets/svg/comment_14.svg';
-import { ReactComponent as Profile } from '../../assets/svg/default_profile.svg';
-import { ReactComponent as Dots } from '../../assets/svg/FeedDetail/dots_vertical.svg';
-import { ReactComponent as Like } from '../../assets/svg/like_14.svg';
-import { ReactComponent as UnScrap } from '../../assets/svg/scrap.svg';
-import { ReactComponent as ScrapView } from '../../assets/svg/scrap_14.svg';
-// footer
-import { ReactComponent as View } from '../../assets/svg/view_14.svg';
-import Badge from '../@common/Badge/Badge.tsx';
-import Divider from '../@common/Divider/Divider.tsx';
-import Spacer from '../@common/Spacer/Spacer.tsx';
-import Text from '../@common/Text/Text.tsx';
+import {
+  Badge,
+  Divider,
+  Spacer,
+  Text,
+  theme,
+  SVGComment14,
+  SVGDefaultProfile,
+  SVGFeedDotsVertical,
+  SVGLike14,
+  SVGScrap,
+  SVGScrap14,
+  SVGView14,
+} from 'concept-be-design-system';
 
 interface Props {
   mine?: boolean;
@@ -20,12 +20,11 @@ interface Props {
 }
 
 const IdeaCard = ({ mine, badges }: Props) => {
-  const theme = useTheme();
   return (
     <CardContainer>
       <ProfileWrapper>
         <ProfileBox>
-          <Profile />
+          <SVGDefaultProfile />
           <div>
             <Text font="suit14m" color="b4">
               일이삼사오육칠팔구
@@ -45,7 +44,7 @@ const IdeaCard = ({ mine, badges }: Props) => {
             </div>
           </div>
         </ProfileBox>
-        {mine ? <Dots color="ba" /> : <UnScrap />}
+        {mine ? <SVGFeedDotsVertical color="ba" /> : <SVGScrap />}
       </ProfileWrapper>
 
       <ContentWrapper>
@@ -75,19 +74,19 @@ const IdeaCard = ({ mine, badges }: Props) => {
       <Divider top={18} bottom={16} color="l3" />
       <FooterWrapper>
         <FooterText>
-          <View />
+          <SVGView14 />
           999+
         </FooterText>
         <FooterText>
-          <Comment />
+          <SVGComment14 />
           999+
         </FooterText>
         <FooterText>
-          <Like />
+          <SVGLike14 />
           999+
         </FooterText>
         <FooterText>
-          <ScrapView />
+          <SVGScrap14 />
           999+
         </FooterText>
       </FooterWrapper>
@@ -101,7 +100,7 @@ const CardContainer = styled.div`
   padding: 30px 20px;
   border-radius: 8px;
   box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.08);
-  background-color: ${({ theme }) => theme.color.w1};
+  background-color: ${theme.color.w1};
 `;
 
 const ProfileWrapper = styled.div`
@@ -125,7 +124,7 @@ const ContentWrapper = styled.div`
 const ContentText = styled.div`
   font-size: 14px;
   line-height: 22px;
-  color: ${(props) => props.theme.color.b6};
+  color: ${theme.color.b6};
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   word-break: keep-all;
@@ -136,8 +135,7 @@ const ContentText = styled.div`
 `;
 
 const TagWrapper = styled.div`
-  /* padding-top: 6px;
-  padding-bottom: 18px; */
+  padding: 0;
 `;
 
 const FooterWrapper = styled.div`
@@ -152,6 +150,6 @@ const FooterText = styled.span`
   align-items: center;
   gap: 4px;
   font-size: 12px;
-  color: ${(props) => props.theme.color.b9};
+  color: ${theme.color.b9};
   margin-right: 10px;
 `;

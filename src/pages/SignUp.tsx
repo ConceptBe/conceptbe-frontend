@@ -1,18 +1,19 @@
-import { useTheme } from '@emotion/react';
+import {
+  useCheckbox,
+  useInput,
+  useRadio,
+  BottomSheet,
+  Button,
+  CheckboxContainer,
+  Dropdown,
+  Field,
+  RadioContainer,
+  Text,
+  SVGActiveCheck,
+  theme,
+} from 'concept-be-design-system';
 import { useEffect, useState } from 'react';
 
-import { ReactComponent as Check } from '../assets/svg/check_24.svg';
-import { ReactComponent as Close } from '../assets/svg/close_24.svg';
-import useCheckbox from '../components/@common/@hooks/useCheckbox.ts';
-import useInput from '../components/@common/@hooks/useInput.ts';
-import useRadio from '../components/@common/@hooks/useRadio.ts';
-import BottomSheet from '../components/@common/BottomSheet/BottomSheet.tsx';
-import Button from '../components/@common/Button/Button.tsx';
-import CheckboxContainer from '../components/@common/CheckboxContainer/CheckboxContainer.tsx';
-import Dropdown from '../components/@common/Dropdown/Dropdown.tsx';
-import Field from '../components/@common/Field/Field.tsx';
-import RadioContainer from '../components/@common/RadioContainer/RadioContainer.tsx';
-import Text from '../components/@common/Text/Text.tsx';
 import CheckBoxModal from '../components/BottomSheet/CheckBox.tsx';
 import IdeaCard from '../components/Card/IdeaCard.tsx';
 import PopCard from '../components/Card/PopCard.tsx';
@@ -25,7 +26,6 @@ interface FormValueType {
 }
 
 const SignUp = () => {
-  const theme = useTheme();
   const { inputValue, inputErrorValue, onChangeInput } = useInput<FormValueType>({
     a: '',
     b: '',
@@ -46,6 +46,7 @@ const SignUp = () => {
   //체크박스
   const { checkboxValue, onChangeCheckBox } = useCheckbox({
     field: filterOptions,
+    sample: filterOptions,
   });
 
   //버튼
@@ -92,21 +93,6 @@ const SignUp = () => {
 
   // 모달 체크박스
   const [selectMain, setSelectMain] = useState({ text: '기획', value: '기획' });
-  const [modalCheckboxOptions, setModalCheckboxOptions] = useState([]);
-
-  const handleModalCheckboxChange = (value: string, newState: boolean) => {
-    setModalCheckboxOptions((prevCheckboxes: any) =>
-      prevCheckboxes.map(
-        (checkbox: any) =>
-          checkbox.parent === selectMain.text && {
-            ...checkbox,
-            options: checkbox.options.map((option: any) =>
-              option.value === value ? { ...option, checked: !newState } : option,
-            ),
-          },
-      ),
-    );
-  };
 
   const validateInput = () => {
     return [
@@ -226,9 +212,9 @@ const SignUp = () => {
 
       <BottomSheet isOpen={isModal} onClose={() => setIsModal(false)}>
         <div style={{ display: 'flex', justifyContent: 'space-between', padding: 22 }}>
-          <Close onClick={() => setIsModal(false)} />
+          {/* <Close onClick={() => setIsModal(false)} /> */}
           <Text font="suit16sb">타이틀</Text>
-          <Check />
+          <SVGActiveCheck />
         </div>
         <div style={{ display: 'flex', height: '100%' }}>
           <div style={{ flex: 1 }}>
@@ -248,7 +234,13 @@ const SignUp = () => {
             })}
           </div>
           <div style={{ flex: 2 }}>
-            <CheckBoxModal options={modalCheckboxOptions[0]?.options} onChange={handleModalCheckboxChange} />
+            <CheckboxContainer
+              nameKey="sample"
+              options={checkboxValue.sample}
+              onChange={(e) => {
+                onChangeCheckBox(e, 'sample');
+              }}
+            />
           </div>
         </div>
       </BottomSheet>

@@ -1,8 +1,5 @@
 import styled from '@emotion/styled';
-
-import Button from '../../@common/Button/Button';
-import Spacer from '../../@common/Spacer/Spacer';
-import Text from '../../@common/Text/Text';
+import { Button, Spacer, Text, theme } from 'concept-be-design-system';
 
 interface props {
   isOpen: boolean;
@@ -23,7 +20,7 @@ const Privacy = ({ isOpen, onClose }: props) => {
 
   const ListItem = styled.li`
     list-style: disc;
-    color: ${(props) => props.theme.color.b6};
+    color: ${theme.color.b6};
     list-style-position: inside;
     font-size: 14px;
     font-weight: 400;
@@ -33,7 +30,7 @@ const Privacy = ({ isOpen, onClose }: props) => {
   `;
 
   const OrderedList = styled.ol`
-    color: ${(props) => props.theme.color.b6};
+    color: ${theme.color.b6};
     font-size: 14px;
     font-weight: 400;
   `;

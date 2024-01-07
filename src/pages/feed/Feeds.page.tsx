@@ -1,20 +1,22 @@
 import styled from '@emotion/styled';
+import {
+  useCheckbox,
+  useRadio,
+  BottomSheet,
+  Button,
+  CheckboxContainer,
+  Dropdown,
+  Header,
+  Logo,
+  RadioContainer,
+  Spacer,
+  Text,
+  theme,
+  SVGFilter,
+  SVGWrite40,
+} from 'concept-be-design-system';
 import { useState } from 'react';
 
-import { ReactComponent as SVGFilter } from '../../assets/svg/filter.svg';
-import { ReactComponent as SVGWrite } from '../../assets/svg/writeicon40.svg';
-import useCheckbox from '../../components/@common/@hooks/useCheckbox';
-import useRadio from '../../components/@common/@hooks/useRadio';
-import BottomSheet from '../../components/@common/BottomSheet/BottomSheet';
-import Button from '../../components/@common/Button/Button';
-import CheckboxContainer from '../../components/@common/CheckboxContainer/CheckboxContainer';
-import Dropdown from '../../components/@common/Dropdown/Dropdown';
-import Header from '../../components/@common/Header/Header';
-import Logo from '../../components/@common/Logo/Logo';
-import RadioContainer from '../../components/@common/RadioContainer/RadioContainer';
-import Spacer from '../../components/@common/Spacer/Spacer';
-import Text from '../../components/@common/Text/Text';
-import FilterBox from '../../components/BottomSheet/FilterBox';
 import IdeaCard from '../../components/Card/IdeaCard';
 import PopCard from '../../components/Card/PopCard';
 import Padding from '../../components/Padding';
@@ -66,7 +68,7 @@ const Feeds = () => {
 
       <Wrapper>
         <FeedFixBox>
-          <SVGWrite />
+          <SVGWrite40 />
 
           <Spacer size={27} />
           <FeedFixTextWrapper>
@@ -192,7 +194,7 @@ const Feeds = () => {
 export default Feeds;
 
 const Wrapper = styled.section`
-  background-color: ${(props) => props.theme.color.c1};
+  background-color: ${theme.color.c1};
   height: 100%;
 `;
 
@@ -200,8 +202,8 @@ const FeedFixBox = styled.div`
   padding: 90px 30px 50px 30px;
   display: flex;
   flex-direction: column;
-  background-color: ${(props) => props.theme.color.c1};
-  color: ${(props) => props.theme.color.w1};
+  background-color: ${theme.color.c1};
+  color: ${theme.color.w1};
 `;
 
 const FeedFixWrapper = styled.div`
@@ -218,7 +220,7 @@ const FeedFixTextWrapper = styled.div`
 `;
 
 const FeedBox = styled.div`
-  background-color: ${(props) => props.theme.color.bg1};
+  background-color: ${theme.color.bg1};
   border-radius: 16px 16px 0 0;
 `;
 
@@ -240,7 +242,20 @@ const FilterBottom = styled.div`
   position: sticky;
   bottom: 0;
   padding: 0 22px 22px;
-  background-color: ${({ theme }) => theme.color.w1};
+  background-color: ${theme.color.w1};
 `;
 
 const FilterWrapper = styled.div``;
+
+const FilterBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  overflow: auto;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;

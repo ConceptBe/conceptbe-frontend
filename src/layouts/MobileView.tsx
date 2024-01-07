@@ -1,11 +1,19 @@
 import styled from '@emotion/styled';
-import { Outlet } from 'react-router-dom';
+import {
+  Navigation,
+  SVGNavActiveFeed,
+  SVGNavFeed,
+  SVGNavActiveProfile,
+  SVGNavProfile,
+  SVGWrite24,
+} from 'concept-be-design-system';
+import { Outlet, useNavigate } from 'react-router-dom';
 
-import Navigation from '../components/@common/Navigation/Navigation';
 import useRouteMatched from '../hooks/useRouteMatch';
 
 const MobileView = () => {
   const { hasMatched } = useRouteMatched();
+  const navigate = useNavigate();
   const isMatchedNavigation = hasMatched('/profile/:id', '/login', '/write', '/agreement', '/auth', '/feed/:id');
 
   // TODO: Header 도메인 얽힘 문제 해결 확인 시 사용 예정
@@ -16,7 +24,19 @@ const MobileView = () => {
       <Wrapper>
         <Outlet />
       </Wrapper>
-      {!isMatchedNavigation && <Navigation />}
+      {!isMatchedNavigation && (
+        <Navigation>
+          <Navigation.Item onClick={() => navigate('/feed')}>
+            {location.pathname.startsWith('/feed') ? <SVGNavActiveFeed /> : <SVGNavFeed />}
+          </Navigation.Item>
+          <Navigation.Item position="center">
+            <SVGWrite24 onClick={() => navigate('/write')} />
+          </Navigation.Item>
+          <Navigation.Item onClick={() => navigate('/profile')}>
+            {location.pathname.startsWith('/profile') ? <SVGNavActiveProfile /> : <SVGNavProfile />}
+          </Navigation.Item>
+        </Navigation>
+      )}
     </Container>
   );
 };

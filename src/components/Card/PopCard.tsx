@@ -1,11 +1,13 @@
 import styled from '@emotion/styled';
-
-import IdeaBack from '../../assets/images/idea_back.png';
-import IdeaBack2 from '../../assets/images/idea_back2.png';
-import IdeaBack3 from '../../assets/images/idea_back3.png';
-import IdeaBack4 from '../../assets/images/idea_back4.png';
-import IdeaBack5 from '../../assets/images/idea_back5.png';
-import Text from '../@common/Text/Text';
+import {
+  Text,
+  theme,
+  PNGIdeaBackground1,
+  PNGIdeaBackground2,
+  PNGIdeaBackground3,
+  PNGIdeaBackground4,
+  PNGIdeaBackground5,
+} from 'concept-be-design-system';
 
 interface IdeaCardProps {
   category: string;
@@ -13,7 +15,13 @@ interface IdeaCardProps {
   image?: string;
 }
 
-const randomImages = [IdeaBack, IdeaBack2, IdeaBack3, IdeaBack4, IdeaBack5];
+const randomImages = [
+  PNGIdeaBackground1,
+  PNGIdeaBackground2,
+  PNGIdeaBackground3,
+  PNGIdeaBackground4,
+  PNGIdeaBackground5,
+];
 
 const PopCard = ({ category, title, image }: IdeaCardProps) => {
   const randomNumber = Math.floor(Math.random() * 5) + 1;
@@ -21,7 +29,7 @@ const PopCard = ({ category, title, image }: IdeaCardProps) => {
   console.log('test', test);
   return (
     <IdeaCardWrapper>
-      <img src={image ?? IdeaBack} />
+      <img src={image ?? PNGIdeaBackground1} />
       <CardBoxBack />
       <CardBox>
         <Text customStyle={{ fontSize: 13, fontWeight: 800 }} color="w1">
@@ -44,7 +52,7 @@ const IdeaCardWrapper = styled.div`
   height: 180px;
   position: relative;
   overflow: hidden;
-  background-color: ${({ theme }) => theme.color.c1};
+  background-color: ${theme.color.c1};
 `;
 
 const CardBoxBack = styled.div`
@@ -57,7 +65,7 @@ const CardBoxBack = styled.div`
 `;
 
 const CardBox = styled.div`
-  color: ${(props) => props.theme.color.w1};
+  color: ${theme.color.w1};
   position: absolute;
   bottom: 0;
   display: flex;
