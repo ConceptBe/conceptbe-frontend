@@ -1,7 +1,6 @@
 import { ReactNode } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 
-import Profile from './components/Profile';
 import MobileView from './layouts/MobileView';
 import Feed from './pages/Feed/Feed.page';
 import FeedDetail from './pages/Feed/FeedDetail.page';
@@ -12,6 +11,7 @@ import SignUp from './pages/Login/SignUp';
 import NeedAuth from './pages/NeedAuth';
 import NotFound from './pages/NotFound';
 import More from './pages/profile/More.page';
+import Profile from './pages/profile/Profile.page';
 import Setting from './pages/profile/Setting.page';
 import Temp from './pages/Temp';
 import Write from './pages/Write';

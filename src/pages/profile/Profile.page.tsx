@@ -44,7 +44,7 @@ const Profile = () => {
                 외국계 스타트업 | 강원특별자치도
               </Text>
             </div>
-            <EditButton>프로필 수정</EditButton>
+            <EditButton onClick={() => navigate('/profile/1')}>프로필 수정</EditButton>
           </ProfileMainBox>
           {/* 프로필 설명 */}
           <Text font="suit15rb" color="b4" customStyle={{ lineHeight: 1.5 }}>
