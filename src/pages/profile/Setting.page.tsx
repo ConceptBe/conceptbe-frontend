@@ -11,6 +11,7 @@ import {
   Tag,
   Text,
   theme,
+  SVGImageWrite,
 } from 'concept-be-design-system';
 import { useCallback, useEffect, useState } from 'react';
 
@@ -102,7 +103,9 @@ const Setting = () => {
             <ImageBox>
               <Img src="https://image.toast.com/aaaaaqx/catchtable/shopinfo/sR1B6qa4fT537GjL6KO9bHg/r1b6qa4ft537gjl6ko9bhg_2371016411290157.jpg?detail750" />
             </ImageBox>
-            <ImageWrite>{/* <SVGImageWrite /> */}</ImageWrite>
+            <ImageWrite>
+              <SVGImageWrite />
+            </ImageWrite>
           </ImageWrapper>
 
           <Field label="닉네임" value={inputValue.nickName} maxLength={10} isRequired>

@@ -1,5 +1,8 @@
+import { AxiosResponse } from 'axios';
+
 import { http } from './http';
-import { CheckMember, SignUp } from '../types/login';
+import { CheckMember } from '../types/login';
+import { SignUp, Skill } from '../types/signUp';
 
 type OauthServerType = 'kakao' | 'naver';
 
@@ -16,9 +19,17 @@ export const getLogin = (oauthServerType: OauthServerType, oauthId: string) => {
 };
 
 export const getIsMember = (oauthServerType: OauthServerType, code: string) => {
-  return http.get<CheckMember>(`/oauth/${oauthServerType}/member?code=${code}`);
+  return http.get<AxiosResponse<CheckMember>>(`/oauth/${oauthServerType}/member?code=${code}`);
 };
 
 export const postSignUp = (payload: SignUp) => {
   return http.post<string>('/sign-up', payload);
+};
+
+export const getMainSkills = () => {
+  return http.get<Skill[]>('/skills/main');
+};
+
+export const getDetailSkills = () => {
+  return http.get<Skill[]>(`/skills/detail?parentSkillId=needChange`);
 };
