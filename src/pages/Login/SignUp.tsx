@@ -1,246 +1,406 @@
+import styled from '@emotion/styled';
+import { useMutation } from '@tanstack/react-query';
 import {
   useCheckbox,
-  useInput,
-  useRadio,
-  BottomSheet,
+  useField,
   Button,
   CheckboxContainer,
   Dropdown,
   Field,
-  RadioContainer,
   Text,
-  SVGActiveCheck,
   theme,
+  Header,
+  Spacer,
+  Tag,
+  SVGImageWrite,
+  useDropdown,
 } from 'concept-be-design-system';
-import { useState } from 'react';
+import { FormEvent, useCallback, useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
-import IdeaCard from '../../components/Card/IdeaCard.tsx';
-import PopCard from '../../components/Card/PopCard.tsx';
-// svg
-import { filterOptions, memberSelect } from '../../modules/constants.tsx';
+import { postSignUp } from '../../api/index.ts';
+import useSignUpQuery from '../../hooks/api/useSignUpQuery.ts';
+import { OauthMemberInfo } from '../../types/login.ts';
+import { Skill } from '../../types/signUp.ts';
 
-interface FormValueType {
-  a: string;
-  b: string;
+interface FieldValue {
+  nickname: string;
+  company: string;
+  intro: string;
+}
+
+interface CheckboxValue {
+  goal: CheckboxOption[];
+}
+
+interface CheckboxOption {
+  id: number;
+  name: string;
+  checked: boolean;
+}
+
+interface DropdownValue {
+  mainSkill: string;
+  skillDepthOne: string;
+  skillDepthTwo: string;
+  skillDepthThree: string;
+  region: string;
 }
 
 const SignUp = () => {
-  const { inputValue, inputErrorValue, onChangeInput } = useInput<FormValueType>({
-    a: '',
-    b: '',
+  const { state: memberInfo }: { state: OauthMemberInfo } = useLocation();
+  const mutation = useMutation({ mutationFn: postSignUp });
+  const { mainSkillQuery, detailSkillQuery, skillLevelQuery, regionQuery, checkboxQuery } = useSignUpQuery();
+  const { fieldValue, fieldErrorValue, onChangeField } = useField<FieldValue>({
+    nickname: '',
+    company: '',
+    intro: '',
   });
-  const { radioValue, onChangeRadio } = useRadio({
-    a: [
-      { text: '상관없음', value: 'all', checked: false },
-      { text: '온라인', value: 'online', checked: false },
-      { text: '오프라인', value: 'offline', checked: false },
-    ],
-    b: [
-      { text: '상관없음', value: 'all1', checked: false },
-      { text: '온라인', value: 'online1', checked: false },
-      { text: '오프라인', value: 'offline1', checked: false },
-    ],
+  const { checkboxValue, onChangeCheckbox } = useCheckbox<CheckboxValue>({
+    goal: checkboxQuery,
   });
-
-  //체크박스
-  const { checkboxValue, onChangeCheckBox } = useCheckbox({
-    field: filterOptions,
-    sample: filterOptions,
+  const [selectedSkillDepths, setSelectedSkillDepths] = useState<Skill[]>([]);
+  const { dropdownValue, onResetDropdown, onClickDropdown } = useDropdown<DropdownValue>({
+    mainSkill: '',
+    skillDepthOne: '',
+    skillDepthTwo: '',
+    skillDepthThree: '',
+    region: '',
   });
-
-  //버튼
-  const buttonClick = () => {
-    console.log('button');
-  };
-
-  // 아이디어
-  const ideas = [
-    { id: 1, title: '제목입니다. 제목입니다. 제목입니다.', category: 'IT' },
-    { id: 2, title: '제목입니다. 제목입니다. 제목입니다.', category: '디자인' },
-    { id: 3, title: '제목입니다. 제목입니다. 제목입니다.', category: '기획' },
-    { id: 3, title: '제목입니다. 제목입니다. 제목입니다.', category: '기획' },
-    { id: 3, title: '제목입니다. 제목입니다. 제목입니다.', category: '기획' },
-    { id: 3, title: '제목입니다. 제목입니다. 제목입니다.', category: '기획' },
-  ];
-
-  //태그
-  const tags = ['팀원모집', '팀원모집', '팀원모집', '팀원모집'];
-
-  //드롭다운
-  const dropdownItems = [
-    { value: '1', text: 'Dropdown item1' },
-    { value: '2', text: 'Dropdown item2' },
-  ];
-
-  const handleDropdownClick = (value: string) => {
-    console.log(value);
-  };
-
-  // 필터 bottom sheet
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleBottomSheet = () => {
-    setIsOpen(!isOpen);
-  };
-
-  // 팀원 추가 bottom sheet
-  const [isModal, setIsModal] = useState(false);
-
-  const toggleAddMember = () => {
-    setIsModal(!isModal);
-  };
-
-  // 모달 체크박스
-  const [selectMain, setSelectMain] = useState({ text: '기획', value: '기획' });
+  const skillDepthOneId = mainSkillQuery.find(({ name }) => name === dropdownValue.skillDepthOne)?.id;
 
   const validateInput = () => {
     return [
       {
         regexp: /[~!@#$%";'^,&*()_+|</>=>`?:{[\]}]/g,
-        name: 'a',
+        name: 'nickname',
         errorMessage: '사용 불가한 닉네임입니다.',
       },
     ];
   };
 
+  const onClickDropdownSetting = useCallback(() => {
+    if (!skillDepthOneId) return;
+
+    const selectedValue = `${dropdownValue.skillDepthTwo}, ${dropdownValue.skillDepthThree}`;
+    const selectedId = detailSkillQuery[skillDepthOneId].find(({ name }) => name === dropdownValue.skillDepthTwo)?.id;
+
+    if (selectedId && selectedSkillDepths.length < 3) {
+      setSelectedSkillDepths((prev) => [...prev, { id: selectedId, name: selectedValue }]);
+      onResetDropdown('skillDepthOne');
+      onResetDropdown('skillDepthTwo');
+      onResetDropdown('skillDepthThree');
+    }
+  }, [detailSkillQuery, skillDepthOneId, selectedSkillDepths, dropdownValue, onResetDropdown]);
+
+  const onDeleteSkill = (value: string) => {
+    setSelectedSkillDepths(selectedSkillDepths.filter(({ name }) => name !== value));
+  };
+
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (
+      fieldErrorValue.nickname ||
+      !fieldValue.nickname ||
+      !dropdownValue.mainSkill ||
+      selectedSkillDepths.length === 0 ||
+      checkboxValue.goal.length === 0
+    ) {
+      alert('잘못된 입력입니다.');
+    }
+
+    mutation.mutate({
+      nickname: fieldValue.nickname,
+      mainSkillId: mainSkillQuery.find(({ name }) => dropdownValue.mainSkill === name)?.id || 0,
+      profileImageUrl: memberInfo.profileImageUrl,
+      skills: selectedSkillDepths.map(({ id, name }) => ({ skillId: id, level: name.split(', ')[1] })),
+      joinPurposes: checkboxValue.goal.filter(({ checked }) => checked).map(({ id }) => id),
+      livingPlace: dropdownValue.region,
+      workingPlace: fieldValue.company,
+      email: memberInfo.email,
+      oauthId: memberInfo.oauthId,
+      oauthServerType: memberInfo.oauthServerType,
+    });
+  };
+
+  useEffect(() => {
+    if (dropdownValue.skillDepthThree === '' || !dropdownValue.skillDepthTwo) return;
+    onClickDropdownSetting();
+  }, [dropdownValue, onClickDropdownSetting]);
+
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-      <div>
-        <RadioContainer nameKey="a" options={radioValue.a} onChange={(e) => onChangeRadio(e, 'a')} gap="large" />
-        <RadioContainer nameKey="b" options={radioValue.b} onChange={(e) => onChangeRadio(e, 'b')} gap="large" />
-        <p>선택한 옵션: {radioValue.a[0].text}</p>
-      </div>
+    <Container>
+      <Header main>
+        <Header.Item>
+          <Spacer size={24} />
+        </Header.Item>
+        <Header.Item>
+          <Text font="suit16sb" color="w1">
+            프로필 설정
+          </Text>
+        </Header.Item>
+        <Header.Item>
+          <Spacer size={24} />
+        </Header.Item>
+      </Header>
 
-      <div>
-        <CheckboxContainer
-          nameKey="field"
-          options={checkboxValue.field}
-          onChange={(e) => onChangeCheckBox(e, 'field')}
-        />
-        <p>선택한 옵션!: {checkboxValue.field.map(({ text, checked }) => checked && text + ' ')}</p>
-      </div>
+      <MainWrapper onSubmit={onSubmit}>
+        <Spacer size={20} />
+        <MainBox>
+          <ImageWrapper>
+            <ImageBox>
+              <Img src={memberInfo.profileImageUrl} />
+            </ImageBox>
+            <ImageWrite>
+              <SVGImageWrite />
+            </ImageWrite>
+          </ImageWrapper>
 
-      <div>
-        <Button onClick={toggleBottomSheet}>필터</Button>
-        <Button onClick={toggleAddMember}>팀원추가</Button>
-        <Button onClick={buttonClick} isGrayOut>
-          버튼
-        </Button>
-      </div>
-
-      <div>
-        <Field label="임시 A" value={inputValue.a} maxLength={10} isRequired>
-          <Field.Input
-            name="a"
-            value={inputValue.a}
-            onChange={onChangeInput}
-            onValidate={validateInput}
-            maxLength={10}
-            placeholder="닉네임을 입력해주세요"
-            errorMessage={inputErrorValue.a}
-            successMessage="사용 가능한 닉네임입니다."
-            isRequired
-          />
-        </Field>
-
-        <Field label="임시 B" value={inputValue.b} maxLength={10} isRequired>
-          <Field.Input
-            name="b"
-            value={inputValue.b}
-            onChange={onChangeInput}
-            onValidate={validateInput}
-            maxLength={20}
-            placeholder="닉네임을 입력해주세요"
-            errorMessage={inputErrorValue.b}
-            successMessage="사용 가능한 닉네임입니다."
-            isRequired
-          />
-        </Field>
-      </div>
-
-      <div style={{ display: 'flex', gap: '10px' }}>
-        <Dropdown onClick={handleDropdownClick} items={dropdownItems} initialValue="다운" />
-      </div>
-
-      <div
-        style={{
-          display: 'flex',
-          flexWrap: 'nowrap',
-          gap: 10,
-          overflowX: 'scroll',
-          overflowY: 'hidden',
-          paddingLeft: 22,
-          paddingRight: 22,
-        }}
-      >
-        {ideas.map((idea, idx) => {
-          return <PopCard key={idx} category={idea.category} title={idea.title} />;
-        })}
-      </div>
-
-      <div style={{ padding: 20 }}>
-        {Array.from({ length: 20 }, (_, idx) => (
-          <IdeaCard key={idx} badges={tags} />
-        ))}
-      </div>
-      <BottomSheet isOpen={isOpen} onClose={() => setIsOpen(false)}>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            height: '100%',
-            padding: 20,
-          }}
-        >
-          <div>콘텐츠부분!</div>
-          <div style={{ display: 'flex', alignItems: 'flex-end', gap: 7, marginBottom: 50 }}>
-            <Button customStyle={{ flex: 1 }} onClick={toggleBottomSheet} isGrayOut>
-              닫기
-            </Button>
-            <Button customStyle={{ flex: 2 }} onClick={buttonClick}>
-              적용
-            </Button>
-          </div>
-        </div>
-      </BottomSheet>
-
-      <BottomSheet isOpen={isModal} onClose={() => setIsModal(false)}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', padding: 22 }}>
-          {/* <Close onClick={() => setIsModal(false)} /> */}
-          <Text font="suit16sb">타이틀</Text>
-          <SVGActiveCheck />
-        </div>
-        <div style={{ display: 'flex', height: '100%' }}>
-          <div style={{ flex: 1 }}>
-            {memberSelect.map((select) => {
-              return (
-                <div
-                  style={{
-                    padding: '18px 22px',
-                    color: selectMain.text === select.text ? theme.color.b2 : theme.color.ba,
-                    background: selectMain.text === select.text ? theme.color.w1 : theme.color.bg1,
-                  }}
-                  onClick={() => setSelectMain(select)}
-                >
-                  <Text font="suit14m">{select.text}</Text>
-                </div>
-              );
-            })}
-          </div>
-          <div style={{ flex: 2 }}>
-            <CheckboxContainer
-              nameKey="sample"
-              options={checkboxValue.sample}
-              onChange={(e) => {
-                onChangeCheckBox(e, 'sample');
-              }}
+          <Field label="닉네임" value={fieldValue.nickname} maxLength={10} isRequired>
+            <Field.Input
+              name="nickname"
+              onChange={onChangeField}
+              onValidate={validateInput}
+              placeholder="닉네임을 입력해주세요"
+              errorMessage={fieldErrorValue.nickname}
+              successMessage="사용 가능한 닉네임입니다."
             />
-          </div>
-        </div>
-      </BottomSheet>
-    </div>
+          </Field>
+
+          <Spacer size={35} />
+
+          <SettingWrapper>
+            <Text required font="suit15m" color="b9">
+              대표 스킬
+            </Text>
+            <SettingBox>
+              <Dropdown selectedValue={dropdownValue.mainSkill} initialValue="대분류">
+                {mainSkillQuery.map(({ id, name }) => (
+                  <Dropdown.Item
+                    key={id}
+                    value={name}
+                    onClick={(value) => {
+                      onClickDropdown(value, 'mainSkill');
+                    }}
+                  >
+                    {name}
+                  </Dropdown.Item>
+                ))}
+              </Dropdown>
+            </SettingBox>
+          </SettingWrapper>
+
+          <Spacer size={35} />
+
+          <SettingWrapper>
+            <Text required font="suit15m" color="b9">
+              세부 스킬 (최대 3개)
+            </Text>
+            <SettingBox>
+              <Dropdown
+                disabled={selectedSkillDepths.length === 3}
+                selectedValue={dropdownValue.skillDepthOne}
+                initialValue="대분류"
+              >
+                {mainSkillQuery.map(({ id, name }) => (
+                  <Dropdown.Item
+                    key={id}
+                    value={name}
+                    onClick={(value) => {
+                      onClickDropdown(value, 'skillDepthOne');
+                    }}
+                  >
+                    {name}
+                  </Dropdown.Item>
+                ))}
+              </Dropdown>
+              <Dropdown
+                disabled={selectedSkillDepths.length === 3}
+                selectedValue={dropdownValue.skillDepthTwo}
+                initialValue="상세분류"
+              >
+                {skillDepthOneId &&
+                  detailSkillQuery[skillDepthOneId].map(({ id, name }) => (
+                    <Dropdown.Item
+                      key={id}
+                      value={name}
+                      onClick={(value) => {
+                        onClickDropdown(value, 'skillDepthTwo');
+                      }}
+                    >
+                      {name}
+                    </Dropdown.Item>
+                  ))}
+              </Dropdown>
+              <Dropdown
+                disabled={selectedSkillDepths.length === 3}
+                selectedValue={dropdownValue.skillDepthThree}
+                initialValue="숙련도"
+              >
+                {skillLevelQuery.map(({ id, name }) => (
+                  <Dropdown.Item
+                    key={id}
+                    value={name}
+                    onClick={(value) => {
+                      onClickDropdown(value, 'skillDepthThree');
+                    }}
+                  >
+                    {name}
+                  </Dropdown.Item>
+                ))}
+              </Dropdown>
+            </SettingBox>
+            {selectedSkillDepths.length > 0 && (
+              <TagBox>
+                {selectedSkillDepths.map((skill, idx) => {
+                  return <Tag key={idx} text={skill.name} onDelete={onDeleteSkill} />;
+                })}
+              </TagBox>
+            )}
+          </SettingWrapper>
+
+          <Spacer size={35} />
+
+          <SettingWrapper>
+            <Text required font="suit15m" color="b9">
+              목적 (최대 3개)
+            </Text>
+            <CheckboxContainer
+              nameKey="goal"
+              options={checkboxValue.goal}
+              onChange={(e) => onChangeCheckbox(e, 'goal', { checkboxKey: 'goal', maxValue: 3 })}
+            />
+          </SettingWrapper>
+
+          <Spacer size={35} />
+
+          <SettingWrapper>
+            <Text font="suit15m" color="b9">
+              지역
+            </Text>
+            <Dropdown selectedValue={dropdownValue.region} initialValue="시/도/광역시">
+              {regionQuery.map(({ id, name }) => (
+                <Dropdown.Item
+                  key={id}
+                  value={name}
+                  onClick={(value) => {
+                    onClickDropdown(value, 'region');
+                  }}
+                >
+                  {name}
+                </Dropdown.Item>
+              ))}
+            </Dropdown>
+          </SettingWrapper>
+
+          <Spacer size={35} />
+
+          <Field label="직장명" value={fieldValue.company} maxLength={10}>
+            <Field.Input
+              name="company"
+              onChange={onChangeField}
+              onValidate={validateInput}
+              placeholder="직장명을 입력해주세요"
+            />
+          </Field>
+
+          <Spacer size={35} />
+
+          <Field label="자기소개" value={fieldValue.intro} maxLength={150}>
+            <Field.Textarea
+              name="intro"
+              onChange={onChangeField}
+              onValidate={validateInput}
+              placeholder="자기소개를 입력해 주세요. (최대 150자)"
+              errorMessage={fieldErrorValue.intro}
+            />
+          </Field>
+        </MainBox>
+        <BottomWrapper>
+          <Button onClick={() => {}}>프로필 저장하기</Button>
+        </BottomWrapper>
+      </MainWrapper>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  padding-bottom: 100px;
+`;
+
+const MainWrapper = styled.form`
+  background-color: ${theme.color.c1};
+  height: 100%;
+`;
+
+const MainBox = styled.div`
+  background-color: ${theme.color.w1};
+  border-radius: 16px 16px 0 0;
+  padding: 0 22px 25px 22px;
+  margin-top: 100px;
+  position: relative;
+`;
+
+const SettingWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+`;
+
+const SettingBox = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+`;
+
+const TagBox = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+`;
+
+const ImageWrapper = styled.div`
+  position: relative;
+  top: -50px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+`;
+
+const ImageBox = styled.div`
+  border-radius: 0 150px 150px 0;
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+`;
+
+const Img = styled.img`
+  width: 100%;
+  height: 100%;
+`;
+
+const ImageWrite = styled.div`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: ${theme.color.w1};
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #e6e6e6;
+  border-radius: 50%;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px;
+`;
+
+const BottomWrapper = styled.div`
+  padding: 0 22px;
+  background: ${theme.color.w1};
+`;
 
 export default SignUp;
