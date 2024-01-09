@@ -14,6 +14,8 @@ import {
   Tag,
   SVGImageWrite,
   useDropdown,
+  Flex,
+  Box,
 } from 'concept-be-design-system';
 import { FormEvent, useCallback, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -130,7 +132,7 @@ const SignUp = () => {
   }, [dropdownValue, onClickDropdownSetting]);
 
   return (
-    <Container>
+    <Box paddingBottom={100}>
       <Header main>
         <Header.Item>
           <Spacer size={24} />
@@ -147,15 +149,33 @@ const SignUp = () => {
 
       <MainWrapper onSubmit={onSubmit}>
         <Spacer size={20} />
-        <MainBox>
-          <ImageWrapper>
-            <ImageBox>
+        <Box
+          marginTop={100}
+          position="relative"
+          padding="0 22px 25px 22px"
+          borderRadius="16px 16px 0 0"
+          backgroundColor="w1"
+        >
+          <Box position="relative" top={-50} left={0} right={0} margin="auto" width={100} height={100} cursor="pointer">
+            <Box width={100} height={100} overflow="hidden" borderRadius="0 150px 150px 0">
               <Img src={memberInfo.profileImageUrl} />
-            </ImageBox>
-            <ImageWrite>
+            </Box>
+            <Flex
+              justifyContent="center"
+              alignItems="center"
+              border="1px solid #e6e6e6"
+              borderRadius="50%"
+              width={32}
+              height={32}
+              backgroundColor="w1"
+              position="absolute"
+              shadow="rgba(100, 100, 111, 0.2) 0px 7px 29px"
+              bottom={0}
+              right={0}
+            >
               <SVGImageWrite />
-            </ImageWrite>
-          </ImageWrapper>
+            </Flex>
+          </Box>
 
           <Field label="닉네임" value={fieldValue.nickname} maxLength={10} isRequired>
             <Field.Input
@@ -170,11 +190,11 @@ const SignUp = () => {
 
           <Spacer size={35} />
 
-          <SettingWrapper>
+          <Flex direction="column" gap={13}>
             <Text required font="suit15m" color="b9">
               대표 스킬
             </Text>
-            <SettingBox>
+            <Flex wrap="wrap" gap={8}>
               <Dropdown selectedValue={dropdownValue.mainSkill} initialValue="대분류">
                 {mainSkillQuery.map(({ id, name }) => (
                   <Dropdown.Item
@@ -188,16 +208,16 @@ const SignUp = () => {
                   </Dropdown.Item>
                 ))}
               </Dropdown>
-            </SettingBox>
-          </SettingWrapper>
+            </Flex>
+          </Flex>
 
           <Spacer size={35} />
 
-          <SettingWrapper>
+          <Flex direction="column" gap={13}>
             <Text required font="suit15m" color="b9">
               세부 스킬 (최대 3개)
             </Text>
-            <SettingBox>
+            <Flex wrap="wrap" gap={8}>
               <Dropdown
                 disabled={selectedSkillDepths.length === 3}
                 selectedValue={dropdownValue.skillDepthOne}
@@ -250,19 +270,19 @@ const SignUp = () => {
                   </Dropdown.Item>
                 ))}
               </Dropdown>
-            </SettingBox>
+            </Flex>
             {selectedSkillDepths.length > 0 && (
-              <TagBox>
+              <Flex wrap="wrap" gap={6}>
                 {selectedSkillDepths.map((skill, idx) => {
                   return <Tag key={idx} text={skill.name} onDelete={onDeleteSkill} />;
                 })}
-              </TagBox>
+              </Flex>
             )}
-          </SettingWrapper>
+          </Flex>
 
           <Spacer size={35} />
 
-          <SettingWrapper>
+          <Flex direction="column" gap={13}>
             <Text required font="suit15m" color="b9">
               목적 (최대 3개)
             </Text>
@@ -271,11 +291,11 @@ const SignUp = () => {
               options={checkboxValue.goal}
               onChange={(e) => onChangeCheckbox(e, 'goal', { checkboxKey: 'goal', maxValue: 3 })}
             />
-          </SettingWrapper>
+          </Flex>
 
           <Spacer size={35} />
 
-          <SettingWrapper>
+          <Flex direction="column" gap={13}>
             <Text font="suit15m" color="b9">
               지역
             </Text>
@@ -292,7 +312,7 @@ const SignUp = () => {
                 </Dropdown.Item>
               ))}
             </Dropdown>
-          </SettingWrapper>
+          </Flex>
 
           <Spacer size={35} />
 
@@ -316,91 +336,23 @@ const SignUp = () => {
               errorMessage={fieldErrorValue.intro}
             />
           </Field>
-        </MainBox>
-        <BottomWrapper>
+        </Box>
+        <Box padding="0 22px" backgroundColor="w1">
           <Button onClick={() => {}}>프로필 저장하기</Button>
-        </BottomWrapper>
+        </Box>
       </MainWrapper>
-    </Container>
+    </Box>
   );
 };
-
-const Container = styled.div`
-  padding-bottom: 100px;
-`;
 
 const MainWrapper = styled.form`
   background-color: ${theme.color.c1};
   height: 100%;
 `;
 
-const MainBox = styled.div`
-  background-color: ${theme.color.w1};
-  border-radius: 16px 16px 0 0;
-  padding: 0 22px 25px 22px;
-  margin-top: 100px;
-  position: relative;
-`;
-
-const SettingWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 13px;
-`;
-
-const SettingBox = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-`;
-
-const TagBox = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-`;
-
-const ImageWrapper = styled.div`
-  position: relative;
-  top: -50px;
-  left: 0;
-  right: 0;
-  margin: auto;
-  width: 100px;
-  height: 100px;
-  cursor: pointer;
-`;
-
-const ImageBox = styled.div`
-  border-radius: 0 150px 150px 0;
-  width: 100px;
-  height: 100px;
-  overflow: hidden;
-`;
-
 const Img = styled.img`
   width: 100%;
   height: 100%;
-`;
-
-const ImageWrite = styled.div`
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  background: ${theme.color.w1};
-  width: 32px;
-  height: 32px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid #e6e6e6;
-  border-radius: 50%;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px;
-`;
-
-const BottomWrapper = styled.div`
-  padding: 0 22px;
-  background: ${theme.color.w1};
 `;
 
 export default SignUp;
