@@ -12,7 +12,7 @@ const Privacy = ({ onClose }: props) => {
         개인정보 수집 및 이용 동의
       </Text>
       <Spacer size={16} />
-      <Text font="suit14r" color="b6" customStyle={{ lineHeight: '22px' }}>
+      <Text font="suit14r" color="b6" style={{ lineHeight: '22px' }}>
         본 개인정보처리방침은 컨셉BE에서 제공하는 서비스 이용과 관련하여 사용자의 개인정보 보호에 대한 내용을
         설명합니다. 서비스를 이용함으로써 사용자는 본 방침에 동의하는 것으로 간주됩니다.
       </Text>

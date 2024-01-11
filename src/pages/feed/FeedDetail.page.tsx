@@ -7,7 +7,7 @@ import {
   Text,
   TextDivider,
   theme,
-  SVGFeedDotsVertical,
+  SVGTripleDots,
   SVGFeedLike,
   SVGFeedMessage,
   SVGFeedPencil,
@@ -15,6 +15,7 @@ import {
   SVGFeedUnLike,
   SVGFeedUnScrap,
   SVGCancel,
+  Flex,
 } from 'concept-be-design-system';
 import { useState } from 'react';
 
@@ -43,7 +44,7 @@ const FeedDetail = () => {
         <Back />
         <Logo />
         <DotsBox>
-          <SVGFeedDotsVertical onClick={onClickDots} />
+          <SVGTripleDots onClick={onClickDots} />
           {isClickDots && (
             <DropDownBox>
               <DropDownSelect>
@@ -92,7 +93,7 @@ const FeedDetail = () => {
         </TitleWrapper>
         <Divider color="l3" top={16} bottom={16} />
 
-        <Text font="suit15ra" color="b6" customStyle={{ lineHeight: '24px' }}>
+        <Text font="suit15ra" color="b6" style={{ lineHeight: '24px' }}>
           현재 저희 팀은 유튜브 컨텐츠를 위해 프로젝트를 진행하고 있습니다.
           <br />
           인원 충원을 위해 멤버를 모집하고 있어요. <br />
@@ -128,13 +129,13 @@ const FeedDetail = () => {
                     {item.indexName}
                   </Text>
                   <Spacer size={12} />
-                  <Badge>
+                  <Flex wrap="wrap" gap={6}>
                     {item.tag.map((badge) => (
-                      <Badge.Item key={badge} fontColor="b4">
+                      <Badge key={badge} fontColor="b4">
                         {badge}
-                      </Badge.Item>
+                      </Badge>
                     ))}
-                  </Badge>
+                  </Flex>
                 </div>
               )}
             </div>
@@ -185,7 +186,7 @@ const FeedDetail = () => {
         <CommentsBox>
           <ProfileInfo />
           <Spacer size={20} />
-          <Text font="suit14m" color="t" customStyle={{ lineHeight: '22px' }}>
+          <Text font="suit14m" color="t" style={{ lineHeight: '22px' }}>
             댓글 내용, 한 번에 최대 500자 까지 입력 가능. 댓글 내용, 한 번에 최대 500자 까지 입력 가능. 댓글 내용, 한
             번에 최대 500자 까지 입력 가능. 댓글 내용, 한 번에 최대 500자 까지 입력 가능. 댓글 내용, 한 번에 최대 500자
             까지 입력 가능. 댓글 내용, 한 번에 최대 500자 까지 입력 가능.
@@ -221,7 +222,7 @@ const FeedDetail = () => {
           <CommentsBox>
             <ProfileInfo />
             <Spacer size={20} />
-            <Text font="suit14m" color="t" customStyle={{ lineHeight: '22px' }}>
+            <Text font="suit14m" color="t" style={{ lineHeight: '22px' }}>
               댓글 내용, 한 번에 최대 500자 까지 입력 가능. 댓글 내용, 한 번에 최대 500자 까지 입력 가능. 댓글 내용, 한
               번에 최대 500자 까지 입력 가능. 댓글 내용, 한 번에 최대 500자 까지 입력 가능. 댓글 내용, 한 번에 최대
               500자 까지 입력 가능. 댓글 내용, 한 번에 최대 500자 까지 입력 가능.

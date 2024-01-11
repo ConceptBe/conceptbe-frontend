@@ -11,13 +11,14 @@ import {
   Spacer,
   Text,
   theme,
-  SVGFilter,
-  SVGWrite40,
+  SVGHeaderFilter,
+  SVGFeedWrite40,
   PNGIdeaBackground1,
   PNGIdeaBackground2,
   PNGIdeaBackground3,
   PNGIdeaBackground4,
   PNGIdeaBackground5,
+  useDropdown,
 } from 'concept-be-design-system';
 import { useState } from 'react';
 
@@ -26,6 +27,21 @@ import PopCard from '../../components/Card/PopCard';
 import Padding from '../../components/Padding';
 import Logo from '../../layouts/Logo';
 import { filterOptions, filterSubOptions, filterRadio } from '../../modules/constants';
+
+interface RadioValue {
+  collaboration: Option[];
+}
+
+interface CheckboxValue {
+  field: Option[];
+  goal: Option[];
+}
+
+interface Option {
+  id: number;
+  name: string;
+  checked: boolean;
+}
 
 // 아이디어
 const ideas = [
@@ -42,23 +58,24 @@ const tags = ['팀원모집', '팀원모집', '팀원모집', '팀원모집'];
 
 //드롭다운
 const dropdownItems = [
-  { value: '1', text: 'Dropdown item1 asdasddas' },
-  { value: '2', text: 'Dropdown item2' },
+  { id: 1, name: 'Dropdown item1 asdasddas' },
+  { id: 2, name: 'Dropdown item2' },
 ];
 
 const Feed = () => {
   const [isFilter, setIsFilter] = useState(false);
-  const { checkboxValue, onChangeCheckBox } = useCheckbox({
+  const { checkboxValue, onChangeCheckbox } = useCheckbox<CheckboxValue>({
     field: filterOptions,
     goal: filterSubOptions,
   });
-  const { radioValue, onChangeRadio } = useRadio({
+  const { radioValue, onChangeRadio } = useRadio<RadioValue>({
     collaboration: filterRadio,
   });
-
-  const handleDropdownClick = (value: string) => {
-    console.log(value);
-  };
+  const { dropdownValue, onClickDropdown } = useDropdown({
+    temp1: '',
+    temp2: '',
+    temp3: '',
+  });
 
   return (
     <>
@@ -67,13 +84,13 @@ const Feed = () => {
           <Logo />
         </Header.Item>
         <Header.Item>
-          <SVGFilter onClick={() => setIsFilter(true)} cursor="pointer" />
+          <SVGHeaderFilter onClick={() => setIsFilter(true)} cursor="pointer" />
         </Header.Item>
       </Header>
 
       <Wrapper>
         <FeedFixBox>
-          <SVGWrite40 />
+          <SVGFeedWrite40 />
 
           <Spacer size={27} />
           <FeedFixTextWrapper>
@@ -134,7 +151,7 @@ const Feed = () => {
               <CheckboxContainer
                 nameKey="field"
                 options={checkboxValue.field}
-                onChange={(e) => onChangeCheckBox(e, 'field')}
+                onChange={(e) => onChangeCheckbox(e, 'field')}
               />
             </FilterWrapper>
 
@@ -146,7 +163,7 @@ const Feed = () => {
               <CheckboxContainer
                 nameKey="goal"
                 options={checkboxValue.goal}
-                onChange={(e) => onChangeCheckBox(e, 'goal')}
+                onChange={(e) => onChangeCheckbox(e, 'goal')}
               />
             </FilterWrapper>
 
@@ -168,7 +185,19 @@ const Feed = () => {
                 지역
               </Text>
               <Spacer size={12} />
-              <Dropdown onClick={handleDropdownClick} items={dropdownItems} initialValue="다운" />
+              <Dropdown selectedValue={dropdownValue.temp1} initialValue="임시">
+                {dropdownItems.map(({ id, name }) => (
+                  <Dropdown.Item
+                    key={id}
+                    value={name}
+                    onClick={(value) => {
+                      onClickDropdown(value, 'temp1');
+                    }}
+                  >
+                    {name}
+                  </Dropdown.Item>
+                ))}
+              </Dropdown>
             </FilterWrapper>
 
             <FilterWrapper>
@@ -177,16 +206,40 @@ const Feed = () => {
               </Text>
               <Spacer size={12} />
               <div style={{ display: 'flex', gap: 8 }}>
-                <Dropdown onClick={handleDropdownClick} items={dropdownItems} initialValue="다운" />
-                <Dropdown onClick={handleDropdownClick} items={dropdownItems} initialValue="다운" />
+                <Dropdown selectedValue={dropdownValue.temp2} initialValue="임시">
+                  {dropdownItems.map(({ id, name }) => (
+                    <Dropdown.Item
+                      key={id}
+                      value={name}
+                      onClick={(value) => {
+                        onClickDropdown(value, 'temp2');
+                      }}
+                    >
+                      {name}
+                    </Dropdown.Item>
+                  ))}
+                </Dropdown>
+                <Dropdown selectedValue={dropdownValue.temp3} initialValue="임시">
+                  {dropdownItems.map(({ id, name }) => (
+                    <Dropdown.Item
+                      key={id}
+                      value={name}
+                      onClick={(value) => {
+                        onClickDropdown(value, 'temp3');
+                      }}
+                    >
+                      {name}
+                    </Dropdown.Item>
+                  ))}
+                </Dropdown>
               </div>
             </FilterWrapper>
           </FilterContent>
           <FilterBottom>
-            <Button customStyle={{ flex: 1 }} onClick={() => setIsFilter(false)} isGrayOut>
+            <Button style={{ flex: 1 }} onClick={() => setIsFilter(false)} isGrayOut>
               닫기
             </Button>
-            <Button customStyle={{ flex: 2 }} onClick={() => {}}>
+            <Button style={{ flex: 2 }} onClick={() => {}}>
               적용
             </Button>
           </FilterBottom>

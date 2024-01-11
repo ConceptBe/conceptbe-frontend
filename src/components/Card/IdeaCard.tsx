@@ -5,13 +5,14 @@ import {
   Spacer,
   Text,
   theme,
-  SVGComment14,
-  SVGDefaultProfile,
-  SVGFeedDotsVertical,
-  SVGLike14,
-  SVGScrap,
-  SVGScrap14,
-  SVGView14,
+  SVGCardComment14,
+  SVGLoginDefaultProfile,
+  SVGTripleDots,
+  SVGCardLike14,
+  SVGScrap24,
+  SVGCardScrap14,
+  SVGCardView14,
+  Flex,
 } from 'concept-be-design-system';
 import { useNavigate } from 'react-router-dom';
 
@@ -27,7 +28,7 @@ const IdeaCard = ({ mine, badges }: Props) => {
     <CardContainer onClick={() => navigate('/feed/1')}>
       <ProfileWrapper>
         <ProfileBox>
-          <SVGDefaultProfile />
+          <SVGLoginDefaultProfile />
           <div>
             <Text font="suit14m" color="b4">
               일이삼사오육칠팔구
@@ -47,7 +48,7 @@ const IdeaCard = ({ mine, badges }: Props) => {
             </div>
           </div>
         </ProfileBox>
-        {mine ? <SVGFeedDotsVertical color="ba" /> : <SVGScrap />}
+        {mine ? <SVGTripleDots color="ba" /> : <SVGScrap24 />}
       </ProfileWrapper>
 
       <ContentWrapper>
@@ -66,30 +67,30 @@ const IdeaCard = ({ mine, badges }: Props) => {
         <Spacer size={14} />
 
         <TagWrapper>
-          <Badge>
+          <Flex wrap="wrap" gap={6}>
             {badges.map((badge) => (
-              <Badge.Item key={badge}>{badge}</Badge.Item>
+              <Badge key={badge}>{badge}</Badge>
             ))}
-          </Badge>
+          </Flex>
         </TagWrapper>
       </ContentWrapper>
 
       <Divider top={18} bottom={16} color="l3" />
       <FooterWrapper>
         <FooterText>
-          <SVGView14 />
+          <SVGCardView14 />
           999+
         </FooterText>
         <FooterText>
-          <SVGComment14 />
+          <SVGCardComment14 />
           999+
         </FooterText>
         <FooterText>
-          <SVGLike14 />
+          <SVGCardLike14 />
           999+
         </FooterText>
         <FooterText>
-          <SVGScrap14 />
+          <SVGCardScrap14 />
           999+
         </FooterText>
       </FooterWrapper>

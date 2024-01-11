@@ -16,10 +16,10 @@ const PopCard = ({ category, title, image }: IdeaCardProps) => {
       <img src={image ?? PNGIdeaBackground1} />
       <CardBoxBack />
       <CardBox>
-        <Text customStyle={{ fontSize: 13, fontWeight: 800 }} color="w1">
+        <Text style={{ fontSize: 13, fontWeight: 800 }} color="w1">
           {category}
         </Text>
-        <Text customStyle={{ fontSize: 14, fontWeight: 600, lineHeight: '20px' }} color="w1">
+        <Text style={{ fontSize: 14, fontWeight: 600, lineHeight: '20px' }} color="w1">
           {title}
         </Text>
       </CardBox>

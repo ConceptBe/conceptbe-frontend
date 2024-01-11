@@ -12,7 +12,7 @@ import {
   Header,
   Spacer,
   Tag,
-  SVGImageWrite,
+  SVGLoginImageWrite,
   useDropdown,
   Flex,
   Box,
@@ -173,7 +173,7 @@ const SignUp = () => {
               bottom={0}
               right={0}
             >
-              <SVGImageWrite />
+              <SVGLoginImageWrite />
             </Flex>
           </Box>
 
@@ -274,7 +274,7 @@ const SignUp = () => {
             {selectedSkillDepths.length > 0 && (
               <Flex wrap="wrap" gap={6}>
                 {selectedSkillDepths.map((skill, idx) => {
-                  return <Tag key={idx} text={skill.name} onDelete={onDeleteSkill} />;
+                  return <Tag key={idx} name={skill.name} onDelete={onDeleteSkill} />;
                 })}
               </Flex>
             )}

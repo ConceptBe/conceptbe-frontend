@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Badge, Header, Spacer, TabLayout, Text, theme, SVGSetting } from 'concept-be-design-system';
+import { Badge, Header, Spacer, TabLayout, Text, theme, SVGHeaderSetting, Flex } from 'concept-be-design-system';
 import { useNavigate } from 'react-router-dom';
 
 import IdeaCard from '../../components/Card/IdeaCard';
@@ -19,7 +19,7 @@ const Profile = () => {
           <Logo />
         </Header.Item>
         <Header.Item>
-          <SVGSetting onClick={() => navigate(`/profile/1/more`)} cursor="pointer" />
+          <SVGHeaderSetting onClick={() => navigate(`/profile/1/more`)} cursor="pointer" />
         </Header.Item>
       </Header>
 
@@ -47,7 +47,7 @@ const Profile = () => {
             <EditButton onClick={() => navigate('/profile/1')}>프로필 수정</EditButton>
           </ProfileMainBox>
           {/* 프로필 설명 */}
-          <Text font="suit15rb" color="b4" customStyle={{ lineHeight: 1.5 }}>
+          <Text font="suit15rb" color="b4" style={{ lineHeight: 1.5 }}>
             안녕하세요! 8년차 일이삼사오육칠팔구십이예요😊 무신사, 에이블리, 29cm 등 핫한 커머스부터, 카카오뱅크에
             이르기까지! 디지털마케팅의 A부터 Z까지 모든것을 직접 경험한 올라운드 마케터입니다!🤩 이번에 다양한 실무
             경험을 통해 퍼포머스마케터로의 직무 전환에도 성공했어요!
@@ -57,13 +57,13 @@ const Profile = () => {
             <Text font="suit14m">스킬</Text>
             <Spacer size={10} />
             <TagWrapper>
-              <Badge>
+              <Flex wrap="wrap" gap={6}>
                 {badges.map((badge) => (
-                  <Badge.Item key={badge} backgroundColor="c1" fontColor="w1">
+                  <Badge key={badge} backgroundColor="c1" fontColor="w1">
                     {badge}
-                  </Badge.Item>
+                  </Badge>
                 ))}
-              </Badge>
+              </Flex>
             </TagWrapper>
           </div>
           {/* 목적 */}
@@ -71,13 +71,13 @@ const Profile = () => {
             <Text font="suit14m">목적</Text>
             <Spacer size={10} />
             <TagWrapper>
-              <Badge>
+              <Flex wrap="wrap" gap={6}>
                 {badges.map((badge) => (
-                  <Badge.Item key={badge} fontColor="b4">
+                  <Badge key={badge} fontColor="b4">
                     {badge}
-                  </Badge.Item>
+                  </Badge>
                 ))}
-              </Badge>
+              </Flex>
             </TagWrapper>
           </div>
         </ProfileBox>

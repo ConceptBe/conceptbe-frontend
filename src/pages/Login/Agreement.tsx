@@ -34,7 +34,7 @@ const Agreement = () => {
       <Text
         font="suit22sb"
         color="b2"
-        customStyle={{
+        style={{
           lineHeight: 'normal',
           display: 'flex',
           flexDirection: 'column',
@@ -54,7 +54,7 @@ const Agreement = () => {
       <Text
         font="suit14r"
         color="b6"
-        customStyle={{
+        style={{
           lineHeight: '22px',
           display: 'flex',
           flexDirection: 'column',
@@ -70,7 +70,7 @@ const Agreement = () => {
       <Text
         font="suit13m"
         color="b4"
-        customStyle={{
+        style={{
           display: 'flex',
           flexDirection: 'column',
           lineHeight: '150%',
@@ -83,7 +83,7 @@ const Agreement = () => {
             font="suit13m"
             color="c1"
             onClick={onClickOpenPrivacy}
-            customStyle={{ cursor: 'pointer', textDecoration: 'underline', textUnderlineOffset: '2px' }}
+            style={{ cursor: 'pointer', textDecoration: 'underline', textUnderlineOffset: '2px' }}
           >
             개인정보 수집 및 이용 동의
           </Text>

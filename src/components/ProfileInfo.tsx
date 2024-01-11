@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
-import { Spacer, Text, TextDivider, SVGDefaultProfile } from 'concept-be-design-system';
+import { Spacer, Text, TextDivider, SVGLoginDefaultProfile } from 'concept-be-design-system';
 
 const ProfileInfo = () => {
   return (
     <ProfileWrapper>
-      <SVGDefaultProfile />
+      <SVGLoginDefaultProfile />
       <ProfileBox>
         <Text font="suit14m" color="b4">
           일이삼사오육칠팔구

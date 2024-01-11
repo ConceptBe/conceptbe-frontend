@@ -12,7 +12,7 @@ const UsageTerms = ({ onClose }: props) => {
         서비스 이용약관
       </Text>
       <Spacer size={16} />
-      <Text font="suit14r" color="b6" customStyle={{ lineHeight: '22px' }}>
+      <Text font="suit14r" color="b6" style={{ lineHeight: '22px' }}>
         본 이용약관은 컨셉BE (이하 "서비스")를 이용하는 사용자에게 적용됩니다. 서비스를 이용함으로써 사용자는 본 약관에
         동의하는 것으로 간주됩니다.
       </Text>

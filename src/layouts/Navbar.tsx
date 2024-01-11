@@ -4,7 +4,7 @@ import {
   SVGNavActiveProfile,
   SVGNavFeed,
   SVGNavProfile,
-  SVGWrite24,
+  SVGNavWrite24,
 } from 'concept-be-design-system';
 import { useNavigate } from 'react-router-dom';
 
@@ -23,7 +23,7 @@ const Navbar = () => {
             {location.pathname.startsWith('/feed') || location.pathname === '/' ? <SVGNavActiveFeed /> : <SVGNavFeed />}
           </Navigation.Item>
           <Navigation.Item position="center" onClick={() => navigate('/write')}>
-            <SVGWrite24 />
+            <SVGNavWrite24 />
           </Navigation.Item>
           <Navigation.Item onClick={() => navigate('/profile')}>
             {location.pathname.startsWith('/profile') ? <SVGNavActiveProfile /> : <SVGNavProfile />}

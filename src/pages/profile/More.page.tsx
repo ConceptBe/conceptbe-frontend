@@ -60,7 +60,7 @@ const More = () => {
           </Text>
 
           <Spacer size={8} />
-          <Text customStyle={{ lineHeight: '22px' }} font="suit14r" color="b6">
+          <Text style={{ lineHeight: '22px' }} font="suit14r" color="b6">
             기타 문의사항이 있으실 경우, ABCDEFG123456@gmail.com으로 연락주세요
           </Text>
 
