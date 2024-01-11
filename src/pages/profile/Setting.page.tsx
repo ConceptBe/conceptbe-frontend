@@ -195,7 +195,11 @@ const Setting = () => {
             </SettingBox>
             <TagBox>
               {selectedSkillDepths.map((skill, idx) => {
-                return <Tag key={idx} name={skill.name} onDelete={onDeleteSkill} />;
+                return (
+                  <Tag key={idx} onDelete={onDeleteSkill}>
+                    {skill.name}
+                  </Tag>
+                );
               })}
             </TagBox>
           </SettingWrapper>
