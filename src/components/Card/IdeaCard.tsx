@@ -68,8 +68,8 @@ const IdeaCard = ({ mine, badges }: Props) => {
 
         <TagWrapper>
           <Flex wrap="wrap" gap={6}>
-            {badges.map((badge) => (
-              <Badge key={badge}>{badge}</Badge>
+            {badges.map((badge, idx) => (
+              <Badge key={`${badge}-${idx}`}>{badge}</Badge>
             ))}
           </Flex>
         </TagWrapper>

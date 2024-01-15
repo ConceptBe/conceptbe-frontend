@@ -118,9 +118,9 @@ const Feed = () => {
             </Text>
             <Spacer size={18} />
             <FeedFixWrapper>
-              {ideas.map((idea, idx) => {
-                return <PopCard key={idx} image={idea.image} category={idea.category} title={idea.title} />;
-              })}
+              {ideas.map((idea, idx) => (
+                <PopCard key={idx} image={idea.image} category={idea.category} title={idea.title} />
+              ))}
             </FeedFixWrapper>
           </FeedWrapper>
 
