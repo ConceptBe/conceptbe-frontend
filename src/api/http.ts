@@ -18,3 +18,4 @@ export interface HttpClient extends AxiosInstance {
 }
 
 export const http: HttpClient = axiosInstance;
+axiosInstance.interceptors.response.use((res) => res.data);

@@ -1,12 +1,10 @@
-import { AxiosResponse } from 'axios';
-
 import { http } from './http';
 import { CheckMember } from '../types/login';
-import { SignUp, Skill } from '../types/signUp';
+import { GetSignUp, PostSignUp } from '../types/signUp';
 
 type OauthServerType = 'kakao' | 'naver';
 
-export const getOauthKaKao = (code: string) => {
+export const getOauthKakao = (code: string) => {
   return http.get<string>(`/oauth/login/kakao?code=${code}`);
 };
 
@@ -15,21 +13,17 @@ export const getOauthNaver = (code: string) => {
 };
 
 export const getLogin = (oauthServerType: OauthServerType, oauthId: string) => {
-  return http.get<string>(`/oauth/${oauthServerType}/login/${oauthId}`);
+  return http.get<string>(`/oauth/${oauthServerType}/login?oauthId=${oauthId}`);
 };
 
 export const getIsMember = (oauthServerType: OauthServerType, code: string) => {
-  return http.get<AxiosResponse<CheckMember>>(`/oauth/${oauthServerType}/member?code=${code}`);
+  return http.get<CheckMember>(`/oauth/${oauthServerType}/member?code=${code}`);
 };
 
-export const postSignUp = (payload: SignUp) => {
+export const postSignUp = (payload: PostSignUp) => {
   return http.post<string>('/sign-up', payload);
 };
 
-export const getMainSkills = () => {
-  return http.get<Skill[]>('/skills/main');
-};
-
-export const getDetailSkills = () => {
-  return http.get<Skill[]>(`/skills/detail?parentSkillId=needChange`);
+export const getSingUp = () => {
+  return http.get<GetSignUp>('/sign-up');
 };
