@@ -1,4 +1,4 @@
-export interface SignUp {
+export interface PostSignUp {
   nickname: string;
   mainSkillId: number;
   profileImageUrl: string;
@@ -16,6 +16,27 @@ export interface SignUp {
 }
 
 export interface Skill {
+  id: number;
+  name: string;
+}
+
+export interface GetSignUp {
+  mainSkillResponses: MainSkillOption[];
+  purposeResponses: CheckboxOption[];
+}
+
+export interface MainSkillOption {
+  id: number;
+  name: string;
+  detailSkillResponses: DetailSkillOption[];
+}
+
+interface DetailSkillOption {
+  id: number;
+  name: string;
+}
+
+export interface CheckboxOption {
   id: number;
   name: string;
 }
