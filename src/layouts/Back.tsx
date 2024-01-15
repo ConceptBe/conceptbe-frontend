@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { SVGBack24B, theme } from 'concept-be-design-system';
+import { SVGHeaderBack24B, theme } from 'concept-be-design-system';
 import { useNavigate } from 'react-router-dom';
 
 import useRouteMatched from '../hooks/useRouteMatch';
@@ -12,7 +12,7 @@ const Back = () => {
 
   return (
     <Wrapper onClick={() => navigate(-1)} isWhiteStyle={isMatchedWhiteStyle}>
-      <SVGBack24B />
+      <SVGHeaderBack24B />
     </Wrapper>
   );
 };

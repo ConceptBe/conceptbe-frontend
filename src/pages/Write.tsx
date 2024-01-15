@@ -10,11 +10,13 @@ import {
   Spacer,
   Text,
   theme,
-  PNGPlus,
-  SVGCheck24,
+  SVGAdd24,
+  SVGHeaderCheck24,
   SVGCancel,
-  SVGActiveCheck,
-  SVGActiveUncheckRadio,
+  SVGRadioCheck24,
+  SVGRadioUncheck24,
+  Flex,
+  useDropdown,
 } from 'concept-be-design-system';
 import { useState, ChangeEvent } from 'react';
 
@@ -23,9 +25,9 @@ import {
   filterOptions,
   filterSubOptions,
   filterRadio,
-  regionOptions,
-  skillOneDepth,
-  skillTwoDepth,
+  REGION_LIST,
+  MAIN_SKILL_QUERY,
+  DETAIL_SKILL_QUERY,
 } from '../modules/constants';
 
 const Write = () => {
@@ -36,12 +38,15 @@ const Write = () => {
   const [getArea, setArea] = useState('');
   const [get1Depth, set1Depth] = useState('product');
   const [get2Depth, set2Depth] = useState([]);
-  const { checkboxValue, onChangeCheckBox } = useCheckbox({
+  const { checkboxValue, onChangeCheckbox } = useCheckbox({
     field: filterOptions,
     goal: filterSubOptions,
   });
   const { radioValue, onChangeRadio } = useRadio({
     collaboration: filterRadio,
+  });
+  const { dropdownValue, onClickDropdown } = useDropdown({
+    region: '',
   });
 
   const handleIndexChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -90,7 +95,7 @@ const Write = () => {
         <Text font="suit16sb" color="b4">
           글쓰기
         </Text>
-        <SVGCheck24 />
+        <SVGHeaderCheck24 />
       </HeaderBox>
 
       <Divider color="l3" />
@@ -113,37 +118,20 @@ const Write = () => {
       <Divider color="bg1" height={8} bottom={30} />
       <BottomWrapper>
         <BottomBox>
-          <Text font="suit15m" color="b9" required>
-            분야
-          </Text>
-
-          <Spacer size={20} />
           <CheckboxContainer
-            nameKey="field"
+            label="분야"
+            checkboxKey="field"
             options={checkboxValue.field}
-            onChange={(e) => onChangeCheckBox(e, 'field')}
+            onChange={onChangeCheckbox}
           />
         </BottomBox>
         <BottomBox>
-          <Text font="suit15m" color="b9" required>
-            목적
-          </Text>
-
-          <Spacer size={20} />
-          <CheckboxContainer
-            nameKey="goal"
-            options={checkboxValue.goal}
-            onChange={(e) => onChangeCheckBox(e, 'goal')}
-          />
+          <CheckboxContainer label="목적" checkboxKey="goal" options={checkboxValue.goal} onChange={onChangeCheckbox} />
         </BottomBox>
         <BottomBox>
-          <Text font="suit15m" color="b9" required>
-            협업방식
-          </Text>
-
-          <Spacer size={20} />
           <RadioContainer
-            nameKey="collaboration"
+            label="협업방식"
+            radioKey="collaboration"
             options={radioValue.collaboration}
             onChange={(e) => onChangeRadio(e, 'collaboration')}
             gap="large"
@@ -155,7 +143,19 @@ const Write = () => {
           </Text>
 
           <Spacer size={20} />
-          <Dropdown onClick={handleDropdownClick} items={regionOptions} initialValue="전국" value={getArea} />
+          <Dropdown selectedValue={dropdownValue.region} initialValue="시/도/광역시">
+            {REGION_LIST.map(({ id, name }) => (
+              <Dropdown.Item
+                key={id}
+                value={name}
+                onClick={(value) => {
+                  onClickDropdown(value, 'region');
+                }}
+              >
+                {name}
+              </Dropdown.Item>
+            ))}
+          </Dropdown>
         </BottomBox>
         <BottomBox>
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -167,8 +167,11 @@ const Write = () => {
                 setIsOpenBottomSheet(true);
               }}
             >
-              <Text font="suit13m" color="b9" customStyle={{ lineHeight: '20px' }}>
-                <img src={PNGPlus} /> 팀원추가
+              <Text font="suit13m" color="b9" style={{ lineHeight: '20px' }}>
+                <Flex alignItems="center">
+                  <SVGAdd24 />
+                  팀원추가
+                </Flex>
               </Text>
             </div>
           </div>
@@ -189,13 +192,14 @@ const Write = () => {
         </BottomBox>
       </BottomWrapper>
 
-      <BottomSheet isOpen={isOpenBottomSheet} onClose={() => setIsOpenBottomSheet(false)}>
+      {/* 추후 수정 필요 */}
+      {/* <BottomSheet isOpen={isOpenBottomSheet} onClose={() => setIsOpenBottomSheet(false)}>
         <Sheet_TopBox>
           <SVGCancel />
           <Text font="suit16sb" color="b4">
             팀원선택
           </Text>
-          <SVGCheck24
+          <SVGHeaderCheck24
             onClick={() => {
               setIsOpenBottomSheet(false);
             }}
@@ -203,22 +207,20 @@ const Write = () => {
         </Sheet_TopBox>
         <Sheet_BodyBox>
           <Sheet_Left>
-            {skillOneDepth
-              .filter((e) => {
-                return e.text !== '대분류';
-              })
-              .map((e, index) => {
-                return (
-                  <Sheet_leftItem key={index} onClick={() => set1Depth(e.value)} checked={get1Depth === e.value}>
-                    <Text font="suit14m" color="ba">
-                      {e.text}
-                    </Text>
-                  </Sheet_leftItem>
-                );
-              })}
+            {MAIN_SKILL_QUERY.filter((e) => {
+              return e.text !== '대분류';
+            }).map((e, index) => {
+              return (
+                <Sheet_leftItem key={index} onClick={() => set1Depth(e.value)} checked={get1Depth === e.value}>
+                  <Text font="suit14m" color="ba">
+                    {e.text}
+                  </Text>
+                </Sheet_leftItem>
+              );
+            })}
           </Sheet_Left>
           <Sheet_right>
-            {skillTwoDepth[get1Depth]
+            {DETAIL_SKILL_QUERY[get1Depth]
               .filter((e: { text: string }) => {
                 return e.text !== '상세분류';
               })
@@ -229,13 +231,13 @@ const Write = () => {
                       {e.text}
                     </Text>
 
-                    {get2Depth.includes(e.value) ? <SVGActiveCheck /> : <SVGActiveUncheckRadio />}
+                    {get2Depth.includes(e.value) ? <SVGRadioCheck24 /> : <SVGRadioUncheck24 />}
                   </Sheet_radioDiv>
                 );
               })}
           </Sheet_right>
         </Sheet_BodyBox>
-      </BottomSheet>
+      </BottomSheet> */}
     </MainWrapper>
   );
 };

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import {
   useCheckbox,
-  useInput,
+  useField,
   Button,
   CheckboxContainer,
   Dropdown,
@@ -11,18 +11,20 @@ import {
   Tag,
   Text,
   theme,
+  SVGLoginImageWrite,
+  useDropdown,
 } from 'concept-be-design-system';
 import { useCallback, useEffect, useState } from 'react';
 
 import Back from '../../layouts/Back';
-import { skillOneDepth, skillTwoDepth, regionOptions, filterSubOptions } from '../../modules/constants';
-
-const dropdownItems = [
-  { text: '숙련도', value: '', placeValue: true },
-  { text: '상', value: '상' },
-  { text: '중', value: '중' },
-  { text: '하', value: '하' },
-];
+import {
+  filterSubOptions,
+  MAIN_SKILL_QUERY,
+  DETAIL_SKILL_QUERY,
+  SKILL_DEPTH_THREE_LIST,
+  REGION_LIST,
+} from '../../modules/constants';
+import { Skill } from '../../types/signUp';
 
 interface FormValueType {
   nickName: string;
@@ -30,56 +32,68 @@ interface FormValueType {
   intro: string;
 }
 
+interface DropdownValue {
+  mainSkill: string;
+  skillDepthOne: string;
+  skillDepthTwo: string;
+  skillDepthThree: string;
+  region: string;
+}
+
 const Setting = () => {
-  const [skills, setSkills] = useState<string[]>([]);
-  const [oneDepth, setOneDepth] = useState(''); // 스킬(대분류)
-  const [twoDepth, setTwoDepth] = useState(''); // 스킬(상세분류)
-  const [threeDepth, setThreeDepth] = useState(''); // 스킬(숙련도)
-  const [, setRegion] = useState(''); // 지역
-  const { inputValue, inputErrorValue, onChangeInput } = useInput<FormValueType>({
+  const { fieldValue, fieldErrorValue, onChangeField } = useField<FormValueType>({
     nickName: '',
     company: '',
     intro: '',
   });
-  const { checkboxValue, onChangeCheckBox } = useCheckbox({
+  const { checkboxValue, onChangeCheckbox } = useCheckbox({
     goal: filterSubOptions,
   });
-  const validDropDown = skills.length === 3;
+  const { dropdownValue, onResetDropdown, onClickDropdown } = useDropdown<DropdownValue>({
+    mainSkill: '',
+    skillDepthOne: '',
+    skillDepthTwo: '',
+    skillDepthThree: '',
+    region: '',
+  });
+  const [selectedSkillDepths, setSelectedSkillDepths] = useState<Skill[]>([]);
+  const skillDepthOneId = MAIN_SKILL_QUERY.find(({ name }) => name === dropdownValue.skillDepthOne)?.id;
 
-  const handleDropdownClick = useCallback(() => {
-    const joinValue = `${twoDepth}_${threeDepth}`;
+  const onClickDropdownSetting = useCallback(() => {
+    if (!skillDepthOneId) return;
 
-    if (skills.length < 3) {
-      setSkills([...skills, joinValue]);
-      setOneDepth('');
-      setTwoDepth('');
-      setThreeDepth('');
+    const selectedValue = `${dropdownValue.skillDepthTwo}, ${dropdownValue.skillDepthThree}`;
+    const selectedId = DETAIL_SKILL_QUERY[skillDepthOneId].find(({ name }) => name === dropdownValue.skillDepthTwo)?.id;
+
+    if (selectedId && selectedSkillDepths.length < 3) {
+      setSelectedSkillDepths((prev) => [...prev, { id: selectedId, name: selectedValue }]);
+      onResetDropdown('skillDepthOne');
+      onResetDropdown('skillDepthTwo');
+      onResetDropdown('skillDepthThree');
     }
-  }, [skills, threeDepth, twoDepth]);
+  }, [skillDepthOneId, selectedSkillDepths, dropdownValue, onResetDropdown]);
 
-  const handleDeleteSkill = (value: string) => {
-    setSkills(skills.filter((skill) => skill !== value));
+  const onDeleteSkill = (value: string) => {
+    setSelectedSkillDepths(selectedSkillDepths.filter(({ name }) => name !== value));
   };
 
   const validateInput = () => {
     return [
       {
-        regexp: /[~!@#$%";'^,&*()_+|</>=>`?:{[\]}]/g,
-        name: 'nickName',
+        validateFn: (value: string) => /[~!@#$%";'^,&*()_+|</>=>`?:{[\]}]/g.test(value),
         errorMessage: '사용 불가한 닉네임입니다.',
       },
       {
-        regexp: /[1234567890]/g,
-        name: 'company',
+        validateFn: (value: string) => /[1234567890]/g.test(value),
         errorMessage: '사용 불가한 직장명입니다.',
       },
     ];
   };
 
   useEffect(() => {
-    if (threeDepth === '' || !twoDepth) return;
-    handleDropdownClick();
-  }, [threeDepth, handleDropdownClick, twoDepth]);
+    if (dropdownValue.skillDepthThree === '' || !dropdownValue.skillDepthTwo) return;
+    onClickDropdownSetting();
+  }, [dropdownValue, onClickDropdownSetting]);
 
   return (
     <Container>
@@ -102,20 +116,24 @@ const Setting = () => {
             <ImageBox>
               <Img src="https://image.toast.com/aaaaaqx/catchtable/shopinfo/sR1B6qa4fT537GjL6KO9bHg/r1b6qa4ft537gjl6ko9bhg_2371016411290157.jpg?detail750" />
             </ImageBox>
-            <ImageWrite>{/* <SVGImageWrite /> */}</ImageWrite>
+            <ImageWrite>
+              <SVGLoginImageWrite />
+            </ImageWrite>
           </ImageWrapper>
 
-          <Field label="닉네임" value={inputValue.nickName} maxLength={10} isRequired>
+          <Field
+            label="닉네임"
+            value={fieldValue.nickName}
+            onChange={onChangeField}
+            onValidate={validateInput}
+            maxLength={10}
+            required
+          >
             <Field.Input
               name="nickName"
-              value={inputValue.nickName}
-              onChange={onChangeInput}
-              onValidate={validateInput}
-              maxLength={10}
               placeholder="닉네임을 입력해주세요"
-              errorMessage={inputErrorValue.nickName}
+              errorValue={fieldErrorValue.nickName}
               successMessage="사용 가능한 닉네임입니다."
-              isRequired
             />
           </Field>
 
@@ -126,43 +144,77 @@ const Setting = () => {
             </Text>
             <SettingBox>
               <Dropdown
-                disabled={validDropDown}
-                value={oneDepth}
-                onClick={(value) => setOneDepth(value)}
-                items={skillOneDepth}
-                initialValue={'대분류'}
-              />
+                disabled={selectedSkillDepths.length === 3}
+                selectedValue={dropdownValue.skillDepthOne}
+                initialValue="대분류"
+              >
+                {MAIN_SKILL_QUERY.map(({ id, name }) => (
+                  <Dropdown.Item
+                    key={id}
+                    value={name}
+                    onClick={(value) => {
+                      onClickDropdown(value, 'skillDepthOne');
+                    }}
+                  >
+                    {name}
+                  </Dropdown.Item>
+                ))}
+              </Dropdown>
               <Dropdown
-                disabled={validDropDown}
-                value={twoDepth}
-                onClick={(value) => setTwoDepth(value)}
-                items={skillTwoDepth[`${oneDepth}`] || []}
-                initialValue={'상세분류'}
-              />
+                disabled={selectedSkillDepths.length === 3}
+                selectedValue={dropdownValue.skillDepthTwo}
+                initialValue="상세분류"
+              >
+                {skillDepthOneId &&
+                  DETAIL_SKILL_QUERY[skillDepthOneId].map(({ id, name }) => (
+                    <Dropdown.Item
+                      key={id}
+                      value={name}
+                      onClick={(value) => {
+                        onClickDropdown(value, 'skillDepthTwo');
+                      }}
+                    >
+                      {name}
+                    </Dropdown.Item>
+                  ))}
+              </Dropdown>
               <Dropdown
-                disabled={validDropDown}
-                value={threeDepth}
-                onClick={(value) => setThreeDepth(value)}
-                items={dropdownItems}
-                initialValue={'숙련도'}
-              />
+                disabled={selectedSkillDepths.length === 3}
+                selectedValue={dropdownValue.skillDepthThree}
+                initialValue="숙련도"
+              >
+                {SKILL_DEPTH_THREE_LIST.map(({ id, name }) => (
+                  <Dropdown.Item
+                    key={id}
+                    value={name}
+                    onClick={(value) => {
+                      onClickDropdown(value, 'skillDepthThree');
+                    }}
+                  >
+                    {name}
+                  </Dropdown.Item>
+                ))}
+              </Dropdown>
             </SettingBox>
             <TagBox>
-              {skills.map((skill, idx) => {
-                return <Tag key={idx} text={skill} onDelete={handleDeleteSkill} />;
+              {selectedSkillDepths.map((skill, idx) => {
+                return (
+                  <Tag key={idx} onDelete={onDeleteSkill}>
+                    {skill.name}
+                  </Tag>
+                );
               })}
             </TagBox>
           </SettingWrapper>
 
           <Spacer size={35} />
           <SettingWrapper>
-            <Text required font="suit15m" color="b9">
-              목적 (최대 3개)
-            </Text>
             <CheckboxContainer
-              nameKey="goal"
+              label="목적 (최대 3개)"
+              checkboxKey="goal"
               options={checkboxValue.goal}
-              onChange={(e) => onChangeCheckBox(e, 'goal', { checkboxKey: 'goal', maxValue: 3 })}
+              onChange={onChangeCheckbox}
+              maxCount={3}
             />
           </SettingWrapper>
 
@@ -171,37 +223,53 @@ const Setting = () => {
             <Text font="suit15m" color="b9">
               지역
             </Text>
-            <Dropdown onClick={(value) => setRegion(value)} items={regionOptions} initialValue={'시/도/광역시'} />
+            <Dropdown selectedValue={dropdownValue.region} initialValue="시/도/광역시">
+              {REGION_LIST.map(({ id, name }) => (
+                <Dropdown.Item
+                  key={id}
+                  value={name}
+                  onClick={(value) => {
+                    onClickDropdown(value, 'region');
+                  }}
+                >
+                  {name}
+                </Dropdown.Item>
+              ))}
+            </Dropdown>
           </SettingWrapper>
 
           <Spacer size={35} />
 
-          <Field label="직장명" value={inputValue.company} maxLength={10} isRequired>
+          <Field
+            label="직장명"
+            value={fieldValue.company}
+            onChange={onChangeField}
+            onValidate={validateInput}
+            maxLength={10}
+            required
+          >
             <Field.Input
               name="company"
-              value={inputValue.company}
-              onChange={onChangeInput}
-              onValidate={validateInput}
-              maxLength={10}
               placeholder="직장명을 입력해주세요"
-              errorMessage={inputErrorValue.company}
+              errorValue={fieldErrorValue.company}
               successMessage="사용 가능한 직장명입니다."
-              isRequired
             />
           </Field>
 
           <Spacer size={35} />
 
-          <Field label="자기소개" value={inputValue.intro} maxLength={150} isRequired>
+          <Field
+            label="자기소개"
+            value={fieldValue.intro}
+            onChange={onChangeField}
+            onValidate={validateInput}
+            maxLength={150}
+            required
+          >
             <Field.Textarea
               name="intro"
-              value={inputValue.intro}
-              onChange={onChangeInput}
-              onValidate={validateInput}
-              maxLength={150}
               placeholder="자기소개를 입력해 주세요. (최대 150자)"
-              errorMessage={inputErrorValue.intro}
-              isRequired
+              errorValue={fieldErrorValue.intro}
             />
           </Field>
         </MainBox>

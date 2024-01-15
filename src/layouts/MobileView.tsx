@@ -20,17 +20,17 @@ const MobileView = () => {
 export default MobileView;
 
 const Container = styled.main`
-  height: 100%;
-  max-width: 375px;
   width: auto;
+  height: 100dvh;
+  max-width: 375px;
+  max-height: 100%;
   margin: 0 auto;
-  min-height: 100%;
   overflow: hidden;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 `;
 
 const Wrapper = styled.div`
-  height: 100dvh;
+  height: 100%;
   overflow: auto;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */

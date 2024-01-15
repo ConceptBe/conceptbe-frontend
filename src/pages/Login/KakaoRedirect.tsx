@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { getIsMember, getOauthKaKao } from '../../api';
+import { getIsMember, getLogin } from '../../api';
 
 const KakaoRedirect = () => {
   const navigate = useNavigate();
@@ -10,19 +10,19 @@ const KakaoRedirect = () => {
 
   const getCode = useCallback(
     async (code: string | null) => {
-      if (!code) throw new Error('CODE ERROR');
+      if (!code) throw new Error('OAUTH CODE ERROR');
 
-      const member = await getIsMember('kakao', code);
+      const data = await getIsMember('kakao', code);
 
-      if (member.isMember) {
-        const token = await getOauthKaKao(member.oauthId);
+      if (data.isMember) {
+        const token = await getLogin('kakao', data.oauthMemberInformation.oauthId);
         localStorage.setItem('userToken', token);
 
-        navigate('/feed');
+        navigate('/');
         return;
       }
 
-      navigate('/sign-up');
+      navigate('/agreement', { state: data.oauthMemberInformation });
     },
     [navigate],
   );

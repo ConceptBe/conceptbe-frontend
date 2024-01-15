@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { SVGMainLogo } from 'concept-be-design-system';
+import { SVGHeaderMainLogo } from 'concept-be-design-system';
 import { useNavigate } from 'react-router-dom';
 
 const Logo = () => {
@@ -7,7 +7,7 @@ const Logo = () => {
 
   return (
     <Wrapper onClick={() => navigate('/')}>
-      <SVGMainLogo />
+      <SVGHeaderMainLogo />
     </Wrapper>
   );
 };

@@ -35,17 +35,17 @@ const routes: RouteElement[] = [
       {
         path: '',
         element: <Feed />,
-        withAuth: true,
+        withAuth: false,
       },
       {
         path: '/feed/:id',
         element: <FeedDetail />,
-        withAuth: true,
+        withAuth: false,
       },
       {
         path: '/write',
         element: <Write />,
-        withAuth: true,
+        withAuth: false,
       },
       {
         path: '/login',
@@ -60,17 +60,17 @@ const routes: RouteElement[] = [
       {
         path: '/profile',
         element: <Profile />,
-        withAuth: true,
+        withAuth: false,
       },
       {
         path: '/profile/:id',
         element: <Setting />,
-        withAuth: true,
+        withAuth: false,
       },
       {
         path: '/profile/:id/more',
         element: <More />,
-        withAuth: true,
+        withAuth: false,
       },
 
       {

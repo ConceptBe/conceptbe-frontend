@@ -6,55 +6,13 @@ interface props {
 }
 
 const Privacy = ({ onClose }: props) => {
-  const CollectionWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    padding: 22px 22px 75px 22px;
-  `;
-
-  const UnorderedList = styled.ul`
-    width: 100%;
-    line-height: 22px;
-  `;
-
-  const ListItem = styled.li`
-    list-style: disc;
-    color: ${theme.color.b6};
-    list-style-position: inside;
-    font-size: 14px;
-    font-weight: 400;
-    padding-left: 20px;
-    text-indent: -20px;
-    margin: 0;
-  `;
-
-  const OrderedList = styled.ol`
-    color: ${theme.color.b6};
-    font-size: 14px;
-    font-weight: 400;
-  `;
-
-  const ButtonWrapper = styled.div`
-    position: fixed;
-    box-sizing: border-box;
-    width: auto; /* changed this to auto */
-    bottom: 0;
-    left: 50%; /* centering the wrapper */
-    transform: translateX(-50%); /* ensuring it's centered */
-    display: flex;
-    padding: 0 22px 20px 22px;
-    max-width: 375px;
-    width: 100%;
-    background-color: #fff;
-  `;
-
   return (
     <CollectionWrapper>
       <Text font="suit18sb" color="b2">
         개인정보 수집 및 이용 동의
       </Text>
       <Spacer size={16} />
-      <Text font="suit14r" color="b6" customStyle={{ lineHeight: '22px' }}>
+      <Text font="suit14r" color="b6" style={{ lineHeight: '22px' }}>
         본 개인정보처리방침은 컨셉BE에서 제공하는 서비스 이용과 관련하여 사용자의 개인정보 보호에 대한 내용을
         설명합니다. 서비스를 이용함으로써 사용자는 본 방침에 동의하는 것으로 간주됩니다.
       </Text>
@@ -123,11 +81,52 @@ const Privacy = ({ onClose }: props) => {
         본 이용약관의 내용은 23.08.24에 업데이트되었습니다.
       </Text>
 
+      <Spacer size={20} />
+
       <ButtonWrapper>
         <Button onClick={onClose}>확인</Button>
       </ButtonWrapper>
     </CollectionWrapper>
   );
 };
+
+const CollectionWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 22px 22px 0 22px;
+`;
+
+const UnorderedList = styled.ul`
+  width: 100%;
+  line-height: 22px;
+`;
+
+const ListItem = styled.li`
+  list-style: disc;
+  color: ${theme.color.b6};
+  list-style-position: inside;
+  font-size: 14px;
+  font-weight: 400;
+  padding-left: 20px;
+  text-indent: -20px;
+  margin: 0;
+`;
+
+const OrderedList = styled.ol`
+  color: ${theme.color.b6};
+  font-size: 14px;
+  font-weight: 400;
+`;
+
+const ButtonWrapper = styled.div`
+  position: sticky;
+  box-sizing: border-box;
+  width: auto;
+  bottom: 0;
+  display: flex;
+  padding: 0 22px 20px 22px;
+  width: 100%;
+  background-color: #fff;
+`;
 
 export default Privacy;

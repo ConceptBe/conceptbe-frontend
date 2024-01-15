@@ -1,22 +1,12 @@
 export interface CheckMember {
   isMember: boolean;
-  oauthId: string;
-  nickname: string;
-  profileImageUrl: string;
-  email: string;
-  oauthServerType: string;
+  oauthMemberInformation: OauthMemberInfo;
 }
 
-export interface SignUp {
-  nickname: string;
-  mainSkill: string;
-  profileImageUrl: string;
-  skills: string[];
-  joinPurpose: string[];
-  livingPlace?: string;
-  workingPlace?: string;
-  introduction?: string;
-  email: string;
+export interface OauthMemberInfo {
   oauthId: string;
   oauthServerType: string;
+  email: string;
+  nickname: string;
+  profileImageUrl: string;
 }
