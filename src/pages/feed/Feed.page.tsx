@@ -144,38 +144,29 @@ const Feed = () => {
         <FilterBox>
           <FilterContent>
             <FilterWrapper>
-              <Text font="suit15m" color="b9">
-                분야
-              </Text>
-              <Spacer size={12} />
               <CheckboxContainer
-                nameKey="field"
+                label="분야"
+                checkboxKey="field"
                 options={checkboxValue.field}
-                onChange={(e) => onChangeCheckbox(e, 'field')}
+                onChange={onChangeCheckbox}
               />
             </FilterWrapper>
 
             <FilterWrapper>
-              <Text font="suit15m" color="b9">
-                목적
-              </Text>
-              <Spacer size={12} />
               <CheckboxContainer
-                nameKey="goal"
+                label="목적"
+                checkboxKey="goal"
                 options={checkboxValue.goal}
-                onChange={(e) => onChangeCheckbox(e, 'goal')}
+                onChange={onChangeCheckbox}
               />
             </FilterWrapper>
 
             <FilterWrapper>
-              <Text font="suit15m" color="b9">
-                협업 방식
-              </Text>
-              <Spacer size={12} />
               <RadioContainer
-                nameKey="collaboration"
+                label="협업 방식"
+                radioKey="collaboration"
                 options={radioValue.collaboration}
-                onChange={(e) => onChangeRadio(e, 'collaboration')}
+                onChange={onChangeRadio}
                 gap="large"
               />
             </FilterWrapper>

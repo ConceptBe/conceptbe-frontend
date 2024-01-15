@@ -118,37 +118,20 @@ const Write = () => {
       <Divider color="bg1" height={8} bottom={30} />
       <BottomWrapper>
         <BottomBox>
-          <Text font="suit15m" color="b9" required>
-            분야
-          </Text>
-
-          <Spacer size={20} />
           <CheckboxContainer
-            nameKey="field"
+            label="분야"
+            checkboxKey="field"
             options={checkboxValue.field}
-            onChange={(e) => onChangeCheckbox(e, 'field')}
+            onChange={onChangeCheckbox}
           />
         </BottomBox>
         <BottomBox>
-          <Text font="suit15m" color="b9" required>
-            목적
-          </Text>
-
-          <Spacer size={20} />
-          <CheckboxContainer
-            nameKey="goal"
-            options={checkboxValue.goal}
-            onChange={(e) => onChangeCheckbox(e, 'goal')}
-          />
+          <CheckboxContainer label="목적" checkboxKey="goal" options={checkboxValue.goal} onChange={onChangeCheckbox} />
         </BottomBox>
         <BottomBox>
-          <Text font="suit15m" color="b9" required>
-            협업방식
-          </Text>
-
-          <Spacer size={20} />
           <RadioContainer
-            nameKey="collaboration"
+            label="협업방식"
+            radioKey="collaboration"
             options={radioValue.collaboration}
             onChange={(e) => onChangeRadio(e, 'collaboration')}
             gap="large"

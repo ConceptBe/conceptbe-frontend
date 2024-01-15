@@ -80,13 +80,11 @@ const Setting = () => {
   const validateInput = () => {
     return [
       {
-        regexp: /[~!@#$%";'^,&*()_+|</>=>`?:{[\]}]/g,
-        name: 'nickName',
+        validateFn: (value: string) => /[~!@#$%";'^,&*()_+|</>=>`?:{[\]}]/g.test(value),
         errorMessage: '사용 불가한 닉네임입니다.',
       },
       {
-        regexp: /[1234567890]/g,
-        name: 'company',
+        validateFn: (value: string) => /[1234567890]/g.test(value),
         errorMessage: '사용 불가한 직장명입니다.',
       },
     ];
@@ -123,13 +121,18 @@ const Setting = () => {
             </ImageWrite>
           </ImageWrapper>
 
-          <Field label="닉네임" value={fieldValue.nickName} maxLength={10} isRequired>
+          <Field
+            label="닉네임"
+            value={fieldValue.nickName}
+            onChange={onChangeField}
+            onValidate={validateInput}
+            maxLength={10}
+            required
+          >
             <Field.Input
               name="nickName"
-              onChange={onChangeField}
-              onValidate={validateInput}
               placeholder="닉네임을 입력해주세요"
-              errorMessage={fieldErrorValue.nickName}
+              errorValue={fieldErrorValue.nickName}
               successMessage="사용 가능한 닉네임입니다."
             />
           </Field>
@@ -206,13 +209,12 @@ const Setting = () => {
 
           <Spacer size={35} />
           <SettingWrapper>
-            <Text required font="suit15m" color="b9">
-              목적 (최대 3개)
-            </Text>
             <CheckboxContainer
-              nameKey="goal"
+              label="목적 (최대 3개)"
+              checkboxKey="goal"
               options={checkboxValue.goal}
-              onChange={(e) => onChangeCheckbox(e, 'goal', { checkboxKey: 'goal', maxValue: 3 })}
+              onChange={onChangeCheckbox}
+              maxCount={3}
             />
           </SettingWrapper>
 
@@ -238,26 +240,36 @@ const Setting = () => {
 
           <Spacer size={35} />
 
-          <Field label="직장명" value={fieldValue.company} maxLength={10} isRequired>
+          <Field
+            label="직장명"
+            value={fieldValue.company}
+            onChange={onChangeField}
+            onValidate={validateInput}
+            maxLength={10}
+            required
+          >
             <Field.Input
               name="company"
-              onChange={onChangeField}
-              onValidate={validateInput}
               placeholder="직장명을 입력해주세요"
-              errorMessage={fieldErrorValue.company}
+              errorValue={fieldErrorValue.company}
               successMessage="사용 가능한 직장명입니다."
             />
           </Field>
 
           <Spacer size={35} />
 
-          <Field label="자기소개" value={fieldValue.intro} maxLength={150} isRequired>
+          <Field
+            label="자기소개"
+            value={fieldValue.intro}
+            onChange={onChangeField}
+            onValidate={validateInput}
+            maxLength={150}
+            required
+          >
             <Field.Textarea
               name="intro"
-              onChange={onChangeField}
-              onValidate={validateInput}
               placeholder="자기소개를 입력해 주세요. (최대 150자)"
-              errorMessage={fieldErrorValue.intro}
+              errorValue={fieldErrorValue.intro}
             />
           </Field>
         </MainBox>
