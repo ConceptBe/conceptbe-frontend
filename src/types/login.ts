@@ -10,3 +10,7 @@ export interface OauthMemberInfo {
   nickname: string;
   profileImageUrl: string;
 }
+
+export interface LoginResponse {
+  accessToken: string;
+}

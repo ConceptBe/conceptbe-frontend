@@ -1,5 +1,5 @@
 import { http } from './http';
-import { CheckMember } from '../types/login';
+import { CheckMember, LoginResponse } from '../types/login';
 import { GetSignUp, PostSignUp } from '../types/signUp';
 
 type OauthServerType = 'kakao' | 'naver';
@@ -13,7 +13,7 @@ export const getOauthNaver = (code: string) => {
 };
 
 export const getLogin = (oauthServerType: OauthServerType, oauthId: string) => {
-  return http.get<string>(`/oauth/${oauthServerType}/login?oauthId=${oauthId}`);
+  return http.get<LoginResponse>(`/oauth/${oauthServerType}/login?oauthId=${oauthId}`);
 };
 
 export const getIsMember = (oauthServerType: OauthServerType, code: string) => {
