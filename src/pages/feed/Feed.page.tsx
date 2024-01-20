@@ -28,6 +28,7 @@ import Padding from '../../components/Padding';
 import Logo from '../../layouts/Logo';
 import { filterOptions, filterSubOptions, filterRadio } from '../../modules/constants';
 import { useIdeasQuery } from '../../hooks/queries/useIdeasQuery';
+import { useBestIdeasQuery } from '../../hooks/queries/useBestIdeasQuery';
 
 interface RadioValue {
   collaboration: Option[];
@@ -64,6 +65,7 @@ const dropdownItems = [
 ];
 
 const Feed = () => {
+  const { bestIdeas } = useBestIdeasQuery();
   const { ideas } = useIdeasQuery();
   const [isFilter, setIsFilter] = useState(false);
   const { checkboxValue, onChangeCheckbox } = useCheckbox<CheckboxValue>({
@@ -79,7 +81,7 @@ const Feed = () => {
     temp3: '',
   });
 
-  if (!ideas) {
+  if (!ideas || !bestIdeas) {
     return null;
   }
 
@@ -124,8 +126,8 @@ const Feed = () => {
             </Text>
             <Spacer size={18} />
             <FeedFixWrapper>
-              {popCardIdeas.map((idea, idx) => (
-                <PopCard key={idx} image={idea.image} category={idea.category} title={idea.title} />
+              {bestIdeas.map((bestIdea, idx) => (
+                <PopCard key={idx} branch={bestIdea.branches} title={bestIdea.title} />
               ))}
             </FeedFixWrapper>
           </FeedWrapper>

@@ -3,21 +3,20 @@ import { Text, theme, PNGIdeaBackground1 } from 'concept-be-design-system';
 import { useNavigate } from 'react-router-dom';
 
 interface IdeaCardProps {
-  category: string;
+  branch: string;
   title: string;
-  image: string;
 }
 
-const PopCard = ({ category, title, image }: IdeaCardProps) => {
+const PopCard = ({ branch, title }: IdeaCardProps) => {
   const navigate = useNavigate();
 
   return (
     <IdeaCardWrapper onClick={() => navigate('/feed/1')}>
-      <img src={image ?? PNGIdeaBackground1} />
+      <img src={PNGIdeaBackground1} />
       <CardBoxBack />
       <CardBox>
         <Text style={{ fontSize: 13, fontWeight: 800 }} color="w1">
-          {category}
+          {branch}
         </Text>
         <Text style={{ fontSize: 14, fontWeight: 600, lineHeight: '20px' }} color="w1">
           {title}
