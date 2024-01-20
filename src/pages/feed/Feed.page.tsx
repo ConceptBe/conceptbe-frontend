@@ -13,11 +13,6 @@ import {
   theme,
   SVGHeaderFilter,
   SVGFeedWrite40,
-  PNGIdeaBackground1,
-  PNGIdeaBackground2,
-  PNGIdeaBackground3,
-  PNGIdeaBackground4,
-  PNGIdeaBackground5,
   useDropdown,
 } from 'concept-be-design-system';
 import { useState } from 'react';
@@ -44,19 +39,6 @@ interface Option {
   name: string;
   checked: boolean;
 }
-
-// 아이디어
-const popCardIdeas = [
-  { id: 1, image: PNGIdeaBackground1, title: '제목입니다. 제목입니다. 제목입니다.', category: 'IT' },
-  { id: 2, image: PNGIdeaBackground2, title: '제목입니다. 제목입니다. 제목입니다.', category: '디자인' },
-  { id: 3, image: PNGIdeaBackground3, title: '제목입니다. 제목입니다. 제목입니다.', category: '기획' },
-  { id: 4, image: PNGIdeaBackground4, title: '제목입니다. 제목입니다. 제목입니다.', category: '영상' },
-  { id: 5, image: PNGIdeaBackground5, title: '제목입니다. 제목입니다. 제목입니다.', category: '개발' },
-  { id: 6, image: PNGIdeaBackground1, title: '제목입니다. 제목입니다. 제목입니다.', category: '기획' },
-];
-
-//태그
-const tags = ['팀원모집', '팀원모집', '팀원모집', '팀원모집'];
 
 //드롭다운
 const dropdownItems = [
