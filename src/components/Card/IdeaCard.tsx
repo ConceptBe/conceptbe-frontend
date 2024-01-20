@@ -16,12 +16,27 @@ import {
 } from 'concept-be-design-system';
 import { useNavigate } from 'react-router-dom';
 
+import { Idea } from '../../hooks/queries/useIdeasQuery';
+
 interface Props {
-  mine?: boolean;
-  badges: string[];
+  idea: Idea;
 }
 
-const IdeaCard = ({ mine, badges }: Props) => {
+const IdeaCard = ({
+  idea: {
+    title,
+    introduce,
+    hitsCount,
+    commentsCount,
+    likesCount,
+    bookmarksCount,
+    isBookmarked,
+    createdAt,
+    memberResponse,
+    branches,
+    teamRecruitments,
+  },
+}: Props) => {
   const navigate = useNavigate();
 
   return (
@@ -31,46 +46,43 @@ const IdeaCard = ({ mine, badges }: Props) => {
           <SVGLoginDefaultProfile />
           <div>
             <Text font="suit14m" color="b4">
-              일이삼사오육칠팔구
+              {memberResponse.nickname}
             </Text>
             <Spacer size={7} />
 
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <Text font="suit12r" color="b9">
-                스킬
+                {memberResponse.mainSkill}
               </Text>
               <Spacer size={6} />
               <div style={{ width: 1, height: 10, backgroundColor: theme.color.l2 }} />
               <Spacer size={6} />
               <Text font="suit12r" color="b9">
-                작성시간
+                {createdAt.toISOString().slice(0, 10)}
               </Text>
             </div>
           </div>
         </ProfileBox>
-        {mine ? <SVGTripleDots color="ba" /> : <SVGScrap24 />}
+        {/* {mine ? <SVGTripleDots color="ba" /> : <SVGScrap24 />} */}
       </ProfileWrapper>
 
       <ContentWrapper>
         <Text font="suit14m" color="c1">
-          분야 / 분야 / 분야
+          {branches.join(' / ')}
         </Text>
         <Spacer size={7} />
 
-        <Text font="suit16sb">20자 내외의 제목이 들어가는 영역입니다.</Text>
+        <Text font="suit16sb">{title}</Text>
         <Spacer size={10} />
 
-        <ContentText>
-          3줄의 아이디어 내용이 들어가는 영역입니다. 3줄 이상부터는 말줄임표로 노출합니다. 3줄의 아이디어 내용이
-          들어가는 영역입니다. 3줄 이상부터는 말줄임표로 노출합니다.
-        </ContentText>
+        <ContentText>{introduce}</ContentText>
         <Spacer size={14} />
 
         <TagWrapper>
           <Flex wrap="wrap" gap={6}>
-            {badges.map((badge, idx) => (
+            {/* {badges.map((badge, idx) => (
               <Badge key={`${badge}-${idx}`}>{badge}</Badge>
-            ))}
+            ))} */}
           </Flex>
         </TagWrapper>
       </ContentWrapper>
@@ -79,19 +91,19 @@ const IdeaCard = ({ mine, badges }: Props) => {
       <FooterWrapper>
         <FooterText>
           <SVGCardView14 />
-          999+
+          {hitsCount}
         </FooterText>
         <FooterText>
           <SVGCardComment14 />
-          999+
+          {commentsCount}
         </FooterText>
         <FooterText>
           <SVGCardLike14 />
-          999+
+          {likesCount}
         </FooterText>
         <FooterText>
           <SVGCardScrap14 />
-          999+
+          {bookmarksCount}
         </FooterText>
       </FooterWrapper>
     </CardContainer>

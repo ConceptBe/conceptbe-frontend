@@ -27,6 +27,7 @@ import PopCard from '../../components/Card/PopCard';
 import Padding from '../../components/Padding';
 import Logo from '../../layouts/Logo';
 import { filterOptions, filterSubOptions, filterRadio } from '../../modules/constants';
+import { useIdeasQuery } from '../../hooks/queries/useIdeasQuery';
 
 interface RadioValue {
   collaboration: Option[];
@@ -44,7 +45,7 @@ interface Option {
 }
 
 // 아이디어
-const ideas = [
+const popCardIdeas = [
   { id: 1, image: PNGIdeaBackground1, title: '제목입니다. 제목입니다. 제목입니다.', category: 'IT' },
   { id: 2, image: PNGIdeaBackground2, title: '제목입니다. 제목입니다. 제목입니다.', category: '디자인' },
   { id: 3, image: PNGIdeaBackground3, title: '제목입니다. 제목입니다. 제목입니다.', category: '기획' },
@@ -63,6 +64,7 @@ const dropdownItems = [
 ];
 
 const Feed = () => {
+  const { ideas } = useIdeasQuery();
   const [isFilter, setIsFilter] = useState(false);
   const { checkboxValue, onChangeCheckbox } = useCheckbox<CheckboxValue>({
     field: filterOptions,
@@ -76,6 +78,10 @@ const Feed = () => {
     temp2: '',
     temp3: '',
   });
+
+  if (!ideas) {
+    return null;
+  }
 
   return (
     <>
@@ -118,7 +124,7 @@ const Feed = () => {
             </Text>
             <Spacer size={18} />
             <FeedFixWrapper>
-              {ideas.map((idea, idx) => (
+              {popCardIdeas.map((idea, idx) => (
                 <PopCard key={idx} image={idea.image} category={idea.category} title={idea.title} />
               ))}
             </FeedFixWrapper>
@@ -129,9 +135,9 @@ const Feed = () => {
               피드 영역 타이틀입니다
             </Text>
             <Spacer size={20} />
-            {Array.from({ length: 20 }, (_, idx) => (
+            {ideas.map((idea, idx) => (
               <>
-                <IdeaCard key={idx} badges={tags} />
+                <IdeaCard key={idx} idea={idea} />
                 <Spacer size={20} />
               </>
             ))}
