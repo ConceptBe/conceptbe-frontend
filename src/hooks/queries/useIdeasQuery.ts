@@ -37,7 +37,7 @@ const getIdeas = () => {
       createdAt: new Date(), // 생성시각,
       memberResponse: { nickname: '영진', mainSkill: 'UIUX 디자인' }, // 게시글 작성자,
       branches: ['IT', '유튜브 컨텐츠'], // 분야,
-      teamRecruitments: [], // 목적 -> 뭐지
+      teamRecruitments: ['영상디자인', '서비스기획', '마케팅'], // 목적
     },
   ];
   return ideas;

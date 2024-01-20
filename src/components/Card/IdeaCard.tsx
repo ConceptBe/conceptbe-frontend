@@ -80,9 +80,9 @@ const IdeaCard = ({
 
         <TagWrapper>
           <Flex wrap="wrap" gap={6}>
-            {/* {badges.map((badge, idx) => (
-              <Badge key={`${badge}-${idx}`}>{badge}</Badge>
-            ))} */}
+            {teamRecruitments.map((teamRecruitment, idx) => (
+              <Badge key={`${teamRecruitment}-${idx}`}>{teamRecruitment}</Badge>
+            ))}
           </Flex>
         </TagWrapper>
       </ContentWrapper>
