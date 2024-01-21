@@ -28,7 +28,7 @@ const BestIdeaCard = ({ branch, title }: Props) => {
 
 export default BestIdeaCard;
 
-const BestIdeaCardWrapper = styled.div`
+export const BestIdeaCardWrapper = styled.div`
   flex: 0 0 auto;
   border-radius: 8px;
   width: 140px;

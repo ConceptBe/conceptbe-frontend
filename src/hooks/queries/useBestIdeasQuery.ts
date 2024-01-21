@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { http } from '../../api/http';
 
@@ -9,8 +9,9 @@ export type BestIdea = {
   title: string; // 제목
 };
 
-const getBestIdeas = () => {
+const getBestIdeas = async () => {
   // TODO:: return http.get<BestIdea>('/ideas/bests');
+  await new Promise((resolve) => setTimeout(resolve, 1000));
   const bestIdeas: BestIdea[] = [
     {
       id: 1,
@@ -32,7 +33,7 @@ const getBestIdeas = () => {
 };
 
 export const useBestIdeasQuery = () => {
-  const { data: bestIdeas, ...rest } = useQuery({ queryKey: ['bestIdeas'], queryFn: getBestIdeas });
+  const { data: bestIdeas, ...rest } = useSuspenseQuery({ queryKey: ['bestIdeas'], queryFn: getBestIdeas });
 
   return { bestIdeas, ...rest };
 };
