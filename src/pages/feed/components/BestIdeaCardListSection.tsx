@@ -8,29 +8,29 @@ type Props = {
   bestIdeas: BestIdea[];
 };
 
-const BestIdeaListSection = ({ bestIdeas }: Props) => {
+const BestIdeaCardListSection = ({ bestIdeas }: Props) => {
   return (
-    <FeedWrapper style={{ padding: '47px 0 0 22px' }}>
+    <Wrapper>
       <Text font="suit16sb" color="b4">
         현재 인기 있는 아이디어
       </Text>
       <Spacer size={18} />
-      <FeedFixWrapper>
+      <CardListWrapper>
         {bestIdeas.map((bestIdea, idx) => (
           <BestIdeaCard key={idx} branch={bestIdea.branches} title={bestIdea.title} />
         ))}
-      </FeedFixWrapper>
-    </FeedWrapper>
+      </CardListWrapper>
+    </Wrapper>
   );
 };
 
-export default BestIdeaListSection;
+export default BestIdeaCardListSection;
 
-const FeedWrapper = styled.div`
-  padding-top: 47px;
+const Wrapper = styled.div`
+  padding: 47px 0 0 22px;
 `;
 
-const FeedFixWrapper = styled.div`
+const CardListWrapper = styled.div`
   display: flex;
   flex-wrap: nowrap;
   gap: 10px;

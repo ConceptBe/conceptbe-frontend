@@ -22,6 +22,11 @@ const getBestIdeas = () => {
       branches: '디자인',
       title: '디자인 시스템을 같이 만들어요!',
     },
+    {
+      id: 3,
+      branches: '분야',
+      title: '분야를 같이 만들어요!',
+    },
   ];
   return bestIdeas;
 };

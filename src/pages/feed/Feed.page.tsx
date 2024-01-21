@@ -22,8 +22,8 @@ import Logo from '../../layouts/Logo';
 import { filterOptions, filterSubOptions, filterRadio } from '../../modules/constants';
 import { useIdeasQuery } from '../../hooks/queries/useIdeasQuery';
 import { useBestIdeasQuery } from '../../hooks/queries/useBestIdeasQuery';
-import NewIdeaCard from '../../components/Card/NewIdeaCard';
-import BestIdeaListSection from './components/BestIdeaListSection';
+import BestIdeaCardListSection from './components/BestIdeaCardListSection';
+import NewIdeaCardListSection from './components/NewIdeaCardListSection';
 
 interface RadioValue {
   collaboration: Option[];
@@ -100,22 +100,11 @@ const Feed = () => {
 
           <Text font="suit15ra" color="w2">{`아이디어 적으러 가기 >`}</Text>
         </FeedFixBox>
-        <FeedBox>
-          <BestIdeaListSection bestIdeas={bestIdeas} />
-          <FeedWrapper style={{ padding: '47px 22px 0 22px' }}>
-            <Text font="suit16sb" color="b4">
-              피드 영역 타이틀입니다
-            </Text>
-            <Spacer size={20} />
-            {ideas.map((idea, idx) => (
-              <>
-                <NewIdeaCard key={idx} idea={idea} />
-                <Spacer size={20} />
-              </>
-            ))}
-          </FeedWrapper>
+        <IdeaSectionBox>
+          <BestIdeaCardListSection bestIdeas={bestIdeas} />
+          <NewIdeaCardListSection ideas={ideas} />
           <Padding bottom={80} />
-        </FeedBox>
+        </IdeaSectionBox>
       </Wrapper>
 
       <BottomSheet isOpen={isFilter} onClose={() => setIsFilter(false)}>
@@ -242,7 +231,7 @@ const FeedFixTextWrapper = styled.div`
   gap: 5px;
 `;
 
-const FeedBox = styled.div`
+const IdeaSectionBox = styled.div`
   background-color: ${theme.color.bg1};
   border-radius: 16px 16px 0 0;
 `;
