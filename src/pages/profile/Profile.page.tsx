@@ -85,16 +85,18 @@ const Profile = () => {
         <TabLayout>
           <TabLayout.Tab label="아이디어">
             <TabPanelBox>
-              {Array.from({ length: 20 }, (_, idx) => (
-                <NewIdeaCard mine key={idx} badges={badges} />
-              ))}
+              {/* TODO: 사용자가 생성한 아이디어 GET API 필요 */}
+              {/* {Array.from({ length: 20 }, (_, idx) => (
+                <NewIdeaCard key={idx}  />
+              ))} */}
             </TabPanelBox>
           </TabLayout.Tab>
           <TabLayout.Tab label="북마크">
             <TabPanelBox>
-              {Array.from({ length: 20 }, (_, idx) => (
+              {/* TODO: 사용자가 생성한 아이디어 GET API 필요 */}
+              {/* {Array.from({ length: 20 }, (_, idx) => (
                 <NewIdeaCard key={idx} badges={badges} />
-              ))}
+              ))} */}
             </TabPanelBox>
           </TabLayout.Tab>
         </TabLayout>
