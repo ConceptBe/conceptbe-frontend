@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { http } from '../../api/http';
 
@@ -22,8 +22,9 @@ export type Idea = {
   teamRecruitments: string[]; // 목적
 };
 
-const getIdeas = () => {
+const getIdeas = async () => {
   // TODO:: return http.get<Idea[]>('/ideas');
+  await new Promise((resolve) => setTimeout(resolve, 1000));
   const ideas: Idea[] = [
     {
       title: '쇼츠 전용 뉴스를 함께 제작하실 분!', // 게시글 제목,
@@ -44,7 +45,7 @@ const getIdeas = () => {
 };
 
 export const useIdeasQuery = () => {
-  const { data: ideas, ...rest } = useQuery({ queryKey: ['ideas'], queryFn: getIdeas });
+  const { data: ideas, ...rest } = useSuspenseQuery({ queryKey: ['ideas'], queryFn: getIdeas });
 
   return { ideas, ...rest };
 };
