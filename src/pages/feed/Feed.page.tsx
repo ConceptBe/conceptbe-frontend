@@ -15,15 +15,15 @@ import {
   SVGFeedWrite40,
   useDropdown,
 } from 'concept-be-design-system';
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 
 import Padding from '../../components/Padding';
 import Logo from '../../layouts/Logo';
 import { filterOptions, filterSubOptions, filterRadio } from '../../modules/constants';
-import { useIdeasQuery } from '../../hooks/queries/useIdeasQuery';
-import { useBestIdeasQuery } from '../../hooks/queries/useBestIdeasQuery';
 import BestIdeaCardListSection from './components/BestIdeaCardListSection';
 import NewIdeaCardListSection from './components/NewIdeaCardListSection';
+import BestIdeaCardListSectionSkeleton from './components/BestIdeaCardListSectionSkeleton';
+import NewIdeaCardListSectionSkeleton from './components/NewIdeaCardListSectionSkeleton';
 
 interface RadioValue {
   collaboration: Option[];
@@ -47,8 +47,6 @@ const dropdownItems = [
 ];
 
 const Feed = () => {
-  const { bestIdeas } = useBestIdeasQuery();
-  const { ideas } = useIdeasQuery();
   const [isFilter, setIsFilter] = useState(false);
   const { checkboxValue, onChangeCheckbox } = useCheckbox<CheckboxValue>({
     field: filterOptions,
@@ -62,10 +60,6 @@ const Feed = () => {
     temp2: '',
     temp3: '',
   });
-
-  if (!ideas || !bestIdeas) {
-    return null;
-  }
 
   return (
     <>
@@ -101,8 +95,12 @@ const Feed = () => {
           <Text font="suit15ra" color="w2">{`아이디어 적으러 가기 >`}</Text>
         </FeedFixBox>
         <IdeaSectionBox>
-          <BestIdeaCardListSection bestIdeas={bestIdeas} />
-          <NewIdeaCardListSection ideas={ideas} />
+          <Suspense fallback={<BestIdeaCardListSectionSkeleton />}>
+            <BestIdeaCardListSection />
+          </Suspense>
+          <Suspense fallback={<NewIdeaCardListSectionSkeleton />}>
+            <NewIdeaCardListSection />
+          </Suspense>
           <Padding bottom={80} />
         </IdeaSectionBox>
       </Wrapper>
