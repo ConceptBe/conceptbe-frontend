@@ -13,20 +13,17 @@ import {
   theme,
   SVGHeaderFilter,
   SVGFeedWrite40,
-  PNGIdeaBackground1,
-  PNGIdeaBackground2,
-  PNGIdeaBackground3,
-  PNGIdeaBackground4,
-  PNGIdeaBackground5,
   useDropdown,
 } from 'concept-be-design-system';
 import { useState } from 'react';
 
-import IdeaCard from '../../components/Card/IdeaCard';
-import PopCard from '../../components/Card/PopCard';
 import Padding from '../../components/Padding';
 import Logo from '../../layouts/Logo';
 import { filterOptions, filterSubOptions, filterRadio } from '../../modules/constants';
+import { useIdeasQuery } from '../../hooks/queries/useIdeasQuery';
+import { useBestIdeasQuery } from '../../hooks/queries/useBestIdeasQuery';
+import BestIdeaCardListSection from './components/BestIdeaCardListSection';
+import NewIdeaCardListSection from './components/NewIdeaCardListSection';
 
 interface RadioValue {
   collaboration: Option[];
@@ -43,19 +40,6 @@ interface Option {
   checked: boolean;
 }
 
-// 아이디어
-const ideas = [
-  { id: 1, image: PNGIdeaBackground1, title: '제목입니다. 제목입니다. 제목입니다.', category: 'IT' },
-  { id: 2, image: PNGIdeaBackground2, title: '제목입니다. 제목입니다. 제목입니다.', category: '디자인' },
-  { id: 3, image: PNGIdeaBackground3, title: '제목입니다. 제목입니다. 제목입니다.', category: '기획' },
-  { id: 4, image: PNGIdeaBackground4, title: '제목입니다. 제목입니다. 제목입니다.', category: '영상' },
-  { id: 5, image: PNGIdeaBackground5, title: '제목입니다. 제목입니다. 제목입니다.', category: '개발' },
-  { id: 6, image: PNGIdeaBackground1, title: '제목입니다. 제목입니다. 제목입니다.', category: '기획' },
-];
-
-//태그
-const tags = ['팀원모집', '팀원모집', '팀원모집', '팀원모집'];
-
 //드롭다운
 const dropdownItems = [
   { id: 1, name: 'Dropdown item1 asdasddas' },
@@ -63,6 +47,8 @@ const dropdownItems = [
 ];
 
 const Feed = () => {
+  const { bestIdeas } = useBestIdeasQuery();
+  const { ideas } = useIdeasQuery();
   const [isFilter, setIsFilter] = useState(false);
   const { checkboxValue, onChangeCheckbox } = useCheckbox<CheckboxValue>({
     field: filterOptions,
@@ -76,6 +62,10 @@ const Feed = () => {
     temp2: '',
     temp3: '',
   });
+
+  if (!ideas || !bestIdeas) {
+    return null;
+  }
 
   return (
     <>
@@ -110,34 +100,11 @@ const Feed = () => {
 
           <Text font="suit15ra" color="w2">{`아이디어 적으러 가기 >`}</Text>
         </FeedFixBox>
-
-        <FeedBox>
-          <FeedWrapper style={{ padding: '47px 0 0 22px' }}>
-            <Text font="suit16sb" color="b4">
-              현재 인기 있는 아이디어
-            </Text>
-            <Spacer size={18} />
-            <FeedFixWrapper>
-              {ideas.map((idea, idx) => (
-                <PopCard key={idx} image={idea.image} category={idea.category} title={idea.title} />
-              ))}
-            </FeedFixWrapper>
-          </FeedWrapper>
-
-          <FeedWrapper style={{ padding: '47px 22px 0 22px' }}>
-            <Text font="suit16sb" color="b4">
-              피드 영역 타이틀입니다
-            </Text>
-            <Spacer size={20} />
-            {Array.from({ length: 20 }, (_, idx) => (
-              <>
-                <IdeaCard key={idx} badges={tags} />
-                <Spacer size={20} />
-              </>
-            ))}
-          </FeedWrapper>
+        <IdeaSectionBox>
+          <BestIdeaCardListSection bestIdeas={bestIdeas} />
+          <NewIdeaCardListSection ideas={ideas} />
           <Padding bottom={80} />
-        </FeedBox>
+        </IdeaSectionBox>
       </Wrapper>
 
       <BottomSheet isOpen={isFilter} onClose={() => setIsFilter(false)}>
@@ -255,12 +222,8 @@ const FeedFixBox = styled.div`
   color: ${theme.color.w1};
 `;
 
-const FeedFixWrapper = styled.div`
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 10px;
-  overflow-x: scroll;
-  overflow-y: hidden;
+const FeedWrapper = styled.div`
+  padding-top: 47px;
 `;
 
 const FeedFixTextWrapper = styled.div`
@@ -268,13 +231,9 @@ const FeedFixTextWrapper = styled.div`
   gap: 5px;
 `;
 
-const FeedBox = styled.div`
+const IdeaSectionBox = styled.div`
   background-color: ${theme.color.bg1};
   border-radius: 16px 16px 0 0;
-`;
-
-const FeedWrapper = styled.div`
-  padding-top: 47px;
 `;
 
 const FilterContent = styled.div`
