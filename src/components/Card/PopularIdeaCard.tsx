@@ -2,16 +2,16 @@ import styled from '@emotion/styled';
 import { Text, theme, PNGIdeaBackground1 } from 'concept-be-design-system';
 import { useNavigate } from 'react-router-dom';
 
-interface IdeaCardProps {
+interface Props {
   branch: string;
   title: string;
 }
 
-const PopCard = ({ branch, title }: IdeaCardProps) => {
+const PopularIdeaCard = ({ branch, title }: Props) => {
   const navigate = useNavigate();
 
   return (
-    <IdeaCardWrapper onClick={() => navigate('/feed/1')}>
+    <PopularIdeaCardWrapper onClick={() => navigate('/feed/1')}>
       <img src={PNGIdeaBackground1} />
       <CardBoxBack />
       <CardBox>
@@ -22,13 +22,13 @@ const PopCard = ({ branch, title }: IdeaCardProps) => {
           {title}
         </Text>
       </CardBox>
-    </IdeaCardWrapper>
+    </PopularIdeaCardWrapper>
   );
 };
 
-export default PopCard;
+export default PopularIdeaCard;
 
-const IdeaCardWrapper = styled.div`
+const PopularIdeaCardWrapper = styled.div`
   flex: 0 0 auto;
   border-radius: 8px;
   width: 140px;

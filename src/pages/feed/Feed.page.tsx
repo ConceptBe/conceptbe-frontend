@@ -17,13 +17,13 @@ import {
 } from 'concept-be-design-system';
 import { useState } from 'react';
 
-import IdeaCard from '../../components/Card/IdeaCard';
-import PopCard from '../../components/Card/PopCard';
 import Padding from '../../components/Padding';
 import Logo from '../../layouts/Logo';
 import { filterOptions, filterSubOptions, filterRadio } from '../../modules/constants';
 import { useIdeasQuery } from '../../hooks/queries/useIdeasQuery';
 import { useBestIdeasQuery } from '../../hooks/queries/useBestIdeasQuery';
+import PopularIdeaCard from '../../components/Card/PopularIdeaCard';
+import NewIdeaCard from '../../components/Card/NewIdeaCard';
 
 interface RadioValue {
   collaboration: Option[];
@@ -109,7 +109,7 @@ const Feed = () => {
             <Spacer size={18} />
             <FeedFixWrapper>
               {bestIdeas.map((bestIdea, idx) => (
-                <PopCard key={idx} branch={bestIdea.branches} title={bestIdea.title} />
+                <PopularIdeaCard key={idx} branch={bestIdea.branches} title={bestIdea.title} />
               ))}
             </FeedFixWrapper>
           </FeedWrapper>
@@ -121,7 +121,7 @@ const Feed = () => {
             <Spacer size={20} />
             {ideas.map((idea, idx) => (
               <>
-                <IdeaCard key={idx} idea={idea} />
+                <NewIdeaCard key={idx} idea={idea} />
                 <Spacer size={20} />
               </>
             ))}

@@ -22,7 +22,7 @@ interface Props {
   idea: Idea;
 }
 
-const IdeaCard = ({
+const NewIdeaCard = ({
   idea: {
     title,
     introduce,
@@ -110,7 +110,7 @@ const IdeaCard = ({
   );
 };
 
-export default IdeaCard;
+export default NewIdeaCard;
 
 const CardContainer = styled.div`
   padding: 30px 20px;

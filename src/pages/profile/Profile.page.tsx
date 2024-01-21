@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Badge, Header, Spacer, TabLayout, Text, theme, SVGHeaderSetting, Flex } from 'concept-be-design-system';
 import { useNavigate } from 'react-router-dom';
 
-import IdeaCard from '../../components/Card/IdeaCard';
+import NewIdeaCard from '../../components/Card/NewIdeaCard';
 import Padding from '../../components/Padding';
 import Logo from '../../layouts/Logo';
 
@@ -86,14 +86,14 @@ const Profile = () => {
           <TabLayout.Tab label="아이디어">
             <TabPanelBox>
               {Array.from({ length: 20 }, (_, idx) => (
-                <IdeaCard mine key={idx} badges={badges} />
+                <NewIdeaCard mine key={idx} badges={badges} />
               ))}
             </TabPanelBox>
           </TabLayout.Tab>
           <TabLayout.Tab label="북마크">
             <TabPanelBox>
               {Array.from({ length: 20 }, (_, idx) => (
-                <IdeaCard key={idx} badges={badges} />
+                <NewIdeaCard key={idx} badges={badges} />
               ))}
             </TabPanelBox>
           </TabLayout.Tab>
