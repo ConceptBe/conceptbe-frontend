@@ -16,7 +16,7 @@ import {
 } from 'concept-be-design-system';
 import { useNavigate } from 'react-router-dom';
 
-import { Idea } from '../../hooks/queries/useIdeasQuery';
+import { Idea } from '../../../hooks/queries/useIdeasQuery';
 
 interface Props {
   idea: Idea;

@@ -20,10 +20,10 @@ import { Suspense, useState } from 'react';
 import Padding from '../../components/Padding';
 import Logo from '../../layouts/Logo';
 import { filterOptions, filterSubOptions, filterRadio } from '../../modules/constants';
-import BestIdeaCardListSection from './components/BestIdeaCardListSection';
-import NewIdeaCardListSection from './components/NewIdeaCardListSection';
-import BestIdeaCardListSectionSkeleton from './components/BestIdeaCardListSectionSkeleton';
-import NewIdeaCardListSectionSkeleton from './components/NewIdeaCardListSectionSkeleton';
+import BestIdeaCardListSection from './components/BestIdeaCardListSection/BestIdeaCardListSection';
+import NewIdeaCardListSection from './components/NewIdeaCardListSection/NewIdeaCardListSection';
+import BestIdeaCardListSectionSkeleton from './components/BestIdeaCardListSection/BestIdeaCardListSectionSkeleton';
+import NewIdeaCardListSectionSkeleton from './components/NewIdeaCardListSection/NewIdeaCardListSectionSkeleton';
 
 interface RadioValue {
   collaboration: Option[];

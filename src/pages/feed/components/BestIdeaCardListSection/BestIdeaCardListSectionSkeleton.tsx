@@ -1,8 +1,8 @@
 import { Spacer } from 'concept-be-design-system';
 
 import { CardListWrapper, Wrapper } from './BestIdeaCardListSection';
-import BestIdeaCardSkeleton from '../../../components/Card/BestIdeaCardSkeleton';
-import Skeleton from '../../../components/Skeleton/Skeleton';
+import BestIdeaCardSkeleton from '../../../../components/Card/BestIdeaCard/BestIdeaCardSkeleton';
+import Skeleton from '../../../../components/Skeleton/Skeleton';
 
 const BestIdeaCardListSectionSkeleton = () => {
   return (

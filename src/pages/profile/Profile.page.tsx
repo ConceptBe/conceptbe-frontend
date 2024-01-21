@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Badge, Header, Spacer, TabLayout, Text, theme, SVGHeaderSetting, Flex } from 'concept-be-design-system';
 import { useNavigate } from 'react-router-dom';
 
-import NewIdeaCard from '../../components/Card/NewIdeaCard';
+import NewIdeaCard from '../../components/Card/NewIdeaCard/NewIdeaCard';
 import Padding from '../../components/Padding';
 import Logo from '../../layouts/Logo';
 

@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import { Spacer, Text } from 'concept-be-design-system';
 
-import BestIdeaCard from '../../../components/Card/BestIdeaCard';
-import { useBestIdeasQuery } from '../../../hooks/queries/useBestIdeasQuery';
+import BestIdeaCard from '../../../../components/Card/BestIdeaCard/BestIdeaCard';
+import { useBestIdeasQuery } from '../../../../hooks/queries/useBestIdeasQuery';
 
 const BestIdeaCardListSection = () => {
   const { bestIdeas } = useBestIdeasQuery();
