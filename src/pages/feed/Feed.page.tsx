@@ -22,8 +22,8 @@ import Logo from '../../layouts/Logo';
 import { filterOptions, filterSubOptions, filterRadio } from '../../modules/constants';
 import { useIdeasQuery } from '../../hooks/queries/useIdeasQuery';
 import { useBestIdeasQuery } from '../../hooks/queries/useBestIdeasQuery';
-import PopularIdeaCard from '../../components/Card/PopularIdeaCard';
 import NewIdeaCard from '../../components/Card/NewIdeaCard';
+import PopularIdeaListSection from './components/PopularIdeaListSection';
 
 interface RadioValue {
   collaboration: Option[];
@@ -100,20 +100,8 @@ const Feed = () => {
 
           <Text font="suit15ra" color="w2">{`아이디어 적으러 가기 >`}</Text>
         </FeedFixBox>
-
         <FeedBox>
-          <FeedWrapper style={{ padding: '47px 0 0 22px' }}>
-            <Text font="suit16sb" color="b4">
-              현재 인기 있는 아이디어
-            </Text>
-            <Spacer size={18} />
-            <FeedFixWrapper>
-              {bestIdeas.map((bestIdea, idx) => (
-                <PopularIdeaCard key={idx} branch={bestIdea.branches} title={bestIdea.title} />
-              ))}
-            </FeedFixWrapper>
-          </FeedWrapper>
-
+          <PopularIdeaListSection bestIdeas={bestIdeas} />
           <FeedWrapper style={{ padding: '47px 22px 0 22px' }}>
             <Text font="suit16sb" color="b4">
               피드 영역 타이틀입니다
@@ -245,12 +233,8 @@ const FeedFixBox = styled.div`
   color: ${theme.color.w1};
 `;
 
-const FeedFixWrapper = styled.div`
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 10px;
-  overflow-x: scroll;
-  overflow-y: hidden;
+const FeedWrapper = styled.div`
+  padding-top: 47px;
 `;
 
 const FeedFixTextWrapper = styled.div`
@@ -261,10 +245,6 @@ const FeedFixTextWrapper = styled.div`
 const FeedBox = styled.div`
   background-color: ${theme.color.bg1};
   border-radius: 16px 16px 0 0;
-`;
-
-const FeedWrapper = styled.div`
-  padding-top: 47px;
 `;
 
 const FilterContent = styled.div`
