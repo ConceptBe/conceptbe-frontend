@@ -2,13 +2,11 @@ import styled from '@emotion/styled';
 import { Spacer, Text } from 'concept-be-design-system';
 
 import BestIdeaCard from '../../../components/Card/BestIdeaCard';
-import { BestIdea } from '../../../hooks/queries/useBestIdeasQuery';
+import { useBestIdeasQuery } from '../../../hooks/queries/useBestIdeasQuery';
 
-type Props = {
-  bestIdeas: BestIdea[];
-};
+const BestIdeaCardListSection = () => {
+  const { bestIdeas } = useBestIdeasQuery();
 
-const BestIdeaCardListSection = ({ bestIdeas }: Props) => {
   return (
     <Wrapper>
       <Text font="suit16sb" color="b4">
@@ -26,11 +24,11 @@ const BestIdeaCardListSection = ({ bestIdeas }: Props) => {
 
 export default BestIdeaCardListSection;
 
-const Wrapper = styled.div`
+export const Wrapper = styled.div`
   padding: 47px 0 0 22px;
 `;
 
-const CardListWrapper = styled.div`
+export const CardListWrapper = styled.div`
   display: flex;
   flex-wrap: nowrap;
   gap: 10px;
