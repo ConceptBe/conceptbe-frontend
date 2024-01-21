@@ -1,14 +1,14 @@
 import styled from '@emotion/styled';
 import { Spacer, Text } from 'concept-be-design-system';
 
-import PopularIdeaCard from '../../../components/Card/PopularIdeaCard';
+import BestIdeaCard from '../../../components/Card/BestIdeaCard';
 import { BestIdea } from '../../../hooks/queries/useBestIdeasQuery';
 
 type Props = {
   bestIdeas: BestIdea[];
 };
 
-const PopularIdeaListSection = ({ bestIdeas }: Props) => {
+const BestIdeaListSection = ({ bestIdeas }: Props) => {
   return (
     <FeedWrapper style={{ padding: '47px 0 0 22px' }}>
       <Text font="suit16sb" color="b4">
@@ -17,14 +17,14 @@ const PopularIdeaListSection = ({ bestIdeas }: Props) => {
       <Spacer size={18} />
       <FeedFixWrapper>
         {bestIdeas.map((bestIdea, idx) => (
-          <PopularIdeaCard key={idx} branch={bestIdea.branches} title={bestIdea.title} />
+          <BestIdeaCard key={idx} branch={bestIdea.branches} title={bestIdea.title} />
         ))}
       </FeedFixWrapper>
     </FeedWrapper>
   );
 };
 
-export default PopularIdeaListSection;
+export default BestIdeaListSection;
 
 const FeedWrapper = styled.div`
   padding-top: 47px;

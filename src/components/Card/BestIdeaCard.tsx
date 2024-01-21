@@ -7,11 +7,11 @@ interface Props {
   title: string;
 }
 
-const PopularIdeaCard = ({ branch, title }: Props) => {
+const BestIdeaCard = ({ branch, title }: Props) => {
   const navigate = useNavigate();
 
   return (
-    <PopularIdeaCardWrapper onClick={() => navigate('/feed/1')}>
+    <BestIdeaCardWrapper onClick={() => navigate('/feed/1')}>
       <img src={PNGIdeaBackground1} />
       <CardBoxBack />
       <CardBox>
@@ -22,13 +22,13 @@ const PopularIdeaCard = ({ branch, title }: Props) => {
           {title}
         </Text>
       </CardBox>
-    </PopularIdeaCardWrapper>
+    </BestIdeaCardWrapper>
   );
 };
 
-export default PopularIdeaCard;
+export default BestIdeaCard;
 
-const PopularIdeaCardWrapper = styled.div`
+const BestIdeaCardWrapper = styled.div`
   flex: 0 0 auto;
   border-radius: 8px;
   width: 140px;

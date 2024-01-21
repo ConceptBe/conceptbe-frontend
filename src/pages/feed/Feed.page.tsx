@@ -23,7 +23,7 @@ import { filterOptions, filterSubOptions, filterRadio } from '../../modules/cons
 import { useIdeasQuery } from '../../hooks/queries/useIdeasQuery';
 import { useBestIdeasQuery } from '../../hooks/queries/useBestIdeasQuery';
 import NewIdeaCard from '../../components/Card/NewIdeaCard';
-import PopularIdeaListSection from './components/PopularIdeaListSection';
+import BestIdeaListSection from './components/BestIdeaListSection';
 
 interface RadioValue {
   collaboration: Option[];
@@ -101,7 +101,7 @@ const Feed = () => {
           <Text font="suit15ra" color="w2">{`아이디어 적으러 가기 >`}</Text>
         </FeedFixBox>
         <FeedBox>
-          <PopularIdeaListSection bestIdeas={bestIdeas} />
+          <BestIdeaListSection bestIdeas={bestIdeas} />
           <FeedWrapper style={{ padding: '47px 22px 0 22px' }}>
             <Text font="suit16sb" color="b4">
               피드 영역 타이틀입니다
