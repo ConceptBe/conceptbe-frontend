@@ -29,15 +29,17 @@ import {
   MAIN_SKILL_QUERY,
   DETAIL_SKILL_QUERY,
 } from '../modules/constants';
+import { usePostIdeasMutation } from '../hooks/mutations/useIdeasMutation';
 
 const Write = () => {
+  const { postIdeas } = usePostIdeasMutation();
   const [getIndex, setIndex] = useState('');
   const [getBody, setBody] = useState('');
   const [bodyCount, setBodyCount] = useState(0);
   const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
   const [getArea, setArea] = useState('');
-  const [get1Depth, set1Depth] = useState('product');
-  const [get2Depth, set2Depth] = useState([]);
+  const [get1Depth, set1Depth] = useState(1);
+  const [get2Depth, set2Depth] = useState<number[]>([]);
   const { checkboxValue, onChangeCheckbox } = useCheckbox({
     field: filterOptions,
     goal: filterSubOptions,
@@ -48,6 +50,18 @@ const Write = () => {
   const { dropdownValue, onClickDropdown } = useDropdown({
     region: '',
   });
+
+  const writeIdea = () => {
+    postIdeas({
+      title: getIndex,
+      introduce: getBody,
+      recruitmentPlace: dropdownValue.region,
+      cooperationWay: radioValue,
+      branchIds: checkboxValue.field,
+      purposeIds: checkboxValue.goal,
+      teamRecruitmentIds: get2Depth,
+    });
+  };
 
   const handleIndexChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length > 20) return;
@@ -65,14 +79,14 @@ const Write = () => {
     setArea(value);
   };
 
-  const onClick2Depth = (value: never) => {
-    if (get2Depth.includes(value)) {
-      set2Depth((prev2Depth) => prev2Depth.filter((item) => item !== value));
+  const onClick2Depth = (id: number) => {
+    if (get2Depth.includes(id)) {
+      set2Depth((prev2Depth) => prev2Depth.filter((item) => item !== id));
     } else {
       if (get2Depth.length >= 10) {
         alert('10개 이상 선택할 수 없습니다.');
       } else {
-        set2Depth((prev2Depth) => [...prev2Depth, value]);
+        set2Depth((prev2Depth) => [...prev2Depth, id]);
       }
     }
   };
@@ -95,7 +109,9 @@ const Write = () => {
         <Text font="suit16sb" color="b4">
           글쓰기
         </Text>
-        <SVGHeaderCheck24 />
+        <button onClick={writeIdea}>
+          <SVGHeaderCheck24 />
+        </button>
       </HeaderBox>
 
       <Divider color="l3" />
@@ -193,7 +209,7 @@ const Write = () => {
       </BottomWrapper>
 
       {/* 추후 수정 필요 */}
-      {/* <BottomSheet isOpen={isOpenBottomSheet} onClose={() => setIsOpenBottomSheet(false)}>
+      <BottomSheet isOpen={isOpenBottomSheet} onClose={() => setIsOpenBottomSheet(false)}>
         <Sheet_TopBox>
           <SVGCancel />
           <Text font="suit16sb" color="b4">
@@ -207,37 +223,30 @@ const Write = () => {
         </Sheet_TopBox>
         <Sheet_BodyBox>
           <Sheet_Left>
-            {MAIN_SKILL_QUERY.filter((e) => {
-              return e.text !== '대분류';
-            }).map((e, index) => {
+            {MAIN_SKILL_QUERY.map((skill) => {
               return (
-                <Sheet_leftItem key={index} onClick={() => set1Depth(e.value)} checked={get1Depth === e.value}>
+                <Sheet_leftItem key={skill.id} onClick={() => set1Depth(skill.id)} checked={get1Depth === skill.id}>
                   <Text font="suit14m" color="ba">
-                    {e.text}
+                    {skill.name}
                   </Text>
                 </Sheet_leftItem>
               );
             })}
           </Sheet_Left>
           <Sheet_right>
-            {DETAIL_SKILL_QUERY[get1Depth]
-              .filter((e: { text: string }) => {
-                return e.text !== '상세분류';
-              })
-              .map((e: { text: string; checked: boolean; value: never }, index: string) => {
-                return (
-                  <Sheet_radioDiv key={index} onClick={() => onClick2Depth(e.value)}>
-                    <Text font="suit14m" color="b4">
-                      {e.text}
-                    </Text>
-
-                    {get2Depth.includes(e.value) ? <SVGRadioCheck24 /> : <SVGRadioUncheck24 />}
-                  </Sheet_radioDiv>
-                );
-              })}
+            {DETAIL_SKILL_QUERY[get1Depth].map((detailSkill) => {
+              return (
+                <Sheet_radioDiv key={detailSkill.id} onClick={() => onClick2Depth(detailSkill.id)}>
+                  <Text font="suit14m" color="b4">
+                    {detailSkill.name}
+                  </Text>
+                  {get2Depth.includes(detailSkill.id) ? <SVGRadioCheck24 /> : <SVGRadioUncheck24 />}
+                </Sheet_radioDiv>
+              );
+            })}
           </Sheet_right>
         </Sheet_BodyBox>
-      </BottomSheet> */}
+      </BottomSheet>
     </MainWrapper>
   );
 };
