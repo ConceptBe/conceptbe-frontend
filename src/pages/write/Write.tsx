@@ -104,8 +104,7 @@ const Write = () => {
 
   return (
     <MainWrapper>
-      {/* 헤더 */}
-      <Header onClickCheckButton={writeIdea} />
+      <Header onClickCheckButton={writeIdea} checkButtonDisabled={true} />
 
       <Divider color="l3" />
       {/* 제목인풋 */}
