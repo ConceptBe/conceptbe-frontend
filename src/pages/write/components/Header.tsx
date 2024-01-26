@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { SVGHeaderCheck24, SVGHeaderUncheck24, Text } from 'concept-be-design-system';
 
-import Back from '../../../../layouts/Back';
+import Back from '../../../layouts/Back';
 
 type Props = {
   onClickCheckButton: () => void;

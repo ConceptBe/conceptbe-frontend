@@ -30,7 +30,7 @@ import {
   DETAIL_SKILL_QUERY,
 } from '../../modules/constants';
 import { usePostIdeasMutation } from '../../hooks/mutations/useIdeasMutation';
-import Header from './components/Header/Header';
+import Header from './components/Header';
 
 const Write = () => {
   const { postIdeas } = usePostIdeasMutation();
