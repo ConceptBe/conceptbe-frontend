@@ -155,7 +155,7 @@ const TagWrapper = styled.div`
   padding: 0;
 `;
 
-const FooterWrapper = styled.div`
+const FooteaarWrapper = styled.div`
   display: flex;
   margin-top: 16px;
 `;
