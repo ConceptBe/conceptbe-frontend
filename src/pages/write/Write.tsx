@@ -31,12 +31,12 @@ import {
 } from '../../modules/constants';
 import { usePostIdeasMutation } from '../../hooks/mutations/useIdeasMutation';
 import Header from './components/Header';
+import TitleAndIntroduceSection from './components/TitleAndIntroduceSection';
 
 const Write = () => {
   const { postIdeas } = usePostIdeasMutation();
-  const [getIndex, setIndex] = useState('');
-  const [getBody, setBody] = useState('');
-  const [bodyCount, setBodyCount] = useState(0);
+  const [title, setTitle] = useState('');
+  const [introduce, setIntroduce] = useState('');
   const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
   const [getArea, setArea] = useState('');
   const [get1Depth, set1Depth] = useState(1);
@@ -54,8 +54,8 @@ const Write = () => {
 
   const writeIdea = () => {
     postIdeas({
-      title: getIndex,
-      introduce: getBody,
+      title,
+      introduce,
       recruitmentPlace: dropdownValue.region,
       cooperationWay: radioValue,
       branchIds: checkboxValue.field,
@@ -64,16 +64,12 @@ const Write = () => {
     });
   };
 
-  const handleIndexChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length > 20) return;
-
-    setIndex(e.target.value);
+  const handleTitleChange = (newTitle: string) => {
+    setTitle(newTitle);
   };
 
-  const handleBodyChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    if (e.target.value.length > 2000) return;
-    setBody(e.target.value);
-    setBodyCount(e.target.value.length);
+  const handleIntroduceChange = (newIntroduce: string) => {
+    setIntroduce(newIntroduce);
   };
 
   const handleDropdownClick = (value: string) => {
@@ -107,22 +103,13 @@ const Write = () => {
       <Header onClickCheckButton={writeIdea} checkButtonDisabled={true} />
 
       <Divider color="l3" />
-      {/* 제목인풋 */}
+      <TitleAndIntroduceSection
+        title={title}
+        introduce={introduce}
+        onTitleChange={handleTitleChange}
+        onIntroduceChange={handleIntroduceChange}
+      />
 
-      <HeaderInput placeholder="제목을 입력해 주세요 (최대20자)" value={getIndex} onChange={handleIndexChange} />
-
-      <Divider color="l3" />
-      {/* 내용인풋 */}
-      <div>
-        <BodyTextarea placeholder="내용을 작성해주세요 (최대 2000자)" value={getBody} onChange={handleBodyChange} />
-
-        <TextareaCountBox>
-          <Text font="suit15m" color="c1">
-            {bodyCount}
-          </Text>
-          /2,000
-        </TextareaCountBox>
-      </div>
       <Divider color="bg1" height={8} bottom={30} />
       <BottomWrapper>
         <BottomBox>
@@ -247,58 +234,6 @@ export default Write;
 
 const MainWrapper = styled.div`
   width: 100%;
-`;
-
-const HeaderInput = styled.input`
-  width: 100%;
-
-  border: none;
-  padding: 20px;
-  outline: none;
-  font-size: 15px;
-  font-weight: 400;
-  color: ${theme.color.b4};
-
-  &:focus {
-    ::placeholder {
-      color: transparent;
-    }
-  }
-
-  ::placeholder {
-    color: ${theme.color.ba};
-  }
-`;
-
-const BodyTextarea = styled.textarea`
-  width: 100%;
-  overflow: auto;
-  height: 190px;
-  border: none;
-  padding: 20px 22px 25px 22px;
-  outline: none;
-  font-size: 15px;
-  font-weight: 400;
-  resize: none;
-  color: ${theme.color.b4};
-
-  ::placeholder {
-    color: ${theme.color.ba};
-  }
-  &:focus {
-    ::placeholder {
-      color: transparent;
-    }
-  }
-`;
-
-const TextareaCountBox = styled.div`
-  display: flex;
-  justify-content: end;
-  padding: 0px 22px 25px 22px;
-  color: ${theme.color.b9};
-  font-size: 15px;
-  font-weight: 500;
 `;
 
 const BottomWrapper = styled.div`
