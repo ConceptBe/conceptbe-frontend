@@ -20,7 +20,7 @@ import {
 } from 'concept-be-design-system';
 import { useState, ChangeEvent } from 'react';
 
-import Back from '../layouts/Back';
+import Back from '../../layouts/Back';
 import {
   filterOptions,
   filterSubOptions,
@@ -28,8 +28,9 @@ import {
   REGION_LIST,
   MAIN_SKILL_QUERY,
   DETAIL_SKILL_QUERY,
-} from '../modules/constants';
-import { usePostIdeasMutation } from '../hooks/mutations/useIdeasMutation';
+} from '../../modules/constants';
+import { usePostIdeasMutation } from '../../hooks/mutations/useIdeasMutation';
+import Header from './components/Header/Header';
 
 const Write = () => {
   const { postIdeas } = usePostIdeasMutation();
@@ -104,15 +105,7 @@ const Write = () => {
   return (
     <MainWrapper>
       {/* 헤더 */}
-      <HeaderBox>
-        <Back />
-        <Text font="suit16sb" color="b4">
-          글쓰기
-        </Text>
-        <button onClick={writeIdea}>
-          <SVGHeaderCheck24 />
-        </button>
-      </HeaderBox>
+      <Header onClickCheckButton={writeIdea} />
 
       <Divider color="l3" />
       {/* 제목인풋 */}
@@ -255,17 +248,6 @@ export default Write;
 
 const MainWrapper = styled.div`
   width: 100%;
-`;
-
-const HeaderBox = styled.div`
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  height: 54px;
-  padding: 0 22px;
 `;
 
 const HeaderInput = styled.input`

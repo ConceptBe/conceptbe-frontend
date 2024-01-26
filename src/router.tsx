@@ -14,7 +14,7 @@ import Profile from './pages/profile/Profile.page';
 import Setting from './pages/profile/Setting.page';
 import SignUpPage from './pages/SignUp/SignUp.page';
 import Temp from './pages/Temp';
-import Write from './pages/Write';
+import Write from './pages/write/Write';
 
 interface RouteElement {
   path: string;
