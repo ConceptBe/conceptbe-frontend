@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 
 import MobileView from './layouts/MobileView';
@@ -7,12 +7,12 @@ import FeedDetail from './pages/Feed/FeedDetail.page';
 import Agreement from './pages/Login/Agreement';
 import KakaoRedirect from './pages/Login/KakaoRedirect';
 import Login from './pages/Login/Login';
-import SignUp from './pages/Login/SignUp';
 import NeedAuth from './pages/NeedAuth';
 import NotFound from './pages/NotFound';
 import More from './pages/profile/More.page';
 import Profile from './pages/profile/Profile.page';
 import Setting from './pages/profile/Setting.page';
+import SignUpPage from './pages/SignUp/SignUp.page';
 import Temp from './pages/Temp';
 import Write from './pages/Write';
 
@@ -80,7 +80,11 @@ const routes: RouteElement[] = [
       },
       {
         path: '/sign-up',
-        element: <SignUp />,
+        element: (
+          <Suspense>
+            <SignUpPage />
+          </Suspense>
+        ),
         withAuth: false,
       },
       {
