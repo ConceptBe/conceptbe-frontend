@@ -14,11 +14,6 @@ type Props = {
  */
 const Header = ({ onClickCheckButton, checkButtonDisabled }: Props) => {
   const handleClickCheckButton = () => {
-    if (checkButtonDisabled) {
-      // TODO: 글쓰기 필수 조건 누락 시 토스트 띄워주기
-      return;
-    }
-
     onClickCheckButton();
   };
 

@@ -84,13 +84,39 @@ const Write = () => {
   });
 
   const writeIdea = () => {
+    const cooperationWay = radioValue.cooperationWays.find((cooperationWay) => cooperationWay.checked)?.name;
+    const branchIds = checkboxValue.branches.map((branch) => branch.id);
+    const purposeIds = checkboxValue.purposes.map((purpose) => purpose.id);
+
+    // TODO: 글쓰기 필수 조건 누락 시 토스트 띄워주기 (alert -> toast)
+    if (!title) {
+      alert('제목을 입력해주세요.');
+      return;
+    }
+    if (!introduce) {
+      alert('내용을 입력해주세요.');
+      return;
+    }
+    if (!branchIds.length) {
+      alert('분야를 1개 이상 선택해주세요.');
+      return;
+    }
+    if (!purposeIds.length) {
+      alert('목적을 1개 이상 선택해주세요.');
+      return;
+    }
+    if (!cooperationWay) {
+      alert('협업방식을 선택해주세요.');
+      return;
+    }
+
     postIdeas({
       title,
       introduce,
       recruitmentPlace: dropdownValue.region,
-      cooperationWay: radioValue,
-      branchIds: checkboxValue.branches.map((branch) => branch.id),
-      purposeIds: checkboxValue.purposes.map((purpose) => purpose.id),
+      cooperationWay,
+      branchIds,
+      purposeIds,
       teamRecruitmentIds: get2Depth,
     });
   };
