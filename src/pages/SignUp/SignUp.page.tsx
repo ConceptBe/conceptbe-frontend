@@ -18,10 +18,10 @@ import {
   Box,
 } from 'concept-be-design-system';
 import { FormEvent, useCallback, useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
+import useSignUpQuery from './hooks/useSignUpQuery.ts';
 import { postSignUp } from '../../api/index.ts';
-import useSignUpQuery from '../../hooks/api/useSignUpQuery.ts';
 import { OauthMemberInfo } from '../../types/login.ts';
 import { Skill } from '../../types/signUp.ts';
 
@@ -49,14 +49,8 @@ interface DropdownValue {
   region: string;
 }
 
-// TODO: #1 useCheckbox 초기값 지정 불안정 이슈로 잠시 목데이터 사용
-const CHECKBOX_LIST = [
-  { id: 1, name: '사이드프로젝트', checked: false },
-  { id: 2, name: '창업', checked: false },
-  { id: 3, name: '공모전', checked: false },
-];
-
-const SignUp = () => {
+const SignUpPage = () => {
+  const navigate = useNavigate();
   const { state: memberInfo }: { state: OauthMemberInfo } = useLocation();
   const mutation = useMutation({ mutationFn: postSignUp });
   const { mainSkillQuery, detailSkillQuery, skillLevelQuery, regionQuery, checkboxQuery } = useSignUpQuery();
@@ -65,10 +59,8 @@ const SignUp = () => {
     company: '',
     intro: '',
   });
-
-  // TODO: #1
   const { checkboxValue, onChangeCheckbox } = useCheckbox<CheckboxValue>({
-    goal: checkboxQuery.length === 0 ? CHECKBOX_LIST : [],
+    goal: checkboxQuery,
   });
   const [selectedSkillDepths, setSelectedSkillDepths] = useState<Skill[]>([]);
   const { dropdownValue, onResetDropdown, onClickDropdown } = useDropdown<DropdownValue>({
@@ -132,6 +124,8 @@ const SignUp = () => {
       oauthId: memberInfo.oauthId,
       oauthServerType: memberInfo.oauthServerType,
     });
+
+    navigate('/');
   };
 
   useEffect(() => {
@@ -372,4 +366,4 @@ const Img = styled.img`
   height: 100%;
 `;
 
-export default SignUp;
+export default SignUpPage;
