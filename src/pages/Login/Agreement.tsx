@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import { BottomSheet, Button, Spacer, Text, PNGAgreementBackground, Flex } from 'concept-be-design-system';
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -27,7 +28,7 @@ const Agreement = () => {
   };
 
   return (
-    <Flex direction="column" padding="20px 22px">
+    <Wrapper height="100%" direction="column" padding="20px 22px">
       <img src={PNGAgreementBackground} />
       <Spacer size={50} />
 
@@ -66,7 +67,9 @@ const Agreement = () => {
         아이디어 표절이나 도용 시 해당 사실을 근거로 <br />
         불이익이 발생할 수 있습니다.
       </Text>
-      <Spacer size={50} />
+
+      <DynamicSpacer size={50} />
+
       <Text
         font="suit13m"
         color="b4"
@@ -74,7 +77,6 @@ const Agreement = () => {
           display: 'flex',
           flexDirection: 'column',
           lineHeight: '150%',
-
           alignItems: 'center',
         }}
       >
@@ -108,8 +110,16 @@ const Agreement = () => {
         {isOpenPrivacy && <Privacy onClose={onCloseBottomSheet} />}
         {!isOpenPrivacy && <UsageTerms onClose={onCloseBottomSheet} />}
       </BottomSheet>
-    </Flex>
+    </Wrapper>
   );
 };
 
 export default Agreement;
+
+const Wrapper = styled(Flex)`
+  box-sizing: border-box;
+`;
+
+const DynamicSpacer = styled(Spacer)`
+  height: 100%;
+`;
