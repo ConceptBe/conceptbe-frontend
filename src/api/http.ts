@@ -3,10 +3,12 @@ import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 // const API_PREFIX = '/api';
 // const BASE_URL = `url${API_PREFIX}`;
 const BASE_URL = 'http://localhost:8080';
+const token = localStorage.getItem('userToken');
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
   timeout: 5000,
+  headers: token ? { Authorization: `Bearer ${token}` } : {},
 });
 
 export interface HttpClient extends AxiosInstance {
