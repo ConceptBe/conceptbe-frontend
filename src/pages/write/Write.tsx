@@ -47,6 +47,13 @@ const purposes = [
   { id: 5, name: '스터디' },
 ];
 
+// 협업 방식 필터
+const cooperationWays = [
+  { name: '상관없음', id: 1 },
+  { name: '온라인', id: 2 },
+  { name: '오프라인', id: 3 },
+];
+
 const Write = () => {
   const { postIdeas } = usePostIdeasMutation();
   const [title, setTitle] = useState('');
@@ -63,9 +70,12 @@ const Write = () => {
     branches: branchOptions,
     purposes: purposeOptions,
   });
+
+  const cooperationWayOptions = cooperationWays.map((properties) => ({ checked: false, ...properties }));
   const { radioValue, onChangeRadio } = useRadio({
-    collaboration: filterRadio,
+    cooperationWays: cooperationWayOptions,
   });
+
   const { dropdownValue, onClickDropdown } = useDropdown({
     region: '',
   });
@@ -153,9 +163,9 @@ const Write = () => {
         <BottomBox>
           <RadioContainer
             label="협업방식"
-            radioKey="collaboration"
-            options={radioValue.collaboration}
-            onChange={(e) => onChangeRadio(e, 'collaboration')}
+            radioKey="cooperationWays"
+            options={radioValue.cooperationWays}
+            onChange={(e) => onChangeRadio(e, 'cooperationWays')}
             gap="large"
           />
         </BottomBox>
