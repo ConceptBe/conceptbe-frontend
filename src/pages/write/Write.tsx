@@ -21,20 +21,14 @@ import {
 import { useState, ChangeEvent } from 'react';
 
 import Back from '../../layouts/Back';
-import {
-  filterOptions,
-  filterSubOptions,
-  filterRadio,
-  REGION_LIST,
-  MAIN_SKILL_QUERY,
-  DETAIL_SKILL_QUERY,
-} from '../../modules/constants';
+import { filterRadio, REGION_LIST, MAIN_SKILL_QUERY, DETAIL_SKILL_QUERY } from '../../modules/constants';
 import { usePostIdeasMutation } from '../../hooks/mutations/useIdeasMutation';
 import Header from './components/Header';
 import TitleAndIntroduceSection from './components/TitleAndIntroduceSection';
 import BranchSection from './components/BranchSection';
 
 // 목데이터
+// 분야 필터
 const branches = [
   { name: 'IT', id: 1 },
   { name: '게임', id: 2 },
@@ -42,6 +36,15 @@ const branches = [
   { name: '유튜브컨텐츠', id: 4 },
   { name: '영화', id: 5 },
   { name: '웹툰', id: 6 },
+];
+
+// 목적 필터
+const purposes = [
+  { id: 1, name: '사이드프로젝트' },
+  { id: 2, name: '창업' },
+  { id: 3, name: '크라우드펀딩' },
+  { id: 4, name: '공모전' },
+  { id: 5, name: '스터디' },
 ];
 
 const Write = () => {
@@ -53,9 +56,12 @@ const Write = () => {
   const [get1Depth, set1Depth] = useState(1);
   const [get2Depth, set2Depth] = useState<number[]>([]);
   const [checkedBranchIds, setCheckedBranchIds] = useState<number[]>([]);
+
+  const branchOptions = branches.map((properties) => ({ checked: false, ...properties }));
+  const purposeOptions = purposes.map((properties) => ({ checked: false, ...properties }));
   const { checkboxValue, onChangeCheckbox } = useCheckbox({
-    field: filterOptions,
-    goal: filterSubOptions,
+    branches: branchOptions,
+    purposes: purposeOptions,
   });
   const { radioValue, onChangeRadio } = useRadio({
     collaboration: filterRadio,
@@ -70,8 +76,8 @@ const Write = () => {
       introduce,
       recruitmentPlace: dropdownValue.region,
       cooperationWay: radioValue,
-      branchIds: checkedBranchIds,
-      purposeIds: checkboxValue.goal,
+      branchIds: checkboxValue.branches.map((branch) => branch.id),
+      purposeIds: checkboxValue.purposes.map((purpose) => purpose.id),
       teamRecruitmentIds: get2Depth,
     });
   };
@@ -128,10 +134,21 @@ const Write = () => {
 
       <Divider color="bg1" height={8} bottom={30} />
       <BottomWrapper>
-        <BranchSection branches={branches} onBranchCheckBoxChange={handleBranchCheckBoxChange} />
-
         <BottomBox>
-          <CheckboxContainer label="목적" checkboxKey="goal" options={checkboxValue.goal} onChange={onChangeCheckbox} />
+          <CheckboxContainer
+            label="분야"
+            checkboxKey="branches"
+            options={checkboxValue.branches}
+            onChange={onChangeCheckbox}
+          />
+        </BottomBox>
+        <BottomBox>
+          <CheckboxContainer
+            label="목적"
+            checkboxKey="purposes"
+            options={checkboxValue.purposes}
+            onChange={onChangeCheckbox}
+          />
         </BottomBox>
         <BottomBox>
           <RadioContainer
