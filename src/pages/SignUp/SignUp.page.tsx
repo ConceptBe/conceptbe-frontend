@@ -349,7 +349,7 @@ const SignUpPage = () => {
           </Field>
         </Box>
         <Box padding="0 22px" backgroundColor="w1">
-          <Button onClick={() => {}}>프로필 저장하기</Button>
+          <Button>프로필 저장하기</Button>
         </Box>
       </MainWrapper>
     </Box>
