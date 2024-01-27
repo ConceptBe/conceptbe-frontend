@@ -26,8 +26,9 @@ import { usePostIdeasMutation } from '../../hooks/mutations/useIdeasMutation';
 import Header from './components/Header';
 import TitleAndIntroduceSection from './components/TitleAndIntroduceSection';
 import BranchSection from './components/BranchSection';
+import RecruitmentPlaceSection from './components/RecruitmentPlaceSection';
 
-// 목데이터
+// 목데이터: 추후 쿼리로 받아오기
 // 분야 필터
 const branches = [
   { name: 'IT', id: 1 },
@@ -54,6 +55,26 @@ const cooperationWays = [
   { name: '오프라인', id: 3 },
 ];
 
+// 지역 목록
+const places = [
+  { id: 1, name: '서울특별시' },
+  { id: 2, name: '부산광역시' },
+  { id: 3, name: '대구광역시' },
+  { id: 4, name: '인천광역시' },
+  { id: 5, name: '광주광역시' },
+  { id: 6, name: '울산광역시' },
+  { id: 7, name: '세종특별자치시' },
+  { id: 8, name: '경기도' },
+  { id: 9, name: '강원특별자치도' },
+  { id: 10, name: '충청북도' },
+  { id: 11, name: '충청남도' },
+  { id: 12, name: '전라북도' },
+  { id: 13, name: '전라남도' },
+  { id: 14, name: '경상북도' },
+  { id: 15, name: '경상남도' },
+  { id: 16, name: '제주특별자치도' },
+];
+
 const Write = () => {
   const { postIdeas } = usePostIdeasMutation();
   const [title, setTitle] = useState('');
@@ -78,14 +99,16 @@ const Write = () => {
     cooperationWays: cooperationWayOptions,
   });
 
+  // 모집 지역도 백엔드와 형식 논의해야할듯(id 추가..?)
   const { dropdownValue, onClickDropdown } = useDropdown({
-    region: '',
+    recruitmentPlace: '',
   });
 
   const writeIdea = () => {
     const cooperationWay = radioValue.cooperationWays.find((cooperationWay) => cooperationWay.checked)?.name;
     const branchIds = checkboxValue.branches.map((branch) => branch.id);
     const purposeIds = checkboxValue.purposes.map((purpose) => purpose.id);
+    const recruitmentPlace = dropdownValue.recruitmentPlace;
 
     // TODO: 글쓰기 필수 조건 누락 시 토스트 띄워주기 (alert -> toast)
     if (!title) {
@@ -112,7 +135,7 @@ const Write = () => {
     postIdeas({
       title,
       introduce,
-      recruitmentPlace: dropdownValue.region,
+      recruitmentPlace,
       cooperationWay,
       branchIds,
       purposeIds,
@@ -198,24 +221,11 @@ const Write = () => {
           />
         </BottomBox>
         <BottomBox>
-          <Text font="suit15m" color="b9">
-            모집 지역
-          </Text>
-
-          <Spacer size={20} />
-          <Dropdown selectedValue={dropdownValue.region} initialValue="시/도/광역시">
-            {REGION_LIST.map(({ id, name }) => (
-              <Dropdown.Item
-                key={id}
-                value={name}
-                onClick={(value) => {
-                  onClickDropdown(value, 'region');
-                }}
-              >
-                {name}
-              </Dropdown.Item>
-            ))}
-          </Dropdown>
+          <RecruitmentPlaceSection
+            places={places}
+            selectedPlace={dropdownValue.recruitmentPlace}
+            onPlaceChange={(selectedPlace) => onClickDropdown(selectedPlace, 'recruitmentPlace')}
+          />
         </BottomBox>
         <BottomBox>
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
