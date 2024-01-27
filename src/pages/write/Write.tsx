@@ -77,12 +77,9 @@ const places = [
 
 const Write = () => {
   const { postIdeas } = usePostIdeasMutation();
+
   const [title, setTitle] = useState('');
   const [introduce, setIntroduce] = useState('');
-  const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
-  const [getArea, setArea] = useState('');
-  const [get1Depth, set1Depth] = useState(1);
-  const [get2Depth, set2Depth] = useState<number[]>([]);
 
   const branchOptions = branches.map((properties) => ({ checked: false, ...properties }));
   const purposeOptions = purposes.map((properties) => ({ checked: false, ...properties }));
@@ -103,6 +100,10 @@ const Write = () => {
   const { dropdownValue, onClickDropdown } = useDropdown({
     recruitmentPlace: '',
   });
+
+  const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
+  const [get1Depth, set1Depth] = useState(1);
+  const [get2Depth, set2Depth] = useState<number[]>([]);
 
   const writeIdea = () => {
     const cooperationWay = radioValue.cooperationWays.find((cooperationWay) => cooperationWay.checked)?.name;
@@ -149,14 +150,6 @@ const Write = () => {
 
   const handleIntroduceChange = (newIntroduce: string) => {
     setIntroduce(newIntroduce);
-  };
-
-  const handleBranchCheckBoxChange = (newCheckedBranchIds: number[]) => {
-    setCheckedBranchIds(newCheckedBranchIds);
-  };
-
-  const handleDropdownClick = (value: string) => {
-    setArea(value);
   };
 
   const onClick2Depth = (id: number) => {
@@ -227,6 +220,7 @@ const Write = () => {
             onPlaceChange={(selectedPlace) => onClickDropdown(selectedPlace, 'recruitmentPlace')}
           />
         </BottomBox>
+
         <BottomBox>
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
             <Text font="suit15m" color="b9">
