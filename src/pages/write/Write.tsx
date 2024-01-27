@@ -32,6 +32,17 @@ import {
 import { usePostIdeasMutation } from '../../hooks/mutations/useIdeasMutation';
 import Header from './components/Header';
 import TitleAndIntroduceSection from './components/TitleAndIntroduceSection';
+import BranchSection from './components/BranchSection';
+
+// 목데이터
+const branches = [
+  { name: 'IT', id: 1 },
+  { name: '게임', id: 2 },
+  { name: '제품', id: 3 },
+  { name: '유튜브컨텐츠', id: 4 },
+  { name: '영화', id: 5 },
+  { name: '웹툰', id: 6 },
+];
 
 const Write = () => {
   const { postIdeas } = usePostIdeasMutation();
@@ -41,6 +52,7 @@ const Write = () => {
   const [getArea, setArea] = useState('');
   const [get1Depth, set1Depth] = useState(1);
   const [get2Depth, set2Depth] = useState<number[]>([]);
+  const [checkedBranchIds, setCheckedBranchIds] = useState<number[]>([]);
   const { checkboxValue, onChangeCheckbox } = useCheckbox({
     field: filterOptions,
     goal: filterSubOptions,
@@ -58,7 +70,7 @@ const Write = () => {
       introduce,
       recruitmentPlace: dropdownValue.region,
       cooperationWay: radioValue,
-      branchIds: checkboxValue.field,
+      branchIds: checkedBranchIds,
       purposeIds: checkboxValue.goal,
       teamRecruitmentIds: get2Depth,
     });
@@ -70,6 +82,10 @@ const Write = () => {
 
   const handleIntroduceChange = (newIntroduce: string) => {
     setIntroduce(newIntroduce);
+  };
+
+  const handleBranchCheckBoxChange = (newCheckedBranchIds: number[]) => {
+    setCheckedBranchIds(newCheckedBranchIds);
   };
 
   const handleDropdownClick = (value: string) => {
@@ -112,14 +128,8 @@ const Write = () => {
 
       <Divider color="bg1" height={8} bottom={30} />
       <BottomWrapper>
-        <BottomBox>
-          <CheckboxContainer
-            label="분야"
-            checkboxKey="field"
-            options={checkboxValue.field}
-            onChange={onChangeCheckbox}
-          />
-        </BottomBox>
+        <BranchSection branches={branches} onBranchCheckBoxChange={handleBranchCheckBoxChange} />
+
         <BottomBox>
           <CheckboxContainer label="목적" checkboxKey="goal" options={checkboxValue.goal} onChange={onChangeCheckbox} />
         </BottomBox>
