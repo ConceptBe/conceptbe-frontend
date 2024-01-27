@@ -71,7 +71,10 @@ const Write = () => {
     purposes: purposeOptions,
   });
 
-  const cooperationWayOptions = cooperationWays.map((properties) => ({ checked: false, ...properties }));
+  const cooperationWayOptions = cooperationWays.map((properties) => {
+    // 협업방식: 상관없음이 기본값(id === 1)
+    return properties.id === 1 ? { checked: true, ...properties } : { checked: false, ...properties };
+  });
   const { radioValue, onChangeRadio } = useRadio({
     cooperationWays: cooperationWayOptions,
   });
