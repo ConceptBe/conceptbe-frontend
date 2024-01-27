@@ -62,7 +62,6 @@ const Write = () => {
   const [getArea, setArea] = useState('');
   const [get1Depth, set1Depth] = useState(1);
   const [get2Depth, set2Depth] = useState<number[]>([]);
-  const [checkedBranchIds, setCheckedBranchIds] = useState<number[]>([]);
 
   const branchOptions = branches.map((properties) => ({ checked: false, ...properties }));
   const purposeOptions = purposes.map((properties) => ({ checked: false, ...properties }));
