@@ -64,14 +64,25 @@ const Write = () => {
   });
 
   const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
-  const [get1Depth, set1Depth] = useState(1);
-  const [get2Depth, set2Depth] = useState<number[]>([]);
+
+  const [selectedTeamRecruitment1Depth, setSelectedTeamRecruitment1Depth] = useState(teamRecruitments[0].name);
+  const [selectedTeamRecruitments, setSelectedTeamRecruitments] = useState<{ id: number; name: string }[]>([]);
+
+  const sheetLeftItems = teamRecruitments.map((item) => item.name);
+  const sheetRightItems = teamRecruitments.find((item) => item.name === selectedTeamRecruitment1Depth)
+    ?.teamRecruitments;
+
+  if (!sheetRightItems) {
+    console.error('sheetRightItems is null');
+    return null;
+  }
 
   const writeIdea = () => {
     const cooperationWay = radioValue.cooperationWays.find((cooperationWay) => cooperationWay.checked)?.name;
     const branchIds = checkboxValue.branches.filter((branch) => branch.checked).map((branch) => branch.id);
     const purposeIds = checkboxValue.purposes.filter((branch) => branch.checked).map((purpose) => purpose.id);
     const recruitmentPlace = dropdownValue.recruitmentPlace;
+    const teamRecruitmentIds = selectedTeamRecruitments.map((teamRecruitment) => teamRecruitment.id);
 
     // TODO: 글쓰기 필수 조건 누락 시 토스트 띄워주기 (alert -> toast)
     if (!title) {
@@ -101,7 +112,7 @@ const Write = () => {
       cooperationWay,
       branchIds,
       purposeIds,
-      teamRecruitmentIds: get2Depth,
+      teamRecruitmentIds,
     });
   };
 
@@ -113,26 +124,16 @@ const Write = () => {
     setIntroduce(newIntroduce);
   };
 
-  const onClick2Depth = (id: number) => {
-    if (get2Depth.includes(id)) {
-      set2Depth((prev2Depth) => prev2Depth.filter((item) => item !== id));
+  const onClickTeamRecruitment = (selected: { id: number; name: string }) => {
+    if (setSelectedTeamRecruitments.length >= 10) {
+      alert('10개 이상 선택할 수 없습니다.');
     } else {
-      if (get2Depth.length >= 10) {
-        alert('10개 이상 선택할 수 없습니다.');
-      } else {
-        set2Depth((prev2Depth) => [...prev2Depth, id]);
-      }
+      setSelectedTeamRecruitments((prev) => [...prev, selected]);
     }
   };
 
-  const onClick2DepthDelete = (e: never) => {
-    if (get2Depth.indexOf(e) !== -1) {
-      set2Depth(
-        get2Depth.filter((item) => {
-          return item !== e;
-        }),
-      );
-    }
+  const onDeleteTeamRecruitment = (id: number) => {
+    setSelectedTeamRecruitments((prev) => prev.filter((item) => item.id !== id));
   };
 
   return (
@@ -203,11 +204,11 @@ const Write = () => {
 
           <Spacer size={12} />
           <TeamLabelBox>
-            {get2Depth.map((item) => {
+            {selectedTeamRecruitments.map((item) => {
               return (
                 <TeamLabel>
-                  {item}
-                  <SVGCancel onClick={() => onClick2DepthDelete(item)} />
+                  {item.name}
+                  <SVGCancel onClick={() => onDeleteTeamRecruitment(item.id)} />
                 </TeamLabel>
               );
             })}
@@ -232,24 +233,29 @@ const Write = () => {
         </Sheet_TopBox>
         <Sheet_BodyBox>
           <Sheet_Left>
-            {MAIN_SKILL_QUERY.map((skill) => {
+            {sheetLeftItems.map((item) => {
               return (
-                <Sheet_leftItem key={skill.id} onClick={() => set1Depth(skill.id)} checked={get1Depth === skill.id}>
+                <Sheet_leftItem
+                  key={item}
+                  onClick={() => setSelectedTeamRecruitment1Depth(item)}
+                  checked={selectedTeamRecruitment1Depth === item}
+                >
                   <Text font="suit14m" color="ba">
-                    {skill.name}
+                    {item}
                   </Text>
                 </Sheet_leftItem>
               );
             })}
           </Sheet_Left>
           <Sheet_right>
-            {DETAIL_SKILL_QUERY[get1Depth].map((detailSkill) => {
+            {sheetRightItems.map((item) => {
               return (
-                <Sheet_radioDiv key={detailSkill.id} onClick={() => onClick2Depth(detailSkill.id)}>
+                <Sheet_radioDiv key={item.name} onClick={() => onClickTeamRecruitment(item)}>
                   <Text font="suit14m" color="b4">
-                    {detailSkill.name}
+                    {item.name}
                   </Text>
-                  {get2Depth.includes(detailSkill.id) ? <SVGRadioCheck24 /> : <SVGRadioUncheck24 />}
+                  {/* 조건문 다시 고려 */}
+                  {selectedTeamRecruitments.includes(item) ? <SVGRadioCheck24 /> : <SVGRadioUncheck24 />}
                 </Sheet_radioDiv>
               );
             })}

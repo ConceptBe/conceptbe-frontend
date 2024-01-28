@@ -44,7 +44,11 @@ const routes: RouteElement[] = [
       },
       {
         path: '/write',
-        element: <Write />,
+        element: (
+          <Suspense>
+            <Write />
+          </Suspense>
+        ),
         withAuth: false,
       },
       {
