@@ -29,6 +29,12 @@ import BranchSection from './components/BranchSection';
 import RecruitmentPlaceSection from './components/RecruitmentPlaceSection';
 import { useWritingInfoQuery } from '../../hooks/queries/useWritingInfoQuery';
 
+const cooperationWays = [
+  { id: 1, name: '상관없음' },
+  { id: 2, name: '온라인' },
+  { id: 3, name: '오프라인' },
+];
+
 const Write = () => {
   const { postIdeas } = usePostIdeasMutation();
   const { branches, purposes, recruitmentPlaces, teamRecruitments } = useWritingInfoQuery();
@@ -47,6 +53,7 @@ const Write = () => {
     // 협업방식: 상관없음이 기본값(id === 1)
     return properties.id === 1 ? { checked: true, ...properties } : { checked: false, ...properties };
   });
+
   const { radioValue, onChangeRadio } = useRadio({
     cooperationWays: cooperationWayOptions,
   });
@@ -87,7 +94,6 @@ const Write = () => {
       alert('협업방식을 선택해주세요.');
       return;
     }
-
     postIdeas({
       title,
       introduce,
