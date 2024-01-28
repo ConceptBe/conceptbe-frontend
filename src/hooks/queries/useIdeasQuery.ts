@@ -2,10 +2,11 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { http } from '../../api/http';
 
-// IdeaCard 글 글쓴이 정보: 예상타입
+// IdeaCard 글 글쓴이 정보
 type MemberResponse = {
+  profileImageUrl: string;
   nickname: string;
-  mainSkill: string;
+  skills: string[];
 };
 
 export type Idea = {
@@ -36,7 +37,7 @@ const getIdeas = async () => {
       bookmarksCount: 44, // 북마크 수,
       isBookmarked: false, // 현재 해당 게시글을 북마크했는지,
       createdAt: new Date(), // 생성시각,
-      memberResponse: { nickname: '영진', mainSkill: 'UIUX 디자인' }, // 게시글 작성자,
+      memberResponse: { profileImageUrl: '', nickname: '영진', skills: ['UIUX 디자인', 'FE'] }, // 게시글 작성자,
       branches: ['IT', '유튜브 컨텐츠'], // 분야,
       teamRecruitments: ['영상디자인', '서비스기획', '마케팅'], // 목적
     },
