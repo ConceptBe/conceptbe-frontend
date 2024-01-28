@@ -52,7 +52,7 @@ const NewIdeaCard = ({
 
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <Text font="suit12r" color="b9">
-                {memberResponse.mainSkill}
+                {memberResponse.skills.join(' | ')}
               </Text>
               <Spacer size={6} />
               <div style={{ width: 1, height: 10, backgroundColor: theme.color.l2 }} />
