@@ -24,7 +24,7 @@ const purposes = [
 
 // 모집 지역
 const places = [
-  { id: 1, name: '서울특별시' },
+  { id: 1, name: '전국' },
   { id: 2, name: '부산광역시' },
   { id: 3, name: '대구광역시' },
   { id: 4, name: '인천광역시' },

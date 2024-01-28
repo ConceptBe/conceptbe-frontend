@@ -60,7 +60,7 @@ const Write = () => {
 
   // 모집 지역도 백엔드와 형식 논의해야할듯(id 추가..?)
   const { dropdownValue, onClickDropdown } = useDropdown({
-    recruitmentPlace: '',
+    recruitmentPlace: '전국', // "전국"의 id === 1
   });
 
   const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
@@ -81,7 +81,7 @@ const Write = () => {
     const cooperationWay = radioValue.cooperationWays.find((cooperationWay) => cooperationWay.checked)?.name;
     const branchIds = checkboxValue.branches.filter((branch) => branch.checked).map((branch) => branch.id);
     const purposeIds = checkboxValue.purposes.filter((branch) => branch.checked).map((purpose) => purpose.id);
-    const recruitmentPlace = dropdownValue.recruitmentPlace;
+    const recruitmentPlaceId = recruitmentPlaces.find((place) => place.name === dropdownValue.recruitmentPlace)?.id;
     const teamRecruitmentIds = selectedTeamRecruitments.map((teamRecruitment) => teamRecruitment.id);
 
     // TODO: 글쓰기 필수 조건 누락 시 토스트 띄워주기 (alert -> toast)
@@ -105,10 +105,15 @@ const Write = () => {
       alert('협업방식을 선택해주세요.');
       return;
     }
+    if (!recruitmentPlaceId) {
+      alert('모집지역을 선택해주세요.');
+      return;
+    }
+
     postIdeas({
       title,
       introduce,
-      recruitmentPlace,
+      recruitmentPlaceId,
       cooperationWay,
       branchIds,
       purposeIds,
