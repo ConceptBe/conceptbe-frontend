@@ -72,15 +72,17 @@ const Write = () => {
   const sheetRightItems = teamRecruitments.find((item) => item.name === selectedTeamRecruitment1Depth)
     ?.teamRecruitments;
 
+  const branchIds = checkboxValue.branches.filter((branch) => branch.checked).map((branch) => branch.id);
+  const purposeIds = checkboxValue.purposes.filter((branch) => branch.checked).map((purpose) => purpose.id);
+  const cooperationWay = radioValue.cooperationWays.find((cooperationWay) => cooperationWay.checked)?.name;
+  const canSubmit = branchIds.length > 0 && purposeIds.length > 0 && cooperationWay;
+
   if (!sheetRightItems) {
     console.error('sheetRightItems is null');
     return null;
   }
 
   const writeIdea = () => {
-    const cooperationWay = radioValue.cooperationWays.find((cooperationWay) => cooperationWay.checked)?.name;
-    const branchIds = checkboxValue.branches.filter((branch) => branch.checked).map((branch) => branch.id);
-    const purposeIds = checkboxValue.purposes.filter((branch) => branch.checked).map((purpose) => purpose.id);
     const recruitmentPlaceId = recruitmentPlaces.find((place) => place.name === dropdownValue.recruitmentPlace)?.id;
     const teamRecruitmentIds = selectedTeamRecruitments.map((teamRecruitment) => teamRecruitment.id);
 
@@ -147,7 +149,7 @@ const Write = () => {
 
   return (
     <MainWrapper>
-      <Header onClickCheckButton={writeIdea} checkButtonDisabled={true} />
+      <Header onClickCheckButton={writeIdea} isCheckButtonEnabled={canSubmit} />
 
       <Divider color="l3" />
       <TitleAndIntroduceSection

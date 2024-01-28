@@ -5,14 +5,14 @@ import Back from '../../../layouts/Back';
 
 type Props = {
   onClickCheckButton: () => void;
-  checkButtonDisabled: boolean;
+  isCheckButtonEnabled: boolean;
 };
 
 /**
  * 글쓰기 페이지 헤더
  * checkButton을 클릭해서 글을 작성한다.
  */
-const Header = ({ onClickCheckButton, checkButtonDisabled }: Props) => {
+const Header = ({ onClickCheckButton, isCheckButtonEnabled }: Props) => {
   const handleClickCheckButton = () => {
     onClickCheckButton();
   };
@@ -24,7 +24,7 @@ const Header = ({ onClickCheckButton, checkButtonDisabled }: Props) => {
         글쓰기
       </Text>
       <button onClick={handleClickCheckButton}>
-        {checkButtonDisabled ? <SVGHeaderUncheck24 /> : <SVGHeaderCheck24 />}
+        {isCheckButtonEnabled ? <SVGHeaderCheck24 /> : <SVGHeaderUncheck24 />}
       </button>
     </HeaderBox>
   );
