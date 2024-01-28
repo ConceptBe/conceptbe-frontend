@@ -132,9 +132,13 @@ const Write = () => {
   const onClickTeamRecruitment = (selected: { id: number; name: string }) => {
     if (setSelectedTeamRecruitments.length >= 10) {
       alert('10개 이상 선택할 수 없습니다.');
-    } else {
-      setSelectedTeamRecruitments((prev) => [...prev, selected]);
+      return;
     }
+    setSelectedTeamRecruitments((prev) =>
+      selectedTeamRecruitments.includes(selected)
+        ? prev.filter((item) => item.id !== selected.id)
+        : [...prev, selected],
+    );
   };
 
   const onDeleteTeamRecruitment = (id: number) => {
