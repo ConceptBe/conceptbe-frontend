@@ -107,8 +107,8 @@ const Write = () => {
 
   const writeIdea = () => {
     const cooperationWay = radioValue.cooperationWays.find((cooperationWay) => cooperationWay.checked)?.name;
-    const branchIds = checkboxValue.branches.map((branch) => branch.id);
-    const purposeIds = checkboxValue.purposes.map((purpose) => purpose.id);
+    const branchIds = checkboxValue.branches.filter((branch) => branch.checked).map((branch) => branch.id);
+    const purposeIds = checkboxValue.purposes.filter((branch) => branch.checked).map((purpose) => purpose.id);
     const recruitmentPlace = dropdownValue.recruitmentPlace;
 
     // TODO: 글쓰기 필수 조건 누락 시 토스트 띄워주기 (alert -> toast)
