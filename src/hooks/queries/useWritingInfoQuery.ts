@@ -87,10 +87,10 @@ type Info = {
 };
 
 type Idea = {
-  branchesResponse: Info[]; // 분야
-  purposeResponse: Info[]; // 목적
-  recruitmentPlaceResponse: Info[]; // 팀원 모집 지역
-  teamRecruitmentsResponse: {
+  branches: Info[]; // 분야
+  purposes: Info[]; // 목적
+  regions: Info[]; // 팀원 모집 지역
+  teamRecruitmentsCategories: {
     // 팀원 모집 종류
     name: string; // 기획
     teamRecruitments: Info[]; // IT기획, 게임기획, 제품기획, 사업기획
@@ -98,13 +98,13 @@ type Idea = {
 };
 
 const getWritingInfo = async () => {
-  // TODO:: return http.get<Idea[]>('/?');
+  // TODO:: return http.get<Idea[]>('/ideas/writing');
   await new Promise((resolve) => setTimeout(resolve, 1000));
   const writingInfo: Idea = {
-    branchesResponse: branches,
-    purposeResponse: purposes,
-    recruitmentPlaceResponse: places,
-    teamRecruitmentsResponse: teamRecruitments,
+    branches,
+    purposes,
+    regions: places,
+    teamRecruitmentsCategories: teamRecruitments,
   };
 
   return writingInfo;
@@ -113,12 +113,7 @@ const getWritingInfo = async () => {
 export const useWritingInfoQuery = () => {
   const { data: writingInfo, ...rest } = useSuspenseQuery({ queryKey: ['writingInfo'], queryFn: getWritingInfo });
 
-  const {
-    branchesResponse: branches,
-    purposeResponse: purposes,
-    recruitmentPlaceResponse: recruitmentPlaces,
-    teamRecruitmentsResponse: teamRecruitments,
-  } = writingInfo;
+  const { branches, purposes, regions: recruitmentPlaces, teamRecruitmentsCategories: teamRecruitments } = writingInfo;
 
   return {
     branches,
