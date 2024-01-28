@@ -75,7 +75,7 @@ const Write = () => {
   const branchIds = checkboxValue.branches.filter((branch) => branch.checked).map((branch) => branch.id);
   const purposeIds = checkboxValue.purposes.filter((branch) => branch.checked).map((purpose) => purpose.id);
   const cooperationWay = radioValue.cooperationWays.find((cooperationWay) => cooperationWay.checked)?.name;
-  const canSubmit = branchIds.length > 0 && purposeIds.length > 0 && cooperationWay;
+  const canSubmit = branchIds.length > 0 && purposeIds.length > 0 && !!cooperationWay;
 
   if (!sheetRightItems) {
     console.error('sheetRightItems is null');
