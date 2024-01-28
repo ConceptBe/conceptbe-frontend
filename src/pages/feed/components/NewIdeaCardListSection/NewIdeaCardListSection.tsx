@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
 import { Spacer, Text } from 'concept-be-design-system';
+import { Fragment } from 'react';
 
 import NewIdeaCard from '../../../../components/Card/NewIdeaCard/NewIdeaCard';
 import { useIdeasQuery } from '../../../../hooks/queries/useIdeasQuery';
-import { Fragment } from 'react';
 
 const NewIdeaCardListSection = () => {
   const { ideas } = useIdeasQuery();

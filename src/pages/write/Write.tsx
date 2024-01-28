@@ -5,7 +5,6 @@ import {
   BottomSheet,
   CheckboxContainer,
   Divider,
-  Dropdown,
   RadioContainer,
   Spacer,
   Text,
@@ -18,15 +17,12 @@ import {
   Flex,
   useDropdown,
 } from 'concept-be-design-system';
-import { useState, ChangeEvent } from 'react';
+import { useState } from 'react';
 
-import Back from '../../layouts/Back';
-import { filterRadio, REGION_LIST, MAIN_SKILL_QUERY, DETAIL_SKILL_QUERY } from '../../modules/constants';
-import { usePostIdeasMutation } from '../../hooks/mutations/useIdeasMutation';
 import Header from './components/Header';
-import TitleAndIntroduceSection from './components/TitleAndIntroduceSection';
-import BranchSection from './components/BranchSection';
 import RecruitmentPlaceSection from './components/RecruitmentPlaceSection';
+import TitleAndIntroduceSection from './components/TitleAndIntroduceSection';
+import { usePostIdeasMutation } from '../../hooks/mutations/useIdeasMutation';
 import { useWritingInfoQuery } from '../../hooks/queries/useWritingInfoQuery';
 
 const cooperationWays = [
