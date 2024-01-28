@@ -27,56 +27,11 @@ import Header from './components/Header';
 import TitleAndIntroduceSection from './components/TitleAndIntroduceSection';
 import BranchSection from './components/BranchSection';
 import RecruitmentPlaceSection from './components/RecruitmentPlaceSection';
-
-// 목데이터: 추후 쿼리로 받아오기
-// 분야 필터
-const branches = [
-  { name: 'IT', id: 1 },
-  { name: '게임', id: 2 },
-  { name: '제품', id: 3 },
-  { name: '유튜브컨텐츠', id: 4 },
-  { name: '영화', id: 5 },
-  { name: '웹툰', id: 6 },
-];
-
-// 목적 필터
-const purposes = [
-  { id: 1, name: '사이드프로젝트' },
-  { id: 2, name: '창업' },
-  { id: 3, name: '크라우드펀딩' },
-  { id: 4, name: '공모전' },
-  { id: 5, name: '스터디' },
-];
-
-// 협업 방식 필터
-const cooperationWays = [
-  { name: '상관없음', id: 1 },
-  { name: '온라인', id: 2 },
-  { name: '오프라인', id: 3 },
-];
-
-// 지역 목록
-const places = [
-  { id: 1, name: '서울특별시' },
-  { id: 2, name: '부산광역시' },
-  { id: 3, name: '대구광역시' },
-  { id: 4, name: '인천광역시' },
-  { id: 5, name: '광주광역시' },
-  { id: 6, name: '울산광역시' },
-  { id: 7, name: '세종특별자치시' },
-  { id: 8, name: '경기도' },
-  { id: 9, name: '강원특별자치도' },
-  { id: 10, name: '충청북도' },
-  { id: 11, name: '충청남도' },
-  { id: 12, name: '전라북도' },
-  { id: 13, name: '전라남도' },
-  { id: 14, name: '경상북도' },
-  { id: 15, name: '경상남도' },
-  { id: 16, name: '제주특별자치도' },
-];
+import { useWritingInfoQuery } from '../../hooks/queries/useWritingInfoQuery';
 
 const Write = () => {
   const { postIdeas } = usePostIdeasMutation();
+  const { branches, purposes, recruitmentPlaces, teamRecruitments } = useWritingInfoQuery();
 
   const [title, setTitle] = useState('');
   const [introduce, setIntroduce] = useState('');
@@ -215,7 +170,7 @@ const Write = () => {
         </BottomBox>
         <BottomBox>
           <RecruitmentPlaceSection
-            places={places}
+            places={recruitmentPlaces}
             selectedPlace={dropdownValue.recruitmentPlace}
             onPlaceChange={(selectedPlace) => onClickDropdown(selectedPlace, 'recruitmentPlace')}
           />
