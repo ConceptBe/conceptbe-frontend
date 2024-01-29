@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { MainSkillOption, Skill } from '../../../types/signUp';
-import { DetailSkills, DropdownValue } from '../types';
+import { DetailSkills, DropdownValue, MainSkillOption, Skill } from '../types';
 
 interface Props {
   mainSkills: Pick<MainSkillOption, 'id' | 'name'>[];

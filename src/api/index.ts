@@ -1,6 +1,6 @@
 import { http } from './http';
 import { CheckMember, LoginResponse } from '../types/login';
-import { GetSignUp, PostSignUp } from '../types/signUp';
+import { GetSignUp, PostSignUp } from '../pages/SignUp/types/signUp';
 
 type OauthServerType = 'kakao' | 'naver';
 

@@ -24,7 +24,7 @@ import {
   SKILL_DEPTH_THREE_LIST,
   REGION_LIST,
 } from '../../modules/constants';
-import { Skill } from '../../types/signUp';
+import { Skill } from '../SignUp/types';
 
 interface FormValueType {
   nickName: string;
