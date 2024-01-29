@@ -21,7 +21,7 @@ export const getIsMember = (oauthServerType: OauthServerType, code: string) => {
 };
 
 export const postSignUp = (payload: PostSignUp) => {
-  return http.post<string>('/sign-up', payload);
+  return http.post<{ accessToken: string }>('/sign-up', payload);
 };
 
 export const getSingUp = () => {

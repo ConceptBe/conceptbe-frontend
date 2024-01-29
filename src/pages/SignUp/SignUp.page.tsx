@@ -45,7 +45,12 @@ interface CheckboxOption {
 const SignUpPage = () => {
   const navigate = useNavigate();
   const { state: memberInfo }: { state: OauthMemberInfo } = useLocation();
-  const mutation = useMutation({ mutationFn: postSignUp });
+  const mutation = useMutation({
+    mutationFn: postSignUp,
+    onSuccess: (data) => {
+      localStorage.setItem('userToken', data.accessToken);
+    },
+  });
   const { mainSkills, detailSkills, skillLevels, regions, purposes } = useSignUpQuery();
   const { fieldValue, fieldErrorValue, onChangeField } = useField<FieldValue>({
     nickname: '',
