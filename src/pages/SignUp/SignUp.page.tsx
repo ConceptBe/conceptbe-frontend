@@ -93,7 +93,8 @@ const SignUpPage = () => {
       selectedSkillDepths.length === 0 ||
       checkboxValue.goal.length === 0
     ) {
-      if (confirm('잘못된 입력입니다. 입력하신 내용을 다시 한번 확인해주세요.')) return;
+      alert('필수 정보를 입력하지 않아, 저장할 수 없습니다.');
+      return;
     }
 
     mutation.mutate({
