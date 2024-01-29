@@ -277,7 +277,7 @@ const SignUpPage = () => {
 
           <Flex direction="column" gap={13}>
             <CheckboxContainer
-              label="목적 (최대 3개)"
+              label="가입 목적 (최대 3개)"
               checkboxKey="goal"
               options={checkboxValue.goal}
               onChange={onChangeCheckbox}
