@@ -10,26 +10,26 @@ export type BestIdea = {
 };
 
 const getBestIdeas = async () => {
-  // TODO:: return http.get<BestIdea>('/ideas/bests');
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-  const bestIdeas: BestIdea[] = [
-    {
-      id: 1,
-      branches: 'IT',
-      title: '쇼츠 전용 뉴스를 함께 제작하실 분!',
-    },
-    {
-      id: 2,
-      branches: '디자인',
-      title: '디자인 시스템을 같이 만들어요!',
-    },
-    {
-      id: 3,
-      branches: '분야',
-      title: '분야를 같이 만들어요!',
-    },
-  ];
-  return bestIdeas;
+  return http.get<BestIdea[]>('/ideas/best?page=1&size=10');
+  // await new Promise((resolve) => setTimeout(resolve, 1000));
+  // const bestIdeas: BestIdea[] = [
+  //   {
+  //     id: 1,
+  //     branches: 'IT',
+  //     title: '쇼츠 전용 뉴스를 함께 제작하실 분!',
+  //   },
+  //   {
+  //     id: 2,
+  //     branches: '디자인',
+  //     title: '디자인 시스템을 같이 만들어요!',
+  //   },
+  //   {
+  //     id: 3,
+  //     branches: '분야',
+  //     title: '분야를 같이 만들어요!',
+  //   },
+  // ];
+  // return bestIdeas;
 };
 
 export const useBestIdeasQuery = () => {
