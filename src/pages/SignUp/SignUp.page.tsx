@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { useMutation } from '@tanstack/react-query';
 import {
   useCheckbox,
   useField,
@@ -21,9 +20,9 @@ import { FormEvent } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import useSetDetailSkills from './hooks/useSetDetailSkills.ts';
+import useSignUpMutation from './hooks/useSignUpMutation.ts';
 import useSignUpQuery from './hooks/useSignUpQuery.ts';
 import { DropdownValue } from './types';
-import { postSignUp } from '../../api/index.ts';
 import { OauthMemberInfo } from '../../types/login.ts';
 
 interface FieldValue {
@@ -45,12 +44,7 @@ interface CheckboxOption {
 const SignUpPage = () => {
   const navigate = useNavigate();
   const { state: memberInfo }: { state: OauthMemberInfo } = useLocation();
-  const mutation = useMutation({
-    mutationFn: postSignUp,
-    onSuccess: (data) => {
-      localStorage.setItem('userToken', data.accessToken);
-    },
-  });
+  const { mutateSignUp } = useSignUpMutation();
   const { mainSkills, detailSkills, skillLevels, regions, purposes } = useSignUpQuery();
   const { fieldValue, fieldErrorValue, onChangeField } = useField<FieldValue>({
     nickname: '',
@@ -97,7 +91,7 @@ const SignUpPage = () => {
       return;
     }
 
-    mutation.mutate({
+    mutateSignUp({
       nickname: fieldValue.nickname,
       mainSkillId: mainSkills.find(({ name }) => dropdownValue.mainSkill === name)?.id || 0,
       profileImageUrl: memberInfo.profileImageUrl,
