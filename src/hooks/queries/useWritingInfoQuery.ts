@@ -90,30 +90,29 @@ type Idea = {
   branches: Info[]; // 분야
   purposes: Info[]; // 목적
   regions: Info[]; // 팀원 모집 지역
-  teamRecruitmentsCategories: {
+  teamRecruitmentCategories: {
     // 팀원 모집 종류
     name: string; // 기획
-    teamRecruitments: Info[]; // IT기획, 게임기획, 제품기획, 사업기획
+    teamRecruitmentResponses: Info[]; // IT기획, 게임기획, 제품기획, 사업기획
   }[];
 };
 
 const getWritingInfo = async () => {
-  // TODO:: return http.get<Idea[]>('/ideas/writing');
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-  const writingInfo: Idea = {
-    branches,
-    purposes,
-    regions: places,
-    teamRecruitmentsCategories: teamRecruitments,
-  };
-
-  return writingInfo;
+  return http.get<Idea>('/ideas/writing');
+  // await new Promise((resolve) => setTimeout(resolve, 1000));
+  // const writingInfo: Idea = {
+  //   branches,
+  //   purposes,
+  //   regions: places,
+  //   teamRecruitmentCategories: teamRecruitments,
+  // };
+  // return writingInfo;
 };
 
 export const useWritingInfoQuery = () => {
   const { data: writingInfo, ...rest } = useSuspenseQuery({ queryKey: ['writingInfo'], queryFn: getWritingInfo });
 
-  const { branches, purposes, regions: recruitmentPlaces, teamRecruitmentsCategories: teamRecruitments } = writingInfo;
+  const { branches, purposes, regions: recruitmentPlaces, teamRecruitmentCategories: teamRecruitments } = writingInfo;
 
   return {
     branches,

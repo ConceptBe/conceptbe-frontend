@@ -66,7 +66,7 @@ const Write = () => {
 
   const sheetLeftItems = teamRecruitments.map((item) => item.name);
   const sheetRightItems = teamRecruitments.find((item) => item.name === selectedTeamRecruitment1Depth)
-    ?.teamRecruitments;
+    ?.teamRecruitmentResponses;
 
   const branchIds = checkboxValue.branches.filter((branch) => branch.checked).map((branch) => branch.id);
   const purposeIds = checkboxValue.purposes.filter((branch) => branch.checked).map((purpose) => purpose.id);
@@ -111,7 +111,7 @@ const Write = () => {
     postIdeas({
       title,
       introduce,
-      recruitmentPlaceId,
+      recruitmentPlace: recruitmentPlaceId,
       cooperationWay,
       branchIds,
       purposeIds,

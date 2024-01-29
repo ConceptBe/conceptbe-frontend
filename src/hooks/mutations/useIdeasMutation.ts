@@ -8,7 +8,7 @@ type PostIdeasRequest = {
   branchIds: number[]; // 분야
   purposeIds: number[]; // 목적
   cooperationWay: string; // 협업 방식
-  recruitmentPlaceId: number; // 팀원 모집 지역
+  recruitmentPlace: number; // 팀원 모집 지역
   teamRecruitmentIds: number[]; // 팀원 모집 종류
 };
 
