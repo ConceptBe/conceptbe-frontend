@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { DetailSkillOption, MainSkillOption, Skill } from '../../../types/signUp';
-import { DropdownValue } from '../types';
+import { MainSkillOption, Skill } from '../../../types/signUp';
+import { DetailSkills, DropdownValue } from '../types';
 
 interface Props {
   mainSkills: Pick<MainSkillOption, 'id' | 'name'>[];
-  detailSkills: DetailSkillOption[][];
+  detailSkills: DetailSkills;
   dropdownValue: DropdownValue;
   onResetDropdown: (value: keyof DropdownValue) => void;
 }
@@ -14,9 +14,15 @@ const useSetDetailSkills = ({ mainSkills, detailSkills, dropdownValue, onResetDr
   const [selectedSkillDepths, setSelectedSkillDepths] = useState<Skill[]>([]);
   const skillDepthOneId = mainSkills.find(({ name }) => name === dropdownValue.skillDepthOne)?.id;
 
-  const onDeleteSkill = (value: string) => {
-    setSelectedSkillDepths(selectedSkillDepths.filter(({ name }) => name !== value));
-  };
+  const onDeleteSkill = useCallback((value: string) => {
+    setSelectedSkillDepths((prevSkillDepths) => prevSkillDepths.filter(({ name }) => name !== value));
+  }, []);
+
+  const resetSkillDropdowns = useCallback(() => {
+    onResetDropdown('skillDepthOne');
+    onResetDropdown('skillDepthTwo');
+    onResetDropdown('skillDepthThree');
+  }, [onResetDropdown]);
 
   const onClickDropdownSetting = useCallback(() => {
     if (!skillDepthOneId) return;
@@ -24,13 +30,17 @@ const useSetDetailSkills = ({ mainSkills, detailSkills, dropdownValue, onResetDr
     const selectedValue = `${dropdownValue.skillDepthTwo}, ${dropdownValue.skillDepthThree}`;
     const selectedId = detailSkills[skillDepthOneId].find(({ name }) => name === dropdownValue.skillDepthTwo)?.id;
 
+    if (selectedSkillDepths.map(({ name }) => name).includes(selectedValue)) {
+      alert('세부 스킬은 중복될 수 없습니다.');
+      resetSkillDropdowns();
+      return;
+    }
+
     if (selectedId && selectedSkillDepths.length < 3) {
       setSelectedSkillDepths((prev) => [...prev, { id: selectedId, name: selectedValue }]);
-      onResetDropdown('skillDepthOne');
-      onResetDropdown('skillDepthTwo');
-      onResetDropdown('skillDepthThree');
+      resetSkillDropdowns();
     }
-  }, [detailSkills, skillDepthOneId, selectedSkillDepths, dropdownValue, onResetDropdown]);
+  }, [detailSkills, skillDepthOneId, selectedSkillDepths, dropdownValue, resetSkillDropdowns]);
 
   useEffect(() => {
     if (dropdownValue.skillDepthThree === '' || !dropdownValue.skillDepthTwo) return;
