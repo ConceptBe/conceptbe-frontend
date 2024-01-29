@@ -1,16 +1,23 @@
 import { CheckboxOption, MainSkillOption } from '../../../types/signUp';
+import { DetailSkills } from '../types';
 
 export const convertSkillQuery = (options: MainSkillOption[] | undefined) => {
+  const detailSkills: DetailSkills = {};
+
   if (!options) {
     return {
       mainSkills: [],
-      detailSkills: [],
+      detailSkills: {},
     };
   }
 
+  options.forEach(({ id, detailSkillResponses }) => {
+    detailSkills[id] = detailSkillResponses;
+  });
+
   return {
     mainSkills: options.map(({ id, name }) => ({ id, name })),
-    detailSkills: options.map((option) => option.detailSkillResponses),
+    detailSkills,
   };
 };
 
