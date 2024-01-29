@@ -216,6 +216,8 @@ const SignUpPage = () => {
                     value={name}
                     onClick={(value) => {
                       onClickDropdown(value, 'skillDepthOne');
+                      onResetDropdown('skillDepthTwo');
+                      onResetDropdown('skillDepthThree');
                     }}
                   >
                     {name}
