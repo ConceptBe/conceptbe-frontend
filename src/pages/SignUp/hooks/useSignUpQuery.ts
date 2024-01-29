@@ -1,7 +1,7 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { getSingUp } from '../../../api';
-import { convertCheckboxQuery, convertSkillQuery } from '../../../service/convertSignUpQuery';
+import { convertCheckboxQuery, convertSkillQuery } from '../service/convertSignUpQuery';
 
 const SKILL_DEPTH_THREE_LIST = [
   { id: 1, name: '상' },
