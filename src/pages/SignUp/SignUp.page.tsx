@@ -17,13 +17,14 @@ import {
   Flex,
   Box,
 } from 'concept-be-design-system';
-import { FormEvent, useCallback, useEffect, useState } from 'react';
+import { FormEvent } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+import useSetDetailSkills from './hooks/useSetDetailSkills.ts';
 import useSignUpQuery from './hooks/useSignUpQuery.ts';
+import { DropdownValue } from './types';
 import { postSignUp } from '../../api/index.ts';
 import { OauthMemberInfo } from '../../types/login.ts';
-import { Skill } from '../../types/signUp.ts';
 
 interface FieldValue {
   nickname: string;
@@ -41,28 +42,19 @@ interface CheckboxOption {
   checked: boolean;
 }
 
-interface DropdownValue {
-  mainSkill: string;
-  skillDepthOne: string;
-  skillDepthTwo: string;
-  skillDepthThree: string;
-  region: string;
-}
-
 const SignUpPage = () => {
   const navigate = useNavigate();
   const { state: memberInfo }: { state: OauthMemberInfo } = useLocation();
   const mutation = useMutation({ mutationFn: postSignUp });
-  const { mainSkillQuery, detailSkillQuery, skillLevelQuery, regionQuery, checkboxQuery } = useSignUpQuery();
+  const { mainSkills, detailSkills, skillLevels, regions, purposes } = useSignUpQuery();
   const { fieldValue, fieldErrorValue, onChangeField } = useField<FieldValue>({
     nickname: '',
     company: '',
     intro: '',
   });
   const { checkboxValue, onChangeCheckbox } = useCheckbox<CheckboxValue>({
-    goal: checkboxQuery,
+    goal: purposes,
   });
-  const [selectedSkillDepths, setSelectedSkillDepths] = useState<Skill[]>([]);
   const { dropdownValue, onResetDropdown, onClickDropdown } = useDropdown<DropdownValue>({
     mainSkill: '',
     skillDepthOne: '',
@@ -70,7 +62,12 @@ const SignUpPage = () => {
     skillDepthThree: '',
     region: '',
   });
-  const skillDepthOneId = mainSkillQuery.find(({ name }) => name === dropdownValue.skillDepthOne)?.id;
+  const { skillDepthOneId, selectedSkillDepths, onDeleteSkill } = useSetDetailSkills({
+    mainSkills,
+    detailSkills,
+    dropdownValue,
+    onResetDropdown,
+  });
 
   const validateInput = () => {
     return [
@@ -79,24 +76,6 @@ const SignUpPage = () => {
         errorMessage: '사용 불가한 닉네임입니다.',
       },
     ];
-  };
-
-  const onClickDropdownSetting = useCallback(() => {
-    if (!skillDepthOneId) return;
-
-    const selectedValue = `${dropdownValue.skillDepthTwo}, ${dropdownValue.skillDepthThree}`;
-    const selectedId = detailSkillQuery[skillDepthOneId].find(({ name }) => name === dropdownValue.skillDepthTwo)?.id;
-
-    if (selectedId && selectedSkillDepths.length < 3) {
-      setSelectedSkillDepths((prev) => [...prev, { id: selectedId, name: selectedValue }]);
-      onResetDropdown('skillDepthOne');
-      onResetDropdown('skillDepthTwo');
-      onResetDropdown('skillDepthThree');
-    }
-  }, [detailSkillQuery, skillDepthOneId, selectedSkillDepths, dropdownValue, onResetDropdown]);
-
-  const onDeleteSkill = (value: string) => {
-    setSelectedSkillDepths(selectedSkillDepths.filter(({ name }) => name !== value));
   };
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -109,12 +88,12 @@ const SignUpPage = () => {
       selectedSkillDepths.length === 0 ||
       checkboxValue.goal.length === 0
     ) {
-      alert('잘못된 입력입니다.');
+      if (confirm('잘못된 입력입니다. 입력하신 내용을 다시 한번 확인해주세요.')) return;
     }
 
     mutation.mutate({
       nickname: fieldValue.nickname,
-      mainSkillId: mainSkillQuery.find(({ name }) => dropdownValue.mainSkill === name)?.id || 0,
+      mainSkillId: mainSkills.find(({ name }) => dropdownValue.mainSkill === name)?.id || 0,
       profileImageUrl: memberInfo.profileImageUrl,
       skills: selectedSkillDepths.map(({ id, name }) => ({ skillId: id, level: name.split(', ')[1] })),
       joinPurposes: checkboxValue.goal.filter(({ checked }) => checked).map(({ id }) => id),
@@ -127,11 +106,6 @@ const SignUpPage = () => {
 
     navigate('/');
   };
-
-  useEffect(() => {
-    if (dropdownValue.skillDepthThree === '' || !dropdownValue.skillDepthTwo) return;
-    onClickDropdownSetting();
-  }, [dropdownValue, onClickDropdownSetting]);
 
   return (
     <Box paddingBottom={100}>
@@ -203,7 +177,7 @@ const SignUpPage = () => {
             </Text>
             <Flex wrap="wrap" gap={8}>
               <Dropdown selectedValue={dropdownValue.mainSkill} initialValue="대분류">
-                {mainSkillQuery.map(({ id, name }) => (
+                {mainSkills.map(({ id, name }) => (
                   <Dropdown.Item
                     key={id}
                     value={name}
@@ -230,7 +204,7 @@ const SignUpPage = () => {
                 selectedValue={dropdownValue.skillDepthOne}
                 initialValue="대분류"
               >
-                {mainSkillQuery.map(({ id, name }) => (
+                {mainSkills.map(({ id, name }) => (
                   <Dropdown.Item
                     key={id}
                     value={name}
@@ -248,7 +222,7 @@ const SignUpPage = () => {
                 initialValue="상세분류"
               >
                 {skillDepthOneId &&
-                  detailSkillQuery[skillDepthOneId].map(({ id, name }) => (
+                  detailSkills[skillDepthOneId].map(({ id, name }) => (
                     <Dropdown.Item
                       key={id}
                       value={name}
@@ -265,7 +239,7 @@ const SignUpPage = () => {
                 selectedValue={dropdownValue.skillDepthThree}
                 initialValue="숙련도"
               >
-                {skillLevelQuery.map(({ id, name }) => (
+                {skillLevels.map(({ id, name }) => (
                   <Dropdown.Item
                     key={id}
                     value={name}
@@ -310,7 +284,7 @@ const SignUpPage = () => {
               지역
             </Text>
             <Dropdown selectedValue={dropdownValue.region} initialValue="시/도/광역시">
-              {regionQuery.map(({ id, name }) => (
+              {regions.map(({ id, name }) => (
                 <Dropdown.Item
                   key={id}
                   value={name}

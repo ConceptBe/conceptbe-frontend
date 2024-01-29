@@ -31,7 +31,7 @@ export interface MainSkillOption {
   detailSkillResponses: DetailSkillOption[];
 }
 
-interface DetailSkillOption {
+export interface DetailSkillOption {
   id: number;
   name: string;
 }
