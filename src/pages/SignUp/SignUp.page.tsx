@@ -114,7 +114,7 @@ const SignUpPage = () => {
   };
 
   return (
-    <Box paddingBottom={100}>
+    <Box paddingBottom={34}>
       <Header main>
         <Header.Item>
           <Spacer size={24} />
