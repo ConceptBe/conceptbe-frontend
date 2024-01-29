@@ -3,14 +3,14 @@ import { CheckboxOption, MainSkillOption } from '../../../types/signUp';
 export const convertSkillQuery = (options: MainSkillOption[] | undefined) => {
   if (!options) {
     return {
-      mainSkillQuery: [],
-      detailSkillQuery: [],
+      mainSkills: [],
+      detailSkills: [],
     };
   }
 
   return {
-    mainSkillQuery: options.map(({ id, name }) => ({ id, name })),
-    detailSkillQuery: options.map((option) => option.detailSkillResponses),
+    mainSkills: options.map(({ id, name }) => ({ id, name })),
+    detailSkills: options.map((option) => option.detailSkillResponses),
   };
 };
 

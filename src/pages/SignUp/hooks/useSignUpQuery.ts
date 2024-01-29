@@ -34,15 +34,15 @@ const useSignUpQuery = () => {
     queryFn: getSingUp,
   });
 
-  const { mainSkillQuery, detailSkillQuery } = convertSkillQuery(data.mainSkillResponses);
-  const checkboxQuery = convertCheckboxQuery(data.purposeResponses);
+  const { mainSkills, detailSkills } = convertSkillQuery(data.mainSkillResponses);
+  const purposes = convertCheckboxQuery(data.purposeResponses);
 
   return {
-    mainSkillQuery,
-    detailSkillQuery,
-    skillLevelQuery: SKILL_DEPTH_THREE_LIST,
-    regionQuery: REGION_LIST,
-    checkboxQuery,
+    mainSkills,
+    detailSkills,
+    skillLevels: SKILL_DEPTH_THREE_LIST,
+    regions: REGION_LIST,
+    purposes,
   };
 };
 
