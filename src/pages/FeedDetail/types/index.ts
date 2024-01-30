@@ -3,7 +3,7 @@ export interface FeedDetailResponse {
   nickname: string;
   skillList: string[];
   title: string;
-  date: Date;
+  date: string;
   introduce: string;
   branchList: string[];
   purposeList: string[];
