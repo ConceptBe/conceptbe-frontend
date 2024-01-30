@@ -171,7 +171,7 @@ const FeedDetailPage = () => {
 
         <Spacer size={35} />
 
-        <Divider color="l3" top={0} bottom={0} />
+        <Divider color="l3" />
 
         <Flex justifyContent="space-between" padding="18px 0">
           <Flex alignItems="center" gap={4}>
