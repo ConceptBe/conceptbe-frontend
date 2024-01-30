@@ -32,18 +32,21 @@ const useSignUpQuery = () => {
   const { data } = useSuspenseQuery({
     queryKey: ['GetSignUp'],
     queryFn: getSingUp,
+    select: (data) => {
+      const { mainSkills, detailSkills } = convertSkillQuery(data.mainSkillResponses);
+      const purposes = convertCheckboxQuery(data.purposeResponses);
+
+      return {
+        mainSkills,
+        detailSkills,
+        skillLevels: SKILL_DEPTH_THREE_LIST,
+        regions: REGION_LIST,
+        purposes,
+      };
+    },
   });
 
-  const { mainSkills, detailSkills } = convertSkillQuery(data.mainSkillResponses);
-  const purposes = convertCheckboxQuery(data.purposeResponses);
-
-  return {
-    mainSkills,
-    detailSkills,
-    skillLevels: SKILL_DEPTH_THREE_LIST,
-    regions: REGION_LIST,
-    purposes,
-  };
+  return data;
 };
 
 export default useSignUpQuery;
