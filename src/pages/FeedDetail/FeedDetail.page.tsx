@@ -11,11 +11,10 @@ import {
   SVGFeedLike,
   SVGFeedMessage,
   SVGFeedPencil,
-  SVGFeedReCommentLine,
-  SVGFeedUnLike,
   SVGFeedUnScrap,
   SVGCancel,
   Flex,
+  Box,
 } from 'concept-be-design-system';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -46,13 +45,6 @@ const FeedDetailPage = () => {
     hits,
     commentParentResponses,
   } = useGetFeedDetail(feedId);
-  const infoIndex = [
-    { indexName: '분야', tag: ['IT', '유튜브 컨텐츠'] },
-    { indexName: '목적', tag: ['사이드 프로잭트', '창업', '크라우드편딩'] },
-    { indexName: '협업 방식', tag: '상관없음' },
-    { indexName: '모집 지역', tag: '서울특별시' },
-    { indexName: '팀원모집', tag: ['서비스기획23', '서비스기5획', '서비기획', '서비스fdsa기획', '서비획'] },
-  ];
 
   const [isClickDots, setIsClickDots] = useState(false);
 
@@ -65,35 +57,33 @@ const FeedDetailPage = () => {
       <Header main>
         <Back />
         <Logo />
-        <DotsBox>
+        <Box position="relative">
           <SVGTripleDots onClick={onClickDots} />
           {isClickDots && (
             <DropDownBox>
-              <DropDownSelect>
+              <Flex justifyContent="space-between" alignItems="center">
                 <Text font="suit12r" color="b6">
                   수정하기
                 </Text>
                 <SVGFeedPencil />
-              </DropDownSelect>
-
+              </Flex>
               <Divider color="bg1" height={0.1} />
-
-              <DropDownSelect>
+              <Flex justifyContent="space-between" alignItems="center">
                 <Text font="suit12r" color="b6">
                   삭제하기
                 </Text>
                 <SVGCancel />
-              </DropDownSelect>
+              </Flex>
             </DropDownBox>
           )}
-        </DotsBox>
+        </Box>
       </Header>
-      <ContentWrapper>
+      <Box padding="30px 22px 30px 22px" marginTop={48}>
         <ProfileInfo imageUrl={imageUrl} nickname={nickname} skillList={skillList} />
 
         <Spacer size={20} />
 
-        <TitleWrapper>
+        <Box>
           <div>
             <Text font="suit14sm" color="c1">
               IT / 유튜브 컨텐츠
@@ -103,7 +93,7 @@ const FeedDetailPage = () => {
               {title}
             </Text>
             <Spacer size={8} />
-            <TitleWrapper_info>
+            <Flex alignItems="center">
               <Text font="suit12r" color="b9">
                 {date}
               </Text>
@@ -111,53 +101,84 @@ const FeedDetailPage = () => {
               <Text font="suit12r" color="b9">
                 조회수 {hits > 999 ? '999+' : hits}
               </Text>
-            </TitleWrapper_info>
+            </Flex>
           </div>
-        </TitleWrapper>
+        </Box>
         <Divider color="l3" top={16} bottom={16} />
-
         <Text font="suit15ra" color="b6" style={{ lineHeight: '24px', whiteSpace: 'pre-wrap' }}>
           {introduce}
         </Text>
-      </ContentWrapper>
+      </Box>
 
       <Divider color="bg1" height={8} />
 
-      <InfoWrapper>
-        {infoIndex.map((item, idx) => {
-          return (
-            <div key={idx}>
-              {typeof item.tag === 'string' ? (
-                <div style={{ display: 'flex', gap: '12px' }}>
-                  <Text font="suit14m" color="b9">
-                    {item.indexName}
-                  </Text>
+      <Box padding="30px 22px 0 22px">
+        <Box>
+          <Text font="suit14m" color="b9">
+            분야
+          </Text>
+          <Spacer size={12} />
+          <Flex wrap="wrap" gap={6}>
+            {branchList.map((badge) => (
+              <Badge key={badge} fontColor="b4">
+                {badge}
+              </Badge>
+            ))}
+          </Flex>
+        </Box>
+        <Spacer size={30} />
+        <Box>
+          <Text font="suit14m" color="b9">
+            목적
+          </Text>
+          <Spacer size={12} />
+          <Flex wrap="wrap" gap={6}>
+            {purposeList.map((badge) => (
+              <Badge key={badge} fontColor="b4">
+                {badge}
+              </Badge>
+            ))}
+          </Flex>
+        </Box>
+        <Spacer size={30} />
+        <Flex gap={12}>
+          <Text font="suit14m" color="b9">
+            협업 방식
+          </Text>
+          <Text font="suit14m" color="b4">
+            {cooperationWay}
+          </Text>
+        </Flex>
+        <Spacer size={30} />
+        <Flex gap={12}>
+          <Text font="suit14m" color="b9">
+            모집 지역
+          </Text>
+          <Text font="suit14m" color="b4">
+            {recruitmentPlace}
+          </Text>
+        </Flex>
+        <Spacer size={30} />
+        <Box>
+          <Text font="suit14m" color="b9">
+            팀원 모집
+          </Text>
+          <Spacer size={12} />
+          <Flex wrap="wrap" gap={6}>
+            {teamRecruitmentsList.map((badge) => (
+              <Badge key={badge} fontColor="b4">
+                {badge}
+              </Badge>
+            ))}
+          </Flex>
+        </Box>
 
-                  <Text font="suit14m" color="b4">
-                    {item.tag}
-                  </Text>
-                </div>
-              ) : (
-                <div>
-                  <Text font="suit14m" color="b9">
-                    {item.indexName}
-                  </Text>
-                  <Spacer size={12} />
-                  <Flex wrap="wrap" gap={6}>
-                    {item.tag.map((badge) => (
-                      <Badge key={badge} fontColor="b4">
-                        {badge}
-                      </Badge>
-                    ))}
-                  </Flex>
-                </div>
-              )}
-            </div>
-          );
-        })}
-        <Divider color="l3" />
-        <InfoBottomBox>
-          <IndexBox>
+        <Spacer size={35} />
+
+        <Divider color="l3" top={0} bottom={0} />
+
+        <Flex justifyContent="space-between" padding="18px 0">
+          <Flex alignItems="center" gap={4}>
             <SVGFeedMessage />
             <Text font="suit12r" color="b9">
               댓글
@@ -165,8 +186,8 @@ const FeedDetailPage = () => {
             <Text font="suit12b" color="b9">
               {commentsCount > 999 ? '999+' : commentsCount}
             </Text>
-          </IndexBox>
-          <IndexBox>
+          </Flex>
+          <Flex alignItems="center" gap={4}>
             <SVGFeedLike />
             <Text font="suit12r" color="b9">
               좋아요
@@ -174,8 +195,8 @@ const FeedDetailPage = () => {
             <Text font="suit12b" color="b9">
               {likesCount > 999 ? '999+' : likesCount}
             </Text>
-          </IndexBox>
-          <IndexBox>
+          </Flex>
+          <Flex alignItems="center" gap={4}>
             <SVGFeedUnScrap />
             <Text font="suit12r" color="b9">
               스크랩
@@ -183,9 +204,9 @@ const FeedDetailPage = () => {
             <Text font="suit12b" color="b9">
               {bookmarksCount > 999 ? '999+' : bookmarksCount}
             </Text>
-          </IndexBox>
-        </InfoBottomBox>
-      </InfoWrapper>
+          </Flex>
+        </Flex>
+      </Box>
 
       <Divider color="bg1" height={8} />
 
@@ -196,10 +217,6 @@ const FeedDetailPage = () => {
 
 export default FeedDetailPage;
 
-const DotsBox = styled.div`
-  position: relative;
-`;
-
 const DropDownBox = styled.div`
   position: absolute;
   display: flex;
@@ -209,40 +226,9 @@ const DropDownBox = styled.div`
   width: 88px;
   height: 70px;
   border-radius: 6px;
-  padding: 10.5px 10px;
+  padding: 10px;
   translate: -67px 2px;
-`;
-const DropDownSelect = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const ContentWrapper = styled.div`
-  padding: 30px 22px 30px 22px;
-  margin-top: 48px;
-`;
-const TitleWrapper = styled.div``;
-const TitleWrapper_info = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-`;
-
-const InfoWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 35px;
-  padding: 30px 22px 20px 22px;
-`;
-
-const InfoBottomBox = styled.div`
-  margin: 18px, 0px;
-  display: flex;
-  justify-content: space-between;
-`;
-const IndexBox = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 4px;
+  top: 38px;
+  left: -10px;
+  box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.18);
 `;
