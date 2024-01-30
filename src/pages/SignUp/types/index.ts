@@ -6,9 +6,7 @@ export interface DropdownValue {
   region: string;
 }
 
-export interface DetailSkills {
-  [key: number]: DetailSkillOption[];
-}
+export type DetailSkills = Record<number, DetailSkillOption[]>;
 
 export interface PostSignUp {
   nickname: string;
