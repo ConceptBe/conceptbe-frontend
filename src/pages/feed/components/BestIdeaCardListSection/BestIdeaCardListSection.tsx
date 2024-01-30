@@ -3,9 +3,27 @@ import { Spacer, Text } from 'concept-be-design-system';
 
 import BestIdeaCard from '../../../../components/Card/BestIdeaCard/BestIdeaCard';
 import { useBestIdeasQuery } from '../../hooks/queries/useBestIdeasQuery';
+import { useIntersection } from 'react-use';
+import { useEffect, useRef } from 'react';
 
 const BestIdeaCardListSection = () => {
-  const { bestIdeas } = useBestIdeasQuery();
+  const {
+    bestIdeas: { pages },
+    fetchNextPage,
+  } = useBestIdeasQuery();
+
+  const intersectionRef = useRef(null);
+  const intersection = useIntersection(intersectionRef, {
+    root: null,
+    rootMargin: `0px`,
+    threshold: 1,
+  });
+
+  useEffect(() => {
+    if (intersection?.isIntersecting) {
+      fetchNextPage();
+    }
+  }, [intersection, fetchNextPage]);
 
   return (
     <Wrapper>
@@ -14,9 +32,10 @@ const BestIdeaCardListSection = () => {
       </Text>
       <Spacer size={18} />
       <CardListWrapper>
-        {bestIdeas.map((bestIdea, idx) => (
+        {pages.flat().map((bestIdea, idx) => (
           <BestIdeaCard key={idx} branches={bestIdea.branches} title={bestIdea.title} />
         ))}
+        <div ref={intersectionRef}></div>
       </CardListWrapper>
     </Wrapper>
   );
