@@ -3,7 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 
 import MobileView from './layouts/MobileView';
 import Feed from './pages/Feed/Feed.page';
-import FeedDetail from './pages/Feed/FeedDetail.page';
+import FeedDetailPage from './pages/FeedDetail/FeedDetail.page';
 import Agreement from './pages/Login/Agreement';
 import KakaoRedirect from './pages/Login/KakaoRedirect';
 import Login from './pages/Login/Login';
@@ -39,7 +39,7 @@ const routes: RouteElement[] = [
       },
       {
         path: '/feed/:id',
-        element: <FeedDetail />,
+        element: <FeedDetailPage />,
         withAuth: false,
       },
       {

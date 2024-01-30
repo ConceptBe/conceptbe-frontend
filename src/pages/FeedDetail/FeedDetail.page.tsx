@@ -18,12 +18,33 @@ import {
   Flex,
 } from 'concept-be-design-system';
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
+import useGetFeedDetail from './hooks/useGetFeedDetail';
 import ProfileInfo from '../../components/ProfileInfo';
 import Back from '../../layouts/Back';
 import Logo from '../../layouts/Logo';
 
-const FeedDetail = () => {
+const FeedDetailPage = () => {
+  const { id: feedId } = useParams();
+  const {
+    imageUrl,
+    nickname,
+    skillList,
+    title,
+    date,
+    introduce,
+    branchList,
+    purposeList,
+    cooperationWay,
+    recruitmentPlace,
+    teamRecruitmentsList,
+    likesCount,
+    commentsCount,
+    bookmarksCount,
+    hits,
+    commentParentResponses,
+  } = useGetFeedDetail(feedId);
   const infoIndex = [
     { indexName: '분야', tag: ['IT', '유튜브 컨텐츠'] },
     { indexName: '목적', tag: ['사이드 프로잭트', '창업', '크라우드편딩'] },
@@ -66,8 +87,9 @@ const FeedDetail = () => {
           )}
         </DotsBox>
       </Header>
-      <ContantWrapper>
-        <ProfileInfo />
+      <ContentWrapper>
+        <ProfileInfo imageUrl={imageUrl} nickname={nickname} skillList={skillList} />
+
         <Spacer size={20} />
 
         <TitleWrapper>
@@ -77,35 +99,26 @@ const FeedDetail = () => {
             </Text>
             <Spacer size={8} />
             <Text font="suit18sb" color="b4">
-              쇼츠 전용 뉴스를 함께 제작하실 분!
+              {title}
             </Text>
             <Spacer size={8} />
             <TitleWrapper_info>
               <Text font="suit12r" color="b9">
-                2023.09.09 23:23
+                {date}
               </Text>
               <TextDivider left={6} right={6} color="l2" />
               <Text font="suit12r" color="b9">
-                조회수 999+
+                조회수 {hits > 999 ? '999+' : hits}
               </Text>
             </TitleWrapper_info>
           </div>
         </TitleWrapper>
         <Divider color="l3" top={16} bottom={16} />
 
-        <Text font="suit15ra" color="b6" style={{ lineHeight: '24px' }}>
-          현재 저희 팀은 유튜브 컨텐츠를 위해 프로젝트를 진행하고 있습니다.
-          <br />
-          인원 충원을 위해 멤버를 모집하고 있어요. <br />
-          아래 항목을 보시고 희망하시면 문의주세요! 현재 1차 범위 진행중에 있습니다. <br /> 새로운 멤버를 찾게 되면 1차
-          이후 or 범위 확장하여 연이어 진행에 들어갈 예정입니다. <br />
-          <br />
-          프로젝트 상세내용 여헹 정보 제공 앱 서비스 <br /> 현재 함께하는 멤버 <br /> <br />- UI 기획/ 디자인/ 마케터:
-          1명 <br />
-          - 브랜딩 외 디자인: 1명 <br />- 풀스택: 1명 <br />- 백엔드 개발자: 2명 프로젝트 <br /> <br />
-          기간 2023년 MVP 1차 런칭 목표로 합니다.
+        <Text font="suit15ra" color="b6" style={{ lineHeight: '24px', whiteSpace: 'pre-wrap' }}>
+          {introduce}
         </Text>
-      </ContantWrapper>
+      </ContentWrapper>
 
       <Divider color="bg1" height={8} />
 
@@ -149,7 +162,7 @@ const FeedDetail = () => {
               댓글
             </Text>
             <Text font="suit12b" color="b9">
-              60
+              {commentsCount > 999 ? '999+' : commentsCount}
             </Text>
           </IndexBox>
           <IndexBox>
@@ -158,7 +171,7 @@ const FeedDetail = () => {
               좋아요
             </Text>
             <Text font="suit12b" color="b9">
-              192
+              {likesCount > 999 ? '999+' : likesCount}
             </Text>
           </IndexBox>
           <IndexBox>
@@ -167,7 +180,7 @@ const FeedDetail = () => {
               스크랩
             </Text>
             <Text font="suit12b" color="b9">
-              430324
+              {bookmarksCount > 999 ? '999+' : bookmarksCount}
             </Text>
           </IndexBox>
         </InfoBottomBox>
@@ -184,7 +197,7 @@ const FeedDetail = () => {
         <Spacer size={20} />
 
         <CommentsBox>
-          <ProfileInfo />
+          <ProfileInfo imageUrl={imageUrl} nickname={nickname} skillList={skillList} />
           <Spacer size={20} />
           <Text font="suit14m" color="t" style={{ lineHeight: '22px' }}>
             댓글 내용, 한 번에 최대 500자 까지 입력 가능. 댓글 내용, 한 번에 최대 500자 까지 입력 가능. 댓글 내용, 한
@@ -192,7 +205,7 @@ const FeedDetail = () => {
             까지 입력 가능. 댓글 내용, 한 번에 최대 500자 까지 입력 가능.
           </Text>
           <Spacer size={10} />
-          <CommnetsBottomBox>
+          <CommentsBottomBox>
             <IndexBox>
               <SVGFeedMessage />
               <Text font="suit12r" color="b9">
@@ -212,7 +225,7 @@ const FeedDetail = () => {
                 192
               </Text>
             </IndexBox>
-          </CommnetsBottomBox>
+          </CommentsBottomBox>
         </CommentsBox>
 
         <ReCommandBox>
@@ -220,7 +233,7 @@ const FeedDetail = () => {
             <SVGFeedReCommentLine />
           </div>
           <CommentsBox>
-            <ProfileInfo />
+            <ProfileInfo imageUrl={imageUrl} nickname={nickname} skillList={skillList} />
             <Spacer size={20} />
             <Text font="suit14m" color="t" style={{ lineHeight: '22px' }}>
               댓글 내용, 한 번에 최대 500자 까지 입력 가능. 댓글 내용, 한 번에 최대 500자 까지 입력 가능. 댓글 내용, 한
@@ -228,7 +241,7 @@ const FeedDetail = () => {
               500자 까지 입력 가능. 댓글 내용, 한 번에 최대 500자 까지 입력 가능.
             </Text>
             <Spacer size={10} />
-            <CommnetsBottomBox>
+            <CommentsBottomBox>
               <IndexBox>
                 <SVGFeedUnLike />
                 <Text font="suit12r" color="b9">
@@ -238,7 +251,7 @@ const FeedDetail = () => {
                   192
                 </Text>
               </IndexBox>
-            </CommnetsBottomBox>
+            </CommentsBottomBox>
           </CommentsBox>
         </ReCommandBox>
       </CommentWrapper>
@@ -246,7 +259,7 @@ const FeedDetail = () => {
   );
 };
 
-export default FeedDetail;
+export default FeedDetailPage;
 
 const DotsBox = styled.div`
   position: relative;
@@ -270,8 +283,7 @@ const DropDownSelect = styled.div`
   align-items: center;
 `;
 
-// ContantWrapper
-const ContantWrapper = styled.div`
+const ContentWrapper = styled.div`
   padding: 30px 22px 30px 22px;
   margin-top: 48px;
 `;
@@ -282,7 +294,6 @@ const TitleWrapper_info = styled.div`
   align-items: center;
 `;
 
-// InfoWrapper
 const InfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -301,7 +312,6 @@ const IndexBox = styled.div`
   gap: 4px;
 `;
 
-// CommentWrapper
 const CommentWrapper = styled.div`
   padding: 20px 22px 20px 22px;
 `;
@@ -331,7 +341,7 @@ const CommentsBox = styled.div`
   margin: 20px 0px;
 `;
 
-const CommnetsBottomBox = styled.div`
+const CommentsBottomBox = styled.div`
   display: flex;
 `;
 
