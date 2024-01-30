@@ -20,6 +20,7 @@ import {
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+import Comments from './components/Comments';
 import useGetFeedDetail from './hooks/useGetFeedDetail';
 import ProfileInfo from '../../components/ProfileInfo';
 import Back from '../../layouts/Back';
@@ -188,73 +189,7 @@ const FeedDetailPage = () => {
 
       <Divider color="bg1" height={8} />
 
-      <CommentWrapper>
-        <InputBox>
-          <Input placeholder="댓글을 입력해 주세요." />
-          {/* <Textarea placeholder="Your message here..." value={textareaValue} onChange={handleTextareaChange} /> */}
-        </InputBox>
-
-        <Spacer size={20} />
-
-        <CommentsBox>
-          <ProfileInfo imageUrl={imageUrl} nickname={nickname} skillList={skillList} />
-          <Spacer size={20} />
-          <Text font="suit14m" color="t" style={{ lineHeight: '22px' }}>
-            댓글 내용, 한 번에 최대 500자 까지 입력 가능. 댓글 내용, 한 번에 최대 500자 까지 입력 가능. 댓글 내용, 한
-            번에 최대 500자 까지 입력 가능. 댓글 내용, 한 번에 최대 500자 까지 입력 가능. 댓글 내용, 한 번에 최대 500자
-            까지 입력 가능. 댓글 내용, 한 번에 최대 500자 까지 입력 가능.
-          </Text>
-          <Spacer size={10} />
-          <CommentsBottomBox>
-            <IndexBox>
-              <SVGFeedMessage />
-              <Text font="suit12r" color="b9">
-                댓글
-              </Text>
-              <Text font="suit12b" color="b9">
-                60
-              </Text>
-            </IndexBox>
-            <Spacer size={14} />
-            <IndexBox>
-              <SVGFeedUnLike />
-              <Text font="suit12r" color="b9">
-                좋아요
-              </Text>
-              <Text font="suit12b" color="b9">
-                192
-              </Text>
-            </IndexBox>
-          </CommentsBottomBox>
-        </CommentsBox>
-
-        <ReCommandBox>
-          <div>
-            <SVGFeedReCommentLine />
-          </div>
-          <CommentsBox>
-            <ProfileInfo imageUrl={imageUrl} nickname={nickname} skillList={skillList} />
-            <Spacer size={20} />
-            <Text font="suit14m" color="t" style={{ lineHeight: '22px' }}>
-              댓글 내용, 한 번에 최대 500자 까지 입력 가능. 댓글 내용, 한 번에 최대 500자 까지 입력 가능. 댓글 내용, 한
-              번에 최대 500자 까지 입력 가능. 댓글 내용, 한 번에 최대 500자 까지 입력 가능. 댓글 내용, 한 번에 최대
-              500자 까지 입력 가능. 댓글 내용, 한 번에 최대 500자 까지 입력 가능.
-            </Text>
-            <Spacer size={10} />
-            <CommentsBottomBox>
-              <IndexBox>
-                <SVGFeedUnLike />
-                <Text font="suit12r" color="b9">
-                  좋아요
-                </Text>
-                <Text font="suit12b" color="b9">
-                  192
-                </Text>
-              </IndexBox>
-            </CommentsBottomBox>
-          </CommentsBox>
-        </ReCommandBox>
-      </CommentWrapper>
+      <Comments comments={commentParentResponses} />
     </>
   );
 };
@@ -310,42 +245,4 @@ const IndexBox = styled.div`
   display: flex;
   align-items: center;
   gap: 4px;
-`;
-
-const CommentWrapper = styled.div`
-  padding: 20px 22px 20px 22px;
-`;
-
-const InputBox = styled.div`
-  position: relative;
-`;
-
-const Input = styled.input`
-  border-radius: 6px;
-  width: 100%;
-  padding: 10px 20px;
-  box-sizing: border-box;
-  border: none;
-  background-color: ${theme.color.bg1};
-  color: ${theme.color.t};
-  font-style: normal;
-  font-family: SUIT;
-  font-weight: 400;
-  line-height: normal;
-  ::placeholder {
-    color: ${theme.color.ba};
-  }
-`;
-
-const CommentsBox = styled.div`
-  margin: 20px 0px;
-`;
-
-const CommentsBottomBox = styled.div`
-  display: flex;
-`;
-
-const ReCommandBox = styled.div`
-  display: flex;
-  gap: 10px;
 `;

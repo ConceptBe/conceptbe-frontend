@@ -17,14 +17,14 @@ export interface FeedDetailResponse {
   commentParentResponses: CommentParentResponse[];
 }
 
-interface CommentChildResponse {
+export interface CommentChildResponse {
   nickname: string;
   memberSkills: string[];
   content: string;
   likesCount: number;
 }
 
-interface CommentParentResponse {
+export interface CommentParentResponse {
   nickname: string;
   memberSkills: string[];
   content: string;
