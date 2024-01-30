@@ -33,7 +33,11 @@ const getBestIdeas = async () => {
 };
 
 export const useBestIdeasQuery = () => {
-  const { data: bestIdeas, ...rest } = useSuspenseQuery({ queryKey: ['bestIdeas'], queryFn: getBestIdeas });
+  const { data: bestIdeas, ...rest } = useSuspenseQuery({
+    queryKey: ['bestIdeas'],
+    queryFn: getBestIdeas,
+    select: (bestIdeas) => bestIdeas.map((bestIdea) => ({ ...bestIdea, createdAt: new Date() })),
+  });
 
   return { bestIdeas, ...rest };
 };

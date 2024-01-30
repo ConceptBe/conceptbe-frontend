@@ -22,8 +22,9 @@ import { useState } from 'react';
 import Header from './components/Header';
 import RecruitmentPlaceSection from './components/RecruitmentPlaceSection';
 import TitleAndIntroduceSection from './components/TitleAndIntroduceSection';
-import { usePostIdeasMutation } from '../../hooks/mutations/useIdeasMutation';
-import { useWritingInfoQuery } from '../../hooks/queries/useWritingInfoQuery';
+import { usePostIdeasMutation } from './hooks/mutations/usePostIdeasMutation';
+import { useWritingInfoQuery } from './hooks/queries/useWritingInfoQuery';
+import { Info } from './types';
 
 const cooperationWays = [
   { id: 1, name: '상관없음' },
@@ -62,7 +63,7 @@ const Write = () => {
   const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
 
   const [selectedTeamRecruitment1Depth, setSelectedTeamRecruitment1Depth] = useState(teamRecruitments[0].name);
-  const [selectedTeamRecruitments, setSelectedTeamRecruitments] = useState<{ id: number; name: string }[]>([]);
+  const [selectedTeamRecruitments, setSelectedTeamRecruitments] = useState<Info[]>([]);
 
   const sheetLeftItems = teamRecruitments.map((item) => item.name);
   const sheetRightItems = teamRecruitments.find((item) => item.name === selectedTeamRecruitment1Depth)
@@ -127,7 +128,7 @@ const Write = () => {
     setIntroduce(newIntroduce);
   };
 
-  const onClickTeamRecruitment = (selected: { id: number; name: string }) => {
+  const onClickTeamRecruitment = (selected: Info) => {
     if (setSelectedTeamRecruitments.length >= 10) {
       alert('10개 이상 선택할 수 없습니다.');
       return;
@@ -225,7 +226,6 @@ const Write = () => {
         </BottomBox>
       </BottomWrapper>
 
-      {/* 추후 수정 필요 */}
       <BottomSheet isOpen={isOpenBottomSheet} onClose={() => setIsOpenBottomSheet(false)}>
         <Sheet_TopBox>
           <SVGCancel />
@@ -261,7 +261,6 @@ const Write = () => {
                   <Text font="suit14m" color="b4">
                     {item.name}
                   </Text>
-                  {/* 조건문 다시 고려 */}
                   {selectedTeamRecruitments.includes(item) ? <SVGRadioCheck24 /> : <SVGRadioUncheck24 />}
                 </Sheet_radioDiv>
               );

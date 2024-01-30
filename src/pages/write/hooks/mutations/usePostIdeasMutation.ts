@@ -1,16 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { http } from '../../api/http';
-
-type PostIdeasRequest = {
-  title: string; // 제목
-  introduce: string; // 소개
-  branchIds: number[]; // 분야
-  purposeIds: number[]; // 목적
-  cooperationWay: string; // 협업 방식
-  recruitmentPlace: number; // 팀원 모집 지역
-  teamRecruitmentIds: number[]; // 팀원 모집 종류
-};
+import { http } from '../../../../api/http';
+import { PostIdeasRequest } from '../../types';
 
 const _postIdeas = (ideas: PostIdeasRequest) => {
   return http.post('/ideas', ideas);
