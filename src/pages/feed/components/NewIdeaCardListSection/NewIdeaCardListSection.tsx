@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Spacer, Text } from 'concept-be-design-system';
 import { Fragment, useEffect, useRef } from 'react';
 
-import NewIdeaCard from '../../../../components/Card/NewIdeaCard/NewIdeaCard';
+import NewIdeaCard from '../NewIdeaCard/NewIdeaCard';
 import { useIdeasQuery } from '../../hooks/queries/useIdeasQuery';
 import { useFeedInfiniteFetch } from '../../hooks/useFeedInfiniteFetch';
 

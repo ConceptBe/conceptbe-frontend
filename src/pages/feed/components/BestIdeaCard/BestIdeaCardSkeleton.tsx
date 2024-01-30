@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 import { BestIdeaCardWrapper } from './BestIdeaCard';
-import Skeleton from '../../Skeleton/Skeleton';
+import Skeleton from '../../../../components/Skeleton/Skeleton';
 
 const BestIdeaCardSkeleton = () => {
   return (
