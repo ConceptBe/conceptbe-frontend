@@ -39,7 +39,11 @@ const routes: RouteElement[] = [
       },
       {
         path: '/feed/:id',
-        element: <FeedDetailPage />,
+        element: (
+          <Suspense>
+            <FeedDetailPage />
+          </Suspense>
+        ),
         withAuth: false,
       },
       {
