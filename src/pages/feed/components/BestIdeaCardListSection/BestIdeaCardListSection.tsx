@@ -3,8 +3,8 @@ import { Spacer, Text } from 'concept-be-design-system';
 
 import BestIdeaCard from '../../../../components/Card/BestIdeaCard/BestIdeaCard';
 import { useBestIdeasQuery } from '../../hooks/queries/useBestIdeasQuery';
-import { useIntersection } from 'react-use';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
+import { useFeedInfiniteFetch } from '../../hooks/useFeedInfiniteFetch';
 
 const BestIdeaCardListSection = () => {
   const {
@@ -13,17 +13,7 @@ const BestIdeaCardListSection = () => {
   } = useBestIdeasQuery();
 
   const intersectionRef = useRef(null);
-  const intersection = useIntersection(intersectionRef, {
-    root: null,
-    rootMargin: `0px`,
-    threshold: 1,
-  });
-
-  useEffect(() => {
-    if (intersection?.isIntersecting) {
-      fetchNextPage();
-    }
-  }, [intersection, fetchNextPage]);
+  useFeedInfiniteFetch(intersectionRef, fetchNextPage);
 
   return (
     <Wrapper>

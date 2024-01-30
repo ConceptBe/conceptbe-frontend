@@ -4,7 +4,7 @@ import { Fragment, useEffect, useRef } from 'react';
 
 import NewIdeaCard from '../../../../components/Card/NewIdeaCard/NewIdeaCard';
 import { useIdeasQuery } from '../../hooks/queries/useIdeasQuery';
-import { useIntersection } from 'react-use';
+import { useFeedInfiniteFetch } from '../../hooks/useFeedInfiniteFetch';
 
 const NewIdeaCardListSection = () => {
   const {
@@ -13,17 +13,7 @@ const NewIdeaCardListSection = () => {
   } = useIdeasQuery();
 
   const intersectionRef = useRef(null);
-  const intersection = useIntersection(intersectionRef, {
-    root: null,
-    rootMargin: `0px`,
-    threshold: 1,
-  });
-
-  useEffect(() => {
-    if (intersection?.isIntersecting) {
-      fetchNextPage();
-    }
-  }, [intersection, fetchNextPage]);
+  useFeedInfiniteFetch(intersectionRef, fetchNextPage);
 
   return (
     <Wrapper>
