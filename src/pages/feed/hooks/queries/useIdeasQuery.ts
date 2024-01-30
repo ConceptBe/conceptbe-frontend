@@ -13,7 +13,7 @@ const getIdeas = ({ page, size }: GetIdeasRequest) => {
 };
 
 export const useIdeasQuery = () => {
-  const sizePerPage = 5; // 한 페이지에 보여줄 아이디어 개수
+  const sizePerPage = 20; // 한 페이지에 보여줄 아이디어 개수
   const { data, fetchNextPage, hasNextPage } = useSuspenseInfiniteQuery({
     queryKey: ['ideas'],
     initialPageParam: { page: 1, size: sizePerPage },
