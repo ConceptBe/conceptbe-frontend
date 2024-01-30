@@ -15,8 +15,8 @@ const KakaoRedirect = () => {
       const data = await getIsMember('kakao', code);
 
       if (data.isMember) {
-        const token = await getLogin('kakao', data.oauthMemberInformation.oauthId);
-        localStorage.setItem('userToken', token);
+        const { accessToken } = await getLogin('kakao', data.oauthMemberInformation.oauthId);
+        localStorage.setItem('userToken', accessToken);
 
         navigate('/');
         return;

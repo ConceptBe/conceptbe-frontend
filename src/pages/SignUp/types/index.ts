@@ -1,3 +1,13 @@
+export interface DropdownValue {
+  mainSkill: string;
+  skillDepthOne: string;
+  skillDepthTwo: string;
+  skillDepthThree: string;
+  region: string;
+}
+
+export type DetailSkills = Record<number, DetailSkillOption[]>;
+
 export interface PostSignUp {
   nickname: string;
   mainSkillId: number;
@@ -31,7 +41,7 @@ export interface MainSkillOption {
   detailSkillResponses: DetailSkillOption[];
 }
 
-interface DetailSkillOption {
+export interface DetailSkillOption {
   id: number;
   name: string;
 }

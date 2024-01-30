@@ -1,7 +1,7 @@
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
-import { getSingUp } from '../../api';
-import { convertCheckboxQuery, convertSkillQuery } from '../../service/convertSignUpQuery';
+import { getSingUp } from '../../../api';
+import { convertCheckboxQuery, convertSkillQuery } from '../service/convertSignUpQuery';
 
 const SKILL_DEPTH_THREE_LIST = [
   { id: 1, name: '상' },
@@ -29,21 +29,24 @@ const REGION_LIST = [
 ];
 
 const useSignUpQuery = () => {
-  const { data } = useQuery({
+  const { data } = useSuspenseQuery({
     queryKey: ['GetSignUp'],
     queryFn: getSingUp,
+    select: (data) => {
+      const { mainSkills, detailSkills } = convertSkillQuery(data.mainSkillResponses);
+      const purposes = convertCheckboxQuery(data.purposeResponses);
+
+      return {
+        mainSkills,
+        detailSkills,
+        skillLevels: SKILL_DEPTH_THREE_LIST,
+        regions: REGION_LIST,
+        purposes,
+      };
+    },
   });
 
-  const { mainSkillQuery, detailSkillQuery } = convertSkillQuery(data?.mainSkillResponses);
-  const checkboxQuery = convertCheckboxQuery(data?.purposeResponses);
-
-  return {
-    mainSkillQuery,
-    detailSkillQuery,
-    skillLevelQuery: SKILL_DEPTH_THREE_LIST,
-    regionQuery: REGION_LIST,
-    checkboxQuery,
-  };
+  return data;
 };
 
 export default useSignUpQuery;

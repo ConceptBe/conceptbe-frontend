@@ -13,7 +13,15 @@ import useRouteMatched from '../hooks/useRouteMatch';
 const Navbar = () => {
   const { hasMatched } = useRouteMatched();
   const navigate = useNavigate();
-  const isMatchedNavigation = hasMatched('/profile/:id', '/login', '/write', '/agreement', '/auth', '/feed/:id');
+  const isMatchedNavigation = hasMatched(
+    '/profile/:id',
+    '/login',
+    '/write',
+    '/agreement',
+    '/auth',
+    '/feed/:id',
+    '/sign-up',
+  );
 
   return (
     <>
