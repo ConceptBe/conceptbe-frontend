@@ -24,7 +24,16 @@ export const useIdeasQuery = () => {
     queryFn: ({ pageParam: { page, size } }) => {
       return getIdeas({ page, size });
     },
-    select: (idea) => ({ ...idea, createdAt: new Date() }),
+
+    // select는 개발용 임시 코드(생성 시간 추가용)
+    select: (data) => {
+      const createdAt추가된데이터 = {
+        ...data,
+        pages: data.pages[0].map((idea) => ({ ...idea, createdAt: new Date() })),
+      };
+      return createdAt추가된데이터;
+    },
+
     getNextPageParam: (lastPage, allPages) => {
       const nextPageParam = { page: allPages.length + 1, size: sizePerPage };
 
