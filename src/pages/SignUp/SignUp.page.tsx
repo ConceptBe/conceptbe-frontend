@@ -44,7 +44,7 @@ interface CheckboxOption {
 const SignUpPage = () => {
   const navigate = useNavigate();
   const { state: memberInfo }: { state: OauthMemberInfo } = useLocation();
-  const { mutateSignUp } = useSignUpMutation();
+  const { postSignUp } = useSignUpMutation();
   const { mainSkills, detailSkills, skillLevels, regions, purposes } = useSignUpQuery();
   const { fieldValue, fieldErrorValue, onChangeField } = useField<FieldValue>({
     nickname: '',
@@ -91,7 +91,7 @@ const SignUpPage = () => {
       return;
     }
 
-    mutateSignUp({
+    postSignUp({
       nickname: fieldValue.nickname,
       mainSkillId: mainSkills.find(({ name }) => dropdownValue.mainSkill === name)?.id || 0,
       profileImageUrl: memberInfo.profileImageUrl,
