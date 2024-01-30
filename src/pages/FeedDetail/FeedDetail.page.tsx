@@ -16,11 +16,11 @@ import {
   Flex,
   Box,
 } from 'concept-be-design-system';
-import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import Comments from './components/Comments';
 import useGetFeedDetail from './hooks/useGetFeedDetail';
+import useHandleClickOutside from './hooks/useHandleClickOutside';
 import ProfileInfo from '../../components/ProfileInfo';
 import Back from '../../layouts/Back';
 import Logo from '../../layouts/Logo';
@@ -46,20 +46,16 @@ const FeedDetailPage = () => {
     commentParentResponses,
   } = useGetFeedDetail(feedId);
 
-  const [isClickDots, setIsClickDots] = useState(false);
-
-  const onClickDots = () => {
-    setIsClickDots(!isClickDots);
-  };
+  const { dropdownRef, isOpenModifyDropdown, toggleModifyDropdown } = useHandleClickOutside();
 
   return (
     <>
       <Header main>
         <Back />
         <Logo />
-        <Box position="relative">
-          <SVGTripleDots onClick={onClickDots} />
-          {isClickDots && (
+        <Box position="relative" ref={dropdownRef} cursor="pointer">
+          <SVGTripleDots onClick={toggleModifyDropdown} />
+          {isOpenModifyDropdown && (
             <DropDownBox>
               <Flex justifyContent="space-between" alignItems="center">
                 <Text font="suit12r" color="b6">
@@ -227,8 +223,7 @@ const DropDownBox = styled.div`
   height: 70px;
   border-radius: 6px;
   padding: 10px;
-  translate: -67px 2px;
-  top: 38px;
-  left: -10px;
+  top: 40px;
+  right: -6px;
   box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.18);
 `;
