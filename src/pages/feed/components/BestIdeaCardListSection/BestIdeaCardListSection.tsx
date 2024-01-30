@@ -7,10 +7,7 @@ import { useRef } from 'react';
 import { useFeedInfiniteFetch } from '../../hooks/useFeedInfiniteFetch';
 
 const BestIdeaCardListSection = () => {
-  const {
-    bestIdeas: { pages },
-    fetchNextPage,
-  } = useBestIdeasQuery();
+  const { bestIdeas, fetchNextPage } = useBestIdeasQuery();
 
   const intersectionRef = useRef(null);
   useFeedInfiniteFetch(intersectionRef, fetchNextPage);
@@ -22,7 +19,7 @@ const BestIdeaCardListSection = () => {
       </Text>
       <Spacer size={18} />
       <CardListWrapper>
-        {pages.flat().map((bestIdea, idx) => (
+        {bestIdeas.map((bestIdea, idx) => (
           <BestIdeaCard key={idx} branches={bestIdea.branches} title={bestIdea.title} />
         ))}
         <div ref={intersectionRef}></div>

@@ -14,24 +14,11 @@ const getIdeas = ({ page, size }: GetIdeasRequest) => {
 
 export const useIdeasQuery = () => {
   const sizePerPage = 5; // 한 페이지에 보여줄 아이디어 개수
-  const {
-    data: ideas,
-    fetchNextPage,
-    hasNextPage,
-  } = useSuspenseInfiniteQuery({
+  const { data, fetchNextPage, hasNextPage } = useSuspenseInfiniteQuery({
     queryKey: ['ideas'],
     initialPageParam: { page: 1, size: sizePerPage },
     queryFn: ({ pageParam: { page, size } }) => {
       return getIdeas({ page, size });
-    },
-
-    // select는 개발용 임시 코드(생성 시간 추가용)
-    select: (data) => {
-      const createdAt추가된데이터 = {
-        ...data,
-        pages: data.pages[0].map((idea) => ({ ...idea, createdAt: new Date() })),
-      };
-      return createdAt추가된데이터;
     },
 
     getNextPageParam: (lastPage, allPages) => {
@@ -42,5 +29,5 @@ export const useIdeasQuery = () => {
     },
   });
 
-  return { ideas, fetchNextPage, hasNextPage };
+  return { ideas: data.pages.flat(), fetchNextPage, hasNextPage };
 };

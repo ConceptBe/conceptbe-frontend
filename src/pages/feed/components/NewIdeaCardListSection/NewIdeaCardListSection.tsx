@@ -7,10 +7,7 @@ import { useIdeasQuery } from '../../hooks/queries/useIdeasQuery';
 import { useFeedInfiniteFetch } from '../../hooks/useFeedInfiniteFetch';
 
 const NewIdeaCardListSection = () => {
-  const {
-    ideas: { pages },
-    fetchNextPage,
-  } = useIdeasQuery();
+  const { ideas, fetchNextPage } = useIdeasQuery();
 
   const intersectionRef = useRef(null);
   useFeedInfiniteFetch(intersectionRef, fetchNextPage);
@@ -21,7 +18,7 @@ const NewIdeaCardListSection = () => {
         피드 영역 타이틀입니다
       </Text>
       <Spacer size={20} />
-      {pages.flat().map((idea, idx) => (
+      {ideas.map((idea, idx) => (
         <Fragment key={idx}>
           <NewIdeaCard key={idx} idea={idea} />
           <Spacer size={20} />

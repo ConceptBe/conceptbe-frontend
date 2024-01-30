@@ -58,7 +58,7 @@ const NewIdeaCard = ({
               <div style={{ width: 1, height: 10, backgroundColor: theme.color.l2 }} />
               <Spacer size={6} />
               <Text font="suit12r" color="b9">
-                {createdAt.toISOString().slice(0, 10)}
+                {/* {createdAt.toISOString().slice(0, 10)} */}
               </Text>
             </div>
           </div>

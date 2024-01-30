@@ -14,11 +14,7 @@ const getBestIdeas = ({ page, size }: GetBestIdeasRequest) => {
 
 export const useBestIdeasQuery = () => {
   const sizePerPage = 5; // 한 페이지에 보여줄 아이디어 개수
-  const {
-    data: bestIdeas,
-    fetchNextPage,
-    hasNextPage,
-  } = useSuspenseInfiniteQuery({
+  const { data, fetchNextPage, hasNextPage } = useSuspenseInfiniteQuery({
     queryKey: ['bestIdeas'],
     initialPageParam: { page: 1, size: sizePerPage },
     queryFn: ({ pageParam: { page, size } }) => {
@@ -32,5 +28,5 @@ export const useBestIdeasQuery = () => {
     },
   });
 
-  return { bestIdeas, fetchNextPage, hasNextPage };
+  return { bestIdeas: data.pages.flat(), fetchNextPage, hasNextPage };
 };
