@@ -1,6 +1,6 @@
 export type BestIdea = {
   id: number; // 게시글 id,
-  branches: string; // 분야들
+  branches: string[]; // 분야들
   title: string; // 제목
 };
 
