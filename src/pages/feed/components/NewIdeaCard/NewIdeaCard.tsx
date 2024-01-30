@@ -15,8 +15,7 @@ import {
   SVGScrapFilled24,
 } from 'concept-be-design-system';
 import { useNavigate } from 'react-router-dom';
-
-import { Idea } from '../../hooks/queries/useIdeasQuery';
+import type { Idea } from '../../types';
 
 interface Props {
   idea: Idea;
