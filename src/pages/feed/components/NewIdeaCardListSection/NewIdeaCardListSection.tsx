@@ -3,7 +3,7 @@ import { Spacer, Text } from 'concept-be-design-system';
 import { Fragment } from 'react';
 
 import NewIdeaCard from '../../../../components/Card/NewIdeaCard/NewIdeaCard';
-import { useIdeasQuery } from '../../../../hooks/queries/useIdeasQuery';
+import { useIdeasQuery } from '../../hooks/queries/useIdeasQuery';
 
 const NewIdeaCardListSection = () => {
   const { ideas } = useIdeasQuery();

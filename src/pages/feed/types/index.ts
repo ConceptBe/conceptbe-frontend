@@ -1,6 +1,8 @@
-import { useSuspenseQuery } from '@tanstack/react-query';
-
-import { http } from '../../api/http';
+export type BestIdea = {
+  id: number; // 게시글 id,
+  branches: string; // 분야들
+  title: string; // 제목
+};
 
 // IdeaCard 글 글쓴이 정보
 type MemberResponse = {
@@ -21,18 +23,4 @@ export type Idea = {
   memberResponse: MemberResponse; // 게시글 작성자,
   branches: string[]; // 분야,
   teamRecruitments: string[]; // 목적
-};
-
-const getIdeas = async () => {
-  return http.get<Idea[]>('/ideas?page=1&size=10');
-};
-
-export const useIdeasQuery = () => {
-  const { data: ideas, ...rest } = useSuspenseQuery({
-    queryKey: ['ideas'],
-    queryFn: getIdeas,
-    select: (bestIdeas) => bestIdeas.map((bestIdea) => ({ ...bestIdea, createdAt: new Date() })),
-  });
-
-  return { ideas, ...rest };
 };
