@@ -12,6 +12,7 @@ type MemberResponse = {
 };
 
 export type Idea = {
+  id: number;
   title: string; // 게시글 제목,
   introduce: string; // 게시글 본문,
   hitsCount: number; // 조회수,
