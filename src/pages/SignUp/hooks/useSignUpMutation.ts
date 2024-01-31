@@ -7,6 +7,7 @@ const useSignUpMutation = () => {
     mutationFn: _postSignUp,
     onSuccess: (data) => {
       localStorage.setItem('userToken', data.accessToken);
+      localStorage.setItem('user', JSON.stringify(data.authMemberInformation));
     },
   });
 

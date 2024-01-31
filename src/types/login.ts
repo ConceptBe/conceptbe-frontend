@@ -13,4 +13,9 @@ export interface OauthMemberInfo {
 
 export interface LoginResponse {
   accessToken: string;
+  authMemberInformation: {
+    id: number;
+    nickname: string;
+    profileImageUrl: string;
+  };
 }
