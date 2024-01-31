@@ -20,7 +20,7 @@ const BestIdeaCardListSection = () => {
       <Spacer size={18} />
       <CardListWrapper>
         {bestIdeas.map((bestIdea, idx) => (
-          <BestIdeaCard key={idx} branches={bestIdea.branches} title={bestIdea.title} idx={idx} />
+          <BestIdeaCard key={idx} id={bestIdea.id} branches={bestIdea.branches} title={bestIdea.title} idx={idx} />
         ))}
         <div ref={intersectionRef}></div>
       </CardListWrapper>
