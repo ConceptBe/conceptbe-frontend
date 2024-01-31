@@ -1,18 +1,37 @@
 import styled from '@emotion/styled';
-import { Text, theme, PNGIdeaBackground1 } from 'concept-be-design-system';
+import {
+  Text,
+  theme,
+  PNGIdeaBackground1,
+  PNGIdeaBackground2,
+  PNGIdeaBackground3,
+  PNGIdeaBackground4,
+  PNGIdeaBackground5,
+} from 'concept-be-design-system';
 import { useNavigate } from 'react-router-dom';
 
 interface Props {
   branches: string[];
   title: string;
+  idx: number;
 }
 
-const BestIdeaCard = ({ branches, title }: Props) => {
+type IdeaBackgroundType = Record<number, string>;
+
+const ideaBackground: IdeaBackgroundType = {
+  0: PNGIdeaBackground1,
+  1: PNGIdeaBackground2,
+  2: PNGIdeaBackground3,
+  3: PNGIdeaBackground4,
+  4: PNGIdeaBackground5,
+};
+
+const BestIdeaCard = ({ branches, title, idx }: Props) => {
   const navigate = useNavigate();
 
   return (
     <BestIdeaCardWrapper onClick={() => navigate('/feed/1')}>
-      <img src={PNGIdeaBackground1} />
+      <img src={ideaBackground[idx % 5]} />
       <CardBoxBack />
       <CardBox>
         <Text style={{ fontSize: 13, fontWeight: 800 }} color="w1">
