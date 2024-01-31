@@ -113,7 +113,7 @@ const WritePage = () => {
     postIdeas({
       title,
       introduce,
-      recruitmentPlace: recruitmentPlaceId,
+      recruitmentPlaceId,
       cooperationWay,
       branchIds,
       purposeIds,

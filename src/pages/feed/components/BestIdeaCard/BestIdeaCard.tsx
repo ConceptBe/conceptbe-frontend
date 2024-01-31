@@ -11,6 +11,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 
 interface Props {
+  id: number;
   branches: string[];
   title: string;
   idx: number;
@@ -26,11 +27,11 @@ const ideaBackground: IdeaBackgroundType = {
   4: PNGIdeaBackground5,
 };
 
-const BestIdeaCard = ({ branches, title, idx }: Props) => {
+const BestIdeaCard = ({ id, branches, title, idx }: Props) => {
   const navigate = useNavigate();
 
   return (
-    <BestIdeaCardWrapper onClick={() => navigate('/feed/1')}>
+    <BestIdeaCardWrapper onClick={() => navigate(`/feed/${id}`)}>
       <img src={ideaBackground[idx % 5]} />
       <CardBoxBack />
       <CardBox>

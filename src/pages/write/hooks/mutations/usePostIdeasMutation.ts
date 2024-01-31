@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 import { http } from '../../../../api/http';
 import { PostIdeasRequest } from '../../types';
-import { useNavigate } from 'react-router-dom';
-import { AxiosError } from 'axios';
 
 const _postIdeas = (ideas: PostIdeasRequest) => {
   return http.post('/ideas', ideas);

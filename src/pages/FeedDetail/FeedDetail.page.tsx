@@ -24,6 +24,7 @@ import useHandleClickOutside from './hooks/useHandleClickOutside';
 import ProfileInfo from '../../components/ProfileInfo';
 import Back from '../../layouts/Back';
 import Logo from '../../layouts/Logo';
+import { formatCommentDate } from '../Feed/utils/formatCommentDate';
 
 const FeedDetailPage = () => {
   const { id: feedId } = useParams() as { id: string };
@@ -91,7 +92,7 @@ const FeedDetailPage = () => {
             <Spacer size={8} />
             <Flex alignItems="center">
               <Text font="suit12r" color="b9">
-                {date}
+                {formatCommentDate(date)}
               </Text>
               <TextDivider left={6} right={6} color="l2" />
               <Text font="suit12r" color="b9">

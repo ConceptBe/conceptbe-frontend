@@ -15,8 +15,10 @@ import {
   SVGScrapFilled24,
 } from 'concept-be-design-system';
 import { useNavigate } from 'react-router-dom';
-import type { Idea } from '../../types';
+
 import { formatCommentDate } from '../../utils/formatCommentDate';
+
+import type { Idea } from '../../types';
 
 interface Props {
   idea: Idea;
@@ -24,6 +26,7 @@ interface Props {
 
 const NewIdeaCard = ({
   idea: {
+    id,
     title,
     introduce,
     hitsCount,
@@ -58,7 +61,7 @@ const NewIdeaCard = ({
   };
 
   return (
-    <CardContainer onClick={() => navigate('/feed/1')}>
+    <CardContainer onClick={() => navigate(`/feed/${id}`)}>
       <ProfileWrapper>
         <ProfileBox>
           <SVGLoginDefaultProfile />
