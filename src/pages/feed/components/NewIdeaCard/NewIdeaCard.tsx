@@ -49,6 +49,13 @@ const NewIdeaCard = ({
       : badges;
   };
 
+  const getCount = (count: number) => {
+    if (count > 999) {
+      return '999+';
+    }
+    return count;
+  };
+
   return (
     <CardContainer onClick={() => navigate('/feed/1')}>
       <ProfileWrapper>
@@ -103,19 +110,19 @@ const NewIdeaCard = ({
       <FooterWrapper>
         <FooterText>
           <SVGCardView14 />
-          {hitsCount}
+          {getCount(hitsCount)}
         </FooterText>
         <FooterText>
           <SVGCardComment14 />
-          {commentsCount}
+          {getCount(commentsCount)}
         </FooterText>
         <FooterText>
           <SVGCardLike14 />
-          {likesCount}
+          {getCount(likesCount)}
         </FooterText>
         <FooterText>
           <SVGCardScrap14 />
-          {bookmarksCount}
+          {getCount(bookmarksCount)}
         </FooterText>
       </FooterWrapper>
     </CardContainer>
