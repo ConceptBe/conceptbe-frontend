@@ -231,7 +231,11 @@ const WritePage = () => {
 
       <BottomSheet isOpen={isOpenBottomSheet} onClose={() => setIsOpenBottomSheet(false)}>
         <Sheet_TopBox>
-          <SVGCancel />
+          <SVGCancel
+            onClick={() => {
+              setIsOpenBottomSheet(false);
+            }}
+          />
           <Text font="suit16sb" color="b4">
             팀원선택
           </Text>
