@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 import { Spacer, Text } from 'concept-be-design-system';
-import { Fragment, useEffect, useRef } from 'react';
+import { Fragment, useRef } from 'react';
 
-import NewIdeaCard from '../NewIdeaCard/NewIdeaCard';
 import { useIdeasQuery } from '../../hooks/queries/useIdeasQuery';
 import { useFeedInfiniteFetch } from '../../hooks/useFeedInfiniteFetch';
+import NewIdeaCard from '../NewIdeaCard/NewIdeaCard';
 
 const NewIdeaCardListSection = () => {
   const { ideas, fetchNextPage } = useIdeasQuery();
@@ -15,7 +15,7 @@ const NewIdeaCardListSection = () => {
   return (
     <Wrapper>
       <Text font="suit16sb" color="b4">
-        피드 영역 타이틀입니다
+        새로 올라온 아이디어
       </Text>
       <Spacer size={20} />
       {ideas.map((idea, idx) => (
