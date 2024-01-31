@@ -1,47 +1,43 @@
 import styled from '@emotion/styled';
-import { Spacer, Text, TextDivider, SVGLoginDefaultProfile } from 'concept-be-design-system';
+import { Text, TextDivider, Box, Flex } from 'concept-be-design-system';
 
-const ProfileInfo = () => {
+interface Props {
+  imageUrl: string;
+  nickname: string;
+  skillList: string[];
+}
+
+// TODO: 프로필 이미지 사진 오류 시 보여줄 기본 프로필 이미지 사진 URL
+const DEFAULT_IMAGE_URL = '';
+
+const ProfileInfo = ({ imageUrl, nickname, skillList }: Props) => {
   return (
-    <ProfileWrapper>
-      <SVGLoginDefaultProfile />
-      <ProfileBox>
+    <Flex alignItems="center" gap={10}>
+      <Box width={36} height={36} overflow="hidden" borderRadius="0 150px 150px 0">
+        <Img src={imageUrl || DEFAULT_IMAGE_URL} />
+      </Box>
+      <Flex direction="column" gap={4}>
         <Text font="suit14m" color="b4">
-          일이삼사오육칠팔구
+          {nickname}
         </Text>
-        <Spacer size={6} />
-        <Profile_info>
-          <Text font="suit12r" color="b9">
-            UXUI
-          </Text>
-          <TextDivider left={6} right={6} color="l2" />
-          <Text font="suit12r" color="b9">
-            영상디자인
-          </Text>
-        </Profile_info>
-      </ProfileBox>
-    </ProfileWrapper>
+        <Flex alignItems="center">
+          {skillList.map((skill, idx) => (
+            <>
+              <Text font="suit12r" color="b9">
+                {skill}
+              </Text>
+              {idx !== skillList.length - 1 && <TextDivider left={6} right={6} color="l2" />}
+            </>
+          ))}
+        </Flex>
+      </Flex>
+    </Flex>
   );
 };
 
 export default ProfileInfo;
 
-const ProfileWrapper = styled.div`
-  display: flex;
-
-  align-items: center;
-  gap: 10px;
-`;
-
-const ProfileBox = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  gap: 4px;
-`;
-
-const Profile_info = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+const Img = styled.img`
+  width: 100%;
+  height: 100%;
 `;

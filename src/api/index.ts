@@ -1,4 +1,5 @@
 import { http } from './http';
+import { FeedDetailResponse } from '../pages/FeedDetail/types';
 import { GetSignUp, PostSignUp } from '../pages/SignUp/types';
 import { CheckMember, LoginResponse } from '../types/login';
 
@@ -26,4 +27,8 @@ export const _postSignUp = (payload: PostSignUp) => {
 
 export const getSingUp = () => {
   return http.get<GetSignUp>('/sign-up');
+};
+
+export const getFeedDetail = (id: string) => {
+  return http.get<FeedDetailResponse>(`/ideas/${id}`);
 };
