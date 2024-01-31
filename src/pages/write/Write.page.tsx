@@ -32,7 +32,7 @@ const cooperationWays = [
   { id: 3, name: '오프라인' },
 ];
 
-const Write = () => {
+const WritePage = () => {
   const { postIdeas } = usePostIdeasMutation();
   const { branches, purposes, recruitmentPlaces, teamRecruitments } = useWritingInfoQuery();
 
@@ -275,7 +275,7 @@ const Write = () => {
   );
 };
 
-export default Write;
+export default WritePage;
 
 const MainWrapper = styled.div`
   width: 100%;
