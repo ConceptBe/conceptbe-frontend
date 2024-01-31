@@ -254,8 +254,10 @@ const WritePage = () => {
                   onClick={() => setSelectedTeamRecruitment1Depth(item)}
                   checked={selectedTeamRecruitment1Depth === item}
                 >
-                  <Text font="suit14m" color="ba">
+                  <Text font="suit14m" color={selectedTeamRecruitment1Depth === item ? 'b2' : 'ba'}>
                     {item}
+                  </Text>
+                  <Text font="suit14m" color={selectedTeamRecruitment1Depth === item ? 'c1' : 'ba'}>
                   </Text>
                 </Sheet_leftItem>
               );
