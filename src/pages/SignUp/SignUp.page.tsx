@@ -17,7 +17,7 @@ import {
   Box,
 } from 'concept-be-design-system';
 import { FormEvent } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import useSetDetailSkills from './hooks/useSetDetailSkills.ts';
 import useSignUpMutation from './hooks/useSignUpMutation.ts';
@@ -42,7 +42,6 @@ interface CheckboxOption {
 }
 
 const SignUpPage = () => {
-  const navigate = useNavigate();
   const { state: memberInfo }: { state: OauthMemberInfo } = useLocation();
   const { postSignUp } = useSignUpMutation();
   const { mainSkills, detailSkills, skillLevels, regions, purposes } = useSignUpQuery();
@@ -80,17 +79,6 @@ const SignUpPage = () => {
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (
-      fieldErrorValue.nickname ||
-      !fieldValue.nickname ||
-      !dropdownValue.mainSkill ||
-      selectedSkillDepths.length === 0 ||
-      checkboxValue.goal.length === 0
-    ) {
-      alert('필수 정보를 입력하지 않아, 저장할 수 없습니다.');
-      return;
-    }
-
     postSignUp({
       nickname: fieldValue.nickname,
       mainSkillId: mainSkills.find(({ name }) => dropdownValue.mainSkill === name)?.id || 0,
@@ -103,8 +91,6 @@ const SignUpPage = () => {
       oauthId: memberInfo.oauthId,
       oauthServerType: memberInfo.oauthServerType,
     });
-
-    navigate('/');
   };
 
   return (
