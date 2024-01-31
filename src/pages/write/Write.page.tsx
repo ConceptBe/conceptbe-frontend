@@ -257,6 +257,7 @@ const WritePage = () => {
                   <Text font="suit14m" color={selectedTeamRecruitment1Depth === item ? 'b2' : 'ba'}>
                     {item}
                   </Text>
+                  <Spacer size={3} />
                   <Text font="suit14m" color={selectedTeamRecruitment1Depth === item ? 'c1' : 'ba'}>
                   </Text>
                 </Sheet_leftItem>
