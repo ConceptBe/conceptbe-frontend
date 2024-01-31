@@ -7,6 +7,7 @@ interface Props {
   skillList: string[];
 }
 
+// TODO: 프로필 이미지 사진 오류 시 보여줄 기본 프로필 이미지 사진 URL
 const DEFAULT_IMAGE_URL = '';
 
 const ProfileInfo = ({ imageUrl, nickname, skillList }: Props) => {
