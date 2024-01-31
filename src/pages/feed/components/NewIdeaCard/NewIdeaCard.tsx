@@ -16,6 +16,7 @@ import {
 } from 'concept-be-design-system';
 import { useNavigate } from 'react-router-dom';
 import type { Idea } from '../../types';
+import { formatCommentDate } from '../../utils/formatCommentDate';
 
 interface Props {
   idea: Idea;
@@ -75,7 +76,7 @@ const NewIdeaCard = ({
               <div style={{ width: 1, height: 10, backgroundColor: theme.color.l2 }} />
               <Spacer size={6} />
               <Text font="suit12r" color="b9">
-                {/* {createdAt.toISOString().slice(0, 10)} */}
+                {formatCommentDate(createdAt)}
               </Text>
             </div>
           </div>
