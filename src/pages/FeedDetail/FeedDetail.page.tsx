@@ -82,7 +82,7 @@ const FeedDetailPage = () => {
         <Box>
           <div>
             <Text font="suit14sm" color="c1">
-              IT / 유튜브 컨텐츠
+              {branchList.join(' / ')}
             </Text>
             <Spacer size={8} />
             <Text font="suit18sb" color="b4">
