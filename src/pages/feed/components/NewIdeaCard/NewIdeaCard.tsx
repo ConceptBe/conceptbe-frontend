@@ -37,6 +37,17 @@ const NewIdeaCard = ({
   },
 }: Props) => {
   const navigate = useNavigate();
+  const isTeamRecruitmentsExist = teamRecruitments.length > 0;
+
+  const TeamRecruitmentsBadges = (teamRecruitments: string[]) => {
+    const badges = teamRecruitments.map((teamRecruitment, idx) => (
+      <Badge key={`${teamRecruitment}-${idx}`}>{teamRecruitment}</Badge>
+    ));
+
+    return badges.length > 5
+      ? [...badges.slice(0, 5), <Badge key="모집중">+{badges.length - 5} 모집중</Badge>]
+      : badges;
+  };
 
   return (
     <CardContainer onClick={() => navigate('/feed/1')}>
@@ -75,15 +86,17 @@ const NewIdeaCard = ({
         <Spacer size={10} />
 
         <ContentText>{introduce}</ContentText>
-        <Spacer size={14} />
 
-        <TagWrapper>
-          <Flex wrap="wrap" gap={6}>
-            {teamRecruitments.map((teamRecruitment, idx) => (
-              <Badge key={`${teamRecruitment}-${idx}`}>{teamRecruitment}</Badge>
-            ))}
-          </Flex>
-        </TagWrapper>
+        {isTeamRecruitmentsExist && (
+          <>
+            <Spacer size={14} />
+            <TagWrapper>
+              <Flex wrap="wrap" gap={6}>
+                {TeamRecruitmentsBadges(teamRecruitments)}
+              </Flex>
+            </TagWrapper>
+          </>
+        )}
       </ContentWrapper>
 
       <Divider top={18} bottom={16} color="l3" />
