@@ -7,12 +7,12 @@ import {
   theme,
   SVGCardComment14,
   SVGLoginDefaultProfile,
-  SVGTripleDots,
   SVGCardLike14,
-  SVGScrap24,
   SVGCardScrap14,
   SVGCardView14,
   Flex,
+  SVGScrap24,
+  SVGScrapFilled24,
 } from 'concept-be-design-system';
 import { useNavigate } from 'react-router-dom';
 
@@ -52,7 +52,7 @@ const NewIdeaCard = ({
 
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <Text font="suit12r" color="b9">
-                {memberResponse.mainSkill}
+                {memberResponse.skills.join(' | ')}
               </Text>
               <Spacer size={6} />
               <div style={{ width: 1, height: 10, backgroundColor: theme.color.l2 }} />
@@ -63,7 +63,7 @@ const NewIdeaCard = ({
             </div>
           </div>
         </ProfileBox>
-        {/* {mine ? <SVGTripleDots color="ba" /> : <SVGScrap24 />} */}
+        {isBookmarked ? <SVGScrapFilled24 /> : <SVGScrap24 />}
       </ProfileWrapper>
 
       <ContentWrapper>

@@ -17,13 +17,13 @@ import {
 } from 'concept-be-design-system';
 import { Suspense, useState } from 'react';
 
+import BestIdeaCardListSection from './components/BestIdeaCardListSection/BestIdeaCardListSection';
+import BestIdeaCardListSectionSkeleton from './components/BestIdeaCardListSection/BestIdeaCardListSectionSkeleton';
+import NewIdeaCardListSection from './components/NewIdeaCardListSection/NewIdeaCardListSection';
+import NewIdeaCardListSectionSkeleton from './components/NewIdeaCardListSection/NewIdeaCardListSectionSkeleton';
 import Padding from '../../components/Padding';
 import Logo from '../../layouts/Logo';
 import { filterOptions, filterSubOptions, filterRadio } from '../../modules/constants';
-import BestIdeaCardListSection from './components/BestIdeaCardListSection/BestIdeaCardListSection';
-import NewIdeaCardListSection from './components/NewIdeaCardListSection/NewIdeaCardListSection';
-import BestIdeaCardListSectionSkeleton from './components/BestIdeaCardListSection/BestIdeaCardListSectionSkeleton';
-import NewIdeaCardListSectionSkeleton from './components/NewIdeaCardListSection/NewIdeaCardListSectionSkeleton';
 
 interface RadioValue {
   collaboration: Option[];
