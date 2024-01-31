@@ -40,7 +40,7 @@ const routes: RouteElement[] = [
       {
         path: '/feed/:id',
         element: <FeedDetail />,
-        withAuth: false,
+        withAuth: true,
       },
       {
         path: '/write',
@@ -49,7 +49,7 @@ const routes: RouteElement[] = [
             <WritePage />
           </Suspense>
         ),
-        withAuth: false,
+        withAuth: true,
       },
       {
         path: '/login',
@@ -64,17 +64,17 @@ const routes: RouteElement[] = [
       {
         path: '/profile',
         element: <Profile />,
-        withAuth: false,
+        withAuth: true,
       },
       {
         path: '/profile/:id',
         element: <Setting />,
-        withAuth: false,
+        withAuth: true,
       },
       {
         path: '/profile/:id/more',
         element: <More />,
-        withAuth: false,
+        withAuth: true,
       },
 
       {
