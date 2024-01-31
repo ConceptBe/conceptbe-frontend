@@ -25,6 +25,7 @@ import TitleAndIntroduceSection from './components/TitleAndIntroduceSection';
 import { usePostIdeasMutation } from './hooks/mutations/usePostIdeasMutation';
 import { useWritingInfoQuery } from './hooks/queries/useWritingInfoQuery';
 import { Info } from './types';
+import { get2DepthCountsBy1Depth } from './utils/get2DepthCountsBy1Depth';
 
 const cooperationWays = [
   { id: 1, name: '상관없음' },
@@ -259,6 +260,7 @@ const WritePage = () => {
                   </Text>
                   <Spacer size={3} />
                   <Text font="suit14m" color={selectedTeamRecruitment1Depth === item ? 'c1' : 'ba'}>
+                    {get2DepthCountsBy1Depth(selectedTeamRecruitments, teamRecruitments)[item]}
                   </Text>
                 </Sheet_leftItem>
               );
