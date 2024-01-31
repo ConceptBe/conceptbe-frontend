@@ -214,7 +214,7 @@ const Write = () => {
           <TeamLabelBox>
             {selectedTeamRecruitments.map((item) => {
               return (
-                <TeamLabel>
+                <TeamLabel key={item.id}>
                   {item.name}
                   <SVGCancel onClick={() => onDeleteTeamRecruitment(item.id)} />
                 </TeamLabel>
