@@ -11,8 +11,8 @@ import {
   SVGCardScrap14,
   SVGCardView14,
   Flex,
-  SVGFeedUnScrap,
-  SVGFeedScrap,
+  SVGScrap24,
+  SVGScrapFilled24,
 } from 'concept-be-design-system';
 import { useNavigate } from 'react-router-dom';
 
@@ -63,7 +63,7 @@ const NewIdeaCard = ({
             </div>
           </div>
         </ProfileBox>
-        {isBookmarked ? <SVGFeedScrap /> : <SVGFeedUnScrap />}
+        {isBookmarked ? <SVGScrapFilled24 /> : <SVGScrap24 />}
       </ProfileWrapper>
 
       <ContentWrapper>
