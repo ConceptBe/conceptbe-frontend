@@ -164,6 +164,7 @@ const Write = () => {
             checkboxKey="branches"
             options={checkboxValue.branches}
             onChange={onChangeCheckbox}
+            required
           />
         </BottomBox>
         <BottomBox>
@@ -172,6 +173,7 @@ const Write = () => {
             checkboxKey="purposes"
             options={checkboxValue.purposes}
             onChange={onChangeCheckbox}
+            required
           />
         </BottomBox>
         <BottomBox>
@@ -181,6 +183,7 @@ const Write = () => {
             options={radioValue.cooperationWays}
             onChange={(e) => onChangeRadio(e, 'cooperationWays')}
             gap="large"
+            required
           />
         </BottomBox>
         <BottomBox>
