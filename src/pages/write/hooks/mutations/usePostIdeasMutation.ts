@@ -6,11 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { AxiosError } from 'axios';
 
 const _postIdeas = (ideas: PostIdeasRequest) => {
-  return http.post('/ideas', ideas, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('userToken')}`,
-    },
-  });
+  return http.post('/ideas', ideas);
 };
 
 // TODO: 제대로 된 에러핸들링 추가(토스트 추가 등)
