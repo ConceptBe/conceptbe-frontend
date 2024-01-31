@@ -2,7 +2,7 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { getFeedDetail } from '../../../api';
 
-const useGetFeedDetail = (id: string | undefined) => {
+const useGetFeedDetail = (id: string) => {
   const { data: feedDetail } = useSuspenseQuery({
     queryKey: ['feedDetail', id],
     queryFn: () => getFeedDetail(id),

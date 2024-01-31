@@ -26,7 +26,7 @@ import Back from '../../layouts/Back';
 import Logo from '../../layouts/Logo';
 
 const FeedDetailPage = () => {
-  const { id: feedId } = useParams();
+  const { id: feedId } = useParams() as { id: string };
   const {
     imageUrl,
     nickname,

@@ -29,6 +29,6 @@ export const getSingUp = () => {
   return http.get<GetSignUp>('/sign-up');
 };
 
-export const getFeedDetail = (id: string | undefined) => {
+export const getFeedDetail = (id: string) => {
   return http.get<FeedDetailResponse>(`/ideas/${id}`);
 };
