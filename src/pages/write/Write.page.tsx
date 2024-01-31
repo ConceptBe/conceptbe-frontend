@@ -85,23 +85,23 @@ const WritePage = () => {
 
     // TODO: 글쓰기 필수 조건 누락 시 토스트 띄워주기 (alert -> toast)
     if (!title) {
-      alert('제목을 입력해주세요.');
+      alert('제목을 입력해 주세요');
       return;
     }
-    if (!introduce) {
-      alert('내용을 입력해주세요.');
+    if (introduce.length < 10) {
+      alert('본문 내용을 10자 이상 입력해 주세요');
       return;
     }
     if (!branchIds.length) {
-      alert('분야를 1개 이상 선택해주세요.');
+      alert('분야를 1개 이상 선택해 주세요');
       return;
     }
     if (!purposeIds.length) {
-      alert('목적을 1개 이상 선택해주세요.');
+      alert('목적을 1개 이상 선택해 주세요');
       return;
     }
     if (!cooperationWay) {
-      alert('협업방식을 선택해주세요.');
+      alert('협업방식을 선택해 주세요');
       return;
     }
     if (!recruitmentPlaceId) {
