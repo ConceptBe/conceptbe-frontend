@@ -3,11 +3,11 @@ import { Text, theme, PNGIdeaBackground1 } from 'concept-be-design-system';
 import { useNavigate } from 'react-router-dom';
 
 interface Props {
-  branch: string;
+  branches: string[];
   title: string;
 }
 
-const BestIdeaCard = ({ branch, title }: Props) => {
+const BestIdeaCard = ({ branches, title }: Props) => {
   const navigate = useNavigate();
 
   return (
@@ -16,7 +16,7 @@ const BestIdeaCard = ({ branch, title }: Props) => {
       <CardBoxBack />
       <CardBox>
         <Text style={{ fontSize: 13, fontWeight: 800 }} color="w1">
-          {branch}
+          {branches.join(' | ')}
         </Text>
         <Text style={{ fontSize: 14, fontWeight: 600, lineHeight: '20px' }} color="w1">
           {title}

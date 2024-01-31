@@ -1,11 +1,16 @@
 import styled from '@emotion/styled';
 import { Spacer, Text } from 'concept-be-design-system';
 
-import BestIdeaCard from '../../../../components/Card/BestIdeaCard/BestIdeaCard';
-import { useBestIdeasQuery } from '../../../../hooks/queries/useBestIdeasQuery';
+import BestIdeaCard from '../BestIdeaCard/BestIdeaCard';
+import { useBestIdeasQuery } from '../../hooks/queries/useBestIdeasQuery';
+import { useRef } from 'react';
+import { useFeedInfiniteFetch } from '../../hooks/useFeedInfiniteFetch';
 
 const BestIdeaCardListSection = () => {
-  const { bestIdeas } = useBestIdeasQuery();
+  const { bestIdeas, fetchNextPage } = useBestIdeasQuery();
+
+  const intersectionRef = useRef(null);
+  useFeedInfiniteFetch(intersectionRef, fetchNextPage);
 
   return (
     <Wrapper>
@@ -15,8 +20,9 @@ const BestIdeaCardListSection = () => {
       <Spacer size={18} />
       <CardListWrapper>
         {bestIdeas.map((bestIdea, idx) => (
-          <BestIdeaCard key={idx} branch={bestIdea.branches} title={bestIdea.title} />
+          <BestIdeaCard key={idx} branches={bestIdea.branches} title={bestIdea.title} />
         ))}
+        <div ref={intersectionRef}></div>
       </CardListWrapper>
     </Wrapper>
   );

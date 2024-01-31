@@ -24,6 +24,7 @@ import NewIdeaCardListSectionSkeleton from './components/NewIdeaCardListSection/
 import Padding from '../../components/Padding';
 import Logo from '../../layouts/Logo';
 import { filterOptions, filterSubOptions, filterRadio } from '../../modules/constants';
+import { getUserNickname } from './utils/getUserNickname';
 
 interface RadioValue {
   collaboration: Option[];
@@ -79,7 +80,7 @@ const Feed = () => {
           <Spacer size={27} />
           <FeedFixTextWrapper>
             <Text font="suit22sb" color="w1">
-              일이삼사오육칠팔구십
+              {getUserNickname()}
             </Text>
             <Text font="suit22r" color="w1">
               님,

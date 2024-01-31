@@ -1,12 +1,16 @@
 import styled from '@emotion/styled';
 import { Spacer, Text } from 'concept-be-design-system';
-import { Fragment } from 'react';
+import { Fragment, useEffect, useRef } from 'react';
 
-import NewIdeaCard from '../../../../components/Card/NewIdeaCard/NewIdeaCard';
-import { useIdeasQuery } from '../../../../hooks/queries/useIdeasQuery';
+import NewIdeaCard from '../NewIdeaCard/NewIdeaCard';
+import { useIdeasQuery } from '../../hooks/queries/useIdeasQuery';
+import { useFeedInfiniteFetch } from '../../hooks/useFeedInfiniteFetch';
 
 const NewIdeaCardListSection = () => {
-  const { ideas } = useIdeasQuery();
+  const { ideas, fetchNextPage } = useIdeasQuery();
+
+  const intersectionRef = useRef(null);
+  useFeedInfiniteFetch(intersectionRef, fetchNextPage);
 
   return (
     <Wrapper>
@@ -20,6 +24,7 @@ const NewIdeaCardListSection = () => {
           <Spacer size={20} />
         </Fragment>
       ))}
+      <div ref={intersectionRef}></div>
     </Wrapper>
   );
 };

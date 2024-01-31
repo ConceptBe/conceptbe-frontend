@@ -8,7 +8,6 @@ const token = localStorage.getItem('userToken');
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
   timeout: 5000,
-  headers: token ? { Authorization: `Bearer ${token}` } : {},
 });
 
 export interface HttpClient extends AxiosInstance {
@@ -21,3 +20,12 @@ export interface HttpClient extends AxiosInstance {
 
 export const http: HttpClient = axiosInstance;
 axiosInstance.interceptors.response.use((res) => res.data);
+
+// Authorization 헤더에 토큰을 넣어준다.
+axiosInstance.interceptors.request.use((req) => {
+  const token = localStorage.getItem('userToken');
+  if (token) {
+    req.headers.Authorization = `Bearer ${token}`;
+  }
+  return req;
+});

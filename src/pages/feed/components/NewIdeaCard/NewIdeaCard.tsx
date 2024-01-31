@@ -15,8 +15,8 @@ import {
   SVGScrapFilled24,
 } from 'concept-be-design-system';
 import { useNavigate } from 'react-router-dom';
-
-import { Idea } from '../../../hooks/queries/useIdeasQuery';
+import type { Idea } from '../../types';
+import { formatCommentDate } from '../../utils/formatCommentDate';
 
 interface Props {
   idea: Idea;
@@ -38,6 +38,24 @@ const NewIdeaCard = ({
   },
 }: Props) => {
   const navigate = useNavigate();
+  const isTeamRecruitmentsExist = teamRecruitments.length > 0;
+
+  const TeamRecruitmentsBadges = (teamRecruitments: string[]) => {
+    const badges = teamRecruitments.map((teamRecruitment, idx) => (
+      <Badge key={`${teamRecruitment}-${idx}`}>{teamRecruitment}</Badge>
+    ));
+
+    return badges.length > 5
+      ? [...badges.slice(0, 5), <Badge key="모집중">+{badges.length - 5} 모집중</Badge>]
+      : badges;
+  };
+
+  const getCount = (count: number) => {
+    if (count > 999) {
+      return '999+';
+    }
+    return count;
+  };
 
   return (
     <CardContainer onClick={() => navigate('/feed/1')}>
@@ -58,7 +76,7 @@ const NewIdeaCard = ({
               <div style={{ width: 1, height: 10, backgroundColor: theme.color.l2 }} />
               <Spacer size={6} />
               <Text font="suit12r" color="b9">
-                {createdAt.toISOString().slice(0, 10)}
+                {formatCommentDate(createdAt)}
               </Text>
             </div>
           </div>
@@ -76,34 +94,36 @@ const NewIdeaCard = ({
         <Spacer size={10} />
 
         <ContentText>{introduce}</ContentText>
-        <Spacer size={14} />
 
-        <TagWrapper>
-          <Flex wrap="wrap" gap={6}>
-            {teamRecruitments.map((teamRecruitment, idx) => (
-              <Badge key={`${teamRecruitment}-${idx}`}>{teamRecruitment}</Badge>
-            ))}
-          </Flex>
-        </TagWrapper>
+        {isTeamRecruitmentsExist && (
+          <>
+            <Spacer size={14} />
+            <TagWrapper>
+              <Flex wrap="wrap" gap={6}>
+                {TeamRecruitmentsBadges(teamRecruitments)}
+              </Flex>
+            </TagWrapper>
+          </>
+        )}
       </ContentWrapper>
 
       <Divider top={18} bottom={16} color="l3" />
       <FooterWrapper>
         <FooterText>
           <SVGCardView14 />
-          {hitsCount}
+          {getCount(hitsCount)}
         </FooterText>
         <FooterText>
           <SVGCardComment14 />
-          {commentsCount}
+          {getCount(commentsCount)}
         </FooterText>
         <FooterText>
           <SVGCardLike14 />
-          {likesCount}
+          {getCount(likesCount)}
         </FooterText>
         <FooterText>
           <SVGCardScrap14 />
-          {bookmarksCount}
+          {getCount(bookmarksCount)}
         </FooterText>
       </FooterWrapper>
     </CardContainer>

@@ -1,7 +1,7 @@
 import { Spacer } from 'concept-be-design-system';
 
 import { Wrapper } from './NewIdeaCardListSection';
-import NewIdeaCardSkeleton from '../../../../components/Card/NewIdeaCard/NewIdeaCardSkeleton';
+import NewIdeaCardSkeleton from '../NewIdeaCard/NewIdeaCardSkeleton';
 import Skeleton from '../../../../components/Skeleton/Skeleton';
 
 const NewIdeaCardListSectionSkeleton = () => {
