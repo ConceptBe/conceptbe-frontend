@@ -42,7 +42,7 @@ interface CheckboxOption {
 }
 
 const SignUpPage = () => {
-  const { state: memberInfo }: { state: OauthMemberInfo } = useLocation();
+  const { state: memberInfo }: { state: OauthMemberInfo | null } = useLocation();
   const { postSignUp } = useSignUpMutation();
   const { mainSkills, detailSkills, skillLevels, regions, purposes } = useSignUpQuery();
   const { fieldValue, fieldErrorValue, onChangeField } = useField<FieldValue>({
@@ -70,7 +70,7 @@ const SignUpPage = () => {
   const validateInput = () => {
     return [
       {
-        validateFn: (value: string) => /[~!@#$%";'^,&*()_+|</>=>`?:{[\]}]/g.test(value),
+        validateFn: (value: string) => /[~!@#$%";'^,&*()_+|</>=>`?:{[\]}\s]/g.test(value),
         errorMessage: '사용 불가한 닉네임입니다.',
       },
     ];
@@ -82,14 +82,14 @@ const SignUpPage = () => {
     postSignUp({
       nickname: fieldValue.nickname,
       mainSkillId: mainSkills.find(({ name }) => dropdownValue.mainSkill === name)?.id || 0,
-      profileImageUrl: memberInfo.profileImageUrl,
+      profileImageUrl: memberInfo?.profileImageUrl || '',
       skills: selectedSkillDepths.map(({ id, name }) => ({ skillId: id, level: name.split(', ')[1] })),
       joinPurposes: checkboxValue.goal.filter(({ checked }) => checked).map(({ id }) => id),
       livingPlace: dropdownValue.region,
       workingPlace: fieldValue.company,
-      email: memberInfo.email,
-      oauthId: memberInfo.oauthId,
-      oauthServerType: memberInfo.oauthServerType,
+      email: memberInfo?.email || '',
+      oauthId: memberInfo?.oauthId || '',
+      oauthServerType: memberInfo?.oauthServerType || '',
     });
   };
 
@@ -120,7 +120,7 @@ const SignUpPage = () => {
         >
           <Box position="relative" top={-50} left={0} right={0} margin="auto" width={100} height={100} cursor="pointer">
             <Box width={100} height={100} overflow="hidden" borderRadius="0 150px 150px 0">
-              <Img src={memberInfo.profileImageUrl} />
+              <Img src={memberInfo?.profileImageUrl} />
             </Box>
             <Flex
               justifyContent="center"
