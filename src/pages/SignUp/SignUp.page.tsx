@@ -70,8 +70,12 @@ const SignUpPage = () => {
   const validateInput = () => {
     return [
       {
-        validateFn: (value: string) => /[~!@#$%";'^,&*()_+|</>=>`?:{[\]}\s]/g.test(value),
+        validateFn: (input: string) => /[~!@#$%";'^,&*()_+|</>=>`?:{[\]}\s]/g.test(input),
         errorMessage: '사용 불가한 닉네임입니다.',
+      },
+      {
+        validateFn: (input: string) => input.length < 2,
+        errorMessage: '2글자 이상의 닉네임으로 입력해주세요.',
       },
     ];
   };
@@ -149,7 +153,7 @@ const SignUpPage = () => {
           >
             <Field.Input
               name="nickname"
-              placeholder="닉네임을 입력해주세요"
+              placeholder="닉네임을 입력해주세요."
               errorValue={fieldErrorValue.nickname}
               successMessage="사용 가능한 닉네임입니다."
             />
