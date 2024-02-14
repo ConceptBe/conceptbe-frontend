@@ -1,7 +1,9 @@
 import styled from '@emotion/styled';
 import { Spacer, Text, theme, SVGLoginKakao, SVGLoginNaver, SVGLoginLogo, Flex } from 'concept-be-design-system';
 
-const REQUEST_URL = `http://localhost:8080/oauth/kakao`;
+import { BASE_URL } from '../../constants';
+
+const REQUEST_URL = `${BASE_URL}/oauth/kakao`;
 
 const Login = () => {
   const onClickOauthKakao = () => {

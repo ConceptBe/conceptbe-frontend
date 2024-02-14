@@ -1,8 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 
-// const API_PREFIX = '/api';
-// const BASE_URL = `url${API_PREFIX}`;
-const BASE_URL = 'http://ec2-54-180-109-147.ap-northeast-2.compute.amazonaws.com:8080';
+import { BASE_URL } from '../constants';
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
