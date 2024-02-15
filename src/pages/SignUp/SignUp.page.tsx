@@ -19,6 +19,7 @@ import {
 import { FormEvent } from 'react';
 import { useLocation } from 'react-router-dom';
 
+import useCheckDuplicateNickname from './hooks/useCheckDuplicateNickname.ts';
 import useSetDetailSkills from './hooks/useSetDetailSkills.ts';
 import useSignUpMutation from './hooks/useSignUpMutation.ts';
 import useSignUpQuery from './hooks/useSignUpQuery.ts';
@@ -66,8 +67,10 @@ const SignUpPage = () => {
     dropdownValue,
     onResetDropdown,
   });
+  const isUniqueNickname = useCheckDuplicateNickname(fieldValue.nickname);
 
   const validateInput = () => {
+    console.log(isUniqueNickname);
     return [
       {
         validateFn: (input: string) => /[~!@#$%";'^,&*()_+|</>=>`?:{[\]}\s]/g.test(input),
@@ -76,6 +79,10 @@ const SignUpPage = () => {
       {
         validateFn: (input: string) => input.length < 2,
         errorMessage: '2글자 이상의 닉네임으로 입력해주세요.',
+      },
+      {
+        validateFn: () => !isUniqueNickname,
+        errorMessage: '사용 불가한 닉네임입니다.',
       },
     ];
   };
