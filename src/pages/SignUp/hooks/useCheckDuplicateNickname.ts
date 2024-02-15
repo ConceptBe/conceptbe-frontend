@@ -1,9 +1,14 @@
-import { useEffect, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
 
 import { getCheckDuplicateNickname } from '../../../api';
+import { FieldValue } from '../types';
 
-const useCheckDuplicateNickname = (userNickname: string) => {
-  const [isUniqueNickname, setIsUniqueNickname] = useState(true);
+interface Props {
+  nickname: string;
+  setFieldErrorValue: Dispatch<SetStateAction<Record<keyof FieldValue, string>>>;
+}
+
+const useCheckDuplicateNickname = ({ nickname, setFieldErrorValue }: Props) => {
   const timerId = useRef<number | null>(null);
 
   useEffect(() => {
@@ -13,15 +18,18 @@ const useCheckDuplicateNickname = (userNickname: string) => {
     }
 
     timerId.current = setTimeout(async () => {
-      if (!userNickname) return;
+      if (!nickname) return;
 
-      const response = await getCheckDuplicateNickname(userNickname);
+      const isUnique = await getCheckDuplicateNickname(nickname);
 
-      setIsUniqueNickname(response);
-    }, 250);
-  }, [userNickname]);
-
-  return isUniqueNickname;
+      if (!isUnique) {
+        setFieldErrorValue((prev) => ({
+          ...prev,
+          nickname: '이미 사용 중인 닉네임입니다.',
+        }));
+      }
+    }, 300);
+  }, [nickname, setFieldErrorValue]);
 };
 
 export default useCheckDuplicateNickname;

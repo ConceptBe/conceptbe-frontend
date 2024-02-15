@@ -50,3 +50,9 @@ export interface CheckboxOption {
   id: number;
   name: string;
 }
+
+export interface FieldValue {
+  nickname: string;
+  company: string;
+  intro: string;
+}

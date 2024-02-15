@@ -23,14 +23,8 @@ import useCheckDuplicateNickname from './hooks/useCheckDuplicateNickname.ts';
 import useSetDetailSkills from './hooks/useSetDetailSkills.ts';
 import useSignUpMutation from './hooks/useSignUpMutation.ts';
 import useSignUpQuery from './hooks/useSignUpQuery.ts';
-import { DropdownValue } from './types';
+import { DropdownValue, FieldValue } from './types';
 import { OauthMemberInfo } from '../../types/login.ts';
-
-interface FieldValue {
-  nickname: string;
-  company: string;
-  intro: string;
-}
 
 interface CheckboxValue {
   goal: CheckboxOption[];
@@ -46,7 +40,7 @@ const SignUpPage = () => {
   const { state: memberInfo }: { state: OauthMemberInfo | null } = useLocation();
   const { postSignUp } = useSignUpMutation();
   const { mainSkills, detailSkills, skillLevels, regions, purposes } = useSignUpQuery();
-  const { fieldValue, fieldErrorValue, onChangeField } = useField<FieldValue>({
+  const { fieldValue, fieldErrorValue, setFieldErrorValue, onChangeField } = useField<FieldValue>({
     nickname: '',
     company: '',
     intro: '',
@@ -67,10 +61,10 @@ const SignUpPage = () => {
     dropdownValue,
     onResetDropdown,
   });
-  const isUniqueNickname = useCheckDuplicateNickname(fieldValue.nickname);
+
+  useCheckDuplicateNickname({ nickname: fieldValue.nickname, setFieldErrorValue });
 
   const validateInput = () => {
-    console.log(isUniqueNickname);
     return [
       {
         validateFn: (input: string) => /[~!@#$%";'^,&*()_+|</>=>`?:{[\]}\s]/g.test(input),
@@ -79,10 +73,6 @@ const SignUpPage = () => {
       {
         validateFn: (input: string) => input.length < 2,
         errorMessage: '2글자 이상의 닉네임으로 입력해주세요.',
-      },
-      {
-        validateFn: () => !isUniqueNickname,
-        errorMessage: '사용 불가한 닉네임입니다.',
       },
     ];
   };
