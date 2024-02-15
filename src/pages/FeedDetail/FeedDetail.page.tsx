@@ -44,7 +44,7 @@ const FeedDetailPage = () => {
     commentsCount,
     bookmarksCount,
     hits,
-    commentParentResponses,
+    owner,
   } = useGetFeedDetail(feedId);
 
   const { dropdownRef, isOpenModifyDropdown, toggleModifyDropdown } = useHandleClickOutside();
@@ -54,26 +54,30 @@ const FeedDetailPage = () => {
       <Header main>
         <Back />
         <Logo />
-        <Box position="relative" ref={dropdownRef} cursor="pointer">
-          <SVGTripleDots onClick={toggleModifyDropdown} />
-          {isOpenModifyDropdown && (
-            <DropDownBox>
-              <Flex justifyContent="space-between" alignItems="center">
-                <Text font="suit12r" color="b6">
-                  수정하기
-                </Text>
-                <SVGFeedPencil />
-              </Flex>
-              <Divider color="bg1" height={0.1} />
-              <Flex justifyContent="space-between" alignItems="center">
-                <Text font="suit12r" color="b6">
-                  삭제하기
-                </Text>
-                <SVGCancel />
-              </Flex>
-            </DropDownBox>
-          )}
-        </Box>
+        {owner ? (
+          <Box position="relative" ref={dropdownRef} cursor="pointer">
+            <SVGTripleDots onClick={toggleModifyDropdown} />
+            {isOpenModifyDropdown && (
+              <DropDownBox>
+                <Flex justifyContent="space-between" alignItems="center">
+                  <Text font="suit12r" color="b6">
+                    수정하기
+                  </Text>
+                  <SVGFeedPencil />
+                </Flex>
+                <Divider color="bg1" height={0.1} />
+                <Flex justifyContent="space-between" alignItems="center">
+                  <Text font="suit12r" color="b6">
+                    삭제하기
+                  </Text>
+                  <SVGCancel />
+                </Flex>
+              </DropDownBox>
+            )}
+          </Box>
+        ) : (
+          <Spacer size={24} />
+        )}
       </Header>
       <Box padding="30px 22px 30px 22px" marginTop={48}>
         <ProfileInfo imageUrl={imageUrl} nickname={nickname} skillList={skillList} />
@@ -207,7 +211,7 @@ const FeedDetailPage = () => {
 
       <Divider color="bg1" height={8} />
 
-      <Comments comments={commentParentResponses} />
+      <Comments />
     </>
   );
 };

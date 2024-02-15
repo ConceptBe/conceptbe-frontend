@@ -14,14 +14,7 @@ export interface FeedDetailResponse {
   commentsCount: number;
   bookmarksCount: number;
   hits: number;
-  commentParentResponses: CommentParentResponse[];
-}
-
-export interface CommentChildResponse {
-  nickname: string;
-  memberSkills: string[];
-  content: string;
-  likesCount: number;
+  owner: boolean;
 }
 
 export interface CommentParentResponse {
@@ -31,4 +24,11 @@ export interface CommentParentResponse {
   likesCount: number;
   commentCount: number;
   commentChildResponses: CommentChildResponse[];
+}
+
+export interface CommentChildResponse {
+  nickname: string;
+  memberSkills: string[];
+  content: string;
+  likesCount: number;
 }

@@ -2,23 +2,22 @@ import styled from '@emotion/styled';
 import { Spacer, theme } from 'concept-be-design-system';
 
 import Comment from './Comment';
-import { CommentParentResponse } from '../types';
 
-interface Props {
-  comments: CommentParentResponse[];
-}
+const Comments = () => {
+  const comments = [];
 
-const Comments = ({ comments }: Props) => (
-  <CommentWrapper>
-    <InputBox>
-      <Input placeholder="댓글을 입력해 주세요." />
-    </InputBox>
-    <Spacer size={20} />
-    {comments.map((comment, idx) => (
-      <Comment key={idx} comment={comment} />
-    ))}
-  </CommentWrapper>
-);
+  return (
+    <CommentWrapper>
+      <InputBox>
+        <Input placeholder="댓글을 입력해 주세요." />
+      </InputBox>
+      <Spacer size={20} />
+      {comments.map((comment, idx) => (
+        <Comment key={idx} comment={comment} />
+      ))}
+    </CommentWrapper>
+  );
+};
 
 export default Comments;
 
