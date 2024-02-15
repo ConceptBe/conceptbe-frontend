@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-const useHandleClickOutside = () => {
+const useHandleModifyDropdown = () => {
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const [isOpenModifyDropdown, setIsOpenModifyDropdown] = useState(false);
 
@@ -34,4 +34,4 @@ const useHandleClickOutside = () => {
   return { dropdownRef, isOpenModifyDropdown, toggleModifyDropdown };
 };
 
-export default useHandleClickOutside;
+export default useHandleModifyDropdown;

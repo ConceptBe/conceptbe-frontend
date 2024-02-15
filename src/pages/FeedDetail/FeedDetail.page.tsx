@@ -20,7 +20,7 @@ import { useParams } from 'react-router-dom';
 
 import Comments from './components/Comments';
 import useGetFeedDetail from './hooks/useGetFeedDetail';
-import useHandleClickOutside from './hooks/useHandleClickOutside';
+import useHandleModifyDropdown from './hooks/useHandleModifyDropdown';
 import ProfileInfo from '../../components/ProfileInfo';
 import Back from '../../layouts/Back';
 import Logo from '../../layouts/Logo';
@@ -47,7 +47,7 @@ const FeedDetailPage = () => {
     owner,
   } = useGetFeedDetail(feedId);
 
-  const { dropdownRef, isOpenModifyDropdown, toggleModifyDropdown } = useHandleClickOutside();
+  const { dropdownRef, isOpenModifyDropdown, toggleModifyDropdown } = useHandleModifyDropdown();
 
   return (
     <>
