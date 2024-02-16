@@ -1,4 +1,3 @@
-import styled from '@emotion/styled';
 import {
   Badge,
   Divider,
@@ -6,21 +5,17 @@ import {
   Spacer,
   Text,
   TextDivider,
-  theme,
-  SVGTripleDots,
   SVGFeedLike,
   SVGFeedMessage,
-  SVGFeedPencil,
   SVGFeedUnScrap,
-  SVGCancel,
   Flex,
   Box,
 } from 'concept-be-design-system';
 import { useParams } from 'react-router-dom';
 
 import Comments from './components/Comments';
+import ModifyDropdown from './components/ModifyDropdown';
 import useGetFeedDetail from './hooks/useGetFeedDetail';
-import useHandleModifyDropdown from './hooks/useHandleModifyDropdown';
 import ProfileInfo from '../../components/ProfileInfo';
 import Back from '../../layouts/Back';
 import Logo from '../../layouts/Logo';
@@ -47,43 +42,17 @@ const FeedDetailPage = () => {
     owner,
   } = useGetFeedDetail(feedId);
 
-  const { dropdownRef, isOpenModifyDropdown, toggleModifyDropdown } = useHandleModifyDropdown();
-
   return (
     <>
       <Header main>
         <Back />
         <Logo />
-        {owner ? (
-          <Box position="relative" ref={dropdownRef} cursor="pointer">
-            <SVGTripleDots onClick={toggleModifyDropdown} />
-            {isOpenModifyDropdown && (
-              <DropDownBox>
-                <Flex justifyContent="space-between" alignItems="center">
-                  <Text font="suit12r" color="b6">
-                    수정하기
-                  </Text>
-                  <SVGFeedPencil />
-                </Flex>
-                <Divider color="bg1" height={0.1} />
-                <Flex justifyContent="space-between" alignItems="center">
-                  <Text font="suit12r" color="b6">
-                    삭제하기
-                  </Text>
-                  <SVGCancel />
-                </Flex>
-              </DropDownBox>
-            )}
-          </Box>
-        ) : (
-          <Spacer size={24} />
-        )}
+        <ModifyDropdown owner={owner} />
       </Header>
+
       <Box padding="30px 22px 30px 22px" marginTop={48}>
         <ProfileInfo imageUrl={imageUrl} nickname={nickname} skillList={skillList} />
-
         <Spacer size={20} />
-
         <Box>
           <div>
             <Text font="suit14sm" color="c1">
@@ -175,7 +144,6 @@ const FeedDetailPage = () => {
         </Box>
 
         <Spacer size={35} />
-
         <Divider color="l3" />
 
         <Flex justifyContent="space-between" padding="18px 0">
@@ -217,18 +185,3 @@ const FeedDetailPage = () => {
 };
 
 export default FeedDetailPage;
-
-const DropDownBox = styled.div`
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  background-color: ${theme.color.w1};
-  width: 88px;
-  height: 70px;
-  border-radius: 6px;
-  padding: 10px;
-  top: 40px;
-  right: -6px;
-  box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.18);
-`;
