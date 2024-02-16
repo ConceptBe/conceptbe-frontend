@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { Text, TextDivider, Box, Flex } from 'concept-be-design-system';
+import { Fragment } from 'react';
 
 interface Props {
   imageUrl: string;
@@ -22,12 +23,12 @@ const ProfileInfo = ({ imageUrl, nickname, skillList }: Props) => {
         </Text>
         <Flex alignItems="center">
           {skillList.map((skill, idx) => (
-            <>
+            <Fragment key={skill}>
               <Text font="suit12r" color="b9">
                 {skill}
               </Text>
               {idx !== skillList.length - 1 && <TextDivider left={6} right={6} color="l2" />}
-            </>
+            </Fragment>
           ))}
         </Flex>
       </Flex>
