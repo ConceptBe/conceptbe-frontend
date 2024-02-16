@@ -72,7 +72,7 @@ const SignUpPage = () => {
       },
       {
         validateFn: (input: string) => input.length < 2,
-        errorMessage: '2글자 이상의 닉네임으로 입력해주세요.',
+        errorMessage: '2글자 이상의 닉네임으로 입력해 주세요.',
       },
     ];
   };
