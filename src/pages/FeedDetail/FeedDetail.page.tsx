@@ -1,20 +1,9 @@
-import {
-  Badge,
-  Divider,
-  Header,
-  Spacer,
-  Text,
-  TextDivider,
-  SVGFeedLike,
-  SVGFeedMessage,
-  SVGFeedUnScrap,
-  Flex,
-  Box,
-} from 'concept-be-design-system';
+import { Badge, Divider, Header, Spacer, Text, TextDivider, Flex, Box } from 'concept-be-design-system';
 import { useParams } from 'react-router-dom';
 
 import Comments from './components/Comments';
 import ModifyDropdown from './components/ModifyDropdown';
+import ReactionBar from './components/ReactionBar';
 import useGetFeedDetail from './hooks/useGetFeedDetail';
 import ProfileInfo from '../../components/ProfileInfo';
 import Back from '../../layouts/Back';
@@ -146,35 +135,7 @@ const FeedDetailPage = () => {
         <Spacer size={35} />
         <Divider color="l3" />
 
-        <Flex justifyContent="space-between" padding="18px 0">
-          <Flex alignItems="center" gap={4}>
-            <SVGFeedMessage />
-            <Text font="suit12r" color="b9">
-              댓글
-            </Text>
-            <Text font="suit12b" color="b9">
-              {commentsCount > 999 ? '999+' : commentsCount}
-            </Text>
-          </Flex>
-          <Flex alignItems="center" gap={4}>
-            <SVGFeedLike />
-            <Text font="suit12r" color="b9">
-              좋아요
-            </Text>
-            <Text font="suit12b" color="b9">
-              {likesCount > 999 ? '999+' : likesCount}
-            </Text>
-          </Flex>
-          <Flex alignItems="center" gap={4}>
-            <SVGFeedUnScrap />
-            <Text font="suit12r" color="b9">
-              스크랩
-            </Text>
-            <Text font="suit12b" color="b9">
-              {bookmarksCount > 999 ? '999+' : bookmarksCount}
-            </Text>
-          </Flex>
-        </Flex>
+        <ReactionBar commentsCount={commentsCount} likesCount={likesCount} bookmarksCount={bookmarksCount} />
       </Box>
 
       <Divider color="bg1" height={8} />
