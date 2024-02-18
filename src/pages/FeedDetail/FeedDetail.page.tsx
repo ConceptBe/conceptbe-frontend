@@ -135,7 +135,12 @@ const FeedDetailPage = () => {
         <Spacer size={35} />
         <Divider color="l3" />
 
-        <ReactionBar commentsCount={commentsCount} likesCount={likesCount} bookmarksCount={bookmarksCount} />
+        <ReactionBar
+          feedId={feedId}
+          commentsCount={commentsCount}
+          likesCount={likesCount}
+          bookmarksCount={bookmarksCount}
+        />
       </Box>
 
       <Divider color="bg1" height={8} />

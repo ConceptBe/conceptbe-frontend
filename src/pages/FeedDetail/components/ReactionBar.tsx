@@ -1,12 +1,21 @@
 import { Flex, SVGFeedLike, SVGFeedMessage, SVGFeedUnScrap, Text } from 'concept-be-design-system';
 
+import useScrapMutation from '../hooks/useScrapMutation';
+
 interface Props {
+  feedId: string;
   commentsCount: number;
   likesCount: number;
   bookmarksCount: number;
 }
 
-const ReactionBar = ({ commentsCount, likesCount, bookmarksCount }: Props) => {
+const ReactionBar = ({ feedId, commentsCount, likesCount, bookmarksCount }: Props) => {
+  const { postScrap } = useScrapMutation(feedId);
+
+  const toggleScrap = () => {
+    postScrap(feedId);
+  };
+
   return (
     <Flex justifyContent="space-between" padding="18px 0">
       <Flex alignItems="center" gap={4}>
@@ -27,7 +36,7 @@ const ReactionBar = ({ commentsCount, likesCount, bookmarksCount }: Props) => {
           {likesCount > 999 ? '999+' : likesCount}
         </Text>
       </Flex>
-      <Flex alignItems="center" gap={4}>
+      <Flex alignItems="center" gap={4} cursor="pointer" onClick={toggleScrap}>
         <SVGFeedUnScrap />
         <Text font="suit12r" color="b9">
           스크랩
