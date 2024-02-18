@@ -36,3 +36,7 @@ export const getFeedDetail = (id: string) => {
 export const getCheckDuplicateNickname = (nickname: string) => {
   return http.get<boolean>(`/members/nickname?nickname=${nickname}`);
 };
+
+export const _postScrap = (id: string) => {
+  return http.post<string>(`/bookmark/${id}`);
+};
