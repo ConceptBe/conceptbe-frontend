@@ -9,3 +9,16 @@ export type Idea = {
   branches: string; // 분야,
   teamRecruitments: string; // 목적
 };
+
+// TODO: 서버에서 skills, joinPurposes 타입 string -> string[]로 변경
+export type Member = {
+  profileImageUrl: string; // 프로필 이미지,
+  nickname: string; // 닉네임
+  isMyProfile: boolean; // 내 프로필 여부
+  mainSkill: string; // 주요 스킬
+  livingPlace: string; // 지역
+  workingPlace: string; // 직장명
+  introduction: string; // 자기소개
+  skills: string[]; // 세부 스킬
+  joinPurposes: string[]; // 관심 영역
+};

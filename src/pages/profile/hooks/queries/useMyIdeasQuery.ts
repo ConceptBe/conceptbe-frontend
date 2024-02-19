@@ -2,13 +2,12 @@ import { useSuspenseInfiniteQuery } from '@tanstack/react-query';
 
 import { http } from '../../../../api/http';
 import { Idea } from '../../types';
+import { memberId } from '../../utils/memberId';
 
 type GetMyIdeasRequest = {
   page: number;
   size: number;
 };
-
-const memberId = JSON.parse(localStorage.getItem('user') ?? '').id;
 
 const getMyIdeas = ({ page, size }: GetMyIdeasRequest) => {
   return http.get<Idea[]>(`/members/${memberId}/ideas?page=${page}&size=${size}`);
