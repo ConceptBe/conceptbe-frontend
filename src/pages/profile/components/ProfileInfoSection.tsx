@@ -19,6 +19,19 @@ const ProfileInfoSection = () => {
     joinPurposes,
   } = useMemberInfoQuery();
 
+  const renderWorkingAndLivingPlace = () => {
+    if (workingPlace && livingPlace) {
+      return `${workingPlace} | ${livingPlace}`;
+    }
+    if (workingPlace) {
+      return workingPlace;
+    }
+    if (livingPlace) {
+      return livingPlace;
+    }
+    return '';
+  };
+
   return (
     <>
       <ImageWrapper>
@@ -37,7 +50,7 @@ const ProfileInfoSection = () => {
             <Text font="suit22sb">{nickname}</Text>
             <Spacer size={6} />
             <Text font="suit15rb" color="b9">
-              {workingPlace} | {livingPlace}
+              {renderWorkingAndLivingPlace()}
             </Text>
           </div>
           <EditButton onClick={() => navigate('/profile/1')}>프로필 수정</EditButton>
