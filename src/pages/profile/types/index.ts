@@ -22,3 +22,24 @@ export type Member = {
   skills: string[]; // 세부 스킬
   joinPurposes: string[]; // 관심 영역
 };
+
+// TODO: 서버에서 skills, branches, teamRecruitments 타입 string -> string[]로 변경
+export interface MemberResponse {
+  profileImageUrl: string;
+  nickname: string;
+  skills: string[];
+}
+export interface BookmarkedIdea {
+  id: number;
+  title: string;
+  introduce: string;
+  hitsCount: number;
+  commentsCount: number;
+  likesCount: number;
+  bookmarksCount: number;
+  isBookmarked: boolean;
+  createdAt: Date;
+  memberResponse: MemberResponse;
+  branches: string[];
+  teamRecruitments: string[];
+}
