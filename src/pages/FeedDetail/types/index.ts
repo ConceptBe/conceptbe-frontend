@@ -15,6 +15,8 @@ export interface FeedDetailResponse {
   bookmarksCount: number;
   hits: number;
   owner: boolean;
+  ownerScrap: boolean;
+  ownerLike: boolean;
 }
 
 export interface CommentParentResponse {

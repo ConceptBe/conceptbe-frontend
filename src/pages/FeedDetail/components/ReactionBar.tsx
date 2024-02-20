@@ -1,19 +1,24 @@
 import { Flex, SVGFeedLike, SVGFeedMessage, SVGFeedUnScrap, Text } from 'concept-be-design-system';
 
-import useScrapMutation from '../hooks/useScrapMutation';
+import { _postScrap } from '../../../api';
+import useDeleteScrapMutation from '../hooks/useDeleteScrapMutation';
+import usePostScrapMutation from '../hooks/usePostScrapMutation';
 
 interface Props {
   feedId: string;
   commentsCount: number;
   likesCount: number;
   bookmarksCount: number;
+  ownerScrap: boolean;
+  ownerLike: boolean;
 }
 
-const ReactionBar = ({ feedId, commentsCount, likesCount, bookmarksCount }: Props) => {
-  const { postScrap } = useScrapMutation(feedId);
+const ReactionBar = ({ feedId, commentsCount, likesCount, bookmarksCount, ownerLike, ownerScrap }: Props) => {
+  const { postScrap } = usePostScrapMutation(feedId);
+  const { deleteScrap } = useDeleteScrapMutation(feedId);
 
   const toggleScrap = () => {
-    postScrap(feedId);
+    ownerScrap ? deleteScrap(feedId) : postScrap(feedId);
   };
 
   return (

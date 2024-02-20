@@ -38,5 +38,9 @@ export const getCheckDuplicateNickname = (nickname: string) => {
 };
 
 export const _postScrap = (id: string) => {
-  return http.post<string>(`/bookmark/${id}`);
+  return http.post<void>(`/bookmark/${id}`);
+};
+
+export const _deleteScrap = (id: string) => {
+  return http.delete<void>(`/bookmark/${id}`);
 };

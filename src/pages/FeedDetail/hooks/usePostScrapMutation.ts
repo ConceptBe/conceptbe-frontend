@@ -3,7 +3,7 @@ import { AxiosError } from 'axios';
 
 import { _postScrap } from '../../../api';
 
-const useScrapMutation = (id: string) => {
+const usePostScrapMutation = (id: string) => {
   const queryClient = useQueryClient();
   const { mutate: postScrap, ...rest } = useMutation({
     mutationFn: _postScrap,
@@ -18,4 +18,4 @@ const useScrapMutation = (id: string) => {
   return { postScrap, ...rest };
 };
 
-export default useScrapMutation;
+export default usePostScrapMutation;

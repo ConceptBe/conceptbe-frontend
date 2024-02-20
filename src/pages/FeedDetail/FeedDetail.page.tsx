@@ -29,6 +29,8 @@ const FeedDetailPage = () => {
     bookmarksCount,
     hits,
     owner,
+    ownerScrap,
+    ownerLike,
   } = useGetFeedDetail(feedId);
 
   return (
@@ -140,6 +142,8 @@ const FeedDetailPage = () => {
           commentsCount={commentsCount}
           likesCount={likesCount}
           bookmarksCount={bookmarksCount}
+          ownerScrap={ownerScrap}
+          ownerLike={ownerLike}
         />
       </Box>
 
