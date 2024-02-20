@@ -30,26 +30,8 @@ interface NewIdeaCardContext {
 
 export const newIdeaCardContext = createContext<NewIdeaCardContext | null>(null);
 
-interface Props {
+export interface Props extends NewIdeaCardContext {
   id: number;
-  profile?: {
-    nickname: string;
-    skills: string[];
-    isBookmarked: boolean;
-    createdAt: Date;
-  };
-  content: {
-    branches: string[];
-    title: string;
-    introduce: string;
-    teamRecruitments: string[];
-  };
-  footer: {
-    hitsCount: number;
-    commentsCount: number;
-    likesCount: number;
-    bookmarksCount: number;
-  };
 }
 
 const NewIdeaCard = ({ id, profile, content, footer, children }: PropsWithChildren<Props>) => {
