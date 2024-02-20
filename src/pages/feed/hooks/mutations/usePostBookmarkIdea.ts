@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { http } from '../../../../api/http';
 
@@ -7,7 +7,13 @@ const _postBookmarkIdea = (ideaId: number) => {
 };
 
 export const usePostBookmarkIdea = () => {
-  const { mutate: postBookmarkIdea, ...rest } = useMutation({ mutationFn: _postBookmarkIdea });
+  const queryClient = useQueryClient();
+  const { mutate: postBookmarkIdea, ...rest } = useMutation({
+    mutationFn: _postBookmarkIdea,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['ideas'] });
+    },
+  });
 
   return { postBookmarkIdea, ...rest };
 };
