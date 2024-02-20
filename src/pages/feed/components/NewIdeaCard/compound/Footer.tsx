@@ -7,17 +7,11 @@ import {
   SVGCardView14,
   theme,
 } from 'concept-be-design-system';
-import { useContext } from 'react';
 
-import { newIdeaCardContext } from '../NewIdeaCard';
+import { useFooterContext } from '../NewIdeaCardContext';
 
 const Footer = () => {
-  const { footer } = useContext(newIdeaCardContext)!;
-  if (!footer) {
-    console.error('NewIdeaCard 컴포넌트 prop에 footer가 필요합니다.');
-    return;
-  }
-  const { hitsCount, commentsCount, likesCount, bookmarksCount } = footer;
+  const { hitsCount, commentsCount, likesCount, bookmarksCount } = useFooterContext();
 
   const getCount = (count: number) => {
     if (count > 999) {

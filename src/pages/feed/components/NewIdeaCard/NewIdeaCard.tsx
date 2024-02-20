@@ -1,36 +1,14 @@
 import styled from '@emotion/styled';
 import { theme } from 'concept-be-design-system';
-import { PropsWithChildren, createContext } from 'react';
+import { PropsWithChildren, createContext, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Content from './compound/Content';
 import Footer from './compound/Footer';
 import Profile from './compound/Profile';
+import { NewIdeaCardContextType, NewIdeaCardContext } from './NewIdeaCardContext';
 
-interface NewIdeaCardContext {
-  profile?: {
-    nickname: string;
-    skills: string[];
-    isBookmarked: boolean;
-    createdAt: Date;
-  };
-  content: {
-    branches: string[];
-    title: string;
-    introduce: string;
-    teamRecruitments: string[];
-  };
-  footer: {
-    hitsCount: number;
-    commentsCount: number;
-    likesCount: number;
-    bookmarksCount: number;
-  };
-}
-
-export const newIdeaCardContext = createContext<NewIdeaCardContext | null>(null);
-
-export interface Props extends NewIdeaCardContext {
+export interface Props extends NewIdeaCardContextType {
   id: number;
 }
 
@@ -38,9 +16,9 @@ const NewIdeaCard = ({ id, profile, content, footer, children }: PropsWithChildr
   const navigate = useNavigate();
 
   return (
-    <newIdeaCardContext.Provider value={{ profile, content, footer }}>
+    <NewIdeaCardContext.Provider value={{ profile, content, footer }}>
       <CardContainer onClick={() => navigate(`/feed/${id}`)}>{children}</CardContainer>
-    </newIdeaCardContext.Provider>
+    </NewIdeaCardContext.Provider>
   );
 };
 

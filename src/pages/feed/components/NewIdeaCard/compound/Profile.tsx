@@ -1,17 +1,11 @@
 import styled from '@emotion/styled';
 import { SVGLoginDefaultProfile, SVGScrap24, SVGScrapFilled24, Spacer, Text, theme } from 'concept-be-design-system';
-import { useContext } from 'react';
 
 import { formatCommentDate } from '../../../utils/formatCommentDate';
-import { newIdeaCardContext } from '../NewIdeaCard';
+import { useProfileContext } from '../NewIdeaCardContext';
 
 const Profile = () => {
-  const { profile } = useContext(newIdeaCardContext)!;
-  if (!profile) {
-    console.error('NewIdeaCard 컴포넌트 prop에 profile이 필요합니다.');
-    return;
-  }
-  const { nickname, skills, isBookmarked, createdAt } = profile;
+  const { nickname, skills, isBookmarked, createdAt } = useProfileContext();
 
   return (
     <ProfileWrapper>

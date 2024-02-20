@@ -1,16 +1,10 @@
 import styled from '@emotion/styled';
 import { Badge, Flex, Spacer, Text, theme } from 'concept-be-design-system';
-import { useContext } from 'react';
 
-import { newIdeaCardContext } from '../NewIdeaCard';
+import { useContentContext } from '../NewIdeaCardContext';
 
 const Content = () => {
-  const { content } = useContext(newIdeaCardContext)!;
-  if (!content) {
-    console.error('NewIdeaCard 컴포넌트 prop에 content가 필요합니다.');
-    return;
-  }
-  const { branches, title, introduce, teamRecruitments } = content;
+  const { branches, title, introduce, teamRecruitments } = useContentContext();
 
   const isTeamRecruitmentsExist = teamRecruitments.length > 0;
 
