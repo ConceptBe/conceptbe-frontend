@@ -57,6 +57,7 @@ const ProfileWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin: 0 0 22px 0;
 `;
 
 const ProfileBox = styled.div`

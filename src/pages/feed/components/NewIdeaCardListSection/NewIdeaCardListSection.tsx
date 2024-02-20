@@ -4,7 +4,10 @@ import { Fragment, useRef } from 'react';
 
 import { useIdeasQuery } from '../../hooks/queries/useIdeasQuery';
 import { useFeedInfiniteFetch } from '../../hooks/useFeedInfiniteFetch';
+import { getUserNickname } from '../../utils/getUserNickname';
 import NewIdeaCard from '../NewIdeaCard/NewIdeaCard';
+
+const nickname = getUserNickname();
 
 const NewIdeaCardListSection = () => {
   const { ideas, fetchNextPage } = useIdeasQuery();
@@ -18,36 +21,44 @@ const NewIdeaCardListSection = () => {
         새로 올라온 아이디어
       </Text>
       <Spacer size={20} />
-      {ideas.map((idea, idx) => (
-        <Fragment key={idx}>
-          <NewIdeaCard
-            id={idea.id}
-            profile={{
-              nickname: idea.memberResponse.nickname,
-              skills: idea.memberResponse.skills,
-              isBookmarked: idea.isBookmarked,
-              createdAt: idea.createdAt,
-            }}
-            content={{
-              branches: idea.branches,
-              title: idea.title,
-              introduce: idea.introduce,
-              teamRecruitments: idea.teamRecruitments,
-            }}
-            footer={{
-              hitsCount: idea.hitsCount,
-              commentsCount: idea.commentsCount,
-              likesCount: idea.likesCount,
-              bookmarksCount: idea.bookmarksCount,
-            }}
-          >
-            <NewIdeaCard.Profile />
-            <NewIdeaCard.Content />
-            <NewIdeaCard.Footer />
-          </NewIdeaCard>
-          <Spacer size={20} />
-        </Fragment>
-      ))}
+      {ideas.map((idea, idx) => {
+        const profile = {
+          nickname: idea.memberResponse.nickname,
+          skills: idea.memberResponse.skills,
+          isBookmarked: idea.isBookmarked,
+          createdAt: idea.createdAt,
+        };
+        const content = {
+          branches: idea.branches,
+          title: idea.title,
+          introduce: idea.introduce,
+          teamRecruitments: idea.teamRecruitments,
+        };
+        const footer = {
+          hitsCount: idea.hitsCount,
+          commentsCount: idea.commentsCount,
+          likesCount: idea.likesCount,
+          bookmarksCount: idea.bookmarksCount,
+        };
+
+        return (
+          <Fragment key={idx}>
+            {idea.memberResponse.nickname === nickname ? (
+              <NewIdeaCard id={idea.id} content={content} footer={footer}>
+                <NewIdeaCard.Content />
+                <NewIdeaCard.Footer />
+              </NewIdeaCard>
+            ) : (
+              <NewIdeaCard id={idea.id} profile={profile} content={content} footer={footer}>
+                <NewIdeaCard.Profile />
+                <NewIdeaCard.Content />
+                <NewIdeaCard.Footer />
+              </NewIdeaCard>
+            )}
+            <Spacer size={20} />
+          </Fragment>
+        );
+      })}
       <div ref={intersectionRef}></div>
     </Wrapper>
   );

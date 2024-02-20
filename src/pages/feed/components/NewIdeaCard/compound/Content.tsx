@@ -49,7 +49,6 @@ export default Content;
 const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 22px 0 0;
 `;
 
 const ContentText = styled.div`
