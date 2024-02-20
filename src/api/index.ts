@@ -44,3 +44,7 @@ export const _postScrap = (id: string) => {
 export const _deleteScrap = (id: string) => {
   return http.delete<void>(`/bookmark/${id}`);
 };
+
+export const _postLike = (id: string) => {
+  return http.post(`/ideas/likes/${id}`);
+};

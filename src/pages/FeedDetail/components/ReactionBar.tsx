@@ -2,6 +2,7 @@ import { Flex, SVGFeedLike, SVGFeedMessage, SVGFeedUnScrap, Text } from 'concept
 
 import { _postScrap } from '../../../api';
 import useDeleteScrapMutation from '../hooks/useDeleteScrapMutation';
+import usePostLikeMutation from '../hooks/usePostLikeMutation';
 import usePostScrapMutation from '../hooks/usePostScrapMutation';
 
 interface Props {
@@ -16,6 +17,7 @@ interface Props {
 const ReactionBar = ({ feedId, commentsCount, likesCount, bookmarksCount, ownerLike, ownerScrap }: Props) => {
   const { postScrap } = usePostScrapMutation(feedId);
   const { deleteScrap } = useDeleteScrapMutation(feedId);
+  const { postLike } = usePostLikeMutation(feedId);
 
   const toggleScrap = () => {
     ownerScrap ? deleteScrap(feedId) : postScrap(feedId);

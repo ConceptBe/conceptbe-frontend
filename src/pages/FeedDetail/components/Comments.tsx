@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Spacer, theme } from 'concept-be-design-system';
+import { Box, Spacer, theme } from 'concept-be-design-system';
 
 import Comment from './Comment';
 
@@ -7,27 +7,19 @@ const Comments = () => {
   const comments = [];
 
   return (
-    <CommentWrapper>
-      <InputBox>
+    <Box padding="20px 22px">
+      <Box position="relative">
         <Input placeholder="댓글을 입력해 주세요." />
-      </InputBox>
+      </Box>
       <Spacer size={20} />
       {comments.map((comment, idx) => (
         <Comment key={idx} comment={comment} />
       ))}
-    </CommentWrapper>
+    </Box>
   );
 };
 
 export default Comments;
-
-const CommentWrapper = styled.div`
-  padding: 20px 22px 20px 22px;
-`;
-
-const InputBox = styled.div`
-  position: relative;
-`;
 
 const Input = styled.input`
   border-radius: 6px;
