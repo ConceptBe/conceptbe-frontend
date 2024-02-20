@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
-import { _deleteScrap, _postScrap } from '../../../api';
+import { _deleteScrap } from '../../../api';
 
 const useDeleteScrapMutation = (id: string) => {
   const queryClient = useQueryClient();
@@ -11,7 +11,7 @@ const useDeleteScrapMutation = (id: string) => {
       queryClient.invalidateQueries({ queryKey: ['feedDetail', id] });
     },
     onError: (error: AxiosError<{ message: string }>) => {
-      alert(error.response?.data.message ?? '스크랩 삭제에 실패했습니다.');
+      alert(error.response?.data.message ?? '스크랩 해제에 실패했습니다.');
     },
   });
 
