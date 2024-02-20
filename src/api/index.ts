@@ -32,3 +32,7 @@ export const getSingUp = () => {
 export const getFeedDetail = (id: string) => {
   return http.get<FeedDetailResponse>(`/ideas/${id}`);
 };
+
+export const getCheckDuplicateNickname = (nickname: string) => {
+  return http.get<boolean>(`/members/nickname?nickname=${nickname}`);
+};

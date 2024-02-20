@@ -19,17 +19,12 @@ import {
 import { FormEvent } from 'react';
 import { useLocation } from 'react-router-dom';
 
+import useCheckDuplicateNickname from './hooks/useCheckDuplicateNickname.ts';
 import useSetDetailSkills from './hooks/useSetDetailSkills.ts';
 import useSignUpMutation from './hooks/useSignUpMutation.ts';
 import useSignUpQuery from './hooks/useSignUpQuery.ts';
-import { DropdownValue } from './types';
+import { DropdownValue, FieldValue } from './types';
 import { OauthMemberInfo } from '../../types/login.ts';
-
-interface FieldValue {
-  nickname: string;
-  company: string;
-  intro: string;
-}
 
 interface CheckboxValue {
   goal: CheckboxOption[];
@@ -45,7 +40,7 @@ const SignUpPage = () => {
   const { state: memberInfo }: { state: OauthMemberInfo | null } = useLocation();
   const { postSignUp } = useSignUpMutation();
   const { mainSkills, detailSkills, skillLevels, regions, purposes } = useSignUpQuery();
-  const { fieldValue, fieldErrorValue, onChangeField } = useField<FieldValue>({
+  const { fieldValue, fieldErrorValue, setFieldErrorValue, onChangeField } = useField<FieldValue>({
     nickname: '',
     company: '',
     intro: '',
@@ -67,11 +62,17 @@ const SignUpPage = () => {
     onResetDropdown,
   });
 
+  useCheckDuplicateNickname({ nickname: fieldValue.nickname, setFieldErrorValue });
+
   const validateInput = () => {
     return [
       {
-        validateFn: (value: string) => /[~!@#$%";'^,&*()_+|</>=>`?:{[\]}\s]/g.test(value),
+        validateFn: (input: string) => /[~!@#$%";'^,&*()_+|</>=>`?:{[\]}\s]/g.test(input),
         errorMessage: '사용 불가한 닉네임입니다.',
+      },
+      {
+        validateFn: (input: string) => input.length < 2,
+        errorMessage: '2글자 이상의 닉네임으로 입력해 주세요.',
       },
     ];
   };
@@ -79,12 +80,34 @@ const SignUpPage = () => {
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    const joinPurposes = checkboxValue.goal.filter(({ checked }) => checked).map(({ id }) => id);
+
+    if (Object.values(fieldErrorValue).find((errorMessage) => errorMessage)) {
+      alert('입력하신 내용을 다시 한번 확인해 주세요.');
+      return;
+    }
+
+    if (!dropdownValue.mainSkill) {
+      alert('대표 스킬을 선택해 주세요.');
+      return;
+    }
+
+    if (selectedSkillDepths.length === 0) {
+      alert('세부 스킬을 선택해 주세요.');
+      return;
+    }
+
+    if (joinPurposes.length === 0) {
+      alert('가입 목적을 선택해 주세요.');
+      return;
+    }
+
     postSignUp({
       nickname: fieldValue.nickname,
       mainSkillId: mainSkills.find(({ name }) => dropdownValue.mainSkill === name)?.id || 0,
       profileImageUrl: memberInfo?.profileImageUrl || '',
       skills: selectedSkillDepths.map(({ id, name }) => ({ skillId: id, level: name.split(', ')[1] })),
-      joinPurposes: checkboxValue.goal.filter(({ checked }) => checked).map(({ id }) => id),
+      joinPurposes,
       livingPlace: dropdownValue.region,
       workingPlace: fieldValue.company,
       email: memberInfo?.email || '',
@@ -149,7 +172,7 @@ const SignUpPage = () => {
           >
             <Field.Input
               name="nickname"
-              placeholder="닉네임을 입력해주세요"
+              placeholder="닉네임을 입력해주세요."
               errorValue={fieldErrorValue.nickname}
               successMessage="사용 가능한 닉네임입니다."
             />
@@ -262,6 +285,7 @@ const SignUpPage = () => {
               options={checkboxValue.goal}
               onChange={onChangeCheckbox}
               maxCount={3}
+              required
             />
           </Flex>
 
