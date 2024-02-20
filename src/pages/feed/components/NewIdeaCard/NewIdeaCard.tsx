@@ -8,15 +8,13 @@ import Footer from './compound/Footer';
 import Profile from './compound/Profile';
 import { NewIdeaCardContextType, NewIdeaCardContext } from './NewIdeaCardContext';
 
-export interface Props extends NewIdeaCardContextType {
-  id: number;
-}
+export interface Props extends NewIdeaCardContextType {}
 
 const NewIdeaCard = ({ id, profile, content, footer, children }: PropsWithChildren<Props>) => {
   const navigate = useNavigate();
 
   return (
-    <NewIdeaCardContext.Provider value={{ profile, content, footer }}>
+    <NewIdeaCardContext.Provider value={{ id, profile, content, footer }}>
       <CardContainer onClick={() => navigate(`/feed/${id}`)}>{children}</CardContainer>
     </NewIdeaCardContext.Provider>
   );

@@ -1,11 +1,27 @@
 import styled from '@emotion/styled';
 import { SVGLoginDefaultProfile, SVGScrap24, SVGScrapFilled24, Spacer, Text, theme } from 'concept-be-design-system';
+import { MouseEventHandler } from 'react';
 
+import { useDeleteBookmarkIdea } from '../../../hooks/mutations/useDeleteBookmarkIdea';
+import { usePostBookmarkIdea } from '../../../hooks/mutations/usePostBookmarkIdea';
 import { formatCommentDate } from '../../../utils/formatCommentDate';
-import { useProfileContext } from '../NewIdeaCardContext';
+import { useIdeaId, useProfileContext } from '../NewIdeaCardContext';
 
 const Profile = () => {
+  const id = useIdeaId();
   const { nickname, skills, isBookmarked, createdAt } = useProfileContext();
+  const { postBookmarkIdea } = usePostBookmarkIdea();
+  const { deleteBookmarkIdea } = useDeleteBookmarkIdea();
+
+  const bookmarkIdea: MouseEventHandler<SVGSVGElement> = (e) => {
+    e.stopPropagation();
+    postBookmarkIdea(id);
+  };
+
+  const unbookmarkIdea: MouseEventHandler<SVGSVGElement> = (e) => {
+    e.stopPropagation();
+    deleteBookmarkIdea(id);
+  };
 
   return (
     <ProfileWrapper>
@@ -30,7 +46,7 @@ const Profile = () => {
           </div>
         </div>
       </ProfileBox>
-      {isBookmarked ? <SVGScrapFilled24 /> : <SVGScrap24 />}
+      {isBookmarked ? <SVGScrapFilled24 onClick={unbookmarkIdea} /> : <SVGScrap24 onClick={bookmarkIdea} />}
     </ProfileWrapper>
   );
 };

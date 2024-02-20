@@ -1,6 +1,7 @@
 import { createContext, useContext } from 'react';
 
 export interface NewIdeaCardContextType {
+  id: number;
   profile?: {
     nickname: string;
     skills: string[];
@@ -30,6 +31,13 @@ const useNewIdeaCardContext = () => {
   }
 
   return context;
+};
+
+export const useIdeaId = () => {
+  const context = useNewIdeaCardContext();
+  const { id } = context;
+
+  return id;
 };
 
 export const useProfileContext = () => {
