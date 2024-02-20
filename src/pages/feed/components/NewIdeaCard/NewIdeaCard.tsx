@@ -14,33 +14,78 @@ import {
   SVGScrap24,
   SVGScrapFilled24,
 } from 'concept-be-design-system';
+import { PropsWithChildren, createContext, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { formatCommentDate } from '../../utils/formatCommentDate';
 
-import type { Idea } from '../../types';
-
-interface Props {
-  idea: Idea;
+interface NewIdeaCardContext {
+  profile?: {
+    nickname: string;
+    skills: string[];
+    isBookmarked: boolean;
+    createdAt: Date;
+  };
+  content: {
+    branches: string[];
+    title: string;
+    introduce: string;
+    teamRecruitments: string[];
+  };
+  footer: {
+    hitsCount: number;
+    commentsCount: number;
+    likesCount: number;
+    bookmarksCount: number;
+  };
 }
 
-const NewIdeaCard = ({
-  idea: {
-    id,
-    title,
-    introduce,
-    hitsCount,
-    commentsCount,
-    likesCount,
-    bookmarksCount,
-    isBookmarked,
-    createdAt,
-    memberResponse,
-    branches,
-    teamRecruitments,
-  },
-}: Props) => {
-  const navigate = useNavigate();
+const newIdeaCardContext = createContext<NewIdeaCardContext | null>(null);
+
+const Profile = () => {
+  const { profile } = useContext(newIdeaCardContext)!;
+  if (!profile) {
+    console.error('NewIdeaCard 컴포넌트 prop에 profile이 필요합니다.');
+    return;
+  }
+  const { nickname, skills, isBookmarked, createdAt } = profile;
+
+  return (
+    <ProfileWrapper>
+      <ProfileBox>
+        <SVGLoginDefaultProfile />
+        <div>
+          <Text font="suit14m" color="b4">
+            {nickname}
+          </Text>
+          <Spacer size={7} />
+
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Text font="suit12r" color="b9">
+              {skills.join(' | ')}
+            </Text>
+            <Spacer size={6} />
+            <div style={{ width: 1, height: 10, backgroundColor: theme.color.l2 }} />
+            <Spacer size={6} />
+            <Text font="suit12r" color="b9">
+              {formatCommentDate(createdAt)}
+            </Text>
+          </div>
+        </div>
+      </ProfileBox>
+      {isBookmarked ? <SVGScrapFilled24 /> : <SVGScrap24 />}
+    </ProfileWrapper>
+  );
+};
+
+const Content = () => {
+  const { content } = useContext(newIdeaCardContext)!;
+  if (!content) {
+    console.error('NewIdeaCard 컴포넌트 prop에 content가 필요합니다.');
+    return;
+  }
+  const { branches, title, introduce, teamRecruitments } = content;
+
   const isTeamRecruitmentsExist = teamRecruitments.length > 0;
 
   const TeamRecruitmentsBadges = (teamRecruitments: string[]) => {
@@ -53,6 +98,40 @@ const NewIdeaCard = ({
       : badges;
   };
 
+  return (
+    <ContentWrapper>
+      <Text font="suit14m" color="c1">
+        {branches.join(' / ')}
+      </Text>
+      <Spacer size={7} />
+
+      <Text font="suit16sb">{title}</Text>
+      <Spacer size={10} />
+
+      <ContentText>{introduce}</ContentText>
+
+      {isTeamRecruitmentsExist && (
+        <>
+          <Spacer size={14} />
+          <TagWrapper>
+            <Flex wrap="wrap" gap={6}>
+              {TeamRecruitmentsBadges(teamRecruitments)}
+            </Flex>
+          </TagWrapper>
+        </>
+      )}
+    </ContentWrapper>
+  );
+};
+
+const Footer = () => {
+  const { footer } = useContext(newIdeaCardContext)!;
+  if (!footer) {
+    console.error('NewIdeaCard 컴포넌트 prop에 footer가 필요합니다.');
+    return;
+  }
+  const { hitsCount, commentsCount, likesCount, bookmarksCount } = footer;
+
   const getCount = (count: number) => {
     if (count > 999) {
       return '999+';
@@ -61,55 +140,7 @@ const NewIdeaCard = ({
   };
 
   return (
-    <CardContainer onClick={() => navigate(`/feed/${id}`)}>
-      <ProfileWrapper>
-        <ProfileBox>
-          <SVGLoginDefaultProfile />
-          <div>
-            <Text font="suit14m" color="b4">
-              {memberResponse.nickname}
-            </Text>
-            <Spacer size={7} />
-
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <Text font="suit12r" color="b9">
-                {memberResponse.skills.join(' | ')}
-              </Text>
-              <Spacer size={6} />
-              <div style={{ width: 1, height: 10, backgroundColor: theme.color.l2 }} />
-              <Spacer size={6} />
-              <Text font="suit12r" color="b9">
-                {formatCommentDate(createdAt)}
-              </Text>
-            </div>
-          </div>
-        </ProfileBox>
-        {isBookmarked ? <SVGScrapFilled24 /> : <SVGScrap24 />}
-      </ProfileWrapper>
-
-      <ContentWrapper>
-        <Text font="suit14m" color="c1">
-          {branches.join(' / ')}
-        </Text>
-        <Spacer size={7} />
-
-        <Text font="suit16sb">{title}</Text>
-        <Spacer size={10} />
-
-        <ContentText>{introduce}</ContentText>
-
-        {isTeamRecruitmentsExist && (
-          <>
-            <Spacer size={14} />
-            <TagWrapper>
-              <Flex wrap="wrap" gap={6}>
-                {TeamRecruitmentsBadges(teamRecruitments)}
-              </Flex>
-            </TagWrapper>
-          </>
-        )}
-      </ContentWrapper>
-
+    <>
       <Divider top={18} bottom={16} color="l3" />
       <FooterWrapper>
         <FooterText>
@@ -129,9 +160,45 @@ const NewIdeaCard = ({
           {getCount(bookmarksCount)}
         </FooterText>
       </FooterWrapper>
-    </CardContainer>
+    </>
   );
 };
+
+interface Props {
+  id: number;
+  profile?: {
+    nickname: string;
+    skills: string[];
+    isBookmarked: boolean;
+    createdAt: Date;
+  };
+  content: {
+    branches: string[];
+    title: string;
+    introduce: string;
+    teamRecruitments: string[];
+  };
+  footer: {
+    hitsCount: number;
+    commentsCount: number;
+    likesCount: number;
+    bookmarksCount: number;
+  };
+}
+
+const NewIdeaCard = ({ id, profile, content, footer, children }: PropsWithChildren<Props>) => {
+  const navigate = useNavigate();
+
+  return (
+    <newIdeaCardContext.Provider value={{ profile, content, footer }}>
+      <CardContainer onClick={() => navigate(`/feed/${id}`)}>{children}</CardContainer>
+    </newIdeaCardContext.Provider>
+  );
+};
+
+NewIdeaCard.Profile = Profile;
+NewIdeaCard.Content = Content;
+NewIdeaCard.Footer = Footer;
 
 export default NewIdeaCard;
 

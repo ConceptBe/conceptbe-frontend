@@ -20,7 +20,31 @@ const NewIdeaCardListSection = () => {
       <Spacer size={20} />
       {ideas.map((idea, idx) => (
         <Fragment key={idx}>
-          <NewIdeaCard key={idx} idea={idea} />
+          <NewIdeaCard
+            id={idea.id}
+            profile={{
+              nickname: idea.memberResponse.nickname,
+              skills: idea.memberResponse.skills,
+              isBookmarked: idea.isBookmarked,
+              createdAt: idea.createdAt,
+            }}
+            content={{
+              branches: idea.branches,
+              title: idea.title,
+              introduce: idea.introduce,
+              teamRecruitments: idea.teamRecruitments,
+            }}
+            footer={{
+              hitsCount: idea.hitsCount,
+              commentsCount: idea.commentsCount,
+              likesCount: idea.likesCount,
+              bookmarksCount: idea.bookmarksCount,
+            }}
+          >
+            <NewIdeaCard.Profile />
+            <NewIdeaCard.Content />
+            <NewIdeaCard.Footer />
+          </NewIdeaCard>
           <Spacer size={20} />
         </Fragment>
       ))}
