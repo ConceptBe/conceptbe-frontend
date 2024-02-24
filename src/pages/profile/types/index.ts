@@ -38,7 +38,7 @@ export interface BookmarkedIdea {
   likesCount: number;
   bookmarksCount: number;
   isBookmarked: boolean;
-  createdAt: Date;
+  createdAt: string;
   memberResponse: MemberResponse;
   branches: string[];
   teamRecruitments: string[];

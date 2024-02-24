@@ -6,7 +6,7 @@ export interface NewIdeaCardContextType {
     nickname: string;
     skills: string[];
     isBookmarked: boolean;
-    createdAt: Date;
+    createdAt: string;
   };
   content: {
     canEdit: boolean;

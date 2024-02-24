@@ -1,4 +1,4 @@
-export function formatCommentDate(date: Date) {
+export function formatCommentDate(date: string) {
   const now = new Date();
   const commentDate = new Date(date);
   const diffTime = Math.abs(now - commentDate);
