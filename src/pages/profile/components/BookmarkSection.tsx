@@ -6,7 +6,7 @@ import { useFeedInfiniteFetch } from '../../Feed/hooks/useFeedInfiniteFetch';
 import { useBookmarkedIdeasQuery } from '../hooks/queries/useBookmarkedIdeasQuery';
 
 const BookmarkSection = () => {
-  const { ideas, fetchNextPage } = useBookmarkedIdeasQuery();
+  const { bookmarkedIdeas, fetchNextPage } = useBookmarkedIdeasQuery();
 
   const intersectionRef = useRef(null);
 
@@ -14,7 +14,7 @@ const BookmarkSection = () => {
 
   return (
     <>
-      {ideas.map((idea, idx) => {
+      {bookmarkedIdeas.map((idea, idx) => {
         const isMine = false;
 
         const profile = {
