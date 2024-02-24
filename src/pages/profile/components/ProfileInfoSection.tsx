@@ -1,8 +1,10 @@
 import styled from '@emotion/styled';
 import { theme, Badge, Spacer, Text, Flex } from 'concept-be-design-system';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Padding from '../../../components/Padding';
+import { ProfileImageDefault } from '../asset';
 import { useMemberInfoQuery } from '../hooks/queries/useMemberInfoQuery';
 
 const ProfileInfoSection = () => {
@@ -18,6 +20,12 @@ const ProfileInfoSection = () => {
     skills,
     joinPurposes,
   } = useMemberInfoQuery();
+
+  const [profileImageError, setProfileImageError] = useState(false);
+
+  const handleProfileImageError = () => {
+    setProfileImageError(true);
+  };
 
   const renderWorkingAndLivingPlace = () => {
     if (workingPlace && livingPlace) {
@@ -35,7 +43,11 @@ const ProfileInfoSection = () => {
   return (
     <>
       <ImageWrapper>
-        <ProfileImage src={profileImageUrl} />
+        {profileImageError === true ? (
+          <ProfileImageDefault />
+        ) : (
+          <ProfileImage src={profileImageUrl} onError={handleProfileImageError} />
+        )}
       </ImageWrapper>
 
       <Padding top={300} />
