@@ -1,7 +1,10 @@
 import styled from '@emotion/styled';
-import { Badge, Header, Spacer, TabLayout, Text, theme, SVGHeaderSetting, Flex } from 'concept-be-design-system';
+import { Header, TabLayout, theme, SVGHeaderSetting } from 'concept-be-design-system';
+import { Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import BookmarkSection from './components/BookmarkSection';
+import IdeaSection from './components/IdeaSection';
 import ProfileInfoSection from './components/ProfileInfoSection';
 import Logo from '../../layouts/Logo';
 
@@ -20,24 +23,22 @@ const Profile = () => {
       </Header>
 
       <ProfileWrapper>
-        <ProfileInfoSection />
-
-        {/* tab */}
+        <Suspense fallback={<div>loading...</div>}>
+          <ProfileInfoSection />
+        </Suspense>
         <TabLayout>
           <TabLayout.Tab label="아이디어">
             <TabPanelBox>
-              {/* TODO: 사용자가 생성한 아이디어 GET API 필요 */}
-              {/* {Array.from({ length: 20 }, (_, idx) => (
-                <NewIdeaCard key={idx}  />
-              ))} */}
+              <Suspense fallback={<div>loading...</div>}>
+                <IdeaSection />
+              </Suspense>
             </TabPanelBox>
           </TabLayout.Tab>
           <TabLayout.Tab label="북마크">
             <TabPanelBox>
-              {/* TODO: 사용자가 생성한 아이디어 GET API 필요 */}
-              {/* {Array.from({ length: 20 }, (_, idx) => (
-                <NewIdeaCard key={idx} badges={badges} />
-              ))} */}
+              <Suspense fallback={<div>loading...</div>}>
+                <BookmarkSection />
+              </Suspense>
             </TabPanelBox>
           </TabLayout.Tab>
         </TabLayout>
@@ -61,5 +62,4 @@ const TabPanelBox = styled.div`
   background-color: ${theme.color.bg1};
   display: flex;
   flex-direction: column;
-  gap: 20px;
 `;
