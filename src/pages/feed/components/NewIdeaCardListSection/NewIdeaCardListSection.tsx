@@ -13,6 +13,7 @@ const NewIdeaCardListSection = () => {
   const { ideas, fetchNextPage } = useIdeasQuery();
 
   const intersectionRef = useRef(null);
+
   useFeedInfiniteFetch(intersectionRef, fetchNextPage);
 
   return (
@@ -22,6 +23,8 @@ const NewIdeaCardListSection = () => {
       </Text>
       <Spacer size={20} />
       {ideas.map((idea, idx) => {
+        const isMine = idea.memberResponse.nickname === nickname;
+
         const profile = {
           nickname: idea.memberResponse.nickname,
           skills: idea.memberResponse.skills,
@@ -29,6 +32,7 @@ const NewIdeaCardListSection = () => {
           createdAt: idea.createdAt,
         };
         const content = {
+          canEdit: isMine,
           branches: idea.branches,
           title: idea.title,
           introduce: idea.introduce,
@@ -43,7 +47,7 @@ const NewIdeaCardListSection = () => {
 
         return (
           <Fragment key={idx}>
-            {idea.memberResponse.nickname === nickname ? (
+            {isMine ? (
               <NewIdeaCard id={idea.id} content={content} footer={footer}>
                 <NewIdeaCard.Content />
                 <NewIdeaCard.Footer />

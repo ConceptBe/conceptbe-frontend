@@ -9,6 +9,7 @@ export interface NewIdeaCardContextType {
     createdAt: Date;
   };
   content: {
+    canEdit: boolean;
     branches: string[];
     title: string;
     introduce: string;
