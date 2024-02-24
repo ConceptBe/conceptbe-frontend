@@ -6,8 +6,8 @@ export type Idea = {
   commentsCount: number; // 댓글 개수,
   likesCount: number; // 좋아요수,
   bookmarksCount: number; // 북마크 수,
-  branches: string; // 분야,
-  teamRecruitments: string; // 목적
+  branches: string[]; // 분야,
+  teamRecruitments: string[]; // 목적
 };
 
 // TODO: 서버에서 skills, joinPurposes 타입 string -> string[]로 변경
