@@ -26,6 +26,7 @@ const NewIdeaCardListSection = () => {
         const isMine = idea.memberResponse.nickname === nickname;
 
         const profile = {
+          profileImageUrl: idea.memberResponse.profileImageUrl,
           nickname: idea.memberResponse.nickname,
           skills: idea.memberResponse.skills,
           isBookmarked: idea.isBookmarked,

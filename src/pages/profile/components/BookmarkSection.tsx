@@ -18,6 +18,7 @@ const BookmarkSection = () => {
         const isMine = false;
 
         const profile = {
+          profileImageUrl: idea.memberResponse.profileImageUrl,
           nickname: idea.memberResponse.nickname,
           skills: idea.memberResponse.skills,
           isBookmarked: idea.isBookmarked,

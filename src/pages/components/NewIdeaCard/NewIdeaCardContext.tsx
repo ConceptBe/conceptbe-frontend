@@ -3,6 +3,7 @@ import { createContext, useContext } from 'react';
 export interface NewIdeaCardContextType {
   id: number;
   profile?: {
+    profileImageUrl: string;
     nickname: string;
     skills: string[];
     isBookmarked: boolean;
