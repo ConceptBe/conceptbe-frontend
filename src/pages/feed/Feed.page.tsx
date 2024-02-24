@@ -15,16 +15,14 @@ import {
   SVGFeedWrite40,
   useDropdown,
 } from 'concept-be-design-system';
-import { Suspense, useState } from 'react';
+import { useState } from 'react';
 
 import BestIdeaCardListSection from './components/BestIdeaCardListSection/BestIdeaCardListSection';
-import BestIdeaCardListSectionSkeleton from './components/BestIdeaCardListSection/BestIdeaCardListSectionSkeleton';
 import NewIdeaCardListSection from './components/NewIdeaCardListSection/NewIdeaCardListSection';
-import NewIdeaCardListSectionSkeleton from './components/NewIdeaCardListSection/NewIdeaCardListSectionSkeleton';
+import { getUserNickname } from './utils/getUserNickname';
 import Padding from '../../components/Padding';
 import Logo from '../../layouts/Logo';
 import { filterOptions, filterSubOptions, filterRadio } from '../../modules/constants';
-import { getUserNickname } from './utils/getUserNickname';
 
 interface RadioValue {
   collaboration: Option[];
@@ -96,12 +94,8 @@ const Feed = () => {
           <Text font="suit15ra" color="w2">{`아이디어 적으러 가기 >`}</Text>
         </FeedFixBox>
         <IdeaSectionBox>
-          <Suspense fallback={<BestIdeaCardListSectionSkeleton />}>
-            <BestIdeaCardListSection />
-          </Suspense>
-          <Suspense fallback={<NewIdeaCardListSectionSkeleton />}>
-            <NewIdeaCardListSection />
-          </Suspense>
+          <BestIdeaCardListSection />
+          <NewIdeaCardListSection />
           <Padding bottom={80} />
         </IdeaSectionBox>
       </Wrapper>

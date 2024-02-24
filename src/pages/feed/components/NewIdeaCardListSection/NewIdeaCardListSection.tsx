@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
 import { Spacer, Text } from 'concept-be-design-system';
-import { Fragment, useRef } from 'react';
+import { Fragment, Suspense, useRef } from 'react';
 
+import NewIdeaCardListSkeleton from './NewIdeaCardListSkeleton';
 import NewIdeaCard from '../../../components/NewIdeaCard/NewIdeaCard';
 import { useIdeasQuery } from '../../hooks/queries/useIdeasQuery';
 import { useFeedInfiniteFetch } from '../../hooks/useFeedInfiniteFetch';
@@ -9,7 +10,7 @@ import { getUserNickname } from '../../utils/getUserNickname';
 
 const nickname = getUserNickname();
 
-const NewIdeaCardListSection = () => {
+const CardList = () => {
   const { ideas, fetchNextPage } = useIdeasQuery();
 
   const intersectionRef = useRef(null);
@@ -17,11 +18,7 @@ const NewIdeaCardListSection = () => {
   useFeedInfiniteFetch(intersectionRef, fetchNextPage);
 
   return (
-    <Wrapper>
-      <Text font="suit16sb" color="b4">
-        새로 올라온 아이디어
-      </Text>
-      <Spacer size={20} />
+    <>
       {ideas.map((idea, idx) => {
         const isMine = idea.memberResponse.nickname === nickname;
 
@@ -65,6 +62,20 @@ const NewIdeaCardListSection = () => {
         );
       })}
       <div ref={intersectionRef}></div>
+    </>
+  );
+};
+
+const NewIdeaCardListSection = () => {
+  return (
+    <Wrapper>
+      <Text font="suit16sb" color="b4">
+        새로 올라온 아이디어
+      </Text>
+      <Spacer size={20} />
+      <Suspense fallback={<NewIdeaCardListSkeleton />}>
+        <CardList />
+      </Suspense>
     </Wrapper>
   );
 };
