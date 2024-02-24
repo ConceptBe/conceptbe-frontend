@@ -2,9 +2,9 @@ import styled from '@emotion/styled';
 import { SVGLoginDefaultProfile, SVGScrap24, SVGScrapFilled24, Spacer, Text, theme } from 'concept-be-design-system';
 import { MouseEventHandler } from 'react';
 
-import { useDeleteBookmarkIdea } from '../../../../hooks/mutations/useDeleteBookmarkIdea';
-import { usePostBookmarkIdea } from '../../../../hooks/mutations/usePostBookmarkIdea';
-import { formatCommentDate } from '../../../../utils/formatCommentDate';
+import { useDeleteBookmarkIdea } from '../../../../Feed/hooks/mutations/useDeleteBookmarkIdea';
+import { usePostBookmarkIdea } from '../../../../Feed/hooks/mutations/usePostBookmarkIdea';
+import { formatCommentDate } from '../../../../Feed/utils/formatCommentDate';
 import { useIdeaId, useProfileContext } from '../../NewIdeaCardContext';
 
 const Profile = () => {

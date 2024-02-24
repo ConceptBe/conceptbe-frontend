@@ -2,10 +2,10 @@ import styled from '@emotion/styled';
 import { Spacer, Text } from 'concept-be-design-system';
 import { Fragment, useRef } from 'react';
 
+import NewIdeaCard from '../../../components/NewIdeaCard/NewIdeaCard';
 import { useIdeasQuery } from '../../hooks/queries/useIdeasQuery';
 import { useFeedInfiniteFetch } from '../../hooks/useFeedInfiniteFetch';
 import { getUserNickname } from '../../utils/getUserNickname';
-import NewIdeaCard from '../NewIdeaCard/NewIdeaCard';
 
 const nickname = getUserNickname();
 
