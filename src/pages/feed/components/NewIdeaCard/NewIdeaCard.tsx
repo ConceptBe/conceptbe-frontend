@@ -3,9 +3,9 @@ import { theme } from 'concept-be-design-system';
 import { PropsWithChildren, createContext, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import Content from './compound/Content';
-import Footer from './compound/Footer';
-import Profile from './compound/Profile';
+import Content from './compound/Content/Content';
+import Footer from './compound/Footer/Footer';
+import Profile from './compound/Profile/Profile';
 import { NewIdeaCardContextType, NewIdeaCardContext } from './NewIdeaCardContext';
 
 export interface Props extends NewIdeaCardContextType {}

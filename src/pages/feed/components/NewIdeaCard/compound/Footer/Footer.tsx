@@ -8,7 +8,7 @@ import {
   theme,
 } from 'concept-be-design-system';
 
-import { useFooterContext } from '../NewIdeaCardContext';
+import { useFooterContext } from '../../NewIdeaCardContext';
 
 const Footer = () => {
   const { hitsCount, commentsCount, likesCount, bookmarksCount } = useFooterContext();
