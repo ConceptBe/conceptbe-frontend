@@ -1,4 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ConceptBeProvider } from 'concept-be-design-system';
 import { createRoot } from 'react-dom/client';
 
@@ -13,5 +14,6 @@ createRoot(document.getElementById('root')!).render(
     <ConceptBeProvider>
       <App />
     </ConceptBeProvider>
+    <ReactQueryDevtools initialIsOpen={false} />
   </QueryClientProvider>,
 );
