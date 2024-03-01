@@ -1,8 +1,10 @@
 import { Spacer } from 'concept-be-design-system';
 import { Fragment, useRef } from 'react';
 
+import EmptyTabContentSection from './EmptyTabContentSection';
 import NewIdeaCard from '../../components/NewIdeaCard/NewIdeaCard';
 import { useFeedInfiniteFetch } from '../../Feed/hooks/useFeedInfiniteFetch';
+import { SVGBookOpen } from '../asset';
 import { useBookmarkedIdeasQuery } from '../hooks/queries/useBookmarkedIdeasQuery';
 
 const BookmarkSection = () => {
@@ -11,6 +13,15 @@ const BookmarkSection = () => {
   const intersectionRef = useRef(null);
 
   useFeedInfiniteFetch(intersectionRef, fetchNextPage);
+
+  if (bookmarkedIdeas.length === 0) {
+    return (
+      <EmptyTabContentSection
+        svg={SVGBookOpen}
+        textList={['북마크한 글이 없어요.', '관심있는 아이디어를 수집해보세요.']}
+      />
+    );
+  }
 
   return (
     <>

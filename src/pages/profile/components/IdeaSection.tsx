@@ -1,8 +1,10 @@
 import { Spacer } from 'concept-be-design-system';
 import { Fragment, useRef } from 'react';
 
+import EmptyTabContentSection from './EmptyTabContentSection';
 import NewIdeaCard from '../../components/NewIdeaCard/NewIdeaCard';
 import { useFeedInfiniteFetch } from '../../Feed/hooks/useFeedInfiniteFetch';
+import { SVGMessageDotsCircle } from '../asset';
 import { useMyIdeasQuery } from '../hooks/queries/useMyIdeasQuery';
 
 const IdeaSection = () => {
@@ -11,6 +13,15 @@ const IdeaSection = () => {
   const intersectionRef = useRef(null);
 
   useFeedInfiniteFetch(intersectionRef, fetchNextPage);
+
+  if (ideas.length === 0) {
+    return (
+      <EmptyTabContentSection
+        svg={SVGMessageDotsCircle}
+        textList={['작성한 글이 없어요', '재밌는 아이디어를 공유해보세요.']}
+      />
+    );
+  }
 
   return (
     <>
