@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import BookmarkSection from './components/BookmarkSection';
 import IdeaSection from './components/IdeaSection';
 import ProfileInfoSection from './components/ProfileInfoSection';
+import Spinner from '../../components/Spinner/Spinner';
 import Logo from '../../layouts/Logo';
 
 const Profile = () => {
@@ -22,27 +23,27 @@ const Profile = () => {
         </Header.Item>
       </Header>
 
-      <ProfileWrapper>
-        <Suspense fallback={<div>loading...</div>}>
+      <Suspense fallback={<Spinner />}>
+        <ProfileWrapper>
           <ProfileInfoSection />
-        </Suspense>
-        <TabLayout>
-          <TabLayout.Tab label="아이디어">
-            <TabPanelBox>
-              <Suspense fallback={<></>}>
-                <IdeaSection />
-              </Suspense>
-            </TabPanelBox>
-          </TabLayout.Tab>
-          <TabLayout.Tab label="북마크">
-            <TabPanelBox>
-              <Suspense fallback={<></>}>
-                <BookmarkSection />
-              </Suspense>
-            </TabPanelBox>
-          </TabLayout.Tab>
-        </TabLayout>
-      </ProfileWrapper>
+          <TabLayout>
+            <TabLayout.Tab label="아이디어">
+              <TabPanelBox>
+                <Suspense fallback={<></>}>
+                  <IdeaSection />
+                </Suspense>
+              </TabPanelBox>
+            </TabLayout.Tab>
+            <TabLayout.Tab label="북마크">
+              <TabPanelBox>
+                <Suspense fallback={<></>}>
+                  <BookmarkSection />
+                </Suspense>
+              </TabPanelBox>
+            </TabLayout.Tab>
+          </TabLayout>
+        </ProfileWrapper>
+      </Suspense>
     </ProfileContainer>
   );
 };
@@ -60,6 +61,7 @@ const ProfileWrapper = styled.div`
 const TabPanelBox = styled.div`
   padding: 30px 20px 60px 20px;
   background-color: ${theme.color.bg1};
+  height: 100%;
   display: flex;
   flex-direction: column;
 `;
