@@ -1,1 +1,1 @@
-export const memberId = JSON.parse(localStorage.getItem('user') ?? '').id;
+export const memberId = JSON.parse(localStorage.getItem('user') ?? '{}').id;
