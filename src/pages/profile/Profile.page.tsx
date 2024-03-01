@@ -29,14 +29,14 @@ const Profile = () => {
         <TabLayout>
           <TabLayout.Tab label="아이디어">
             <TabPanelBox>
-              <Suspense fallback={<div>loading...</div>}>
+              <Suspense fallback={<></>}>
                 <IdeaSection />
               </Suspense>
             </TabPanelBox>
           </TabLayout.Tab>
           <TabLayout.Tab label="북마크">
             <TabPanelBox>
-              <Suspense fallback={<div>loading...</div>}>
+              <Suspense fallback={<></>}>
                 <BookmarkSection />
               </Suspense>
             </TabPanelBox>
