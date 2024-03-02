@@ -6,6 +6,7 @@ import ModifyDropdown from './components/ModifyDropdown';
 import ReactionBar from './components/ReactionBar';
 import { CommentFocusProvider } from './contexts/CommentFocusContext';
 import useFeedDetailQuery from './hooks/queries/useFeedDetailQuery';
+import HelmetMeta from '../../components/HelmetMeta/HelmetMeta';
 import ProfileInfo from '../../components/ProfileInfo';
 import Back from '../../layouts/Back';
 import Logo from '../../layouts/Logo';
@@ -46,6 +47,8 @@ const FeedDetailPage = () => {
 
   return (
     <CommentFocusProvider>
+      <HelmetMeta title="컨셉비 | 글 상세" description={title} />
+
       <Header main>
         <Back />
         <Logo />
