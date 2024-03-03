@@ -21,7 +21,7 @@ const getIdeas = ({ page, size, filterParams }: GetIdeasRequest) => {
       if (Array.isArray(value) && value.length > 0) {
         searchParams.append(key, value.join(','));
       }
-      if (typeof value === 'string' && typeof value === 'number') {
+      if (typeof value === 'string' || typeof value === 'number') {
         searchParams.append(key, String(value));
       }
     });

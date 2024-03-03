@@ -45,10 +45,16 @@ const FilterBottomSheet = ({ open, onClose, onApply }: Props) => {
     purposes: purposeOptions,
   });
 
-  const cooperationWayOptions = cooperationWays.map((properties) => ({
-    checked: filterParams?.cooperationWay === properties.name ? true : false,
-    ...properties,
-  }));
+  const cooperationWayOptions =
+    filterParams?.cooperationWay === undefined
+      ? cooperationWays.map((properties) => {
+          // 필터 선택 안 되어 있을 경우 상관없음이 기본값(id === 1)
+          return properties.id === 1 ? { checked: true, ...properties } : { checked: false, ...properties };
+        })
+      : cooperationWays.map((properties) => ({
+          checked: filterParams?.cooperationWay === properties.name ? true : false,
+          ...properties,
+        }));
   const { radioValue, onChangeRadio } = useRadio({
     cooperationWays: cooperationWayOptions,
   });
