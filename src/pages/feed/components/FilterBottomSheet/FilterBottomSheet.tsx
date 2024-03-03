@@ -32,20 +32,29 @@ const FilterBottomSheet = ({ open, onClose, onApply }: Props) => {
   const { filterParams, updateFilterParams } = useFilterParams();
   const { branches, purposes, recruitmentPlaces, skillCategoryResponses } = useWritingInfoQuery();
 
-  const branchOptions = branches.map((properties) => ({ checked: false, ...properties }));
-  const purposeOptions = purposes.map((properties) => ({ checked: false, ...properties }));
+  const branchOptions = branches.map((properties) => ({
+    checked: filterParams?.branchIds?.includes(properties.id) ? true : false,
+    ...properties,
+  }));
+  const purposeOptions = purposes.map((properties) => ({
+    checked: filterParams?.purposeIds?.includes(properties.id) ? true : false,
+    ...properties,
+  }));
   const { checkboxValue, onChangeCheckbox } = useCheckbox({
     branches: branchOptions,
     purposes: purposeOptions,
   });
 
-  const cooperationWayOptions = cooperationWays.map((properties) => ({ checked: false, ...properties }));
+  const cooperationWayOptions = cooperationWays.map((properties) => ({
+    checked: filterParams?.cooperationWay === properties.name ? true : false,
+    ...properties,
+  }));
   const { radioValue, onChangeRadio } = useRadio({
     cooperationWays: cooperationWayOptions,
   });
 
   const { dropdownValue, onClickDropdown } = useDropdown({
-    recruitmentPlace: '',
+    recruitmentPlace: recruitmentPlaces.find((place) => place.id === filterParams?.recruitmentPlaceId)?.name ?? '',
   });
 
   const applyFilter = () => {
