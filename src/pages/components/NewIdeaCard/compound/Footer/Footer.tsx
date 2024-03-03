@@ -8,17 +8,11 @@ import {
   theme,
 } from 'concept-be-design-system';
 
+import { get999PlusCount } from '../../../../utils';
 import { useFooterContext } from '../../NewIdeaCardContext';
 
 const Footer = () => {
   const { hitsCount, commentsCount, likesCount, bookmarksCount } = useFooterContext();
-
-  const getCount = (count: number) => {
-    if (count > 999) {
-      return '999+';
-    }
-    return count;
-  };
 
   return (
     <>
@@ -26,19 +20,19 @@ const Footer = () => {
       <FooterWrapper>
         <FooterText>
           <SVGCardView14 />
-          {getCount(hitsCount)}
+          {get999PlusCount(hitsCount)}
         </FooterText>
         <FooterText>
           <SVGCardComment14 />
-          {getCount(commentsCount)}
+          {get999PlusCount(commentsCount)}
         </FooterText>
         <FooterText>
           <SVGCardLike14 />
-          {getCount(likesCount)}
+          {get999PlusCount(likesCount)}
         </FooterText>
         <FooterText>
           <SVGCardScrap14 />
-          {getCount(bookmarksCount)}
+          {get999PlusCount(bookmarksCount)}
         </FooterText>
       </FooterWrapper>
     </>
