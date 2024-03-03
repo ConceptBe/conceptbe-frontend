@@ -35,7 +35,7 @@ const useNewIdeaCardContext = () => {
   return context;
 };
 
-export const useIdeaId = () => {
+export const useIdeaIdContext = () => {
   const context = useNewIdeaCardContext();
   const { id } = context;
 

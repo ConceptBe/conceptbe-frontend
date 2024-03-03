@@ -13,10 +13,10 @@ import { MouseEventHandler, useState } from 'react';
 import { useDeleteBookmarkIdea } from '../../../../Feed/hooks/mutations/useDeleteBookmarkIdea';
 import { usePostBookmarkIdea } from '../../../../Feed/hooks/mutations/usePostBookmarkIdea';
 import { formatCommentDate } from '../../../../Feed/utils/formatCommentDate';
-import { useIdeaId, useProfileContext } from '../../NewIdeaCardContext';
+import { useIdeaIdContext, useProfileContext } from '../../NewIdeaCardContext';
 
 const Profile = () => {
-  const id = useIdeaId();
+  const id = useIdeaIdContext();
   const { profileImageUrl, nickname, skills, isBookmarked, createdAt } = useProfileContext();
   const { postBookmarkIdea } = usePostBookmarkIdea();
   const { deleteBookmarkIdea } = useDeleteBookmarkIdea();
