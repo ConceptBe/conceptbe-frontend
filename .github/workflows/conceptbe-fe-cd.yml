@@ -1,0 +1,44 @@
+name: conceptbe-fe-cd
+
+on:
+  pull_request:
+    branches: [develop]   
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code.
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Generate build
+        run: npm run build
+
+      - name: Docker Image Build
+        run: docker build -t pjhg410/conceptbe-fe .
+        
+      - name: Docker Hub Login
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          
+      - name: Docker Hub push
+        run: docker push pjhg410/conceptbe-fe
+        
+      - name: Docker Pull And run
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.WAS_HOST }}
+          username: ${{ secrets.WAS_USERNAME }}
+          password: ${{ secrets.WAS_PASSWORD }}
+          port: ${{ secrets.WAS_SSH_PORT }}
+          script: |
+            docker stop frontend
+            docker rm frontend
+            docker pull pjhg410/conceptbe-fe
+            docker run -d -p 3000:3000 --name frontend pjhg410/conceptbe-fe
