@@ -7,10 +7,9 @@ export type Idea = {
   likesCount: number; // 좋아요수,
   bookmarksCount: number; // 북마크 수,
   branches: string[]; // 분야,
-  teamRecruitments: string[]; // 목적
+  skillCategories: string[]; // 목적
 };
 
-// TODO: 서버에서 skills, joinPurposes 타입 string -> string[]로 변경
 export type Member = {
   profileImageUrl: string; // 프로필 이미지,
   nickname: string; // 닉네임
@@ -23,7 +22,6 @@ export type Member = {
   joinPurposes: string[]; // 관심 영역
 };
 
-// TODO: 서버에서 skills, branches, teamRecruitments 타입 string -> string[]로 변경
 export interface MemberResponse {
   profileImageUrl: string;
   nickname: string;
@@ -41,5 +39,5 @@ export interface BookmarkedIdea {
   createdAt: string;
   memberResponse: MemberResponse;
   branches: string[];
-  teamRecruitments: string[];
+  skillCategories: string[];
 }

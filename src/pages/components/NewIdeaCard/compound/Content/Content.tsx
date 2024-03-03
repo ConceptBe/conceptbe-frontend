@@ -7,14 +7,14 @@ import { ReactComponent as SVGMore24 } from '../../assets/more24.svg';
 import { useContentContext } from '../../NewIdeaCardContext';
 
 const Content = () => {
-  const { canEdit, branches, title, introduce, teamRecruitments } = useContentContext();
+  const { canEdit, branches, title, introduce, skillCategories } = useContentContext();
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const isTeamRecruitmentsExist = teamRecruitments.length > 0;
+  const isSkillCategoriesExist = skillCategories.length > 0;
 
-  const TeamRecruitmentsBadges = (teamRecruitments: string[]) => {
-    const badges = teamRecruitments.map((teamRecruitment, idx) => (
+  const SkillCategoriesBadges = (skillCategories: string[]) => {
+    const badges = skillCategories.map((teamRecruitment, idx) => (
       <Badge key={`${teamRecruitment}-${idx}`}>{teamRecruitment}</Badge>
     ));
 
@@ -52,12 +52,12 @@ const Content = () => {
 
       <ContentText>{introduce}</ContentText>
 
-      {isTeamRecruitmentsExist && (
+      {isSkillCategoriesExist && (
         <>
           <Spacer size={14} />
           <TagWrapper>
             <Flex wrap="wrap" gap={6}>
-              {TeamRecruitmentsBadges(teamRecruitments)}
+              {SkillCategoriesBadges(skillCategories)}
             </Flex>
           </TagWrapper>
         </>

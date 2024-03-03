@@ -35,7 +35,7 @@ const cooperationWays = [
 
 const WritePage = () => {
   const { postIdeas } = usePostIdeasMutation();
-  const { branches, purposes, recruitmentPlaces, teamRecruitments } = useWritingInfoQuery();
+  const { branches, purposes, recruitmentPlaces, skillCategoryResponses } = useWritingInfoQuery();
 
   const [title, setTitle] = useState('');
   const [introduce, setIntroduce] = useState('');
@@ -63,12 +63,12 @@ const WritePage = () => {
 
   const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
 
-  const [selectedTeamRecruitment1Depth, setSelectedTeamRecruitment1Depth] = useState(teamRecruitments[0].name);
-  const [selectedTeamRecruitments, setSelectedTeamRecruitments] = useState<Info[]>([]);
+  const [selectedTeamRecruitment1Depth, setSelectedTeamRecruitment1Depth] = useState(skillCategoryResponses[0].name);
+  const [selectedSkillResponses, setSelectedSkillResponses] = useState<Info[]>([]);
 
-  const sheetLeftItems = teamRecruitments.map((item) => item.name);
-  const sheetRightItems = teamRecruitments.find((item) => item.name === selectedTeamRecruitment1Depth)
-    ?.teamRecruitmentResponses;
+  const sheetLeftItems = skillCategoryResponses.map((item) => item.name);
+  const sheetRightItems = skillCategoryResponses.find((item) => item.name === selectedTeamRecruitment1Depth)
+    ?.skillResponses;
 
   const branchIds = checkboxValue.branches.filter((branch) => branch.checked).map((branch) => branch.id);
   const purposeIds = checkboxValue.purposes.filter((branch) => branch.checked).map((purpose) => purpose.id);
@@ -82,7 +82,7 @@ const WritePage = () => {
 
   const writeIdea = () => {
     const recruitmentPlaceId = recruitmentPlaces.find((place) => place.name === dropdownValue.recruitmentPlace)?.id;
-    const teamRecruitmentIds = selectedTeamRecruitments.map((teamRecruitment) => teamRecruitment.id);
+    const skillCategoryIds = selectedSkillResponses.map((selectedSkillResponse) => selectedSkillResponse.id);
 
     // TODO: 글쓰기 필수 조건 누락 시 토스트 띄워주기 (alert -> toast)
     if (!title) {
@@ -117,7 +117,7 @@ const WritePage = () => {
       cooperationWay,
       branchIds,
       purposeIds,
-      teamRecruitmentIds,
+      skillCategoryIds,
     });
   };
 
@@ -130,19 +130,17 @@ const WritePage = () => {
   };
 
   const onClickTeamRecruitment = (selected: Info) => {
-    if (setSelectedTeamRecruitments.length >= 10) {
+    if (selectedSkillResponses.length >= 10) {
       alert('10개 이상 선택할 수 없습니다.');
       return;
     }
-    setSelectedTeamRecruitments((prev) =>
-      selectedTeamRecruitments.includes(selected)
-        ? prev.filter((item) => item.id !== selected.id)
-        : [...prev, selected],
+    setSelectedSkillResponses((prev) =>
+      selectedSkillResponses.includes(selected) ? prev.filter((item) => item.id !== selected.id) : [...prev, selected],
     );
   };
 
   const onDeleteTeamRecruitment = (id: number) => {
-    setSelectedTeamRecruitments((prev) => prev.filter((item) => item.id !== id));
+    setSelectedSkillResponses((prev) => prev.filter((item) => item.id !== id));
   };
 
   return (
@@ -216,7 +214,7 @@ const WritePage = () => {
 
           <Spacer size={12} />
           <TeamLabelBox>
-            {selectedTeamRecruitments.map((item) => {
+            {selectedSkillResponses.map((item) => {
               return (
                 <TeamLabel key={item.id}>
                   {item.name}
@@ -260,7 +258,7 @@ const WritePage = () => {
                   </Text>
                   <Spacer size={3} />
                   <Text font="suit14m" color={selectedTeamRecruitment1Depth === item ? 'c1' : 'ba'}>
-                    {get2DepthCountsBy1Depth(selectedTeamRecruitments, teamRecruitments)[item]}
+                    {get2DepthCountsBy1Depth(selectedSkillResponses, skillCategoryResponses)[item]}
                   </Text>
                 </Sheet_leftItem>
               );
@@ -273,7 +271,7 @@ const WritePage = () => {
                   <Text font="suit14m" color="b4">
                     {item.name}
                   </Text>
-                  {selectedTeamRecruitments.includes(item) ? <SVGRadioCheck24 /> : <SVGRadioUncheck24 />}
+                  {selectedSkillResponses.includes(item) ? <SVGRadioCheck24 /> : <SVGRadioUncheck24 />}
                 </Sheet_radioDiv>
               );
             })}

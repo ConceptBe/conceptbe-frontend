@@ -23,5 +23,5 @@ export type Idea = {
   createdAt: string; // 생성시각,
   memberResponse: MemberResponse; // 게시글 작성자,
   branches: string[]; // 분야,
-  teamRecruitments: string[]; // 목적
+  skillCategories: string[]; // 목적
 };

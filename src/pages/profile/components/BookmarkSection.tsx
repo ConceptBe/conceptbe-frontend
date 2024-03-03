@@ -41,7 +41,7 @@ const BookmarkSection = () => {
           branches: idea.branches,
           title: idea.title,
           introduce: idea.introduce,
-          teamRecruitments: idea.teamRecruitments,
+          skillCategories: idea.skillCategories,
         };
         const footer = {
           hitsCount: idea.hitsCount,

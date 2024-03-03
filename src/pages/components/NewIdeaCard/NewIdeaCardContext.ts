@@ -14,7 +14,7 @@ export interface NewIdeaCardContextType {
     branches: string[];
     title: string;
     introduce: string;
-    teamRecruitments: string[];
+    skillCategories: string[];
   };
   footer: {
     hitsCount: number;

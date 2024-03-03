@@ -10,13 +10,13 @@ const getWritingInfo = async () => {
 export const useWritingInfoQuery = () => {
   const { data: writingInfo, ...rest } = useSuspenseQuery({ queryKey: ['writingInfo'], queryFn: getWritingInfo });
 
-  const { branches, purposes, regions: recruitmentPlaces, teamRecruitmentCategories: teamRecruitments } = writingInfo;
+  const { branches, purposes, regions: recruitmentPlaces, skillCategoryResponses } = writingInfo;
 
   return {
     branches,
     purposes,
     recruitmentPlaces,
-    teamRecruitments,
+    skillCategoryResponses,
     ...rest,
   };
 };
