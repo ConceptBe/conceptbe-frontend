@@ -4,6 +4,7 @@ import { Fragment, Suspense, useRef } from 'react';
 
 import NewIdeaCardListSkeleton from './NewIdeaCardListSkeleton';
 import NewIdeaCard from '../../../components/NewIdeaCard/NewIdeaCard';
+import { useFilterParams } from '../../context/filterContext';
 import { useIdeasQuery } from '../../hooks/queries/useIdeasQuery';
 import { useFeedInfiniteFetch } from '../../hooks/useFeedInfiniteFetch';
 import { getUserNickname } from '../../utils/getUserNickname';
@@ -11,7 +12,8 @@ import { getUserNickname } from '../../utils/getUserNickname';
 const nickname = getUserNickname();
 
 const CardList = () => {
-  const { ideas, fetchNextPage } = useIdeasQuery();
+  const { filterParams, updateFilterParams } = useFilterParams();
+  const { ideas, fetchNextPage } = useIdeasQuery(filterParams);
 
   const intersectionRef = useRef(null);
 

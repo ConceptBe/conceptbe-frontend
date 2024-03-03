@@ -19,46 +19,61 @@ import { useState } from 'react';
 
 import BestIdeaCardListSection from './components/BestIdeaCardListSection/BestIdeaCardListSection';
 import NewIdeaCardListSection from './components/NewIdeaCardListSection/NewIdeaCardListSection';
+import { useFilterParams } from './context/filterContext';
 import { getUserNickname } from './utils/getUserNickname';
 import Padding from '../../components/Padding';
 import Logo from '../../layouts/Logo';
-import { filterOptions, filterSubOptions, filterRadio } from '../../modules/constants';
+import RecruitmentPlaceSection from '../write/components/RecruitmentPlaceSection';
+import { useWritingInfoQuery } from '../write/hooks/queries/useWritingInfoQuery';
 
-interface RadioValue {
-  collaboration: Option[];
-}
-
-interface CheckboxValue {
-  field: Option[];
-  goal: Option[];
-}
-
-interface Option {
-  id: number;
-  name: string;
-  checked: boolean;
-}
-
-//드롭다운
-const dropdownItems = [
-  { id: 1, name: 'Dropdown item1 asdasddas' },
-  { id: 2, name: 'Dropdown item2' },
+const cooperationWays = [
+  { id: 1, name: '상관없음' },
+  { id: 2, name: '온라인' },
+  { id: 3, name: '오프라인' },
 ];
 
 const Feed = () => {
   const [isFilter, setIsFilter] = useState(false);
-  const { checkboxValue, onChangeCheckbox } = useCheckbox<CheckboxValue>({
-    field: filterOptions,
-    goal: filterSubOptions,
+  const { updateFilterParams } = useFilterParams();
+
+  const { branches, purposes, recruitmentPlaces, skillCategories } = useWritingInfoQuery();
+
+  const branchOptions = branches.map((properties) => ({ checked: false, ...properties }));
+  const purposeOptions = purposes.map((properties) => ({ checked: false, ...properties }));
+  const { checkboxValue, onChangeCheckbox } = useCheckbox({
+    branches: branchOptions,
+    purposes: purposeOptions,
   });
-  const { radioValue, onChangeRadio } = useRadio<RadioValue>({
-    collaboration: filterRadio,
+
+  const cooperationWayOptions = cooperationWays.map((properties) => ({ checked: false, ...properties }));
+  const { radioValue, onChangeRadio } = useRadio({
+    cooperationWays: cooperationWayOptions,
   });
+
   const { dropdownValue, onClickDropdown } = useDropdown({
-    temp1: '',
-    temp2: '',
-    temp3: '',
+    recruitmentPlace: '',
   });
+
+  const applyFilter = () => {
+    const branchIds = checkboxValue.branches.filter((branch) => branch.checked).map((branch) => branch.id);
+    const purposeIds = checkboxValue.purposes.filter((branch) => branch.checked).map((purpose) => purpose.id);
+    const cooperationWay = radioValue.cooperationWays.find((cooperationWay) => cooperationWay.checked)?.name;
+    const recruitmentPlaceId = recruitmentPlaces.find((place) => place.name === dropdownValue.recruitmentPlace)?.id;
+
+    updateFilterParams({ branchIds, purposeIds, cooperationWay, recruitmentPlaceId });
+    setIsFilter(false);
+
+    console.log(
+      'branchIds',
+      branchIds,
+      'purposeIds',
+      purposeIds,
+      'cooperationWay',
+      cooperationWay,
+      'recruitmentPlaceId',
+      recruitmentPlaceId,
+    );
+  };
 
   return (
     <>
@@ -106,8 +121,8 @@ const Feed = () => {
             <FilterWrapper>
               <CheckboxContainer
                 label="분야"
-                checkboxKey="field"
-                options={checkboxValue.field}
+                checkboxKey="branches"
+                options={checkboxValue.branches}
                 onChange={onChangeCheckbox}
               />
             </FilterWrapper>
@@ -115,40 +130,28 @@ const Feed = () => {
             <FilterWrapper>
               <CheckboxContainer
                 label="목적"
-                checkboxKey="goal"
-                options={checkboxValue.goal}
+                checkboxKey="purposes"
+                options={checkboxValue.purposes}
                 onChange={onChangeCheckbox}
               />
             </FilterWrapper>
 
             <FilterWrapper>
               <RadioContainer
-                label="협업 방식"
-                radioKey="collaboration"
-                options={radioValue.collaboration}
-                onChange={onChangeRadio}
+                label="협업방식"
+                radioKey="cooperationWays"
+                options={radioValue.cooperationWays}
+                onChange={(e) => onChangeRadio(e, 'cooperationWays')}
                 gap="large"
               />
             </FilterWrapper>
 
             <FilterWrapper>
-              <Text font="suit15m" color="b9">
-                지역
-              </Text>
-              <Spacer size={12} />
-              <Dropdown selectedValue={dropdownValue.temp1} initialValue="임시">
-                {dropdownItems.map(({ id, name }) => (
-                  <Dropdown.Item
-                    key={id}
-                    value={name}
-                    onClick={(value) => {
-                      onClickDropdown(value, 'temp1');
-                    }}
-                  >
-                    {name}
-                  </Dropdown.Item>
-                ))}
-              </Dropdown>
+              <RecruitmentPlaceSection
+                places={recruitmentPlaces}
+                selectedPlace={dropdownValue.recruitmentPlace}
+                onPlaceChange={(selectedPlace) => onClickDropdown(selectedPlace, 'recruitmentPlace')}
+              />
             </FilterWrapper>
 
             <FilterWrapper>
@@ -157,7 +160,7 @@ const Feed = () => {
               </Text>
               <Spacer size={12} />
               <div style={{ display: 'flex', gap: 8 }}>
-                <Dropdown selectedValue={dropdownValue.temp2} initialValue="임시">
+                {/* <Dropdown selectedValue={dropdownValue.temp2} initialValue="임시">
                   {dropdownItems.map(({ id, name }) => (
                     <Dropdown.Item
                       key={id}
@@ -182,7 +185,7 @@ const Feed = () => {
                       {name}
                     </Dropdown.Item>
                   ))}
-                </Dropdown>
+                </Dropdown> */}
               </div>
             </FilterWrapper>
           </FilterContent>
@@ -190,7 +193,7 @@ const Feed = () => {
             <Button style={{ flex: 1 }} onClick={() => setIsFilter(false)} isGrayOut>
               닫기
             </Button>
-            <Button style={{ flex: 2 }} onClick={() => {}}>
+            <Button style={{ flex: 2 }} onClick={applyFilter}>
               적용
             </Button>
           </FilterBottom>
