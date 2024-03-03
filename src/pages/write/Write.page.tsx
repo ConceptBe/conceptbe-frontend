@@ -58,7 +58,7 @@ const WritePage = () => {
 
   // 모집 지역도 백엔드와 형식 논의해야할듯(id 추가..?)
   const { dropdownValue, onClickDropdown } = useDropdown({
-    recruitmentPlace: '전국', // "전국"의 id === 1
+    recruitmentPlace: '',
   });
 
   const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
