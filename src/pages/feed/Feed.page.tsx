@@ -8,9 +8,11 @@ import NewIdeaCardListSection from './components/NewIdeaCardListSection/NewIdeaC
 import { getUserNickname } from './utils/getUserNickname';
 import Padding from '../../components/Padding';
 import Logo from '../../layouts/Logo';
+import { useWritingInfoQuery } from '../write/hooks/queries/useWritingInfoQuery';
 
 const Feed = () => {
   const [isFilterBottomSheetOpen, setIsFilterBottomSheetOpen] = useState(false);
+  const { branches, purposes, recruitmentPlaces, skillCategoryResponses } = useWritingInfoQuery();
 
   const closeFilterBottomSheet = () => {
     setIsFilterBottomSheetOpen(false);
@@ -60,11 +62,19 @@ const Feed = () => {
         </IdeaSectionBox>
       </Wrapper>
 
-      <FilterBottomSheet
-        open={isFilterBottomSheetOpen}
-        onClose={closeFilterBottomSheet}
-        onApply={closeFilterBottomSheet}
-      />
+      {/* `open` prop과 조건부 렌더링을 둘 다 적용하는 이유는 바텀시트에서 닫기 버튼을 눌렀을 때 선택값 초기화를 위해서입니다.
+      onClose시 바텀시트를 언마운트하여 선택값을 초기화합니다. */}
+      {isFilterBottomSheetOpen && (
+        <FilterBottomSheet
+          branches={branches}
+          purposes={purposes}
+          recruitmentPlaces={recruitmentPlaces}
+          skillCategoryResponses={skillCategoryResponses}
+          open={isFilterBottomSheetOpen}
+          onClose={closeFilterBottomSheet}
+          onApply={closeFilterBottomSheet}
+        />
+      )}
     </>
   );
 };

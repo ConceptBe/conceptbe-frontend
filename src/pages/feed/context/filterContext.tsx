@@ -10,6 +10,7 @@ export type FilterParams = {
 type FilterParamsContextType = {
   filterParams: FilterParams | undefined;
   updateFilterParams: (newFilterParams: FilterParams) => void;
+  resetFilterParams: () => void;
 };
 
 const FilterParamsContext = createContext<FilterParamsContextType | null>(null);
@@ -25,8 +26,14 @@ export const FilterProvider = ({ children }: Props) => {
     setFilterParams(newFilterParams);
   };
 
+  const resetFilterParams = () => {
+    setFilterParams(undefined);
+  };
+
   return (
-    <FilterParamsContext.Provider value={{ filterParams, updateFilterParams }}>{children}</FilterParamsContext.Provider>
+    <FilterParamsContext.Provider value={{ filterParams, updateFilterParams, resetFilterParams }}>
+      {children}
+    </FilterParamsContext.Provider>
   );
 };
 

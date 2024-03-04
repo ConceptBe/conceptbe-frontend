@@ -13,7 +13,7 @@ import {
 } from 'concept-be-design-system';
 
 import RecruitmentPlaceSection from '../../../write/components/RecruitmentPlaceSection';
-import { useWritingInfoQuery } from '../../../write/hooks/queries/useWritingInfoQuery';
+import { Idea } from '../../../write/types';
 import { useFilterParams } from '../../context/filterContext';
 
 const cooperationWays = [
@@ -26,11 +26,22 @@ type Props = {
   open: boolean;
   onClose: () => void;
   onApply: () => void;
+  branches: Idea['branches'];
+  purposes: Idea['purposes'];
+  recruitmentPlaces: Idea['regions'];
+  skillCategoryResponses: Idea['skillCategoryResponses'];
 };
 
-const FilterBottomSheet = ({ open, onClose, onApply }: Props) => {
-  const { filterParams, updateFilterParams } = useFilterParams();
-  const { branches, purposes, recruitmentPlaces, skillCategoryResponses } = useWritingInfoQuery();
+const FilterBottomSheet = ({
+  open,
+  onClose,
+  onApply,
+  branches,
+  purposes,
+  recruitmentPlaces,
+  skillCategoryResponses,
+}: Props) => {
+  const { filterParams, updateFilterParams, resetFilterParams } = useFilterParams();
 
   const branchOptions = branches.map((properties) => ({
     checked: filterParams?.branchIds?.includes(properties.id) ? true : false,
@@ -71,17 +82,11 @@ const FilterBottomSheet = ({ open, onClose, onApply }: Props) => {
 
     updateFilterParams({ branchIds, purposeIds, cooperationWay, recruitmentPlaceId });
     onApply();
+  };
 
-    console.log(
-      'branchIds',
-      branchIds,
-      'purposeIds',
-      purposeIds,
-      'cooperationWay',
-      cooperationWay,
-      'recruitmentPlaceId',
-      recruitmentPlaceId,
-    );
+  const handleClose = () => {
+    resetFilterParams(); // filter Context 초기화
+    onClose(); // 바텀시트 닫기
   };
 
   return (
@@ -160,7 +165,7 @@ const FilterBottomSheet = ({ open, onClose, onApply }: Props) => {
           </FilterWrapper>
         </FilterContent>
         <FilterBottom>
-          <Button style={{ flex: 1 }} onClick={onClose} isGrayOut>
+          <Button style={{ flex: 1 }} onClick={handleClose} isGrayOut>
             닫기
           </Button>
           <Button style={{ flex: 2 }} onClick={applyFilter}>
