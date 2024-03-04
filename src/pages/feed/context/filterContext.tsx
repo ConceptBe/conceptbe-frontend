@@ -5,6 +5,7 @@ export type FilterParams = {
   purposeIds?: number[];
   cooperationWay?: string;
   recruitmentPlaceId?: number;
+  skillCategoryIds?: number[];
 };
 
 type FilterParamsContextType = {

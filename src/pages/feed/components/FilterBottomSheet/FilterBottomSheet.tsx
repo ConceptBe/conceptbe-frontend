@@ -3,6 +3,7 @@ import {
   BottomSheet,
   Button,
   CheckboxContainer,
+  Dropdown,
   RadioContainer,
   Spacer,
   Text,
@@ -11,6 +12,7 @@ import {
   useDropdown,
   useRadio,
 } from 'concept-be-design-system';
+import { useState } from 'react';
 
 import RecruitmentPlaceSection from '../../../write/components/RecruitmentPlaceSection';
 import { Idea } from '../../../write/types';
@@ -70,17 +72,69 @@ const FilterBottomSheet = ({
     cooperationWays: cooperationWayOptions,
   });
 
+  const getSkillCategory1DepthFrom2DepthSkillId = (id: number) => {
+    const skillCategory1Depth = skillCategoryResponses.find((item) =>
+      item.skillResponses.find((skill) => skill.id === id),
+    );
+
+    if (skillCategory1Depth === undefined) {
+      throw new Error('skillCategory1Depth skill category not found');
+    }
+    return skillCategory1Depth;
+  };
+
+  const get2DepthNameFrom2DepthId = (id: number) => {
+    const name = skillCategoryResponses
+      .find((item) => item.skillResponses.find((skill) => skill.id === id))
+      ?.skillResponses.find((skill) => skill.id === id)?.name;
+
+    if (name === undefined) {
+      throw new Error('2depth skill category not found');
+    }
+
+    return name;
+  };
+
   const { dropdownValue, onClickDropdown } = useDropdown({
     recruitmentPlace: recruitmentPlaces.find((place) => place.id === filterParams?.recruitmentPlaceId)?.name ?? '',
   });
 
+  const { dropdownValue: skillCategory1DepthDropDownValue, onClickDropdown: onCklickSkillCategory1DepthDropDown } =
+    useDropdown({
+      skillCategory1Depth:
+        filterParams?.skillCategoryIds?.[0] !== undefined
+          ? getSkillCategory1DepthFrom2DepthSkillId(filterParams?.skillCategoryIds?.[0]).name
+          : undefined ?? '',
+    });
+
+  const { dropdownValue: skillCategory2DepthDropDownValue, onClickDropdown: onCklickSkillCategory2DepthDropDown } =
+    useDropdown({
+      skillCategory2Depth:
+        filterParams?.skillCategoryIds?.[0] !== undefined
+          ? get2DepthNameFrom2DepthId(filterParams?.skillCategoryIds?.[0])
+          : undefined ?? '',
+    });
+
+  const skillCategory1DepthItems = skillCategoryResponses.map((item) => ({ id: item.id, name: item.name }));
+  const skillCategory2DepthItems = skillCategoryResponses.find(
+    (item) => item.name === skillCategory1DepthDropDownValue.skillCategory1Depth,
+  )?.skillResponses;
+
   const applyFilter = () => {
+    const get2DepthIdFrom2DepthName = (name: string) => {
+      const id = skillCategory2DepthItems?.find((item) => item.name === name)?.id;
+
+      return id;
+    };
+
     const branchIds = checkboxValue.branches.filter((branch) => branch.checked).map((branch) => branch.id);
     const purposeIds = checkboxValue.purposes.filter((branch) => branch.checked).map((purpose) => purpose.id);
     const cooperationWay = radioValue.cooperationWays.find((cooperationWay) => cooperationWay.checked)?.name;
     const recruitmentPlaceId = recruitmentPlaces.find((place) => place.name === dropdownValue.recruitmentPlace)?.id;
+    const skillCategoryId = get2DepthIdFrom2DepthName(skillCategory2DepthDropDownValue.skillCategory2Depth);
+    const skillCategoryIds = skillCategoryId ? [skillCategoryId] : undefined;
 
-    updateFilterParams({ branchIds, purposeIds, cooperationWay, recruitmentPlaceId });
+    updateFilterParams({ branchIds, purposeIds, cooperationWay, recruitmentPlaceId, skillCategoryIds });
     onApply();
   };
 
@@ -113,7 +167,7 @@ const FilterBottomSheet = ({
 
           <FilterWrapper>
             <RadioContainer
-              label="협업방식"
+              label="협업 방식"
               radioKey="cooperationWays"
               options={radioValue.cooperationWays}
               onChange={(e) => onChangeRadio(e, 'cooperationWays')}
@@ -135,32 +189,32 @@ const FilterBottomSheet = ({
             </Text>
             <Spacer size={12} />
             <div style={{ display: 'flex', gap: 8 }}>
-              {/* <Dropdown selectedValue={dropdownValue.temp2} initialValue="임시">
-                  {dropdownItems.map(({ id, name }) => (
-                    <Dropdown.Item
-                      key={id}
-                      value={name}
-                      onClick={(value) => {
-                        onClickDropdown(value, 'temp2');
-                      }}
-                    >
-                      {name}
-                    </Dropdown.Item>
-                  ))}
-                </Dropdown>
-                <Dropdown selectedValue={dropdownValue.temp3} initialValue="임시">
-                  {dropdownItems.map(({ id, name }) => (
-                    <Dropdown.Item
-                      key={id}
-                      value={name}
-                      onClick={(value) => {
-                        onClickDropdown(value, 'temp3');
-                      }}
-                    >
-                      {name}
-                    </Dropdown.Item>
-                  ))}
-                </Dropdown> */}
+              <Dropdown selectedValue={skillCategory1DepthDropDownValue.skillCategory1Depth} initialValue="분야">
+                {skillCategory1DepthItems.map(({ id, name }) => (
+                  <Dropdown.Item
+                    key={id}
+                    value={name}
+                    onClick={(value) => {
+                      onCklickSkillCategory1DepthDropDown(value, 'skillCategory1Depth');
+                    }}
+                  >
+                    {name}
+                  </Dropdown.Item>
+                ))}
+              </Dropdown>
+              <Dropdown selectedValue={skillCategory2DepthDropDownValue.skillCategory2Depth} initialValue="세부 분야">
+                {skillCategory2DepthItems?.map(({ id, name }) => (
+                  <Dropdown.Item
+                    key={id}
+                    value={name}
+                    onClick={(value) => {
+                      onCklickSkillCategory2DepthDropDown(value, 'skillCategory2Depth');
+                    }}
+                  >
+                    {name}
+                  </Dropdown.Item>
+                ))}
+              </Dropdown>
             </div>
           </FilterWrapper>
         </FilterContent>
