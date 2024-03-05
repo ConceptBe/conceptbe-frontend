@@ -9,12 +9,12 @@ import KakaoRedirect from './pages/Login/KakaoRedirect';
 import Login from './pages/Login/Login';
 import NeedAuth from './pages/NeedAuth';
 import NotFound from './pages/NotFound';
-import More from './pages/profile/More.page';
-import Profile from './pages/profile/Profile.page';
-import Setting from './pages/profile/Setting.page';
+import More from './pages/Profile/More.page';
+import Profile from './pages/Profile/Profile.page';
+import Setting from './pages/Profile/Setting.page';
 import SignUpPage from './pages/SignUp/SignUp.page';
 import Temp from './pages/Temp';
-import WritePage from './pages/write/Write.page';
+import WritePage from './pages/Write/Write.page';
 
 interface RouteElement {
   path: string;
