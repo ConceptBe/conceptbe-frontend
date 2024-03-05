@@ -20,8 +20,8 @@ export type Idea = {
   likesCount: number; // 좋아요수,
   bookmarksCount: number; // 북마크 수,
   isBookmarked: boolean; // 현재 해당 게시글을 북마크했는지,
-  createdAt: Date; // 생성시각,
+  createdAt: string; // 생성시각,
   memberResponse: MemberResponse; // 게시글 작성자,
   branches: string[]; // 분야,
-  teamRecruitments: string[]; // 목적
+  skillCategories: string[]; // 목적
 };

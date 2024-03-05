@@ -1,66 +1,26 @@
 import styled from '@emotion/styled';
-import {
-  useCheckbox,
-  useRadio,
-  BottomSheet,
-  Button,
-  CheckboxContainer,
-  Dropdown,
-  Header,
-  RadioContainer,
-  Spacer,
-  Text,
-  theme,
-  SVGHeaderFilter,
-  SVGFeedWrite40,
-  useDropdown,
-} from 'concept-be-design-system';
-import { Suspense, useState } from 'react';
+import { Header, Spacer, Text, theme, SVGHeaderFilter, SVGFeedWrite40 } from 'concept-be-design-system';
+import { useState } from 'react';
 
 import BestIdeaCardListSection from './components/BestIdeaCardListSection/BestIdeaCardListSection';
-import BestIdeaCardListSectionSkeleton from './components/BestIdeaCardListSection/BestIdeaCardListSectionSkeleton';
+import FilterBottomSheet from './components/FilterBottomSheet/FilterBottomSheet';
 import NewIdeaCardListSection from './components/NewIdeaCardListSection/NewIdeaCardListSection';
-import NewIdeaCardListSectionSkeleton from './components/NewIdeaCardListSection/NewIdeaCardListSectionSkeleton';
+import { getUserNickname } from './utils/getUserNickname';
 import Padding from '../../components/Padding';
 import Logo from '../../layouts/Logo';
-import { filterOptions, filterSubOptions, filterRadio } from '../../modules/constants';
-import { getUserNickname } from './utils/getUserNickname';
-
-interface RadioValue {
-  collaboration: Option[];
-}
-
-interface CheckboxValue {
-  field: Option[];
-  goal: Option[];
-}
-
-interface Option {
-  id: number;
-  name: string;
-  checked: boolean;
-}
-
-//드롭다운
-const dropdownItems = [
-  { id: 1, name: 'Dropdown item1 asdasddas' },
-  { id: 2, name: 'Dropdown item2' },
-];
+import { useWritingInfoQuery } from '../write/hooks/queries/useWritingInfoQuery';
 
 const Feed = () => {
-  const [isFilter, setIsFilter] = useState(false);
-  const { checkboxValue, onChangeCheckbox } = useCheckbox<CheckboxValue>({
-    field: filterOptions,
-    goal: filterSubOptions,
-  });
-  const { radioValue, onChangeRadio } = useRadio<RadioValue>({
-    collaboration: filterRadio,
-  });
-  const { dropdownValue, onClickDropdown } = useDropdown({
-    temp1: '',
-    temp2: '',
-    temp3: '',
-  });
+  const [isFilterBottomSheetOpen, setIsFilterBottomSheetOpen] = useState(false);
+  const { branches, purposes, recruitmentPlaces, skillCategoryResponses } = useWritingInfoQuery();
+
+  const closeFilterBottomSheet = () => {
+    setIsFilterBottomSheetOpen(false);
+  };
+
+  const openFilterBottomSheet = () => {
+    setIsFilterBottomSheetOpen(true);
+  };
 
   return (
     <>
@@ -69,7 +29,7 @@ const Feed = () => {
           <Logo />
         </Header.Item>
         <Header.Item>
-          <SVGHeaderFilter onClick={() => setIsFilter(true)} cursor="pointer" />
+          <SVGHeaderFilter onClick={openFilterBottomSheet} cursor="pointer" />
         </Header.Item>
       </Header>
 
@@ -96,112 +56,25 @@ const Feed = () => {
           <Text font="suit15ra" color="w2">{`아이디어 적으러 가기 >`}</Text>
         </FeedFixBox>
         <IdeaSectionBox>
-          <Suspense fallback={<BestIdeaCardListSectionSkeleton />}>
-            <BestIdeaCardListSection />
-          </Suspense>
-          <Suspense fallback={<NewIdeaCardListSectionSkeleton />}>
-            <NewIdeaCardListSection />
-          </Suspense>
+          <BestIdeaCardListSection />
+          <NewIdeaCardListSection />
           <Padding bottom={80} />
         </IdeaSectionBox>
       </Wrapper>
 
-      <BottomSheet isOpen={isFilter} onClose={() => setIsFilter(false)}>
-        <FilterBox>
-          <FilterContent>
-            <FilterWrapper>
-              <CheckboxContainer
-                label="분야"
-                checkboxKey="field"
-                options={checkboxValue.field}
-                onChange={onChangeCheckbox}
-              />
-            </FilterWrapper>
-
-            <FilterWrapper>
-              <CheckboxContainer
-                label="목적"
-                checkboxKey="goal"
-                options={checkboxValue.goal}
-                onChange={onChangeCheckbox}
-              />
-            </FilterWrapper>
-
-            <FilterWrapper>
-              <RadioContainer
-                label="협업 방식"
-                radioKey="collaboration"
-                options={radioValue.collaboration}
-                onChange={onChangeRadio}
-                gap="large"
-              />
-            </FilterWrapper>
-
-            <FilterWrapper>
-              <Text font="suit15m" color="b9">
-                지역
-              </Text>
-              <Spacer size={12} />
-              <Dropdown selectedValue={dropdownValue.temp1} initialValue="임시">
-                {dropdownItems.map(({ id, name }) => (
-                  <Dropdown.Item
-                    key={id}
-                    value={name}
-                    onClick={(value) => {
-                      onClickDropdown(value, 'temp1');
-                    }}
-                  >
-                    {name}
-                  </Dropdown.Item>
-                ))}
-              </Dropdown>
-            </FilterWrapper>
-
-            <FilterWrapper>
-              <Text font="suit15m" color="b9">
-                팀원 모집
-              </Text>
-              <Spacer size={12} />
-              <div style={{ display: 'flex', gap: 8 }}>
-                <Dropdown selectedValue={dropdownValue.temp2} initialValue="임시">
-                  {dropdownItems.map(({ id, name }) => (
-                    <Dropdown.Item
-                      key={id}
-                      value={name}
-                      onClick={(value) => {
-                        onClickDropdown(value, 'temp2');
-                      }}
-                    >
-                      {name}
-                    </Dropdown.Item>
-                  ))}
-                </Dropdown>
-                <Dropdown selectedValue={dropdownValue.temp3} initialValue="임시">
-                  {dropdownItems.map(({ id, name }) => (
-                    <Dropdown.Item
-                      key={id}
-                      value={name}
-                      onClick={(value) => {
-                        onClickDropdown(value, 'temp3');
-                      }}
-                    >
-                      {name}
-                    </Dropdown.Item>
-                  ))}
-                </Dropdown>
-              </div>
-            </FilterWrapper>
-          </FilterContent>
-          <FilterBottom>
-            <Button style={{ flex: 1 }} onClick={() => setIsFilter(false)} isGrayOut>
-              닫기
-            </Button>
-            <Button style={{ flex: 2 }} onClick={() => {}}>
-              적용
-            </Button>
-          </FilterBottom>
-        </FilterBox>
-      </BottomSheet>
+      {/* `open` prop과 조건부 렌더링을 둘 다 적용하는 이유는 바텀시트에서 닫기 버튼을 눌렀을 때 선택값 초기화를 위해서입니다.
+      onClose시 바텀시트를 언마운트하여 선택값을 초기화합니다. */}
+      {isFilterBottomSheetOpen && (
+        <FilterBottomSheet
+          branches={branches}
+          purposes={purposes}
+          recruitmentPlaces={recruitmentPlaces}
+          skillCategoryResponses={skillCategoryResponses}
+          open={isFilterBottomSheetOpen}
+          onClose={closeFilterBottomSheet}
+          onApply={closeFilterBottomSheet}
+        />
+      )}
     </>
   );
 };
@@ -233,36 +106,4 @@ const FeedFixTextWrapper = styled.div`
 const IdeaSectionBox = styled.div`
   background-color: ${theme.color.bg1};
   border-radius: 16px 16px 0 0;
-`;
-
-const FilterContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-  padding: 22px;
-`;
-
-const FilterBottom = styled.div`
-  display: flex;
-  align-items: flex-end;
-  gap: 7px;
-  position: sticky;
-  bottom: 0;
-  padding: 0 22px 22px;
-  background-color: ${theme.color.w1};
-`;
-
-const FilterWrapper = styled.div``;
-
-const FilterBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-  overflow: auto;
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-  &::-webkit-scrollbar {
-    display: none;
-  }
 `;

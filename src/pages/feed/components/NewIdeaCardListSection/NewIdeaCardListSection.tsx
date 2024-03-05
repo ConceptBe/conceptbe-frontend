@@ -1,30 +1,83 @@
 import styled from '@emotion/styled';
 import { Spacer, Text } from 'concept-be-design-system';
-import { Fragment, useRef } from 'react';
+import { Fragment, Suspense, useRef } from 'react';
 
+import NewIdeaCardListSkeleton from './NewIdeaCardListSkeleton';
+import NewIdeaCard from '../../../components/NewIdeaCard/NewIdeaCard';
+import { useFilterParams } from '../../context/filterContext';
 import { useIdeasQuery } from '../../hooks/queries/useIdeasQuery';
 import { useFeedInfiniteFetch } from '../../hooks/useFeedInfiniteFetch';
-import NewIdeaCard from '../NewIdeaCard/NewIdeaCard';
+import { getUserNickname } from '../../utils/getUserNickname';
 
-const NewIdeaCardListSection = () => {
-  const { ideas, fetchNextPage } = useIdeasQuery();
+const nickname = getUserNickname();
+
+const CardList = () => {
+  const { filterParams, updateFilterParams } = useFilterParams();
+  const { ideas, fetchNextPage } = useIdeasQuery(filterParams);
 
   const intersectionRef = useRef(null);
+
   useFeedInfiniteFetch(intersectionRef, fetchNextPage);
 
+  return (
+    <>
+      {ideas.map((idea, idx) => {
+        const isMine = idea.memberResponse.nickname === nickname;
+
+        const profile = {
+          profileImageUrl: idea.memberResponse.profileImageUrl,
+          nickname: idea.memberResponse.nickname,
+          skills: idea.memberResponse.skills,
+          isBookmarked: idea.isBookmarked,
+          createdAt: idea.createdAt,
+        };
+        const content = {
+          canEdit: isMine,
+          branches: idea.branches,
+          title: idea.title,
+          introduce: idea.introduce,
+          skillCategories: idea.skillCategories,
+        };
+        const footer = {
+          hitsCount: idea.hitsCount,
+          commentsCount: idea.commentsCount,
+          likesCount: idea.likesCount,
+          bookmarksCount: idea.bookmarksCount,
+        };
+
+        return (
+          <Fragment key={idx}>
+            {isMine ? (
+              <NewIdeaCard id={idea.id} content={content} footer={footer}>
+                <NewIdeaCard.Content />
+                <NewIdeaCard.Footer />
+              </NewIdeaCard>
+            ) : (
+              <NewIdeaCard id={idea.id} profile={profile} content={content} footer={footer}>
+                <NewIdeaCard.Profile />
+                <NewIdeaCard.Content />
+                <NewIdeaCard.Footer />
+              </NewIdeaCard>
+            )}
+            <Spacer size={20} />
+          </Fragment>
+        );
+      })}
+      <div ref={intersectionRef}></div>
+    </>
+  );
+};
+
+const NewIdeaCardListSection = () => {
   return (
     <Wrapper>
       <Text font="suit16sb" color="b4">
         새로 올라온 아이디어
       </Text>
       <Spacer size={20} />
-      {ideas.map((idea, idx) => (
-        <Fragment key={idx}>
-          <NewIdeaCard key={idx} idea={idea} />
-          <Spacer size={20} />
-        </Fragment>
-      ))}
-      <div ref={intersectionRef}></div>
+      <Suspense fallback={<NewIdeaCardListSkeleton />}>
+        <CardList />
+      </Suspense>
     </Wrapper>
   );
 };
