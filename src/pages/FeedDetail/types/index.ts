@@ -3,13 +3,13 @@ export interface FeedDetailResponse {
   nickname: string;
   skillList: string[];
   title: string;
-  date: Date;
+  date: string;
   introduce: string;
   branchList: string[];
   purposeList: string[];
   cooperationWay: string;
   recruitmentPlace: string;
-  teamRecruitmentsList: string[];
+  skillCategories: string[];
   likesCount: number;
   commentsCount: number;
   bookmarksCount: number;

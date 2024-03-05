@@ -23,7 +23,7 @@ const FeedDetailPage = () => {
     purposeList,
     cooperationWay,
     recruitmentPlace,
-    teamRecruitmentsList,
+    skillCategories,
     likesCount,
     commentsCount,
     bookmarksCount,
@@ -126,7 +126,7 @@ const FeedDetailPage = () => {
           </Text>
           <Spacer size={12} />
           <Flex wrap="wrap" gap={6}>
-            {teamRecruitmentsList.map((badge) => (
+            {skillCategories.map((badge) => (
               <Badge key={badge} fontColor="b4">
                 {badge}
               </Badge>
