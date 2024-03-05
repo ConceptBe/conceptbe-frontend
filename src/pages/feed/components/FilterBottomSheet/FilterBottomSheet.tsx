@@ -12,7 +12,6 @@ import {
   useDropdown,
   useRadio,
 } from 'concept-be-design-system';
-import { useState } from 'react';
 
 import RecruitmentPlaceSection from '../../../write/components/RecruitmentPlaceSection';
 import { Idea } from '../../../write/types';
@@ -99,7 +98,7 @@ const FilterBottomSheet = ({
     recruitmentPlace: recruitmentPlaces.find((place) => place.id === filterParams?.recruitmentPlaceId)?.name ?? '',
   });
 
-  const { dropdownValue: skillCategory1DepthDropDownValue, onClickDropdown: onCklickSkillCategory1DepthDropDown } =
+  const { dropdownValue: skillCategory1DepthDropDownValue, onClickDropdown: onClickSkillCategory1DepthDropDown } =
     useDropdown({
       skillCategory1Depth:
         filterParams?.skillCategoryIds?.[0] !== undefined
@@ -195,7 +194,7 @@ const FilterBottomSheet = ({
                     key={id}
                     value={name}
                     onClick={(value) => {
-                      onCklickSkillCategory1DepthDropDown(value, 'skillCategory1Depth');
+                      onClickSkillCategory1DepthDropDown(value, 'skillCategory1Depth');
                     }}
                   >
                     {name}
