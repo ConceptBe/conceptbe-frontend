@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { http } from '../../../../api/http';
-import { memberId } from '../../../profile/utils/memberId';
+import { memberId } from '../../../Profile/utils/memberId';
 
 const _deleteBookmarkIdea = (ideaId: number) => {
   return http.delete(`/bookmark/${ideaId}`);

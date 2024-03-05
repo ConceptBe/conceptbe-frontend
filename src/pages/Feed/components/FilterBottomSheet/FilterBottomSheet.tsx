@@ -13,8 +13,8 @@ import {
   useRadio,
 } from 'concept-be-design-system';
 
-import RecruitmentPlaceSection from '../../../write/components/RecruitmentPlaceSection';
-import { Idea } from '../../../write/types';
+import RecruitmentPlaceSection from '../../../Write/components/RecruitmentPlaceSection';
+import { Idea } from '../../../Write/types';
 import { useFilterParams } from '../../context/filterContext';
 
 const cooperationWays = [

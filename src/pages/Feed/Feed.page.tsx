@@ -8,7 +8,7 @@ import NewIdeaCardListSection from './components/NewIdeaCardListSection/NewIdeaC
 import { getUserNickname } from './utils/getUserNickname';
 import Padding from '../../components/Padding';
 import Logo from '../../layouts/Logo';
-import { useWritingInfoQuery } from '../write/hooks/queries/useWritingInfoQuery';
+import { useWritingInfoQuery } from '../Write/hooks/queries/useWritingInfoQuery';
 
 const Feed = () => {
   const [isFilterBottomSheetOpen, setIsFilterBottomSheetOpen] = useState(false);
