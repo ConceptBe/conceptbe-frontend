@@ -2,9 +2,14 @@ import styled from '@emotion/styled';
 import { Box, Spacer, theme } from 'concept-be-design-system';
 
 import Comment from './Comment';
+import useCommentsQuery from '../hooks/useCommentsQuery';
 
-const Comments = () => {
-  const comments = [];
+interface Props {
+  feedId: string;
+}
+
+const Comments = ({ feedId }: Props) => {
+  const { comments } = useCommentsQuery(feedId);
 
   return (
     <Box padding="20px 22px">
@@ -12,8 +17,8 @@ const Comments = () => {
         <Input placeholder="댓글을 입력해 주세요." />
       </Box>
       <Spacer size={20} />
-      {comments.map((comment, idx) => (
-        <Comment key={idx} comment={comment} />
+      {comments.map((comment) => (
+        <Comment key={comment.content} comment={comment} />
       ))}
     </Box>
   );

@@ -149,7 +149,7 @@ const FeedDetailPage = () => {
 
       <Divider color="bg1" height={8} />
 
-      <Comments />
+      <Comments feedId={feedId} />
     </>
   );
 };
