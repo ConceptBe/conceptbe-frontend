@@ -25,10 +25,7 @@ const Comment = ({
           <Flex alignItems="center" gap={4}>
             <SVGFeedMessage />
             <Text font="suit12r" color="b9">
-              {commentChildResponses.length > 0 ? get999PlusCount(commentChildResponses.length) : '댓글작성'}
-            </Text>
-            <Text font="suit12b" color="b9">
-              {commentCount > 999 ? '999+' : commentCount}
+              {commentCount > 0 ? get999PlusCount(commentCount) : '댓글작성'}
             </Text>
           </Flex>
           <Spacer size={14} />
@@ -38,7 +35,7 @@ const Comment = ({
               좋아요
             </Text>
             <Text font="suit12b" color="b9">
-              {likesCount > 999 ? '999+' : likesCount}
+              {get999PlusCount(likesCount)}
             </Text>
           </Flex>
         </Flex>
