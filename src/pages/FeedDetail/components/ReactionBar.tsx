@@ -9,6 +9,7 @@ import {
 } from 'concept-be-design-system';
 
 import { _postScrap } from '../../../api';
+import { get999PlusCount } from '../../utils';
 import { useFocusComment } from '../contexts/CommentFocusContext';
 import useDeleteLikeMutation from '../hooks/useDeleteLikeMutation';
 import useDeleteScrapMutation from '../hooks/useDeleteScrapMutation';
@@ -47,7 +48,7 @@ const ReactionBar = ({ feedId, commentsCount, likesCount, bookmarksCount, ownerL
           댓글
         </Text>
         <Text font="suit12b" color="b9">
-          {commentsCount > 999 ? '999+' : commentsCount}
+          {get999PlusCount(commentsCount)}
         </Text>
       </Flex>
       <Flex alignItems="center" cursor="pointer" gap={4} onClick={toggleLike}>
@@ -56,7 +57,7 @@ const ReactionBar = ({ feedId, commentsCount, likesCount, bookmarksCount, ownerL
           좋아요
         </Text>
         <Text font="suit12b" color="b9">
-          {likesCount > 999 ? '999+' : likesCount}
+          {get999PlusCount(likesCount)}
         </Text>
       </Flex>
       <Flex alignItems="center" gap={4} cursor="pointer" onClick={toggleScrap}>
@@ -65,7 +66,7 @@ const ReactionBar = ({ feedId, commentsCount, likesCount, bookmarksCount, ownerL
           스크랩
         </Text>
         <Text font="suit12b" color="b9">
-          {bookmarksCount > 999 ? '999+' : bookmarksCount}
+          {get999PlusCount(bookmarksCount)}
         </Text>
       </Flex>
     </Flex>
