@@ -15,6 +15,7 @@ import Setting from './pages/Profile/Setting.page';
 import SignUpPage from './pages/SignUp/SignUp.page';
 import Temp from './pages/Temp';
 import WritePage from './pages/Write/Write.page';
+import WriteEditPage from './pages/WriteEdit/WriteEdit.page';
 
 interface RouteElement {
   path: string;
@@ -55,6 +56,15 @@ const routes: RouteElement[] = [
         element: (
           <Suspense>
             <WritePage />
+          </Suspense>
+        ),
+        withAuth: true,
+      },
+      {
+        path: '/write-edit',
+        element: (
+          <Suspense>
+            <WriteEditPage />
           </Suspense>
         ),
         withAuth: true,
