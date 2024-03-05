@@ -1,4 +1,12 @@
-import { Flex, SVGFeedLike, SVGFeedMessage, SVGFeedUnScrap, Text } from 'concept-be-design-system';
+import {
+  Flex,
+  SVGFeedLike,
+  SVGFeedMessage,
+  SVGFeedScrap,
+  SVGFeedUnLike,
+  SVGFeedUnScrap,
+  Text,
+} from 'concept-be-design-system';
 
 import { _postScrap } from '../../../api';
 import useDeleteLikeMutation from '../hooks/useDeleteLikeMutation';
@@ -41,7 +49,7 @@ const ReactionBar = ({ feedId, commentsCount, likesCount, bookmarksCount, ownerL
         </Text>
       </Flex>
       <Flex alignItems="center" cursor="pointer" gap={4} onClick={toggleLike}>
-        <SVGFeedLike />
+        {ownerLike ? <SVGFeedLike /> : <SVGFeedUnLike />}
         <Text font="suit12r" color="b9">
           좋아요
         </Text>
@@ -50,7 +58,7 @@ const ReactionBar = ({ feedId, commentsCount, likesCount, bookmarksCount, ownerL
         </Text>
       </Flex>
       <Flex alignItems="center" gap={4} cursor="pointer" onClick={toggleScrap}>
-        <SVGFeedUnScrap />
+        {ownerScrap ? <SVGFeedScrap /> : <SVGFeedUnScrap />}
         <Text font="suit12r" color="b9">
           스크랩
         </Text>
