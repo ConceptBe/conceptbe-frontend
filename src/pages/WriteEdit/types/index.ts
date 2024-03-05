@@ -26,3 +26,24 @@ export type Idea = {
     skillResponses: Info[]; // IT기획, 게임기획, 제품기획, 사업기획
   }[];
 };
+
+export type IdeaDetail = {
+  imageUrl: string;
+  nickname: string;
+  skillList: string[];
+  title: string;
+  date: string;
+  introduce: string;
+  branchList: string[];
+  purposeList: string[];
+  cooperationWay: string;
+  recruitmentPlace: string;
+  skillCategories: string[];
+  likesCount: number;
+  commentsCount: number;
+  bookmarksCount: number;
+  hits: number;
+  owner: boolean;
+  ownerLike: boolean;
+  ownerScrap: boolean;
+};

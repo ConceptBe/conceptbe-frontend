@@ -1,12 +1,14 @@
 import styled from '@emotion/styled';
-import { Badge, Divider, Flex, Spacer, Text, theme } from 'concept-be-design-system';
+import { Badge, Flex, Spacer, Text, theme } from 'concept-be-design-system';
 import { MouseEventHandler, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import ContentEditDropdown from './ContentEditDropdown';
 import { ReactComponent as SVGMore24 } from '../../assets/more24.svg';
-import { useContentContext } from '../../NewIdeaCardContext';
+import { useContentContext, useIdeaIdContext } from '../../NewIdeaCardContext';
 
 const Content = () => {
+  const ideaId = useIdeaIdContext();
   const { canEdit, branches, title, introduce, skillCategories } = useContentContext();
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -28,6 +30,11 @@ const Content = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
+  const navigate = useNavigate();
+  const goWriteEditPage = () => {
+    navigate('/write-edit', { state: { ideaId } });
+  };
+
   return (
     <ContentWrapper>
       <Flex justifyContent="space-between">
@@ -44,7 +51,7 @@ const Content = () => {
           <Flex position="relative">
             {/* TODO: SVGMore24 디자인시스템에 추가 */}
             <SVGMore24 onClick={toggleDropdown} />
-            {isDropdownOpen && <ContentEditDropdown />}
+            {isDropdownOpen && <ContentEditDropdown onClickEdit={goWriteEditPage} />}
           </Flex>
         )}
       </Flex>

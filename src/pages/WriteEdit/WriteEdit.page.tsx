@@ -18,11 +18,13 @@ import {
   useDropdown,
 } from 'concept-be-design-system';
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import Header from './components/Header';
 import RecruitmentPlaceSection from './components/RecruitmentPlaceSection';
 import TitleAndIntroduceSection from './components/TitleAndIntroduceSection';
 import { usePostIdeasMutation } from './hooks/mutations/usePostIdeasMutation';
+import { useIdeaDetailQuery } from './hooks/queries/useIdeaDetailQuery';
 import { useWritingInfoQuery } from './hooks/queries/useWritingInfoQuery';
 import { Info } from './types';
 import { get2DepthCountsBy1Depth } from './utils/get2DepthCountsBy1Depth';
@@ -34,6 +36,9 @@ const cooperationWays = [
 ];
 
 const WriteEditPage = () => {
+  const location = useLocation();
+  const { ideaDetail } = useIdeaDetailQuery(Number(location.state.ideaId));
+
   const { postIdeas } = usePostIdeasMutation();
   const { branches, purposes, recruitmentPlaces, skillCategoryResponses } = useWritingInfoQuery();
 
