@@ -2,6 +2,7 @@ import { Box, Flex, SVGFeedMessage, SVGFeedUnLike, Spacer, Text } from 'concept-
 
 import Recomment from './Recomment';
 import ProfileInfo from '../../../components/ProfileInfo';
+import { get999PlusCount } from '../../utils';
 import { CommentParentResponse } from '../types';
 
 interface Props {
@@ -24,7 +25,7 @@ const Comment = ({
           <Flex alignItems="center" gap={4}>
             <SVGFeedMessage />
             <Text font="suit12r" color="b9">
-              댓글
+              {commentChildResponses.length > 0 ? get999PlusCount(commentChildResponses.length) : '댓글작성'}
             </Text>
             <Text font="suit12b" color="b9">
               {commentCount > 999 ? '999+' : commentCount}
