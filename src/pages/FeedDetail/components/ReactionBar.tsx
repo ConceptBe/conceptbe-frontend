@@ -9,6 +9,7 @@ import {
 } from 'concept-be-design-system';
 
 import { _postScrap } from '../../../api';
+import { useFocusComment } from '../contexts/CommentFocusContext';
 import useDeleteLikeMutation from '../hooks/useDeleteLikeMutation';
 import useDeleteScrapMutation from '../hooks/useDeleteScrapMutation';
 import usePostLikeMutation from '../hooks/usePostLikeMutation';
@@ -24,6 +25,7 @@ interface Props {
 }
 
 const ReactionBar = ({ feedId, commentsCount, likesCount, bookmarksCount, ownerLike, ownerScrap }: Props) => {
+  const { focusCommentTextarea } = useFocusComment();
   const { postScrap } = usePostScrapMutation(feedId);
   const { deleteScrap } = useDeleteScrapMutation(feedId);
   const { postLike } = usePostLikeMutation(feedId);
@@ -39,7 +41,7 @@ const ReactionBar = ({ feedId, commentsCount, likesCount, bookmarksCount, ownerL
 
   return (
     <Flex justifyContent="space-between" padding="18px 0">
-      <Flex alignItems="center" gap={4}>
+      <Flex alignItems="center" gap={4} onClick={focusCommentTextarea}>
         <SVGFeedMessage />
         <Text font="suit12r" color="b9">
           댓글

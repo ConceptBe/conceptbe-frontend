@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import Comments from './components/Comments';
 import ModifyDropdown from './components/ModifyDropdown';
 import ReactionBar from './components/ReactionBar';
+import { CommentFocusProvider } from './contexts/CommentFocusContext';
 import useGetFeedDetail from './hooks/useGetFeedDetail';
 import ProfileInfo from '../../components/ProfileInfo';
 import Back from '../../layouts/Back';
@@ -34,7 +35,7 @@ const FeedDetailPage = () => {
   } = useGetFeedDetail(feedId);
 
   return (
-    <>
+    <CommentFocusProvider>
       <Header main>
         <Back />
         <Logo />
@@ -150,7 +151,7 @@ const FeedDetailPage = () => {
       <Divider color="bg1" height={8} />
 
       <Comments feedId={feedId} />
-    </>
+    </CommentFocusProvider>
   );
 };
 
