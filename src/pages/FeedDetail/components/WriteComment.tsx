@@ -34,6 +34,7 @@ const WriteComment = ({ feedId, imageUrl, nickname, skillList }: Props) => {
 
   const onSubmitComment = () => {
     postComment({ ideaId: Number(feedId), parentId: 0, content: commentInput });
+    closeCommentTextarea();
   };
 
   return (
