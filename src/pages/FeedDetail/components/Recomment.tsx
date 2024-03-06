@@ -1,6 +1,7 @@
 import { Box, Flex, SVGFeedReCommentLine, SVGFeedUnLike, Spacer, Text } from 'concept-be-design-system';
 
 import ProfileInfo from '../../../components/ProfileInfo';
+import { get999PlusCount } from '../../utils';
 import { CommentChildResponse } from '../types';
 
 interface Props {
@@ -27,7 +28,7 @@ const Recomment = ({ recomment: { nickname, memberSkills, content, likesCount } 
               좋아요
             </Text>
             <Text font="suit12b" color="b9">
-              {likesCount > 999 ? '999+' : likesCount}
+              {get999PlusCount(likesCount)}
             </Text>
           </Flex>
         </Flex>
