@@ -2,19 +2,18 @@ import styled from '@emotion/styled';
 import { Box, Button, Divider, Flex, Text, theme } from 'concept-be-design-system';
 import { ChangeEvent, useState } from 'react';
 
-import ProfileInfo from '../../../components/ProfileInfo';
+import CommentProfileInfo from './CommentProfileInfo';
 import { PARENT_COMMENT_ID } from '../../../constants';
 import { useFocusCommentTextareaContext } from '../contexts/CommentFocusContext';
 import usePostCommentMutation from '../hooks/mutations/usePostCommentMutation';
 
 interface Props {
   feedId: string;
-  imageUrl: string;
-  nickname: string;
-  skillList: string[];
+  myImageUrl: string;
+  myNickname: string;
 }
 
-const WriteComment = ({ feedId, imageUrl, nickname, skillList }: Props) => {
+const WriteComment = ({ feedId, myImageUrl, myNickname }: Props) => {
   const [commentInput, setCommentInput] = useState<string>('');
   const { commentTextareaRef, isFocusComment, openCommentTextarea, closeCommentTextarea } =
     useFocusCommentTextareaContext();
@@ -54,7 +53,7 @@ const WriteComment = ({ feedId, imageUrl, nickname, skillList }: Props) => {
           padding="15px 20px 0 20px"
           borderRadius="6px 6px 0 0"
         >
-          <ProfileInfo imageUrl={imageUrl} nickname={nickname} skillList={skillList} />
+          <CommentProfileInfo imageUrl={myImageUrl} nickname={myNickname} />
         </Box>
       )}
       <Textarea

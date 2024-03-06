@@ -16,7 +16,7 @@ const Comments = ({ feedId }: Props) => {
 
   return (
     <Box padding="20px 22px">
-      <WriteComment feedId={feedId} imageUrl={myImageUrl} nickname={myNickname} skillList={mySkillList} />
+      <WriteComment feedId={feedId} myImageUrl={myImageUrl} myNickname={myNickname} />
       {comments.map((comment, idx) => (
         <Fragment key={comment.content}>
           <Comment

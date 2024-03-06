@@ -20,7 +20,6 @@ const Comment = ({
   feedId,
   myImageUrl,
   myNickname,
-  mySkillList,
   comment: { nickname, memberSkills, content, likesCount, commentCount, commentChildResponses },
 }: Props) => {
   const [isOpenRecommentTextarea, setIsOpenRecommentTextarea] = useState<boolean>(false);
@@ -75,9 +74,8 @@ const Comment = ({
       {isOpenRecommentTextarea && (
         <WriteRecomment
           feedId={feedId}
-          imageUrl={myImageUrl}
-          nickname={myNickname}
-          skillList={mySkillList}
+          myImageUrl={myImageUrl}
+          myNickname={myNickname}
           onCloseRecommentTextarea={onCloseRecommentTextarea}
         />
       )}
