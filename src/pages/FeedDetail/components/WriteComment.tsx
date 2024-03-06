@@ -16,8 +16,14 @@ interface Props {
 
 const WriteComment = ({ feedId, imageUrl, nickname, skillList }: Props) => {
   const [commentInput, setCommentInput] = useState<string>('');
-  const { postComment } = usePostCommentMutation({ feedId, onSuccess: () => setCommentInput('') });
   const { textareaRef, isFocusComment, openCommentTextarea, closeCommentTextarea } = useFocusComment();
+  const { postComment } = usePostCommentMutation({
+    feedId,
+    onSuccess: () => {
+      setCommentInput('');
+      closeCommentTextarea();
+    },
+  });
 
   const onChangeTextarea = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setCommentInput(e.target.value.substring(0, 500));
@@ -35,7 +41,6 @@ const WriteComment = ({ feedId, imageUrl, nickname, skillList }: Props) => {
 
   const onSubmitComment = () => {
     postComment({ ideaId: Number(feedId), parentId: PARENT_COMMENT_ID, content: commentInput });
-    closeCommentTextarea();
   };
 
   return (
