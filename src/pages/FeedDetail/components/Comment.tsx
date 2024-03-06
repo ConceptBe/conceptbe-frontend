@@ -32,9 +32,6 @@ const Comment = ({
           <Flex alignItems="center" gap={4}>
             <SVGFeedUnLike />
             <Text font="suit12r" color="b9">
-              좋아요
-            </Text>
-            <Text font="suit12b" color="b9">
               {get999PlusCount(likesCount)}
             </Text>
           </Flex>
