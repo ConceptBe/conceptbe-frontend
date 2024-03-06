@@ -1,4 +1,5 @@
 import { Box, Divider } from 'concept-be-design-system';
+import { Fragment } from 'react';
 
 import Comment from './Comment';
 import WriteComment from './WriteComment';
@@ -18,10 +19,16 @@ const Comments = ({ feedId, imageUrl, nickname, skillList }: Props) => {
     <Box padding="20px 22px">
       <WriteComment feedId={feedId} imageUrl={imageUrl} nickname={nickname} skillList={skillList} />
       {comments.map((comment, idx) => (
-        <>
-          <Comment key={comment.content} comment={comment} />
+        <Fragment key={comment.content}>
+          <Comment
+            comment={comment}
+            feedId={feedId}
+            myImageUrl={imageUrl}
+            myNickname={nickname}
+            mySkillList={skillList}
+          />
           {idx !== comments.length - 1 ? <Divider color="l3" /> : <></>}
-        </>
+        </Fragment>
       ))}
     </Box>
   );
