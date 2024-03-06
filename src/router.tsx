@@ -34,7 +34,11 @@ const routes: RouteElement[] = [
     children: [
       {
         path: '',
-        element: <Feed />,
+        element: (
+          <Suspense>
+            <Feed />
+          </Suspense>
+        ),
         withAuth: false,
       },
       {
