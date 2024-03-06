@@ -5,7 +5,7 @@ import Comments from './components/Comments';
 import ModifyDropdown from './components/ModifyDropdown';
 import ReactionBar from './components/ReactionBar';
 import { CommentFocusProvider } from './contexts/CommentFocusContext';
-import useGetFeedDetail from './hooks/useGetFeedDetail';
+import useFeedDetailQuery from './hooks/queries/useFeedDetailQuery';
 import ProfileInfo from '../../components/ProfileInfo';
 import Back from '../../layouts/Back';
 import Logo from '../../layouts/Logo';
@@ -32,7 +32,7 @@ const FeedDetailPage = () => {
     owner,
     ownerScrap,
     ownerLike,
-  } = useGetFeedDetail(feedId);
+  } = useFeedDetailQuery(feedId);
 
   return (
     <CommentFocusProvider>

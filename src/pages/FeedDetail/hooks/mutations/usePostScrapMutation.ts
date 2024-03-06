@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
-import { _postScrap } from '../../../api';
+import { _postScrap } from '../../../../api';
 
 const usePostScrapMutation = (id: string) => {
   const queryClient = useQueryClient();

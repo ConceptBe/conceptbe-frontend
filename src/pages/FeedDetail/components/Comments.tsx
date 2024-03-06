@@ -2,7 +2,7 @@ import { Box, Spacer } from 'concept-be-design-system';
 
 import Comment from './Comment';
 import WriteComment from './WriteComment';
-import useCommentsQuery from '../hooks/useCommentsQuery';
+import useCommentsQuery from '../hooks/queries/useCommentsQuery';
 
 interface Props {
   feedId: string;

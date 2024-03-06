@@ -11,10 +11,10 @@ import {
 import { _postScrap } from '../../../api';
 import { get999PlusCount } from '../../utils';
 import { useFocusComment } from '../contexts/CommentFocusContext';
-import useDeleteLikeMutation from '../hooks/useDeleteLikeMutation';
-import useDeleteScrapMutation from '../hooks/useDeleteScrapMutation';
-import usePostLikeMutation from '../hooks/usePostLikeMutation';
-import usePostScrapMutation from '../hooks/usePostScrapMutation';
+import useDeleteLikeMutation from '../hooks/mutations/useDeleteLikeMutation';
+import useDeleteScrapMutation from '../hooks/mutations/useDeleteScrapMutation';
+import usePostLikeMutation from '../hooks/mutations/usePostLikeMutation';
+import usePostScrapMutation from '../hooks/mutations/usePostScrapMutation';
 
 interface Props {
   feedId: string;

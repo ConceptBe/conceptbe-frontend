@@ -4,7 +4,7 @@ import { ChangeEvent, useState } from 'react';
 
 import ProfileInfo from '../../../components/ProfileInfo';
 import { useFocusComment } from '../contexts/CommentFocusContext';
-import usePostCommentMutation from '../hooks/usePostCommentMutation';
+import usePostCommentMutation from '../hooks/mutations/usePostCommentMutation';
 
 interface Props {
   feedId: string;

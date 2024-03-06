@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
-import { _deleteScrap } from '../../../api';
+import { _deleteScrap } from '../../../../api';
 
 const useDeleteScrapMutation = (id: string) => {
   const queryClient = useQueryClient();

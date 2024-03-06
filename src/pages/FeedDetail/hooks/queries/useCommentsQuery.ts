@@ -1,7 +1,7 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
 
-import { http } from '../../../api/http';
-import { CommentParentResponse } from '../types';
+import { http } from '../../../../api/http';
+import { CommentParentResponse } from '../../types';
 
 const getComments = (feedId: string) => http.get<CommentParentResponse[]>(`/ideas/${feedId}/comments`);
 

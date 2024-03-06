@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
-import { _deleteLike } from '../../../api';
+import { _deleteLike } from '../../../../api';
 
 const useDeleteLikeMutation = (id: string) => {
   const queryClient = useQueryClient();
