@@ -26,7 +26,7 @@ interface Props {
 }
 
 const ReactionBar = ({ feedId, commentsCount, likesCount, bookmarksCount, ownerLike, ownerScrap }: Props) => {
-  const { focusCommentTextarea } = useFocusComment();
+  const { openCommentTextarea } = useFocusComment();
   const { postScrap } = usePostScrapMutation(feedId);
   const { deleteScrap } = useDeleteScrapMutation(feedId);
   const { postLike } = usePostLikeMutation(feedId);
@@ -42,7 +42,7 @@ const ReactionBar = ({ feedId, commentsCount, likesCount, bookmarksCount, ownerL
 
   return (
     <Flex justifyContent="space-between" padding="18px 0">
-      <Flex alignItems="center" cursor="pointer" gap={4} onClick={focusCommentTextarea}>
+      <Flex alignItems="center" cursor="pointer" gap={4} onClick={openCommentTextarea}>
         <SVGFeedMessage />
         <Text font="suit12r" color="b9">
           댓글

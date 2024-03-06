@@ -2,8 +2,8 @@ import { useContext, useState, createContext, MutableRefObject, useRef } from 'r
 
 type CommentFocusContextType = {
   isFocusComment: boolean;
-  focusCommentTextarea: () => void;
-  blurCommentTextarea: () => void;
+  openCommentTextarea: () => void;
+  closeCommentTextarea: () => void;
   textareaRef: MutableRefObject<HTMLTextAreaElement | null>;
 };
 
@@ -17,7 +17,7 @@ export const CommentFocusProvider = ({ children }: Props) => {
   const [isFocusComment, setIsFocusComment] = useState<boolean>(false);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
-  const focusCommentTextarea = () => {
+  const openCommentTextarea = () => {
     if (!textareaRef.current) return;
 
     textareaRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -26,12 +26,19 @@ export const CommentFocusProvider = ({ children }: Props) => {
     setIsFocusComment(true);
   };
 
-  const blurCommentTextarea = () => {
+  const closeCommentTextarea = () => {
     setIsFocusComment(false);
   };
 
   return (
-    <CommentFocusContext.Provider value={{ isFocusComment, focusCommentTextarea, blurCommentTextarea, textareaRef }}>
+    <CommentFocusContext.Provider
+      value={{
+        isFocusComment,
+        openCommentTextarea,
+        closeCommentTextarea,
+        textareaRef,
+      }}
+    >
       {children}
     </CommentFocusContext.Provider>
   );

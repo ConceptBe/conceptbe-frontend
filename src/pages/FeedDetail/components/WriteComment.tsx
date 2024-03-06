@@ -4,6 +4,7 @@ import { ChangeEvent, useState } from 'react';
 
 import ProfileInfo from '../../../components/ProfileInfo';
 import { useFocusComment } from '../contexts/CommentFocusContext';
+import usePostCommentMutation from '../hooks/usePostCommentMutation';
 
 interface Props {
   feedId: string;
@@ -14,7 +15,8 @@ interface Props {
 
 const WriteComment = ({ feedId, imageUrl, nickname, skillList }: Props) => {
   const [commentInput, setCommentInput] = useState<string>('');
-  const { textareaRef, isFocusComment, focusCommentTextarea, blurCommentTextarea } = useFocusComment();
+  const { postComment } = usePostCommentMutation({ feedId, onSuccess: () => setCommentInput('') });
+  const { textareaRef, isFocusComment, openCommentTextarea, closeCommentTextarea } = useFocusComment();
 
   const onChangeTextarea = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setCommentInput(e.target.value.substring(0, 500));
@@ -40,8 +42,8 @@ const WriteComment = ({ feedId, imageUrl, nickname, skillList }: Props) => {
         value={commentInput}
         onChange={onChangeTextarea}
         placeholder="댓글을 입력해 주세요."
-        onFocus={focusCommentTextarea}
-        onBlur={blurCommentTextarea}
+        onFocus={openCommentTextarea}
+        onBlur={commentInput.length === 0 ? closeCommentTextarea : () => {}}
       />
       {isFocusComment && (
         <Box width="100%" padding="10px 20px" boxSizing="border-box" backgroundColor="bg1" borderRadius="0 0 6px 6px">
@@ -52,8 +54,20 @@ const WriteComment = ({ feedId, imageUrl, nickname, skillList }: Props) => {
               <Text color="ba">/500</Text>
             </Flex>
             <Flex width={96} justifyContent="space-between">
-              <CancelButton isGrayOut>취소</CancelButton>
-              <ConfirmButton onClick={() => {}}>등록</ConfirmButton>
+              <CancelButton
+                isGrayOut
+                onClick={() => {
+                  setCommentInput('');
+                  closeCommentTextarea();
+                }}
+              >
+                취소
+              </CancelButton>
+              <ConfirmButton
+                onClick={() => postComment({ ideaId: Number(feedId), parentId: 0, content: commentInput })}
+              >
+                등록
+              </ConfirmButton>
             </Flex>
           </Flex>
         </Box>
