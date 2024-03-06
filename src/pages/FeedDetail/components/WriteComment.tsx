@@ -22,6 +22,20 @@ const WriteComment = ({ feedId, imageUrl, nickname, skillList }: Props) => {
     setCommentInput(e.target.value.substring(0, 500));
   };
 
+  const onBlurTextarea = () => {
+    if (commentInput.length > 0) return;
+    closeCommentTextarea();
+  };
+
+  const onCancelComment = () => {
+    setCommentInput('');
+    closeCommentTextarea();
+  };
+
+  const onSubmitComment = () => {
+    postComment({ ideaId: Number(feedId), parentId: 0, content: commentInput });
+  };
+
   return (
     <Box position="relative">
       {isFocusComment && (
@@ -43,7 +57,7 @@ const WriteComment = ({ feedId, imageUrl, nickname, skillList }: Props) => {
         onChange={onChangeTextarea}
         placeholder="댓글을 입력해 주세요."
         onFocus={openCommentTextarea}
-        onBlur={commentInput.length === 0 ? closeCommentTextarea : () => {}}
+        onBlur={onBlurTextarea}
       />
       {isFocusComment && (
         <Box width="100%" padding="10px 20px" boxSizing="border-box" backgroundColor="bg1" borderRadius="0 0 6px 6px">
@@ -54,20 +68,10 @@ const WriteComment = ({ feedId, imageUrl, nickname, skillList }: Props) => {
               <Text color="ba">/500</Text>
             </Flex>
             <Flex width={96} justifyContent="space-between">
-              <CancelButton
-                isGrayOut
-                onClick={() => {
-                  setCommentInput('');
-                  closeCommentTextarea();
-                }}
-              >
+              <CancelButton isGrayOut onClick={onCancelComment}>
                 취소
               </CancelButton>
-              <ConfirmButton
-                onClick={() => postComment({ ideaId: Number(feedId), parentId: 0, content: commentInput })}
-              >
-                등록
-              </ConfirmButton>
+              <ConfirmButton onClick={onSubmitComment}>등록</ConfirmButton>
             </Flex>
           </Flex>
         </Box>
@@ -99,6 +103,7 @@ const CancelButton = styled(Button)`
   width: 43px;
   height: 32px;
   color: ${theme.color.b6};
+  background-color: ${theme.color.l3};
   font-size: ${theme.font.suit13m.fontSize}px;
   font-weight: ${theme.font.suit13m.fontWeight};
   padding: 6px 10px;
