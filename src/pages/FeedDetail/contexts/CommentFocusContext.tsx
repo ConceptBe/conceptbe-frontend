@@ -21,6 +21,7 @@ export const CommentFocusProvider = ({ children }: Props) => {
     if (!textareaRef.current) return;
 
     textareaRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    textareaRef.current.focus();
 
     setIsFocusComment(true);
   };

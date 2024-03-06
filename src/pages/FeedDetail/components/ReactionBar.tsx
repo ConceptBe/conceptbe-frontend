@@ -42,7 +42,7 @@ const ReactionBar = ({ feedId, commentsCount, likesCount, bookmarksCount, ownerL
 
   return (
     <Flex justifyContent="space-between" padding="18px 0">
-      <Flex alignItems="center" gap={4} onClick={focusCommentTextarea}>
+      <Flex alignItems="center" cursor="pointer" gap={4} onClick={focusCommentTextarea}>
         <SVGFeedMessage />
         <Text font="suit12r" color="b9">
           댓글
@@ -60,7 +60,7 @@ const ReactionBar = ({ feedId, commentsCount, likesCount, bookmarksCount, ownerL
           {get999PlusCount(likesCount)}
         </Text>
       </Flex>
-      <Flex alignItems="center" gap={4} cursor="pointer" onClick={toggleScrap}>
+      <Flex alignItems="center" cursor="pointer" gap={4} onClick={toggleScrap}>
         {ownerScrap ? <SVGFeedScrap /> : <SVGFeedUnScrap />}
         <Text font="suit12r" color="b9">
           스크랩
