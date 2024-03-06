@@ -1,4 +1,4 @@
-import { Box } from 'concept-be-design-system';
+import { Box, Divider } from 'concept-be-design-system';
 
 import Comment from './Comment';
 import WriteComment from './WriteComment';
@@ -17,8 +17,11 @@ const Comments = ({ feedId, imageUrl, nickname, skillList }: Props) => {
   return (
     <Box padding="20px 22px">
       <WriteComment feedId={feedId} imageUrl={imageUrl} nickname={nickname} skillList={skillList} />
-      {comments.map((comment) => (
-        <Comment key={comment.content} comment={comment} />
+      {comments.map((comment, idx) => (
+        <>
+          <Comment key={comment.content} comment={comment} />
+          {idx !== comments.length - 1 ? <Divider color="l3" /> : <></>}
+        </>
       ))}
     </Box>
   );

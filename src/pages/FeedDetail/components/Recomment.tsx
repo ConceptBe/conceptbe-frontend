@@ -14,10 +14,10 @@ const Recomment = ({ recomment: { nickname, memberSkills, content, likesCount } 
       <div>
         <SVGFeedReCommentLine />
       </div>
-      <Box margin="20px 0">
+      <Box margin="0 0 20px 0">
         <ProfileInfo imageUrl={''} nickname={nickname} skillList={memberSkills} />
         <Spacer size={20} />
-        <Text font="suit14m" color="t" style={{ lineHeight: '22px', whiteSpace: 'pre-wrap' }}>
+        <Text font="suit14r" color="t" style={{ lineHeight: '22px', whiteSpace: 'pre-wrap' }}>
           {content}
         </Text>
         <Spacer size={10} />
