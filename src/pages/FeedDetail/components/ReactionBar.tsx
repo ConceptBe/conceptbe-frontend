@@ -10,7 +10,7 @@ import {
 
 import { _postScrap } from '../../../api';
 import { get999PlusCount } from '../../utils';
-import { useFocusComment } from '../contexts/CommentFocusContext';
+import { useFocusCommentTextareaContext } from '../contexts/CommentFocusContext';
 import useDeleteLikeMutation from '../hooks/mutations/useDeleteLikeMutation';
 import useDeleteScrapMutation from '../hooks/mutations/useDeleteScrapMutation';
 import usePostLikeMutation from '../hooks/mutations/usePostLikeMutation';
@@ -26,7 +26,7 @@ interface Props {
 }
 
 const ReactionBar = ({ feedId, commentsCount, likesCount, bookmarksCount, ownerLike, ownerScrap }: Props) => {
-  const { openCommentTextarea } = useFocusComment();
+  const { openCommentTextarea } = useFocusCommentTextareaContext();
   const { postScrap } = usePostScrapMutation(feedId);
   const { deleteScrap } = useDeleteScrapMutation(feedId);
   const { postLike } = usePostLikeMutation(feedId);

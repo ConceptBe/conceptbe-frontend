@@ -4,7 +4,7 @@ type CommentFocusContextType = {
   isFocusComment: boolean;
   openCommentTextarea: () => void;
   closeCommentTextarea: () => void;
-  textareaRef: MutableRefObject<HTMLTextAreaElement | null>;
+  commentTextareaRef: MutableRefObject<HTMLTextAreaElement | null>;
 };
 
 const CommentFocusContext = createContext<CommentFocusContextType | null>(null);
@@ -15,13 +15,15 @@ type Props = {
 
 export const CommentFocusProvider = ({ children }: Props) => {
   const [isFocusComment, setIsFocusComment] = useState<boolean>(false);
-  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const [isFocusRecomment, setIsFocusRecomment] = useState<boolean>(false);
+  const commentTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const recommentTextareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const openCommentTextarea = () => {
-    if (!textareaRef.current) return;
+    if (!commentTextareaRef.current) return;
 
-    textareaRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    textareaRef.current.focus();
+    commentTextareaRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    commentTextareaRef.current.focus();
 
     setIsFocusComment(true);
   };
@@ -30,13 +32,26 @@ export const CommentFocusProvider = ({ children }: Props) => {
     setIsFocusComment(false);
   };
 
+  const openRecommentTextarea = () => {
+    if (!recommentTextareaRef.current) return;
+
+    recommentTextareaRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    recommentTextareaRef.current.focus();
+
+    setIsFocusComment(true);
+  };
+
+  const closeRecommentTextarea = () => {
+    setIsFocusRecomment(false);
+  };
+
   return (
     <CommentFocusContext.Provider
       value={{
         isFocusComment,
         openCommentTextarea,
         closeCommentTextarea,
-        textareaRef,
+        commentTextareaRef,
       }}
     >
       {children}
@@ -44,10 +59,11 @@ export const CommentFocusProvider = ({ children }: Props) => {
   );
 };
 
-export const useFocusComment = () => {
+export const useFocusCommentTextareaContext = () => {
   const context = useContext(CommentFocusContext);
   if (context === null) {
     throw new Error('useFocusComment 은 CommentFocusProvider 내부에서 호출해주세요.');
   }
-  return context;
+  const { isFocusComment, openCommentTextarea, closeCommentTextarea, commentTextareaRef } = context;
+  return { isFocusComment, openCommentTextarea, closeCommentTextarea, commentTextareaRef };
 };

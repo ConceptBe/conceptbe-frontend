@@ -4,7 +4,7 @@ import { ChangeEvent, useState } from 'react';
 
 import ProfileInfo from '../../../components/ProfileInfo';
 import { PARENT_COMMENT_ID } from '../../../constants';
-import { useFocusComment } from '../contexts/CommentFocusContext';
+import { useFocusCommentTextareaContext } from '../contexts/CommentFocusContext';
 import usePostCommentMutation from '../hooks/mutations/usePostCommentMutation';
 
 interface Props {
@@ -16,7 +16,8 @@ interface Props {
 
 const WriteComment = ({ feedId, imageUrl, nickname, skillList }: Props) => {
   const [commentInput, setCommentInput] = useState<string>('');
-  const { textareaRef, isFocusComment, openCommentTextarea, closeCommentTextarea } = useFocusComment();
+  const { commentTextareaRef, isFocusComment, openCommentTextarea, closeCommentTextarea } =
+    useFocusCommentTextareaContext();
   const { postComment } = usePostCommentMutation({
     feedId,
     onSuccess: () => {
@@ -58,7 +59,7 @@ const WriteComment = ({ feedId, imageUrl, nickname, skillList }: Props) => {
       )}
       <Textarea
         isFocus={isFocusComment}
-        ref={textareaRef}
+        ref={commentTextareaRef}
         rows={1}
         value={commentInput}
         onChange={onChangeTextarea}
