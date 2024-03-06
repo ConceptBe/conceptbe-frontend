@@ -3,7 +3,9 @@ import { Box, Button, Divider, Flex, theme, Text } from 'concept-be-design-syste
 import { ChangeEvent, useState } from 'react';
 
 import ProfileInfo from '../../../components/ProfileInfo';
+import { PARENT_COMMENT_ID } from '../../../constants';
 import { useFocusRecommentTextareaContext } from '../contexts/CommentFocusContext';
+import usePostCommentMutation from '../hooks/mutations/usePostCommentMutation';
 
 interface Props {
   feedId: string;
@@ -14,17 +16,28 @@ interface Props {
 }
 
 const WriteRecomment = ({ feedId, imageUrl, nickname, skillList, onCloseRecommentTextarea }: Props) => {
-  const [commentInput, setCommentInput] = useState<string>('');
+  const [recommentInput, setRecommentInput] = useState<string>('');
   const { recommentTextareaRef, initRecommentTextareaRef } = useFocusRecommentTextareaContext();
+  const { postComment } = usePostCommentMutation({
+    feedId,
+    onSuccess: () => {
+      setRecommentInput('');
+      onCloseRecommentTextarea();
+    },
+  });
 
   const onChangeTextarea = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setCommentInput(e.target.value.substring(0, 500));
+    setRecommentInput(e.target.value.substring(0, 500));
   };
 
   const onCancelComment = () => {
-    setCommentInput('');
+    setRecommentInput('');
     onCloseRecommentTextarea();
     initRecommentTextareaRef();
+  };
+
+  const onSubmitComment = () => {
+    postComment({ ideaId: Number(feedId), parentId: PARENT_COMMENT_ID, content: recommentInput });
   };
 
   return (
@@ -42,7 +55,7 @@ const WriteRecomment = ({ feedId, imageUrl, nickname, skillList, onCloseRecommen
       <Textarea
         ref={recommentTextareaRef}
         rows={1}
-        value={commentInput}
+        value={recommentInput}
         onChange={onChangeTextarea}
         placeholder="답글을 입력해 주세요."
         onBlur={initRecommentTextareaRef}
@@ -52,14 +65,14 @@ const WriteRecomment = ({ feedId, imageUrl, nickname, skillList, onCloseRecommen
         <Divider color="l3" bottom={10} />
         <Flex justifyContent="space-between" alignItems="center">
           <Flex>
-            <Text color="c1">{commentInput.length}</Text>
+            <Text color="c1">{recommentInput.length}</Text>
             <Text color="ba">/500</Text>
           </Flex>
           <Flex width={96} justifyContent="space-between">
             <CancelButton isGrayOut onClick={onCancelComment}>
               취소
             </CancelButton>
-            <ConfirmButton onClick={() => {}}>등록</ConfirmButton>
+            <ConfirmButton onClick={onSubmitComment}>등록</ConfirmButton>
           </Flex>
         </Flex>
       </Box>
