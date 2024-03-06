@@ -150,7 +150,7 @@ const FeedDetailPage = () => {
 
       <Divider color="bg1" height={8} />
 
-      <Comments feedId={feedId} imageUrl={imageUrl} nickname={nickname} skillList={skillList} />
+      <Comments feedId={feedId} />
     </CommentFocusProvider>
   );
 };
