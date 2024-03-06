@@ -1,7 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
-import { _deleteLike } from '../../../../api';
+import { http } from '../../../../api/http';
+
+const _deleteLike = (id: string) => {
+  return http.delete(`/ideas/likes/${id}`);
+};
 
 const useDeleteLikeMutation = (id: string) => {
   const queryClient = useQueryClient();

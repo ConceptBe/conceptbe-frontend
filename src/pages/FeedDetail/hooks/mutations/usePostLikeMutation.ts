@@ -1,7 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
-import { _postLike } from '../../../../api';
+import { http } from '../../../../api/http';
+
+const _postLike = (id: string) => {
+  return http.post(`/ideas/likes/${id}`);
+};
 
 const usePostLikeMutation = (id: string) => {
   const queryClient = useQueryClient();

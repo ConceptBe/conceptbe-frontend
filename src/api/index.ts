@@ -36,19 +36,3 @@ export const getFeedDetail = (id: string) => {
 export const getCheckDuplicateNickname = (nickname: string) => {
   return http.get<boolean>(`/members/nickname?nickname=${nickname}`);
 };
-
-export const _postScrap = (id: string) => {
-  return http.post<void>(`/bookmark/${id}`);
-};
-
-export const _deleteScrap = (id: string) => {
-  return http.delete<void>(`/bookmark/${id}`);
-};
-
-export const _postLike = (id: string) => {
-  return http.post(`/ideas/likes/${id}`);
-};
-
-export const _deleteLike = (id: string) => {
-  return http.delete(`/ideas/likes/${id}`);
-};
