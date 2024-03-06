@@ -3,8 +3,11 @@ import { useContext, useState, createContext, MutableRefObject, useRef } from 'r
 type CommentFocusContextType = {
   isFocusComment: boolean;
   openCommentTextarea: () => void;
+  focusRecommentTextarea: () => void;
   closeCommentTextarea: () => void;
+  initRecommentTextareaRef: () => void;
   commentTextareaRef: MutableRefObject<HTMLTextAreaElement | null>;
+  recommentTextareaRef: MutableRefObject<HTMLTextAreaElement | null>;
 };
 
 const CommentFocusContext = createContext<CommentFocusContextType | null>(null);
@@ -15,7 +18,6 @@ type Props = {
 
 export const CommentFocusProvider = ({ children }: Props) => {
   const [isFocusComment, setIsFocusComment] = useState<boolean>(false);
-  const [isFocusRecomment, setIsFocusRecomment] = useState<boolean>(false);
   const commentTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const recommentTextareaRef = useRef<HTMLTextAreaElement | null>(null);
 
@@ -32,17 +34,16 @@ export const CommentFocusProvider = ({ children }: Props) => {
     setIsFocusComment(false);
   };
 
-  const openRecommentTextarea = () => {
+  const focusRecommentTextarea = () => {
+    console.log(recommentTextareaRef.current);
     if (!recommentTextareaRef.current) return;
 
     recommentTextareaRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
     recommentTextareaRef.current.focus();
-
-    setIsFocusComment(true);
   };
 
-  const closeRecommentTextarea = () => {
-    setIsFocusRecomment(false);
+  const initRecommentTextareaRef = () => {
+    recommentTextareaRef.current = null;
   };
 
   return (
@@ -50,8 +51,11 @@ export const CommentFocusProvider = ({ children }: Props) => {
       value={{
         isFocusComment,
         openCommentTextarea,
+        focusRecommentTextarea,
         closeCommentTextarea,
+        initRecommentTextareaRef,
         commentTextareaRef,
+        recommentTextareaRef,
       }}
     >
       {children}
@@ -66,4 +70,13 @@ export const useFocusCommentTextareaContext = () => {
   }
   const { isFocusComment, openCommentTextarea, closeCommentTextarea, commentTextareaRef } = context;
   return { isFocusComment, openCommentTextarea, closeCommentTextarea, commentTextareaRef };
+};
+
+export const useFocusRecommentTextareaContext = () => {
+  const context = useContext(CommentFocusContext);
+  if (context === null) {
+    throw new Error('useFocusComment 은 CommentFocusProvider 내부에서 호출해주세요.');
+  }
+  const { focusRecommentTextarea, initRecommentTextareaRef, recommentTextareaRef } = context;
+  return { focusRecommentTextarea, initRecommentTextareaRef, recommentTextareaRef };
 };
