@@ -40,7 +40,7 @@ const WriteComment = ({ feedId, myImageUrl, myNickname }: Props) => {
   };
 
   const onSubmitComment = () => {
-    postComment({ ideaId: Number(feedId), parentId: PARENT_COMMENT_ID, content: commentInput });
+    postComment({ ideaId: feedId, parentId: PARENT_COMMENT_ID, content: commentInput });
   };
 
   return (

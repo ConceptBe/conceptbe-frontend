@@ -4,7 +4,7 @@ import { AxiosError } from 'axios';
 import { http } from '../../../../api/http';
 
 interface CommentPayload {
-  ideaId: number;
+  ideaId: string;
   parentId: number;
   content: string;
 }

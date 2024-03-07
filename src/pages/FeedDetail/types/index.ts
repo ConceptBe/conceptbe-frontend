@@ -20,7 +20,7 @@ export interface FeedDetailResponse {
 }
 
 export interface CommentParentResponse {
-  parentCommentId: number;
+  parentCommentId: string;
   nickname: string;
   profileImageUrl: string;
   memberSkills: string[];
@@ -33,6 +33,7 @@ export interface CommentParentResponse {
 }
 
 export interface CommentChildResponse {
+  childCommentId: string;
   nickname: string;
   profileImageUrl: string;
   memberSkills: string[];

@@ -49,7 +49,7 @@ const FeedDetailPage = () => {
       <Header main>
         <Back />
         <Logo />
-        <ModifyDropdown owner={owner} onModify={onModifyFeedDetail} onDelete={onDeleteFeedDetail} />
+        <ModifyDropdown owner={owner} onEdit={onModifyFeedDetail} onDelete={onDeleteFeedDetail} />
       </Header>
 
       <Box padding="30px 22px 30px 22px" marginTop={48}>

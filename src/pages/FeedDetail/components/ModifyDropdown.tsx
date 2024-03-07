@@ -17,11 +17,11 @@ import useHandleModifyDropdown from '../hooks/useHandleModifyDropdown';
 interface Props {
   owner: boolean;
   isInComment?: boolean;
-  onModify: () => void;
+  onEdit: () => void;
   onDelete: () => void;
 }
 
-const ModifyDropdown = ({ owner, isInComment, onModify, onDelete }: Props) => {
+const ModifyDropdown = ({ owner, isInComment, onEdit, onDelete }: Props) => {
   const { dropdownRef, isOpenModifyDropdown, toggleModifyDropdown } = useHandleModifyDropdown();
 
   return (
@@ -35,7 +35,7 @@ const ModifyDropdown = ({ owner, isInComment, onModify, onDelete }: Props) => {
           )}
           {isOpenModifyDropdown && (
             <DropDownBox>
-              <Flex justifyContent="space-between" alignItems="center" onClick={onModify}>
+              <Flex justifyContent="space-between" alignItems="center" onClick={onEdit}>
                 <Text font="suit12r" color="b6">
                   수정하기
                 </Text>

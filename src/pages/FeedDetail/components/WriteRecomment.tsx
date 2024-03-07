@@ -8,7 +8,7 @@ import usePostCommentMutation from '../hooks/mutations/usePostCommentMutation';
 
 interface Props {
   feedId: string;
-  parentCommentId: number;
+  parentCommentId: string;
   myImageUrl: string;
   myNickname: string;
   onCloseRecommentTextarea: () => void;
@@ -36,7 +36,7 @@ const WriteRecomment = ({ feedId, parentCommentId, myImageUrl, myNickname, onClo
   };
 
   const onSubmitComment = () => {
-    postComment({ ideaId: Number(feedId), parentId: parentCommentId, content: recommentInput });
+    postComment({ ideaId: feedId, parentId: parentCommentId, content: recommentInput });
   };
 
   return (
