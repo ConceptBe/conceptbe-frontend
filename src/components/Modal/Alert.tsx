@@ -75,6 +75,7 @@ const ContentWrapper = styled.div`
   font-size: ${theme.font.suit14r.fontSize}px;
   font-weight: ${theme.font.suit14r.fontWeight};
   line-height: 160%;
+  word-break: keep-all;
 `;
 
 const Overlay = styled.div`

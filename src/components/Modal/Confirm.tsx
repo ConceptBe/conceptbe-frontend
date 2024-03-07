@@ -96,6 +96,7 @@ const ModalWrapper = styled.div`
   color: inherit;
   z-index: 11;
   white-space: pre-wrap;
+  word-break: keep-all;
 `;
 
 const ContentWrapper = styled.div`
