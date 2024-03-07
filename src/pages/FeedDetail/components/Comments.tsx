@@ -3,7 +3,7 @@ import { Fragment, useRef } from 'react';
 
 import Comment from './Comment';
 import WriteComment from './WriteComment';
-import { useMemberInfoQuery } from '../../profile/hooks/queries/useMemberInfoQuery';
+import { useMemberInfoQuery } from '../../Profile/hooks/queries/useMemberInfoQuery';
 import useCommentsQuery from '../hooks/queries/useCommentsQuery';
 import useCommentInfiniteFetch from '../hooks/useCommentInfiniteFetch';
 
