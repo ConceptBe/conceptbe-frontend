@@ -7,7 +7,7 @@ import ModifyDropdown from './ModifyDropdown';
 import Recomment from './Recomment';
 import WriteRecomment from './WriteRecomment';
 import { get999PlusCount } from '../../utils';
-import { useFocusRecommentTextareaContext } from '../contexts/CommentFocusContext';
+import { useFocusEditCommentTextareaContext, useFocusRecommentTextareaContext } from '../contexts/CommentFocusContext';
 import useDeleteCommentMutation from '../hooks/mutations/useDeleteComment';
 import { CommentParentResponse } from '../types';
 
@@ -40,6 +40,7 @@ const Comment = ({
   const [isEditComment, setIsEditComment] = useState<boolean>(false);
   const [isOpenRecommentTextarea, setIsOpenRecommentTextarea] = useState<boolean>(false);
   const { focusRecommentTextarea, initRecommentTextareaRef } = useFocusRecommentTextareaContext();
+  const { focusEditCommentTextarea, initEditCommentTextarea } = useFocusEditCommentTextareaContext();
   const { deleteComment } = useDeleteCommentMutation({ feedId });
 
   const onOpenRecommentTextarea = () => {
@@ -72,6 +73,15 @@ const Comment = ({
 
     focusRecommentTextarea();
   }, [isOpenRecommentTextarea, focusRecommentTextarea, initRecommentTextareaRef]);
+
+  useEffect(() => {
+    if (!isEditComment) {
+      initEditCommentTextarea();
+      return;
+    }
+
+    focusEditCommentTextarea();
+  }, [isEditComment, focusEditCommentTextarea, initEditCommentTextarea]);
 
   return (
     <>
