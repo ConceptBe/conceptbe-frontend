@@ -16,7 +16,7 @@ interface Props {
 
 const WriteRecomment = ({ feedId, parentCommentId, myImageUrl, myNickname, onCloseRecommentTextarea }: Props) => {
   const [recommentInput, setRecommentInput] = useState<string>('');
-  const { recommentTextareaRef, initRecommentTextareaRef } = useFocusRecommentTextareaContext();
+  const { recommentTextareaRef, initRecommentTextarea } = useFocusRecommentTextareaContext();
   const { postComment } = usePostCommentMutation({
     feedId,
     onSuccess: () => {
@@ -32,7 +32,7 @@ const WriteRecomment = ({ feedId, parentCommentId, myImageUrl, myNickname, onClo
   const onCancelComment = () => {
     setRecommentInput('');
     onCloseRecommentTextarea();
-    initRecommentTextareaRef();
+    initRecommentTextarea();
   };
 
   const onSubmitComment = () => {
@@ -57,7 +57,7 @@ const WriteRecomment = ({ feedId, parentCommentId, myImageUrl, myNickname, onClo
         value={recommentInput}
         onChange={onChangeTextarea}
         placeholder="답글을 입력해 주세요."
-        onBlur={initRecommentTextareaRef}
+        onBlur={initRecommentTextarea}
       />
 
       <Box width="100%" padding="10px 20px" boxSizing="border-box" backgroundColor="bg1" borderRadius="0 0 6px 6px">

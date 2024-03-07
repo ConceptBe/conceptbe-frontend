@@ -5,7 +5,7 @@ type CommentFocusContextType = {
   openCommentTextarea: () => void;
   focusRecommentTextarea: () => void;
   closeCommentTextarea: () => void;
-  initRecommentTextareaRef: () => void;
+  initRecommentTextarea: () => void;
   focusEditCommentTextarea: () => void;
   initEditCommentTextarea: () => void;
   commentTextareaRef: MutableRefObject<HTMLTextAreaElement | null>;
@@ -50,7 +50,7 @@ export const CommentFocusProvider = ({ children }: Props) => {
     focusTextareaRef(recommentTextareaRef);
   };
 
-  const initRecommentTextareaRef = () => {
+  const initRecommentTextarea = () => {
     initTextareaRef(recommentTextareaRef);
   };
 
@@ -69,7 +69,7 @@ export const CommentFocusProvider = ({ children }: Props) => {
         openCommentTextarea,
         focusRecommentTextarea,
         closeCommentTextarea,
-        initRecommentTextareaRef,
+        initRecommentTextarea,
         focusEditCommentTextarea,
         initEditCommentTextarea,
         commentTextareaRef,
@@ -96,8 +96,8 @@ export const useFocusRecommentTextareaContext = () => {
   if (context === null) {
     throw new Error('useFocusComment 은 CommentFocusProvider 내부에서 호출해주세요.');
   }
-  const { focusRecommentTextarea, initRecommentTextareaRef, recommentTextareaRef } = context;
-  return { focusRecommentTextarea, initRecommentTextareaRef, recommentTextareaRef };
+  const { focusRecommentTextarea, initRecommentTextarea, recommentTextareaRef } = context;
+  return { focusRecommentTextarea, initRecommentTextarea, recommentTextareaRef };
 };
 
 export const useFocusEditCommentTextareaContext = () => {
