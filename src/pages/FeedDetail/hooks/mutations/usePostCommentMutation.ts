@@ -5,7 +5,7 @@ import { http } from '../../../../api/http';
 
 interface CommentPayload {
   ideaId: string;
-  parentId: number;
+  parentId: string;
   content: string;
 }
 
