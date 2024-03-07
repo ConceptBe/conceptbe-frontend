@@ -3,7 +3,7 @@ import { Box, Button, Divider, Flex, Text, theme } from 'concept-be-design-syste
 import { ChangeEvent, useState } from 'react';
 
 import WriteCommentProfileInfo from './WriteCommentProfileInfo';
-import { PARENT_COMMENT_ID } from '../../../constants';
+import { ROOT_COMMENT_ID } from '../../../constants';
 import { useFocusCommentTextareaContext } from '../contexts/CommentFocusContext';
 import usePostCommentMutation from '../hooks/mutations/usePostCommentMutation';
 
@@ -40,7 +40,7 @@ const WriteComment = ({ feedId, myImageUrl, myNickname }: Props) => {
   };
 
   const onSubmitComment = () => {
-    postComment({ ideaId: feedId, parentId: PARENT_COMMENT_ID, content: commentInput });
+    postComment({ ideaId: feedId, parentId: ROOT_COMMENT_ID, content: commentInput });
   };
 
   return (
