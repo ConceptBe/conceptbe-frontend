@@ -8,7 +8,6 @@ import {
   Text,
 } from 'concept-be-design-system';
 
-import { _postScrap } from '../../../api';
 import { get999PlusCount } from '../../utils';
 import { useFocusCommentTextareaContext } from '../contexts/CommentFocusContext';
 import useDeleteLikeMutation from '../hooks/mutations/useDeleteLikeMutation';
