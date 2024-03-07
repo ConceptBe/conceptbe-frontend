@@ -4,6 +4,7 @@ import { ChangeEvent, useState } from 'react';
 
 import WriteCommentProfileInfo from './WriteCommentProfileInfo';
 import { useFocusEditCommentTextareaContext } from '../contexts/CommentFocusContext';
+import usePatchCommentMutation from '../hooks/mutations/usePatchCommentMutation';
 
 interface Props {
   isRecomment?: boolean;
@@ -15,9 +16,25 @@ interface Props {
   onCloseEditCommentTextarea: () => void;
 }
 
-const EditComment = ({ isRecomment, content, feedId, myImageUrl, myNickname, onCloseEditCommentTextarea }: Props) => {
+const EditComment = ({
+  isRecomment,
+  content,
+  feedId,
+  commentId,
+  myImageUrl,
+  myNickname,
+  onCloseEditCommentTextarea,
+}: Props) => {
   const [commentInput, setCommentInput] = useState<string>(content);
   const { editCommentTextareaRef, initEditCommentTextarea } = useFocusEditCommentTextareaContext();
+  const { editComment } = usePatchCommentMutation({
+    feedId,
+    commentId,
+    onSuccess: () => {
+      initEditCommentTextarea();
+      onCloseEditCommentTextarea();
+    },
+  });
 
   const onChangeTextarea = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setCommentInput(e.target.value.substring(0, 500));
@@ -29,7 +46,9 @@ const EditComment = ({ isRecomment, content, feedId, myImageUrl, myNickname, onC
     initEditCommentTextarea();
   };
 
-  const onSubmitComment = () => {};
+  const onSubmitComment = () => {
+    editComment({ content: commentInput });
+  };
 
   return (
     <Box margin={isRecomment ? '0 0 20px 24px' : '20px 0'} position="relative">
