@@ -22,6 +22,7 @@ const usePostCommentMutation = ({ feedId, onSuccess }: Props) => {
     mutationFn: _postComment,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['comments', feedId] });
+      queryClient.invalidateQueries({ queryKey: ['feedDetail', feedId] });
       if (onSuccess) onSuccess();
     },
     onError: (error: AxiosError<{ message: string }>) => {
