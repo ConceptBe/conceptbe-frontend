@@ -35,7 +35,6 @@ export const CommentFocusProvider = ({ children }: Props) => {
   };
 
   const focusRecommentTextarea = () => {
-    console.log(recommentTextareaRef.current);
     if (!recommentTextareaRef.current) return;
 
     recommentTextareaRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
