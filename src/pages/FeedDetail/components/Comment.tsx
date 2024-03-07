@@ -1,5 +1,5 @@
 import { Box, Flex, SVGFeedMessage, SVGFeedUnLike, Spacer, Text } from 'concept-be-design-system';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import CommentProfileInfo from './CommentProfileInfo';
 import EditComment from './EditComment';
@@ -7,8 +7,9 @@ import ModifyDropdown from './ModifyDropdown';
 import Recomment from './Recomment';
 import WriteRecomment from './WriteRecomment';
 import { get999PlusCount } from '../../utils';
-import { useFocusEditCommentTextareaContext, useFocusRecommentTextareaContext } from '../contexts/CommentFocusContext';
 import useDeleteCommentMutation from '../hooks/mutations/useDeleteComment';
+import useFocusEditComment from '../hooks/useFocusEditComment';
+import useFocusRecomment from '../hooks/useFocusRecomment';
 import { CommentParentResponse } from '../types';
 
 interface Props {
@@ -39,9 +40,10 @@ const Comment = ({
 }: Props) => {
   const [isEditComment, setIsEditComment] = useState<boolean>(false);
   const [isOpenRecommentTextarea, setIsOpenRecommentTextarea] = useState<boolean>(false);
-  const { focusRecommentTextarea, initRecommentTextareaRef } = useFocusRecommentTextareaContext();
-  const { focusEditCommentTextarea, initEditCommentTextarea } = useFocusEditCommentTextareaContext();
   const { deleteComment } = useDeleteCommentMutation({ feedId });
+
+  useFocusEditComment({ focusCondition: isEditComment });
+  useFocusRecomment({ focusCondition: isOpenRecommentTextarea });
 
   const onOpenRecommentTextarea = () => {
     if (isOpenRecommentTextarea) return;
@@ -64,24 +66,6 @@ const Comment = ({
     //TODO: #54 머지 후 Confirm 컴포넌트로 대체
     if (confirm('댓글을 삭제하시겠습니까?')) deleteComment(parentCommentId);
   };
-
-  useEffect(() => {
-    if (!isOpenRecommentTextarea) {
-      initRecommentTextareaRef();
-      return;
-    }
-
-    focusRecommentTextarea();
-  }, [isOpenRecommentTextarea, focusRecommentTextarea, initRecommentTextareaRef]);
-
-  useEffect(() => {
-    if (!isEditComment) {
-      initEditCommentTextarea();
-      return;
-    }
-
-    focusEditCommentTextarea();
-  }, [isEditComment, focusEditCommentTextarea, initEditCommentTextarea]);
 
   return (
     <>

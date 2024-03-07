@@ -1,12 +1,12 @@
 import { Box, Flex, SVGFeedReCommentLine, SVGFeedUnLike, Spacer, Text } from 'concept-be-design-system';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import EditComment from './EditComment';
 import ModifyDropdown from './ModifyDropdown';
 import ProfileInfo from '../../../components/ProfileInfo';
 import { get999PlusCount } from '../../utils';
-import { useFocusEditCommentTextareaContext } from '../contexts/CommentFocusContext';
 import useDeleteCommentMutation from '../hooks/mutations/useDeleteComment';
+import useFocusEditComment from '../hooks/useFocusEditComment';
 import { CommentChildResponse } from '../types';
 
 interface Props {
@@ -23,8 +23,9 @@ const Recomment = ({
   recomment: { childCommentId, profileImageUrl, nickname, memberSkills, content, likesCount, owner, deleted },
 }: Props) => {
   const [isEditComment, setIsEditComment] = useState<boolean>(false);
-  const { focusEditCommentTextarea, initEditCommentTextarea } = useFocusEditCommentTextareaContext();
   const { deleteComment } = useDeleteCommentMutation({ feedId });
+
+  useFocusEditComment({ focusCondition: isEditComment });
 
   const onCloseEditCommentTextarea = () => {
     setIsEditComment(false);
@@ -38,15 +39,6 @@ const Recomment = ({
     //TODO: #54 머지 후 Confirm 컴포넌트로 대체
     if (confirm('답글을 삭제하시겠습니까?')) deleteComment(childCommentId);
   };
-
-  useEffect(() => {
-    if (!isEditComment) {
-      initEditCommentTextarea();
-      return;
-    }
-
-    focusEditCommentTextarea();
-  }, [isEditComment, focusEditCommentTextarea, initEditCommentTextarea]);
 
   return (
     <>
