@@ -3,11 +3,12 @@ import { Flex, Text, theme } from 'concept-be-design-system';
 
 interface ModalProps {
   content: string;
+  buttonContent?: string;
   isOpen: boolean;
   onClose: () => void;
 }
 
-const Alert = ({ content, isOpen, onClose }: ModalProps) => {
+const Alert = ({ content, buttonContent = '확인', isOpen, onClose }: ModalProps) => {
   return (
     <>
       {isOpen && (
@@ -27,7 +28,7 @@ const Alert = ({ content, isOpen, onClose }: ModalProps) => {
               onClick={onClose}
             >
               <Text color="c1" font="suit15m">
-                확인
+                {buttonContent}
               </Text>
             </Flex>
           </ModalWrapper>
