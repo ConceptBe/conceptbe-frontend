@@ -5,25 +5,36 @@ import { useNavigate } from 'react-router-dom';
 interface Props {
   title: string;
   children: ReactNode;
-  onClickRetry: () => void;
+  onClickRetry?: () => void;
+  isGlobal?: boolean;
 }
 
-const ErrorFallback = ({ title, children, onClickRetry }: Props) => {
+const ErrorFallback = ({ title, children, isGlobal, onClickRetry }: Props) => {
   const navigate = useNavigate();
 
   const goToPrevPage = () => {
-    onClickRetry();
+    if (onClickRetry) onClickRetry();
     navigate(-1);
   };
 
   const goToHome = () => {
-    onClickRetry();
+    if (onClickRetry) onClickRetry();
     navigate('/');
   };
 
   return (
-    <Flex height="100%" direction="column" padding="20px 22px" boxSizing="border-box">
-      <Spacer size={40} />
+    <Flex
+      {...(isGlobal && {
+        maxWidth: 375,
+        margin: '0 auto',
+        shadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px',
+      })}
+      height="100%"
+      direction="column"
+      padding="20px 22px"
+      boxSizing="border-box"
+    >
+      {isGlobal ? <></> : <Spacer size={40} />}
       <img src={PNGErrorBackground} />
       <Spacer size={26} />
       <Flex direction="column" alignItems="center" justifyContent="center">
