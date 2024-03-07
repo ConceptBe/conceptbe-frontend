@@ -34,6 +34,7 @@ const Comment = ({
     commentCount,
     commentChildResponses,
     owner,
+    deleted,
   },
 }: Props) => {
   const [isEditComment, setIsEditComment] = useState<boolean>(false);
@@ -91,11 +92,11 @@ const Comment = ({
               skillList={memberSkills}
               createdAt={createdAt}
             />
-            <ModifyDropdown owner={owner} isInComment onEdit={onEditComment} onDelete={onDeleteComment} />
+            {!deleted && <ModifyDropdown owner={owner} isInComment onEdit={onEditComment} onDelete={onDeleteComment} />}
           </Flex>
           <Spacer size={20} />
           <Text font="suit14r" color="t" style={{ lineHeight: '22px', whiteSpace: 'pre-wrap' }}>
-            {content}
+            {deleted ? '삭제된 댓글입니다.' : content}
           </Text>
           <Spacer size={10} />
           <Flex>

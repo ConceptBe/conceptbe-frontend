@@ -20,7 +20,7 @@ const Recomment = ({
   feedId,
   myImageUrl,
   myNickname,
-  recomment: { childCommentId, profileImageUrl, nickname, memberSkills, content, likesCount, owner },
+  recomment: { childCommentId, profileImageUrl, nickname, memberSkills, content, likesCount, owner, deleted },
 }: Props) => {
   const [isEditComment, setIsEditComment] = useState<boolean>(false);
   const { focusEditCommentTextarea, initEditCommentTextarea } = useFocusEditCommentTextareaContext();
@@ -82,7 +82,7 @@ const Recomment = ({
               </Flex>
             </Box>
           </Flex>
-          <ModifyDropdown owner={owner} onEdit={onEditComment} onDelete={onDeleteComment} isInComment />
+          {!deleted && <ModifyDropdown owner={owner} onEdit={onEditComment} onDelete={onDeleteComment} isInComment />}
         </Flex>
       )}
     </>
