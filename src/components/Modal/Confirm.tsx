@@ -19,9 +19,9 @@ const Confirm = ({
   onConfirm,
 }: ModalProps) => {
   const onClickConfirm = () => {
-    onClose();
-
     if (onConfirm) onConfirm();
+
+    onClose();
   };
 
   return (
