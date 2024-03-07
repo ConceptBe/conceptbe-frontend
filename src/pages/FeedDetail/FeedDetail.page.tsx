@@ -1,5 +1,5 @@
 import { Badge, Divider, Header, Spacer, Text, TextDivider, Flex, Box } from 'concept-be-design-system';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import Comments from './components/Comments';
 import ModifyDropdown from './components/ModifyDropdown';
@@ -12,6 +12,7 @@ import Logo from '../../layouts/Logo';
 import { formatCommentDate } from '../Feed/utils/formatCommentDate';
 
 const FeedDetailPage = () => {
+  const navigator = useNavigate();
   const { id: feedId } = useParams() as { id: string };
   const {
     imageUrl,
@@ -34,12 +35,21 @@ const FeedDetailPage = () => {
     ownerLike,
   } = useFeedDetailQuery(feedId);
 
+  const onModifyFeedDetail = () => {
+    // 게시글 수정 로직 필요
+  };
+
+  const onDeleteFeedDetail = () => {
+    // 게시글 삭제 로직 필요
+    navigator(-1);
+  };
+
   return (
     <CommentFocusProvider>
       <Header main>
         <Back />
         <Logo />
-        <ModifyDropdown owner={owner} />
+        <ModifyDropdown owner={owner} onModify={onModifyFeedDetail} onDelete={onDeleteFeedDetail} />
       </Header>
 
       <Box padding="30px 22px 30px 22px" marginTop={48}>

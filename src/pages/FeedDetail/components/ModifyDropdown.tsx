@@ -17,9 +17,11 @@ import useHandleModifyDropdown from '../hooks/useHandleModifyDropdown';
 interface Props {
   owner: boolean;
   isInComment?: boolean;
+  onModify: () => void;
+  onDelete: () => void;
 }
 
-const ModifyDropdown = ({ owner, isInComment }: Props) => {
+const ModifyDropdown = ({ owner, isInComment, onModify, onDelete }: Props) => {
   const { dropdownRef, isOpenModifyDropdown, toggleModifyDropdown } = useHandleModifyDropdown();
 
   return (
@@ -33,14 +35,14 @@ const ModifyDropdown = ({ owner, isInComment }: Props) => {
           )}
           {isOpenModifyDropdown && (
             <DropDownBox>
-              <Flex justifyContent="space-between" alignItems="center">
+              <Flex justifyContent="space-between" alignItems="center" onClick={onModify}>
                 <Text font="suit12r" color="b6">
                   수정하기
                 </Text>
                 <SVGFeedPencil />
               </Flex>
               <Divider color="bg1" height={0.1} />
-              <Flex justifyContent="space-between" alignItems="center">
+              <Flex justifyContent="space-between" alignItems="center" onClick={onDelete}>
                 <Text font="suit12r" color="b6">
                   삭제하기
                 </Text>
