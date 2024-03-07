@@ -15,7 +15,11 @@
     "@tanstack/react-query": "^5.17.19",
     "@toss/use-overlay": "^1.3.8",
     "axios": "^1.5.1",
+<<<<<<< HEAD
     "concept-be-design-system": "^0.4.3",
+=======
+    "concept-be-design-system": "^0.4.5",
+>>>>>>> 1e42e0c (chore: 디자인 시스템 0.4.5 버전 적용)
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.15.0",

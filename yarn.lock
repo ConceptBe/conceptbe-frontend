@@ -1270,10 +1270,17 @@ concat-map@0.0.1:
   resolved "https://registry.npmjs.org/concat-map/-/concat-map-0.0.1.tgz"
   integrity sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==
 
+<<<<<<< HEAD
 concept-be-design-system@^0.4.3:
   version "0.4.3"
   resolved "https://registry.npmjs.org/concept-be-design-system/-/concept-be-design-system-0.4.3.tgz"
   integrity sha512-33G/XWi2dQUCJwRqXfjilCOV1HDqXZCMMbgEuJ1W7+yS26ttiUd9+x0CnLunEeEf09TNmLnTUL9tKT5m7GJRwg==
+=======
+concept-be-design-system@^0.4.4:
+  version "0.4.4"
+  resolved "https://registry.npmjs.org/concept-be-design-system/-/concept-be-design-system-0.4.4.tgz"
+  integrity sha512-UDA5vgn28VZLZgz1WcE/jQlDHpqr8oJgd5dZTFDDvz2pyxsiEzf6xRdCm0iwzsTrY71qYZ+eB7UGdVSuvW/NVw==
+>>>>>>> 1e42e0c (chore: 디자인 시스템 0.4.5 버전 적용)
   dependencies:
     "@emotion/react" "^11.11.1"
     "@emotion/styled" "^11.11.0"
