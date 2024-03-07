@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Box, Button, Divider, Flex, theme, Text } from 'concept-be-design-system';
 import { ChangeEvent, useState } from 'react';
 
-import CommentProfileInfo from './CommentProfileInfo';
+import WriteCommentProfileInfo from './WriteCommentProfileInfo';
 import { PARENT_COMMENT_ID } from '../../../constants';
 import { useFocusRecommentTextareaContext } from '../contexts/CommentFocusContext';
 import usePostCommentMutation from '../hooks/mutations/usePostCommentMutation';
@@ -48,7 +48,7 @@ const WriteRecomment = ({ feedId, myImageUrl, myNickname, onCloseRecommentTextar
         padding="15px 20px 0 20px"
         borderRadius="6px 6px 0 0"
       >
-        <CommentProfileInfo imageUrl={myImageUrl} nickname={myNickname} />
+        <WriteCommentProfileInfo imageUrl={myImageUrl} nickname={myNickname} />
       </Box>
 
       <Textarea

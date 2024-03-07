@@ -1,6 +1,7 @@
 import { Box, Flex, SVGFeedMessage, SVGFeedUnLike, Spacer, Text } from 'concept-be-design-system';
 import { useEffect, useState } from 'react';
 
+import CommentProfileInfo from './CommentProfileInfo';
 import Recomment from './Recomment';
 import WriteRecomment from './WriteRecomment';
 import ProfileInfo from '../../../components/ProfileInfo';
@@ -20,7 +21,18 @@ const Comment = ({
   feedId,
   myImageUrl,
   myNickname,
-  comment: { nickname, memberSkills, content, likesCount, commentCount, commentChildResponses },
+  comment: {
+    parentCommentId,
+    nickname,
+    profileImageUrl,
+    createdAt,
+    memberSkills,
+    content,
+    likesCount,
+    commentCount,
+    commentChildResponses,
+    owner,
+  },
 }: Props) => {
   const [isOpenRecommentTextarea, setIsOpenRecommentTextarea] = useState<boolean>(false);
   const { focusRecommentTextarea, initRecommentTextareaRef } = useFocusRecommentTextareaContext();
@@ -46,7 +58,12 @@ const Comment = ({
   return (
     <>
       <Box margin="20px 0">
-        <ProfileInfo imageUrl={''} nickname={nickname} skillList={memberSkills} />
+        <CommentProfileInfo
+          imageUrl={profileImageUrl}
+          nickname={nickname}
+          skillList={memberSkills}
+          createdAt={createdAt}
+        />
         <Spacer size={20} />
         <Text font="suit14r" color="t" style={{ lineHeight: '22px', whiteSpace: 'pre-wrap' }}>
           {content}

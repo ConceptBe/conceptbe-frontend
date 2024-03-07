@@ -2,6 +2,8 @@ import styled from '@emotion/styled';
 import { Text, TextDivider, Box, Flex } from 'concept-be-design-system';
 import { Fragment } from 'react';
 
+import { DEFAULT_IMAGE_URL } from '../constants';
+
 interface Props {
   imageUrl: string;
   nickname: string;
@@ -9,7 +11,6 @@ interface Props {
 }
 
 // TODO: 프로필 이미지 사진 오류 시 보여줄 기본 프로필 이미지 사진 URL
-const DEFAULT_IMAGE_URL = '';
 
 const ProfileInfo = ({ imageUrl, nickname, skillList }: Props) => {
   return (
