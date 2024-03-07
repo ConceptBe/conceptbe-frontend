@@ -80,34 +80,12 @@ const SignUpPage = () => {
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const joinPurposes = checkboxValue.goal.filter(({ checked }) => checked).map(({ id }) => id);
-
-    if (Object.values(fieldErrorValue).find((errorMessage) => errorMessage)) {
-      alert('입력하신 내용을 다시 한번 확인해 주세요.');
-      return;
-    }
-
-    if (!dropdownValue.mainSkill) {
-      alert('대표 스킬을 선택해 주세요.');
-      return;
-    }
-
-    if (selectedSkillDepths.length === 0) {
-      alert('세부 스킬을 선택해 주세요.');
-      return;
-    }
-
-    if (joinPurposes.length === 0) {
-      alert('가입 목적을 선택해 주세요.');
-      return;
-    }
-
     postSignUp({
       nickname: fieldValue.nickname,
       mainSkillId: mainSkills.find(({ name }) => dropdownValue.mainSkill === name)?.id || 0,
       profileImageUrl: memberInfo?.profileImageUrl || '',
       skills: selectedSkillDepths.map(({ id, name }) => ({ skillId: id, level: name.split(', ')[1] })),
-      joinPurposes,
+      joinPurposes: checkboxValue.goal.filter(({ checked }) => checked).map(({ id }) => id),
       livingPlace: dropdownValue.region,
       workingPlace: fieldValue.company,
       email: memberInfo?.email || '',
@@ -312,25 +290,13 @@ const SignUpPage = () => {
 
           <Spacer size={35} />
 
-          <Field
-            label="직장명"
-            value={fieldValue.company}
-            onChange={onChangeField}
-            onValidate={validateInput}
-            maxLength={10}
-          >
+          <Field label="직장명" value={fieldValue.company} onChange={onChangeField} maxLength={10}>
             <Field.Input name="company" placeholder="직장명을 입력해주세요" />
           </Field>
 
           <Spacer size={35} />
 
-          <Field
-            label="자기소개"
-            value={fieldValue.intro}
-            onChange={onChangeField}
-            onValidate={validateInput}
-            maxLength={150}
-          >
+          <Field label="자기소개" value={fieldValue.intro} onChange={onChangeField} maxLength={150}>
             <Field.Textarea name="intro" placeholder="자기소개를 입력해 주세요. (최대 150자)" />
           </Field>
         </Box>
