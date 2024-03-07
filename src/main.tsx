@@ -5,18 +5,20 @@ import { ConceptBeProvider } from 'concept-be-design-system';
 import { createRoot } from 'react-dom/client';
 
 import App from './App.tsx';
-
 import './styles/reset.css';
+import GlobalErrorBoundary from './components/ErrorBoundary/GlobalErrorBoundary.tsx';
 
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById('root')!).render(
-  <QueryClientProvider client={queryClient}>
-    <ConceptBeProvider>
-      <OverlayProvider>
-        <App />
-      </OverlayProvider>
-    </ConceptBeProvider>
-    <ReactQueryDevtools initialIsOpen={false} />
-  </QueryClientProvider>,
+  <GlobalErrorBoundary>
+    <QueryClientProvider client={queryClient}>
+      <ConceptBeProvider>
+        <OverlayProvider>
+          <App />
+        </OverlayProvider>
+      </ConceptBeProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
+  </GlobalErrorBoundary>,
 );
