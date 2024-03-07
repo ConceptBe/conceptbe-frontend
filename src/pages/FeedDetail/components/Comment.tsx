@@ -2,9 +2,9 @@ import { Box, Flex, SVGFeedMessage, SVGFeedUnLike, Spacer, Text } from 'concept-
 import { useEffect, useState } from 'react';
 
 import CommentProfileInfo from './CommentProfileInfo';
+import ModifyDropdown from './ModifyDropdown';
 import Recomment from './Recomment';
 import WriteRecomment from './WriteRecomment';
-import ProfileInfo from '../../../components/ProfileInfo';
 import { get999PlusCount } from '../../utils';
 import { useFocusRecommentTextareaContext } from '../contexts/CommentFocusContext';
 import { CommentParentResponse } from '../types';
@@ -58,12 +58,15 @@ const Comment = ({
   return (
     <>
       <Box margin="20px 0">
-        <CommentProfileInfo
-          imageUrl={profileImageUrl}
-          nickname={nickname}
-          skillList={memberSkills}
-          createdAt={createdAt}
-        />
+        <Flex justifyContent="space-between">
+          <CommentProfileInfo
+            imageUrl={profileImageUrl}
+            nickname={nickname}
+            skillList={memberSkills}
+            createdAt={createdAt}
+          />
+          <ModifyDropdown owner={owner} isInComment />
+        </Flex>
         <Spacer size={20} />
         <Text font="suit14r" color="t" style={{ lineHeight: '22px', whiteSpace: 'pre-wrap' }}>
           {content}
@@ -91,6 +94,7 @@ const Comment = ({
       {isOpenRecommentTextarea && (
         <WriteRecomment
           feedId={feedId}
+          parentCommentId={parentCommentId}
           myImageUrl={myImageUrl}
           myNickname={myNickname}
           onCloseRecommentTextarea={onCloseRecommentTextarea}

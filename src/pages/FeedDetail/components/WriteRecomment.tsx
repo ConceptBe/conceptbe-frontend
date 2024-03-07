@@ -3,18 +3,18 @@ import { Box, Button, Divider, Flex, theme, Text } from 'concept-be-design-syste
 import { ChangeEvent, useState } from 'react';
 
 import WriteCommentProfileInfo from './WriteCommentProfileInfo';
-import { PARENT_COMMENT_ID } from '../../../constants';
 import { useFocusRecommentTextareaContext } from '../contexts/CommentFocusContext';
 import usePostCommentMutation from '../hooks/mutations/usePostCommentMutation';
 
 interface Props {
   feedId: string;
+  parentCommentId: number;
   myImageUrl: string;
   myNickname: string;
   onCloseRecommentTextarea: () => void;
 }
 
-const WriteRecomment = ({ feedId, myImageUrl, myNickname, onCloseRecommentTextarea }: Props) => {
+const WriteRecomment = ({ feedId, parentCommentId, myImageUrl, myNickname, onCloseRecommentTextarea }: Props) => {
   const [recommentInput, setRecommentInput] = useState<string>('');
   const { recommentTextareaRef, initRecommentTextareaRef } = useFocusRecommentTextareaContext();
   const { postComment } = usePostCommentMutation({
@@ -36,7 +36,7 @@ const WriteRecomment = ({ feedId, myImageUrl, myNickname, onCloseRecommentTextar
   };
 
   const onSubmitComment = () => {
-    postComment({ ideaId: Number(feedId), parentId: PARENT_COMMENT_ID, content: recommentInput });
+    postComment({ ideaId: Number(feedId), parentId: parentCommentId, content: recommentInput });
   };
 
   return (

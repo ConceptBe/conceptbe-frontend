@@ -11,20 +11,26 @@ import {
   theme,
 } from 'concept-be-design-system';
 
+import { ReactComponent as SVGMore24 } from '../../components/NewIdeaCard/assets/more24.svg';
 import useHandleModifyDropdown from '../hooks/useHandleModifyDropdown';
 
 interface Props {
   owner: boolean;
+  isInComment?: boolean;
 }
 
-const ModifyDropdown = ({ owner }: Props) => {
+const ModifyDropdown = ({ owner, isInComment }: Props) => {
   const { dropdownRef, isOpenModifyDropdown, toggleModifyDropdown } = useHandleModifyDropdown();
 
   return (
     <>
       {owner ? (
         <Box position="relative" ref={dropdownRef} cursor="pointer">
-          <SVGTripleDots onClick={toggleModifyDropdown} />
+          {isInComment ? (
+            <SVGMore24 onClick={toggleModifyDropdown} />
+          ) : (
+            <SVGTripleDots onClick={toggleModifyDropdown} />
+          )}
           {isOpenModifyDropdown && (
             <DropDownBox>
               <Flex justifyContent="space-between" alignItems="center">

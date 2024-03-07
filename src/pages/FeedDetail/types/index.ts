@@ -20,17 +20,24 @@ export interface FeedDetailResponse {
 }
 
 export interface CommentParentResponse {
+  parentCommentId: number;
   nickname: string;
+  profileImageUrl: string;
   memberSkills: string[];
   content: string;
+  createdAt: string;
   likesCount: number;
   commentCount: number;
   commentChildResponses: CommentChildResponse[];
+  owner: boolean;
 }
 
 export interface CommentChildResponse {
   nickname: string;
+  profileImageUrl: string;
   memberSkills: string[];
   content: string;
+  createAt: string;
   likesCount: number;
+  owner: boolean;
 }
