@@ -39,6 +39,7 @@ const Comment = ({
   const [isEditComment, setIsEditComment] = useState<boolean>(false);
   const [isOpenRecommentTextarea, setIsOpenRecommentTextarea] = useState<boolean>(false);
   const { focusRecommentTextarea, initRecommentTextareaRef } = useFocusRecommentTextareaContext();
+  const { deleteComment } = useDeleteCommentMutation({ feedId });
 
   const onOpenRecommentTextarea = () => {
     if (isOpenRecommentTextarea) return;
@@ -58,7 +59,7 @@ const Comment = ({
   };
 
   const onDeleteComment = () => {
-    //
+    deleteComment(parentCommentId);
   };
 
   useEffect(() => {

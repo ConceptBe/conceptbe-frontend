@@ -6,6 +6,7 @@ import ModifyDropdown from './ModifyDropdown';
 import ProfileInfo from '../../../components/ProfileInfo';
 import { get999PlusCount } from '../../utils';
 import { useFocusEditCommentTextareaContext } from '../contexts/CommentFocusContext';
+import useDeleteCommentMutation from '../hooks/mutations/useDeleteComment';
 import { CommentChildResponse } from '../types';
 
 interface Props {
@@ -23,6 +24,7 @@ const Recomment = ({
 }: Props) => {
   const [isEditComment, setIsEditComment] = useState<boolean>(false);
   const { focusEditCommentTextarea, initEditCommentTextarea } = useFocusEditCommentTextareaContext();
+  const { deleteComment } = useDeleteCommentMutation({ feedId });
 
   const onCloseEditCommentTextarea = () => {
     setIsEditComment(false);
@@ -33,7 +35,7 @@ const Recomment = ({
   };
 
   const onDeleteComment = () => {
-    //
+    deleteComment(childCommentId);
   };
 
   useEffect(() => {
