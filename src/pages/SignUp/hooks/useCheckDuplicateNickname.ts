@@ -8,10 +8,18 @@ interface Props {
   setFieldErrorValue: Dispatch<SetStateAction<Record<keyof FieldValue, string>>>;
 }
 
+const userItem = localStorage.getItem('user');
+
 const useCheckDuplicateNickname = ({ nickname, setFieldErrorValue }: Props) => {
   const timerId = useRef<number | null>(null);
 
   useEffect(() => {
+    if (userItem) {
+      const userInfo = JSON.parse(userItem);
+
+      if (userInfo.nickname === nickname) return;
+    }
+
     if (timerId.current) {
       const timerIdCurrent = timerId.current;
       clearTimeout(timerIdCurrent);
