@@ -15,14 +15,13 @@ import {
   useDropdown,
   Flex,
   Box,
-  SVGHeaderBack24W,
 } from 'concept-be-design-system';
 import { FormEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import useProfileQuery from './hooks/useProfileQuery.ts';
 import usePutProfileMutation from './hooks/usePutProfileMutation.ts';
 import { DropdownValue, FieldValue } from './types';
+import Back from '../../layouts/Back.tsx';
 import { memberId } from '../Profile/utils/memberId.ts';
 import useCheckDuplicateNickname from '../SignUp/hooks/useCheckDuplicateNickname.ts';
 import useSetDetailSkills from '../SignUp/hooks/useSetDetailSkills.ts';
@@ -38,7 +37,6 @@ interface CheckboxOption {
 }
 
 const ProfileEdit = () => {
-  const navigate = useNavigate();
   const { mainSkills, detailSkills, skillLevels, regions, purposes, my } = useProfileQuery();
   const { fieldValue, fieldErrorValue, setFieldErrorValue, onChangeField } = useField<FieldValue>({
     nickname: my.nickname ?? '',
@@ -98,7 +96,7 @@ const ProfileEdit = () => {
     <Box paddingBottom={34}>
       <Header main>
         <Header.Item>
-          <SVGHeaderBack24W cursor="pointer" onClick={() => navigate(-1)} />
+          <Back />
         </Header.Item>
         <Header.Item>
           <Text font="suit16sb" color="w1">
