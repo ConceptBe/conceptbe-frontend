@@ -13,7 +13,6 @@ import More from './pages/Profile/More.page';
 import Profile from './pages/Profile/Profile.page';
 import Setting from './pages/Profile/Setting.page';
 import SignUpPage from './pages/SignUp/SignUp.page';
-import Temp from './pages/Temp';
 import WritePage from './pages/Write/Write.page';
 import WriteEditPage from './pages/WriteEdit/WriteEdit.page';
 
@@ -107,11 +106,6 @@ const routes: RouteElement[] = [
             <SignUpPage />
           </Suspense>
         ),
-        withAuth: false,
-      },
-      {
-        path: '/temp',
-        element: <Temp />,
         withAuth: false,
       },
     ],
