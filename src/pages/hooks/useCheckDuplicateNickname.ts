@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
 
-import { getCheckDuplicateNickname } from '../../../api';
-import { FieldValue } from '../types';
+import { getCheckDuplicateNickname } from '../../api';
+import { FieldValue } from '../SignUp/types';
 
 interface Props {
   nickname: string;
