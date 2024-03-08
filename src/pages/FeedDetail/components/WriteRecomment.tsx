@@ -17,13 +17,7 @@ interface Props {
 const WriteRecomment = ({ feedId, parentCommentId, myImageUrl, myNickname, onCloseRecommentTextarea }: Props) => {
   const [recommentInput, setRecommentInput] = useState<string>('');
   const { recommentTextareaRef, initRecommentTextarea } = useFocusRecommentTextareaContext();
-  const { postComment } = usePostCommentMutation({
-    feedId,
-    onSuccess: () => {
-      setRecommentInput('');
-      onCloseRecommentTextarea();
-    },
-  });
+  const { postComment } = usePostCommentMutation({ feedId });
 
   const onChangeTextarea = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setRecommentInput(e.target.value.substring(0, 500));
@@ -36,7 +30,15 @@ const WriteRecomment = ({ feedId, parentCommentId, myImageUrl, myNickname, onClo
   };
 
   const onSubmitComment = () => {
-    postComment({ ideaId: feedId, parentId: parentCommentId, content: recommentInput });
+    postComment(
+      { ideaId: feedId, parentId: parentCommentId, content: recommentInput },
+      {
+        onSuccess: () => {
+          setRecommentInput('');
+          onCloseRecommentTextarea();
+        },
+      },
+    );
   };
 
   return (

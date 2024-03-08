@@ -17,13 +17,7 @@ const WriteComment = ({ feedId, myImageUrl, myNickname }: Props) => {
   const [commentInput, setCommentInput] = useState<string>('');
   const { commentTextareaRef, isFocusComment, openCommentTextarea, closeCommentTextarea } =
     useFocusCommentTextareaContext();
-  const { postComment } = usePostCommentMutation({
-    feedId,
-    onSuccess: () => {
-      setCommentInput('');
-      closeCommentTextarea();
-    },
-  });
+  const { postComment } = usePostCommentMutation({ feedId });
 
   const onChangeTextarea = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setCommentInput(e.target.value.substring(0, 500));
@@ -40,7 +34,15 @@ const WriteComment = ({ feedId, myImageUrl, myNickname }: Props) => {
   };
 
   const onSubmitComment = () => {
-    postComment({ ideaId: feedId, parentId: ROOT_COMMENT_ID, content: commentInput });
+    postComment(
+      { ideaId: feedId, parentId: ROOT_COMMENT_ID, content: commentInput },
+      {
+        onSuccess: () => {
+          setCommentInput('');
+          closeCommentTextarea();
+        },
+      },
+    );
   };
 
   return (
