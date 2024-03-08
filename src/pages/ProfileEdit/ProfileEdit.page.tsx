@@ -17,7 +17,7 @@ import {
   Box,
   SVGHeaderBack24W,
 } from 'concept-be-design-system';
-import { FormEvent, useEffect } from 'react';
+import { FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import useProfileQuery from './hooks/useProfileQuery.ts';
@@ -40,7 +40,6 @@ interface CheckboxOption {
 const ProfileEdit = () => {
   const navigate = useNavigate();
   const { mainSkills, detailSkills, skillLevels, regions, purposes, my } = useProfileQuery();
-  const { putProfile } = usePutProfileMutation(memberId);
   const { fieldValue, fieldErrorValue, setFieldErrorValue, onChangeField } = useField<FieldValue>({
     nickname: my.nickname ?? '',
     company: my.workingPlace ?? '',
@@ -63,6 +62,7 @@ const ProfileEdit = () => {
     dropdownValue,
     onResetDropdown,
   });
+  const { putProfile } = usePutProfileMutation(memberId, fieldValue.nickname);
 
   useCheckDuplicateNickname({ nickname: fieldValue.nickname, setFieldErrorValue });
 
