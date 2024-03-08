@@ -12,7 +12,7 @@ const usePostScrapMutation = (id: string) => {
   const { mutate: postScrap, ...rest } = useMutation({
     mutationFn: _postScrap,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['feedDetail', id] });
+      queryClient.invalidateQueries({ queryKey: ['feed', 'detail', id] });
     },
     onError: (error: AxiosError<{ message: string }>) => {
       alert(error.response?.data.message ?? '스크랩에 실패했습니다.');

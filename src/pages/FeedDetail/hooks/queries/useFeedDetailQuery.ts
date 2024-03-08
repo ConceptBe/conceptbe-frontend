@@ -4,7 +4,7 @@ import { getFeedDetail } from '../../../../api';
 
 const useFeedDetailQuery = (id: string) => {
   const { data: feedDetail } = useSuspenseQuery({
-    queryKey: ['feedDetail', id],
+    queryKey: ['feed', 'detail', id],
     queryFn: () => getFeedDetail(id),
     select: (data) => ({ ...data }),
   });

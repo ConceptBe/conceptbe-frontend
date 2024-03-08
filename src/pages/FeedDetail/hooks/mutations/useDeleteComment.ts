@@ -15,7 +15,7 @@ const useDeleteCommentMutation = ({ feedId }: Props) => {
     mutationFn: _deleteComment,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['comments', feedId] });
-      queryClient.invalidateQueries({ queryKey: ['feedDetail', feedId] });
+      queryClient.invalidateQueries({ queryKey: ['feed', 'detail', feedId] });
     },
     onError: (error: AxiosError<{ message: string }>) => {
       alert(error.response?.data.message ?? '댓글 삭제에 실패했습니다.');

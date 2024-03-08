@@ -12,7 +12,7 @@ const usePostLikeMutation = (id: string) => {
   const { mutate: postLike, ...rest } = useMutation({
     mutationFn: _postLike,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['feedDetail', id] });
+      queryClient.invalidateQueries({ queryKey: ['feed', 'detail', id] });
     },
     onError: (error: AxiosError<{ message: string }>) => {
       alert(error.response?.data.message ?? '좋아요에 실패했습니다.');
