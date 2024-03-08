@@ -10,6 +10,12 @@ export type Idea = {
   skillCategories: string[]; // 목적
 };
 
+type MemberSkills = {
+  skillId: number;
+  skillName: string;
+  level: string;
+};
+
 export type Member = {
   profileImageUrl: string; // 프로필 이미지,
   nickname: string; // 닉네임
@@ -18,7 +24,7 @@ export type Member = {
   livingPlace: string; // 지역
   workingPlace: string; // 직장명
   introduction: string; // 자기소개
-  skills: string[]; // 세부 스킬
+  skills: MemberSkills[]; // 세부 스킬
   joinPurposes: string[]; // 관심 영역
 };
 

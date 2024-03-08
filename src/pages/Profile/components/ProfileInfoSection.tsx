@@ -76,9 +76,9 @@ const ProfileInfoSection = () => {
           <Spacer size={10} />
           <TagWrapper>
             <Flex wrap="wrap" gap={6}>
-              {skills.map((badge) => (
-                <Badge key={badge} backgroundColor="c1" fontColor="w1">
-                  {badge}
+              {skills.map(({ skillId, skillName }) => (
+                <Badge key={skillId} backgroundColor="c1" fontColor="w1">
+                  {skillName}
                 </Badge>
               ))}
             </Flex>
