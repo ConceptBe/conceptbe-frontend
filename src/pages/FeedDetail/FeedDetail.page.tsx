@@ -12,7 +12,7 @@ import Logo from '../../layouts/Logo';
 import { formatCommentDate } from '../Feed/utils/formatCommentDate';
 
 const FeedDetailPage = () => {
-  const navigator = useNavigate();
+  const navigate = useNavigate();
   const { id: feedId } = useParams() as { id: string };
   const {
     imageUrl,
@@ -41,7 +41,7 @@ const FeedDetailPage = () => {
 
   const onDeleteFeedDetail = () => {
     // 게시글 삭제 로직 필요
-    navigator(-1);
+    navigate(-1);
   };
 
   return (
