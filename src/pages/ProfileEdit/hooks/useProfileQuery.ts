@@ -7,7 +7,7 @@ const useProfileQuery = () => {
   const { mainSkills, detailSkills, skillLevels, regions, purposes } = useSignUpQuery();
   const { my } = useMemberQuery(memberId);
 
-  const mySkills = convertSelectedSkills(my.skills, detailSkills);
+  const mySkills = convertSelectedSkills(my.skills);
   const myPurposes = convertSelectedCheckbox(my.joinPurposes, purposes);
 
   return {

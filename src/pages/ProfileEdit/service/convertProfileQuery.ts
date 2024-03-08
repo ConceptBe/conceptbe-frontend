@@ -1,34 +1,11 @@
-import { DetailSkills, ConvertedCheckboxOption } from '../types';
+import { ConvertedCheckboxOption, ProfileSkill } from '../types';
 
-interface SelectedSkills {
-  skillNames: string[];
-  skillLevels: string[];
-}
-
-export const convertSelectedSkills = (selectedSkills: string[] | undefined, detailSkill: DetailSkills) => {
+export const convertSelectedSkills = (selectedSkills: ProfileSkill[] | undefined) => {
   if (!selectedSkills) {
     return [];
   }
 
-  const detailSkillList = Object.values(detailSkill).reduce((acc, skill) => acc.concat(skill), []);
-  const { skillNames, skillLevels } = selectedSkills.reduce(
-    (acc: SelectedSkills, skill: string) => {
-      const skillName = skill.split('_')[0];
-      const skillLevel = skill.split('_')[1];
-
-      return {
-        skillNames: [...acc.skillNames, skillName],
-        skillLevels: [...acc.skillLevels, skillLevel],
-      };
-    },
-    { skillNames: [], skillLevels: [] },
-  );
-
-  return skillNames.map((skillName, idx) => {
-    const skillId = detailSkillList.find((skill) => skill.name === skillName)?.id || 0;
-
-    return { id: skillId, name: `${skillName}, ${skillLevels[idx]}` };
-  });
+  return selectedSkills.map((skill) => ({ id: skill.skillId, name: `${skill.skillName}, ${skill.level}` }));
 };
 
 export const convertSelectedCheckbox = (

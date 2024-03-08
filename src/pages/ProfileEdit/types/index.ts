@@ -12,17 +12,20 @@ export interface PutSignUp {
   nickname: string;
   mainSkillId: number;
   profileImageUrl: string;
-  skills: {
-    skillId: number;
-    level: string;
-  }[];
+  skills: Omit<ProfileSkill, 'skillName'>[];
   joinPurposes: number[];
   livingPlace?: string;
   workingPlace?: string;
   introduction?: string;
 }
 
-export interface Skill {
+export interface ProfileSkill {
+  skillId: number;
+  skillName: string;
+  level: string;
+}
+
+export interface SignUpSkill {
   id: number;
   name: string;
 }
@@ -68,6 +71,6 @@ export interface Profile {
   livingPlace: string;
   workingPlace: string;
   introduction: string;
-  skills: string[];
+  skills: ProfileSkill[];
   joinPurposes: string[];
 }
