@@ -22,7 +22,7 @@ const Comments = ({ feedId }: Props) => {
     <Box padding="20px 22px">
       <WriteComment feedId={feedId} myImageUrl={myImageUrl} myNickname={myNickname} />
       {comments.map((comment, idx) => (
-        <Fragment key={comment.content}>
+        <Fragment key={comment.parentCommentId}>
           <Comment
             comment={comment}
             feedId={feedId}

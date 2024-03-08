@@ -115,8 +115,14 @@ const Comment = ({
         </Box>
       )}
 
-      {commentChildResponses.map((recomment, idx) => (
-        <Recomment key={idx} feedId={feedId} recomment={recomment} myImageUrl={myImageUrl} myNickname={myNickname} />
+      {commentChildResponses.map((recomment) => (
+        <Recomment
+          key={recomment.childCommentId}
+          feedId={feedId}
+          recomment={recomment}
+          myImageUrl={myImageUrl}
+          myNickname={myNickname}
+        />
       ))}
       {isOpenRecommentTextarea && (
         <WriteRecomment
