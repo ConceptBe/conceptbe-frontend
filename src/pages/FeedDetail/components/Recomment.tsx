@@ -1,4 +1,4 @@
-import { Box, Flex, SVGFeedReCommentLine, SVGFeedUnLike, Spacer, Text } from 'concept-be-design-system';
+import { Box, Flex, SVGFeedLike, SVGFeedReCommentLine, SVGFeedUnLike, Spacer, Text } from 'concept-be-design-system';
 import { useState } from 'react';
 
 import EditComment from './EditComment';
@@ -7,6 +7,7 @@ import ProfileInfo from '../../../components/ProfileInfo';
 import { get999PlusCount } from '../../utils';
 import useDeleteCommentMutation from '../hooks/mutations/useDeleteComment';
 import useFocusEditComment from '../hooks/useFocusEditComment';
+import useToggleLikeComment from '../hooks/useToggleLikeComment';
 import { CommentChildResponse } from '../types';
 
 interface Props {
@@ -20,10 +21,11 @@ const Recomment = ({
   feedId,
   myImageUrl,
   myNickname,
-  recomment: { childCommentId, profileImageUrl, nickname, memberSkills, content, likesCount, owner, deleted },
+  recomment: { childCommentId, profileImageUrl, nickname, memberSkills, content, likesCount, owner, deleted, likes },
 }: Props) => {
   const [isEditComment, setIsEditComment] = useState<boolean>(false);
   const { deleteComment } = useDeleteCommentMutation({ feedId });
+  const toggleLikeComment = useToggleLikeComment({ feedId, commentId: childCommentId, isLike: likes });
 
   useFocusEditComment({ focusCondition: isEditComment });
 
@@ -66,8 +68,8 @@ const Recomment = ({
               </Text>
               <Spacer size={10} />
               <Flex>
-                <Flex alignItems="center" gap={4}>
-                  <SVGFeedUnLike />
+                <Flex alignItems="center" gap={4} onClick={toggleLikeComment}>
+                  {likes ? <SVGFeedLike /> : <SVGFeedUnLike />}
                   <Text font="suit12r" color="b9">
                     {get999PlusCount(likesCount)}
                   </Text>

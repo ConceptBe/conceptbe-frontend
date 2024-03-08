@@ -31,6 +31,7 @@ export interface CommentParentResponse {
   commentChildResponses: CommentChildResponse[];
   owner: boolean;
   deleted: boolean;
+  likes: boolean;
 }
 
 export interface CommentChildResponse {
@@ -43,4 +44,5 @@ export interface CommentChildResponse {
   likesCount: number;
   owner: boolean;
   deleted: boolean;
+  likes: boolean;
 }
