@@ -18,6 +18,7 @@ import {
   SVGHeaderBack24W,
 } from 'concept-be-design-system';
 import { FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import useProfileQuery from './hooks/useProfileQuery.ts';
 import usePutProfileMutation from './hooks/usePutProfileMutation.ts';
@@ -37,6 +38,7 @@ interface CheckboxOption {
 }
 
 const ProfileEdit = () => {
+  const navigate = useNavigate();
   const { mainSkills, detailSkills, skillLevels, regions, purposes, my } = useProfileQuery();
   const { putProfile } = usePutProfileMutation(memberId);
   const { fieldValue, fieldErrorValue, setFieldErrorValue, onChangeField } = useField<FieldValue>({
@@ -95,7 +97,7 @@ const ProfileEdit = () => {
     <Box paddingBottom={34}>
       <Header main>
         <Header.Item>
-          <SVGHeaderBack24W />
+          <SVGHeaderBack24W cursor="pointer" onClick={() => navigate(-1)} />
         </Header.Item>
         <Header.Item>
           <Text font="suit16sb" color="w1">
