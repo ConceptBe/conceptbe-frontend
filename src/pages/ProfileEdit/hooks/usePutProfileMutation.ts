@@ -5,22 +5,22 @@ import { useNavigate } from 'react-router-dom';
 import { http } from '../../../api/http';
 import { PutSignUp } from '../types';
 
-const editUserNickname = (newNickname: string) => {
+const updateUserNickname = (newNickname: string) => {
   const userInfo = JSON.parse(localStorage.getItem('user') ?? '{}');
   userInfo.nickname = newNickname;
   localStorage.setItem('user', JSON.stringify(userInfo));
 };
 
-const _putProfile = (id: string, payload: PutSignUp) => http.put<void>(`/members/${id}`, payload);
+const _putProfile = (memberId: string, payload: PutSignUp) => http.put<void>(`/members/${memberId}`, payload);
 
-const usePutProfileMutation = (id: string, newNickname: string) => {
+const usePutProfileMutation = (memberId: string, newNickname: string) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { mutate: putProfile, ...rest } = useMutation({
-    mutationFn: (payload: PutSignUp) => _putProfile(id, payload),
+    mutationFn: (payload: PutSignUp) => _putProfile(memberId, payload),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['profile', id] });
-      editUserNickname(newNickname);
+      queryClient.invalidateQueries({ queryKey: ['members', 'detail', memberId] });
+      updateUserNickname(newNickname);
       navigate('/profile');
     },
     onError: (error: AxiosError<{ message: string }>) => {
