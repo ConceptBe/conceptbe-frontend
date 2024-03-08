@@ -17,7 +17,7 @@ import {
   Box,
   SVGHeaderBack24W,
 } from 'concept-be-design-system';
-import { FormEvent } from 'react';
+import { FormEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import useProfileQuery from './hooks/useProfileQuery.ts';
@@ -90,6 +90,7 @@ const ProfileEdit = () => {
       joinPurposes: checkboxValue.goal.filter(({ checked }) => checked).map(({ id }) => id),
       livingPlace: dropdownValue.region,
       workingPlace: fieldValue.company,
+      introduction: fieldValue.intro,
     });
   };
 
