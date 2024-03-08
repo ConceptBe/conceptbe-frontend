@@ -1,5 +1,5 @@
-import useDeleteLikeComment from './mutations/useDeleteLikeComment';
-import usePostLikeComment from './mutations/usePostLikeComment';
+import useDeleteCommentLike from './mutations/useDeleteCommentLike';
+import usePostCommentLike from './mutations/usePostCommentLike';
 
 interface Props {
   feedId: string;
@@ -8,8 +8,8 @@ interface Props {
 }
 
 const useToggleLikeComment = ({ feedId, commentId, isLike }: Props) => {
-  const { postLikeComment } = usePostLikeComment({ feedId });
-  const { deleteLikeComment } = useDeleteLikeComment({ feedId });
+  const { postLikeComment } = usePostCommentLike({ feedId });
+  const { deleteLikeComment } = useDeleteCommentLike({ feedId });
 
   const toggleLikeComment = () => {
     isLike ? deleteLikeComment(commentId) : postLikeComment(commentId);

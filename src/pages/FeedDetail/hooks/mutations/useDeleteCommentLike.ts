@@ -7,7 +7,7 @@ const _deleteLikeComment = (commentId: string) => {
   return http.delete(`/comments/likes/${commentId}`);
 };
 
-const useDeleteLikeComment = ({ feedId }: { feedId: string }) => {
+const useDeleteCommentLike = ({ feedId }: { feedId: string }) => {
   const queryClient = useQueryClient();
   const { mutate: deleteLikeComment, ...rest } = useMutation({
     mutationFn: _deleteLikeComment,
@@ -22,4 +22,4 @@ const useDeleteLikeComment = ({ feedId }: { feedId: string }) => {
   return { deleteLikeComment, ...rest };
 };
 
-export default useDeleteLikeComment;
+export default useDeleteCommentLike;

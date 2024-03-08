@@ -5,7 +5,7 @@ import { http } from '../../../../api/http';
 
 const _postLikeComment = (commentId: string) => http.post(`/comments/likes/${commentId}`);
 
-const usePostLikeComment = ({ feedId }: { feedId: string }) => {
+const usePostCommentLike = ({ feedId }: { feedId: string }) => {
   const queryClient = useQueryClient();
   const { mutate: postLikeComment, ...rest } = useMutation({
     mutationFn: _postLikeComment,
@@ -20,4 +20,4 @@ const usePostLikeComment = ({ feedId }: { feedId: string }) => {
   return { postLikeComment, ...rest };
 };
 
-export default usePostLikeComment;
+export default usePostCommentLike;

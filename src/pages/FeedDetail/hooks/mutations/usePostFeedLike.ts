@@ -7,7 +7,7 @@ const _postLike = (id: string) => {
   return http.post(`/ideas/likes/${id}`);
 };
 
-const usePostLike = (id: string) => {
+const usePostFeedLike = (id: string) => {
   const queryClient = useQueryClient();
   const { mutate: postLike, ...rest } = useMutation({
     mutationFn: _postLike,
@@ -22,4 +22,4 @@ const usePostLike = (id: string) => {
   return { postLike, ...rest };
 };
 
-export default usePostLike;
+export default usePostFeedLike;

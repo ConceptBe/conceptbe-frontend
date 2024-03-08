@@ -3,23 +3,23 @@ import { AxiosError } from 'axios';
 
 import { http } from '../../../../api/http';
 
-const _postScrap = (id: string) => {
-  return http.post<void>(`/bookmark/${id}`);
+const _deleteScrap = (id: string) => {
+  return http.delete<void>(`/bookmark/${id}`);
 };
 
-const usePostScrapFeed = (id: string) => {
+const useDeleteFeedScrap = (id: string) => {
   const queryClient = useQueryClient();
-  const { mutate: postScrap, ...rest } = useMutation({
-    mutationFn: _postScrap,
+  const { mutate: deleteScrap, ...rest } = useMutation({
+    mutationFn: _deleteScrap,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['feed', 'detail', id] });
     },
     onError: (error: AxiosError<{ message: string }>) => {
-      alert(error.response?.data.message ?? '스크랩에 실패했습니다.');
+      alert(error.response?.data.message ?? '스크랩 해제에 실패했습니다.');
     },
   });
 
-  return { postScrap, ...rest };
+  return { deleteScrap, ...rest };
 };
 
-export default usePostScrapFeed;
+export default useDeleteFeedScrap;

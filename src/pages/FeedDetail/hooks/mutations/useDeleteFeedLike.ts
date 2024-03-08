@@ -7,7 +7,7 @@ const _deleteLike = (id: string) => {
   return http.delete(`/ideas/likes/${id}`);
 };
 
-const useDeleteLikeFeed = (id: string) => {
+const useDeleteFeedLike = (id: string) => {
   const queryClient = useQueryClient();
   const { mutate: deleteLike, ...rest } = useMutation({
     mutationFn: _deleteLike,
@@ -22,4 +22,4 @@ const useDeleteLikeFeed = (id: string) => {
   return { deleteLike, ...rest };
 };
 
-export default useDeleteLikeFeed;
+export default useDeleteFeedLike;
