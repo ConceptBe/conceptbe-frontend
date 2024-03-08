@@ -10,10 +10,10 @@ import {
 
 import { get999PlusCount } from '../../utils';
 import { useFocusCommentTextareaContext } from '../contexts/CommentFocusContext';
-import useDeleteLikeMutation from '../hooks/mutations/useDeleteLikeMutation';
-import useDeleteScrapMutation from '../hooks/mutations/useDeleteScrapMutation';
-import usePostLikeMutation from '../hooks/mutations/usePostLikeMutation';
-import usePostScrapMutation from '../hooks/mutations/usePostScrapMutation';
+import useDeleteLikeFeed from '../hooks/mutations/useDeleteLikeFeed';
+import useDeleteScrapFeed from '../hooks/mutations/useDeleteScrapFeed';
+import usePostLike from '../hooks/mutations/usePostLikeFeed';
+import usePostScrapFeed from '../hooks/mutations/usePostScrapFeed';
 
 interface Props {
   feedId: string;
@@ -26,10 +26,10 @@ interface Props {
 
 const ReactionBar = ({ feedId, commentsCount, likesCount, bookmarksCount, ownerLike, ownerScrap }: Props) => {
   const { openCommentTextarea } = useFocusCommentTextareaContext();
-  const { postScrap } = usePostScrapMutation(feedId);
-  const { deleteScrap } = useDeleteScrapMutation(feedId);
-  const { postLike } = usePostLikeMutation(feedId);
-  const { deleteLike } = useDeleteLikeMutation(feedId);
+  const { postScrap } = usePostScrapFeed(feedId);
+  const { deleteScrap } = useDeleteScrapFeed(feedId);
+  const { postLike } = usePostLike(feedId);
+  const { deleteLike } = useDeleteLikeFeed(feedId);
 
   const toggleScrap = () => {
     ownerScrap ? deleteScrap(feedId) : postScrap(feedId);

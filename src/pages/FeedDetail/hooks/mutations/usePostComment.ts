@@ -15,7 +15,7 @@ interface Props {
 
 const _postComment = (payload: CommentPayload) => http.post('/comments', payload);
 
-const usePostCommentMutation = ({ feedId }: Props) => {
+const usePostComment = ({ feedId }: Props) => {
   const queryClient = useQueryClient();
   const { mutate: postComment, ...rest } = useMutation({
     mutationFn: _postComment,
@@ -31,4 +31,4 @@ const usePostCommentMutation = ({ feedId }: Props) => {
   return { postComment, ...rest };
 };
 
-export default usePostCommentMutation;
+export default usePostComment;

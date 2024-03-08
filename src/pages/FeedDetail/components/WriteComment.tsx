@@ -5,7 +5,7 @@ import { ChangeEvent, useState } from 'react';
 import WriteCommentProfileInfo from './WriteCommentProfileInfo';
 import { ROOT_COMMENT_ID } from '../../../constants';
 import { useFocusCommentTextareaContext } from '../contexts/CommentFocusContext';
-import usePostCommentMutation from '../hooks/mutations/usePostCommentMutation';
+import usePostComment from '../hooks/mutations/usePostComment';
 
 interface Props {
   feedId: string;
@@ -17,7 +17,7 @@ const WriteComment = ({ feedId, myImageUrl, myNickname }: Props) => {
   const [commentInput, setCommentInput] = useState<string>('');
   const { commentTextareaRef, isFocusComment, openCommentTextarea, closeCommentTextarea } =
     useFocusCommentTextareaContext();
-  const { postComment } = usePostCommentMutation({ feedId });
+  const { postComment } = usePostComment({ feedId });
 
   const onChangeTextarea = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setCommentInput(e.target.value.substring(0, 500));

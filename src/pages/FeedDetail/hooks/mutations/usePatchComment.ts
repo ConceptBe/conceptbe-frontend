@@ -15,7 +15,7 @@ interface Props {
 
 const _editComment = (commentId: string, payload: CommentPayload) => http.patch(`/comments/${commentId}`, payload);
 
-const usePatchCommentMutation = ({ feedId, commentId, onSuccess }: Props) => {
+const usePatchComment = ({ feedId, commentId, onSuccess }: Props) => {
   const queryClient = useQueryClient();
   const { mutate: editComment, ...rest } = useMutation({
     mutationFn: (payload: CommentPayload) => _editComment(commentId, payload),
@@ -31,4 +31,4 @@ const usePatchCommentMutation = ({ feedId, commentId, onSuccess }: Props) => {
   return { editComment, ...rest };
 };
 
-export default usePatchCommentMutation;
+export default usePatchComment;

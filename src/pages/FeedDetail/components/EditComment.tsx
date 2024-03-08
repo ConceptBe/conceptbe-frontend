@@ -4,7 +4,7 @@ import { ChangeEvent, useState } from 'react';
 
 import WriteCommentProfileInfo from './WriteCommentProfileInfo';
 import { useFocusEditCommentTextareaContext } from '../contexts/CommentFocusContext';
-import usePatchCommentMutation from '../hooks/mutations/usePatchCommentMutation';
+import usePatchComment from '../hooks/mutations/usePatchComment';
 
 interface Props {
   isRecomment?: boolean;
@@ -27,7 +27,7 @@ const EditComment = ({
 }: Props) => {
   const [commentInput, setCommentInput] = useState<string>(content);
   const { editCommentTextareaRef, initEditCommentTextarea } = useFocusEditCommentTextareaContext();
-  const { editComment } = usePatchCommentMutation({
+  const { editComment } = usePatchComment({
     feedId,
     commentId,
     onSuccess: () => {
