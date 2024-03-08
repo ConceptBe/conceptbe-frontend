@@ -1,4 +1,4 @@
-import { CheckboxOption, MainSkillOption, DetailSkills } from '../SignUp/types';
+import { CheckboxOption, MainSkillOption, DetailSkills } from '../types';
 
 export const convertSkillQuery = (options: MainSkillOption[] | undefined) => {
   const detailSkills: DetailSkills = {};
