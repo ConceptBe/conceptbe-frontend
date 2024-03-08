@@ -1,11 +1,10 @@
-import useMemberQuery from './useMemberQuery';
-import { memberId } from '../../Profile/utils/memberId';
+import { useMemberInfoQuery } from '../../Profile/hooks/queries/useMemberInfoQuery';
 import useSignUpQuery from '../../SignUp/hooks/useSignUpQuery';
 import { convertSelectedCheckbox, convertSelectedSkills } from '../service/convertProfileQuery';
 
 const useProfileQuery = () => {
   const { mainSkills, detailSkills, skillLevels, regions, purposes } = useSignUpQuery();
-  const { my } = useMemberQuery(memberId);
+  const my = useMemberInfoQuery();
 
   const mySkills = convertSelectedSkills(my.skills);
   const myPurposes = convertSelectedCheckbox(my.joinPurposes, purposes);
