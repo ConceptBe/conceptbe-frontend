@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { http } from '../../../../api/http';
-import { memberId } from '../../../Profile/utils/memberId';
+import { getUserId } from '../../../Profile/utils/getUserId';
 
 const _deleteBookmarkIdea = (ideaId: number) => {
   return http.delete(`/bookmark/${ideaId}`);
@@ -13,7 +13,7 @@ export const useDeleteBookmarkIdea = () => {
     mutationFn: _deleteBookmarkIdea,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['ideas'] });
-      queryClient.invalidateQueries({ queryKey: ['members', 'detail', memberId, 'bookmarkedIdeas'] });
+      queryClient.invalidateQueries({ queryKey: ['members', 'detail', getUserId(), 'bookmarkedIdeas'] });
     },
   });
 

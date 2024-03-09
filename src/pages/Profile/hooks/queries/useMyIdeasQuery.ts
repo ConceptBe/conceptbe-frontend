@@ -2,7 +2,7 @@ import { useSuspenseInfiniteQuery } from '@tanstack/react-query';
 
 import { http } from '../../../../api/http';
 import { Idea } from '../../types';
-import { memberId } from '../../utils/memberId';
+import { getUserId } from '../../utils/getUserId';
 
 type GetMyIdeasRequest = {
   page: number;
@@ -10,13 +10,13 @@ type GetMyIdeasRequest = {
 };
 
 const getMyIdeas = ({ page, size }: GetMyIdeasRequest) => {
-  return http.get<Idea[]>(`/members/${memberId}/ideas?page=${page}&size=${size}`);
+  return http.get<Idea[]>(`/members/${getUserId()}/ideas?page=${page}&size=${size}`);
 };
 
 export const useMyIdeasQuery = () => {
   const sizePerPage = 20; // 한 페이지에 보여줄 아이디어 개수
   const { data, fetchNextPage, hasNextPage } = useSuspenseInfiniteQuery({
-    queryKey: ['members', 'detail', memberId, 'ideas'],
+    queryKey: ['members', 'detail', getUserId(), 'ideas'],
     initialPageParam: { page: 0, size: sizePerPage },
     queryFn: ({ pageParam: { page, size } }) => {
       return getMyIdeas({ page, size });

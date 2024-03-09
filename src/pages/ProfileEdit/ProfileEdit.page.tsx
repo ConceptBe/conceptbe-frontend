@@ -22,7 +22,7 @@ import useProfileQuery from './hooks/useProfileQuery.ts';
 import usePutProfileMutation from './hooks/usePutProfileMutation.ts';
 import { DropdownValue, FieldValue } from './types';
 import Back from '../../layouts/Back.tsx';
-import { memberId } from '../Profile/utils/memberId.ts';
+import { getUserId } from '../Profile/utils/getUserId';
 import useCheckDuplicateNickname from '../SignUp/hooks/useCheckDuplicateNickname.ts';
 import useSetDetailSkills from '../SignUp/hooks/useSetDetailSkills.ts';
 
@@ -60,7 +60,7 @@ const ProfileEdit = () => {
     dropdownValue,
     onResetDropdown,
   });
-  const { putProfile } = usePutProfileMutation(memberId, fieldValue.nickname);
+  const { putProfile } = usePutProfileMutation(getUserId, fieldValue.nickname);
 
   useCheckDuplicateNickname({ nickname: fieldValue.nickname, setFieldErrorValue });
 

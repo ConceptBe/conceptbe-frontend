@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import Padding from '../../../components/Padding';
 import { ProfileImageDefault } from '../asset';
 import { useMemberInfoQuery } from '../hooks/queries/useMemberInfoQuery';
-import { memberId } from '../utils/memberId';
+import { getUserId } from '../utils/getUserId';
 
 const ProfileInfoSection = () => {
   const navigate = useNavigate();
@@ -66,7 +66,7 @@ const ProfileInfoSection = () => {
               {renderWorkingAndLivingPlace()}
             </Text>
           </div>
-          <EditButton onClick={() => navigate(`/profile/${memberId}`)}>프로필 수정</EditButton>
+          <EditButton onClick={() => navigate(`/profile/${getUserId()}`)}>프로필 수정</EditButton>
         </ProfileMainBox>
         <Text font="suit15rb" color="b4" style={{ lineHeight: 1.5 }}>
           {introduction}
