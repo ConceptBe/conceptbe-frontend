@@ -1,13 +1,24 @@
 import styled from '@emotion/styled';
 import { Divider, Text, theme } from 'concept-be-design-system';
+import { MouseEventHandler } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { ReactComponent as SVGPencil16 } from '../../assets/pencil16.svg';
 import { ReactComponent as SVGX16 } from '../../assets/x16.svg';
 
-const ContentEditDropdown = () => {
+type Props = {
+  onClickEdit: () => void;
+};
+
+const ContentEditDropdown = ({ onClickEdit }: Props) => {
+  const handleClickEdit: MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.stopPropagation();
+    onClickEdit();
+  };
+
   return (
     <DropdownWrapper>
-      <DropdownItem>
+      <DropdownItem onClick={handleClickEdit}>
         <Text font="suit12r" color="b6">
           수정하기
         </Text>

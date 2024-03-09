@@ -21,6 +21,7 @@ const Navbar = () => {
     '/auth',
     '/feed/:id',
     '/sign-up',
+    '/write-edit',
   );
 
   return (
