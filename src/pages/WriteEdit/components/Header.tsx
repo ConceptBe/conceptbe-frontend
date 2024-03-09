@@ -21,7 +21,7 @@ const Header = ({ onClickCheckButton, isCheckButtonEnabled }: Props) => {
     <HeaderBox>
       <Back />
       <Text font="suit16sb" color="b4">
-        글쓰기 수정
+        게시글 수정
       </Text>
       <button onClick={handleClickCheckButton}>
         {isCheckButtonEnabled ? <SVGHeaderCheck24 /> : <SVGHeaderUncheck24 />}
