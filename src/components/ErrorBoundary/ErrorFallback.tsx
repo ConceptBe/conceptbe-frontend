@@ -1,4 +1,5 @@
-import { Button, Flex, PNGErrorBackground, Spacer, Text } from 'concept-be-design-system';
+import styled from '@emotion/styled';
+import { Button, Flex, PNGErrorBackground, Spacer, Text, theme } from 'concept-be-design-system';
 import { ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -38,27 +39,9 @@ const ErrorFallback = ({ title, children, isGlobal, onClickRetry }: Props) => {
       <img src={PNGErrorBackground} />
       <Spacer size={26} />
       <Flex direction="column" alignItems="center" justifyContent="center">
-        <Text
-          font="suit22sb"
-          color="b2"
-          style={{
-            lineHeight: 'normal',
-            display: 'flex',
-          }}
-        >
-          {title}
-        </Text>
+        <TitleWrapper>{title}</TitleWrapper>
         <Spacer size={20} />
-        <Text
-          font="suit14r"
-          color="b6"
-          style={{
-            lineHeight: '22px',
-            textAlign: 'center',
-          }}
-        >
-          {children}
-        </Text>
+        <ContentWrapper>{children}</ContentWrapper>
       </Flex>
       <Spacer size={20} />
       <Flex gap={10}>
@@ -70,5 +53,20 @@ const ErrorFallback = ({ title, children, isGlobal, onClickRetry }: Props) => {
     </Flex>
   );
 };
+
+const TitleWrapper = styled.div`
+  display: flex;
+  font-size: ${theme.font.suit22sb.fontSize}px;
+  font-weight: ${theme.font.suit22sb.fontWeight};
+  color: ${theme.color.b2};
+`;
+
+const ContentWrapper = styled.div`
+  font-size: ${theme.font.suit14r.fontSize}px;
+  font-weight: ${theme.font.suit14r.fontWeight};
+  color: ${theme.color.b6};
+  text-align: center;
+  line-height: 22px;
+`;
 
 export default ErrorFallback;
