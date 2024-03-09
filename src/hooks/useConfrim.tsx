@@ -13,21 +13,6 @@ const useConfirm = () => {
   const overlay = useOverlay();
 
   const openConfirm = ({ content, confirmButtonContent, closeButtonContent, onConfirm }: OpenConfirmProps) => {
-    return overlay.open(({ isOpen, close }) => (
-      <Confirm
-        isOpen={isOpen}
-        content={content}
-        confirmButtonContent={confirmButtonContent}
-        closeButtonContent={closeButtonContent}
-        onClose={close}
-        onConfirm={() => {
-          if (onConfirm) onConfirm();
-        }}
-      />
-    ));
-  };
-
-  const openPromiseConfirm = ({ content, confirmButtonContent, closeButtonContent, onConfirm }: OpenConfirmProps) => {
     return new Promise<boolean>((resolve) => {
       overlay.open(({ isOpen, close }) => (
         <Confirm
@@ -48,7 +33,7 @@ const useConfirm = () => {
     });
   };
 
-  return { openConfirm, openPromiseConfirm };
+  return { openConfirm };
 };
 
 export default useConfirm;
