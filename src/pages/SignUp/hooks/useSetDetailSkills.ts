@@ -3,14 +3,15 @@ import { useCallback, useEffect, useState } from 'react';
 import { DetailSkills, DropdownValue, MainSkillOption, Skill } from '../types';
 
 interface Props {
+  initialValue?: Skill[];
   mainSkills: Pick<MainSkillOption, 'id' | 'name'>[];
   detailSkills: DetailSkills;
   dropdownValue: DropdownValue;
   onResetDropdown: (value: keyof DropdownValue) => void;
 }
 
-const useSetDetailSkills = ({ mainSkills, detailSkills, dropdownValue, onResetDropdown }: Props) => {
-  const [selectedSkillDepths, setSelectedSkillDepths] = useState<Skill[]>([]);
+const useSetDetailSkills = ({ initialValue = [], mainSkills, detailSkills, dropdownValue, onResetDropdown }: Props) => {
+  const [selectedSkillDepths, setSelectedSkillDepths] = useState<Skill[]>(initialValue);
   const skillDepthOneId = mainSkills.find(({ name }) => name === dropdownValue.skillDepthOne)?.id;
 
   const onDeleteSkill = useCallback((value: string) => {

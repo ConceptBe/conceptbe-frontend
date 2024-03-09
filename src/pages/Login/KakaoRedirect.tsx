@@ -2,6 +2,7 @@ import { useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { getIsMember, getLogin } from '../../api';
+import Spinner from '../../components/Spinner/Spinner';
 
 const KakaoRedirect = () => {
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ const KakaoRedirect = () => {
     getCode(code);
   }, [code, getCode]);
 
-  return <div>Loading...</div>;
+  return <Spinner />;
 };
 
 export default KakaoRedirect;

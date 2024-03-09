@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import Padding from '../../../components/Padding';
 import { ProfileImageDefault } from '../asset';
 import { useMemberInfoQuery } from '../hooks/queries/useMemberInfoQuery';
+import { memberId } from '../utils/memberId';
 
 const ProfileInfoSection = () => {
   const navigate = useNavigate();
@@ -65,7 +66,7 @@ const ProfileInfoSection = () => {
               {renderWorkingAndLivingPlace()}
             </Text>
           </div>
-          <EditButton onClick={() => navigate('/profile/1')}>프로필 수정</EditButton>
+          <EditButton onClick={() => navigate(`/profile/${memberId}`)}>프로필 수정</EditButton>
         </ProfileMainBox>
         <Text font="suit15rb" color="b4" style={{ lineHeight: 1.5 }}>
           {introduction}
@@ -75,9 +76,9 @@ const ProfileInfoSection = () => {
           <Spacer size={10} />
           <TagWrapper>
             <Flex wrap="wrap" gap={6}>
-              {skills.map((badge) => (
-                <Badge key={badge} backgroundColor="c1" fontColor="w1">
-                  {badge}
+              {skills.map(({ skillId, skillName }) => (
+                <Badge key={skillId} backgroundColor="c1" fontColor="w1">
+                  {skillName}
                 </Badge>
               ))}
             </Flex>

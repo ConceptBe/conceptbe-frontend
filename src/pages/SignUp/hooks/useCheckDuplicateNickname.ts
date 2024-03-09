@@ -9,9 +9,12 @@ interface Props {
 }
 
 const useCheckDuplicateNickname = ({ nickname, setFieldErrorValue }: Props) => {
+  const userInfo = JSON.parse(localStorage.getItem('user') ?? '{}');
   const timerId = useRef<number | null>(null);
 
   useEffect(() => {
+    if (userInfo.nickname === nickname) return;
+
     if (timerId.current) {
       const timerIdCurrent = timerId.current;
       clearTimeout(timerIdCurrent);
@@ -29,7 +32,7 @@ const useCheckDuplicateNickname = ({ nickname, setFieldErrorValue }: Props) => {
         }));
       }
     }, 300);
-  }, [nickname, setFieldErrorValue]);
+  }, [userInfo, nickname, setFieldErrorValue]);
 };
 
 export default useCheckDuplicateNickname;

@@ -11,9 +11,8 @@ import NeedAuth from './pages/NeedAuth';
 import NotFound from './pages/NotFound';
 import More from './pages/Profile/More.page';
 import Profile from './pages/Profile/Profile.page';
-import Setting from './pages/Profile/Setting.page';
+import ProfileEdit from './pages/ProfileEdit/ProfileEdit.page';
 import SignUpPage from './pages/SignUp/SignUp.page';
-import Temp from './pages/Temp';
 import WritePage from './pages/Write/Write.page';
 import WriteEditPage from './pages/WriteEdit/WriteEdit.page';
 
@@ -86,7 +85,11 @@ const routes: RouteElement[] = [
       },
       {
         path: '/profile/:id',
-        element: <Setting />,
+        element: (
+          <Suspense>
+            <ProfileEdit />
+          </Suspense>
+        ),
         withAuth: true,
       },
       {
@@ -107,11 +110,6 @@ const routes: RouteElement[] = [
             <SignUpPage />
           </Suspense>
         ),
-        withAuth: false,
-      },
-      {
-        path: '/temp',
-        element: <Temp />,
         withAuth: false,
       },
     ],
