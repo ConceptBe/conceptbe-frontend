@@ -1,10 +1,10 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
 
-import { getFeedDetail } from '../../../api';
+import { getFeedDetail } from '../../../../api';
 
-const useGetFeedDetail = (id: string) => {
+const useFeedDetailQuery = (id: string) => {
   const { data: feedDetail } = useSuspenseQuery({
-    queryKey: ['feedDetail', id],
+    queryKey: ['feed', 'detail', id],
     queryFn: () => getFeedDetail(id),
     select: (data) => ({ ...data }),
   });
@@ -12,4 +12,4 @@ const useGetFeedDetail = (id: string) => {
   return feedDetail;
 };
 
-export default useGetFeedDetail;
+export default useFeedDetailQuery;

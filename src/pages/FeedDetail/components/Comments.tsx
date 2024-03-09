@@ -1,48 +1,41 @@
-import styled from '@emotion/styled';
-import { Spacer, theme } from 'concept-be-design-system';
+import { Box, Divider } from 'concept-be-design-system';
+import { Fragment, useRef } from 'react';
 
 import Comment from './Comment';
-import { CommentParentResponse } from '../types';
+import WriteComment from './WriteComment';
+import { useMemberInfoQuery } from '../../Profile/hooks/queries/useMemberInfoQuery';
+import useCommentsQuery from '../hooks/queries/useCommentsQuery';
+import useCommentInfiniteFetch from '../hooks/useCommentInfiniteFetch';
 
 interface Props {
-  comments: CommentParentResponse[];
+  feedId: string;
 }
 
-const Comments = ({ comments }: Props) => (
-  <CommentWrapper>
-    <InputBox>
-      <Input placeholder="댓글을 입력해 주세요." />
-    </InputBox>
-    <Spacer size={20} />
-    {comments.map((comment, idx) => (
-      <Comment key={idx} comment={comment} />
-    ))}
-  </CommentWrapper>
-);
+const Comments = ({ feedId }: Props) => {
+  const { comments, fetchNextPage } = useCommentsQuery(feedId);
+  const { profileImageUrl: myImageUrl, nickname: myNickname, skills: mySkillList } = useMemberInfoQuery();
+
+  const intersectionRef = useRef(null);
+  useCommentInfiniteFetch(intersectionRef, fetchNextPage);
+
+  return (
+    <Box padding="20px 22px">
+      <WriteComment feedId={feedId} myImageUrl={myImageUrl} myNickname={myNickname} />
+      {comments.map((comment, idx) => (
+        <Fragment key={comment.parentCommentId}>
+          <Comment
+            comment={comment}
+            feedId={feedId}
+            myImageUrl={myImageUrl}
+            myNickname={myNickname}
+            mySkillList={mySkillList}
+          />
+          {idx !== comments.length - 1 ? <Divider color="l3" /> : <></>}
+        </Fragment>
+      ))}
+      <div ref={intersectionRef}></div>
+    </Box>
+  );
+};
 
 export default Comments;
-
-const CommentWrapper = styled.div`
-  padding: 20px 22px 20px 22px;
-`;
-
-const InputBox = styled.div`
-  position: relative;
-`;
-
-const Input = styled.input`
-  border-radius: 6px;
-  width: 100%;
-  padding: 10px 20px;
-  box-sizing: border-box;
-  border: none;
-  background-color: ${theme.color.bg1};
-  color: ${theme.color.t};
-  font-style: normal;
-  font-family: SUIT;
-  font-weight: 400;
-  line-height: normal;
-  ::placeholder {
-    color: ${theme.color.ba};
-  }
-`;
