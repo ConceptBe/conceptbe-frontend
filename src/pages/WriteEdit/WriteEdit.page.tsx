@@ -23,7 +23,7 @@ import { useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import RecruitmentPlaceSection from './components/RecruitmentPlaceSection';
 import TitleAndIntroduceSection from './components/TitleAndIntroduceSection';
-import { usePostIdeasMutation } from './hooks/mutations/usePostIdeasMutation';
+import { usePutIdea } from './hooks/mutations/usePutIdea';
 import { useIdeaDetailQuery } from './hooks/queries/useIdeaDetailQuery';
 import { useWritingInfoQuery } from './hooks/queries/useWritingInfoQuery';
 import { Info } from './types';
@@ -38,8 +38,8 @@ const cooperationWays = [
 const WriteEditPage = () => {
   const location = useLocation();
   const { ideaDetail } = useIdeaDetailQuery(Number(location.state.ideaId));
+  const { putIdea } = usePutIdea();
 
-  const { postIdeas } = usePostIdeasMutation();
   const { branches, purposes, recruitmentPlaces, skillCategoryResponses } = useWritingInfoQuery();
 
   const [title, setTitle] = useState(ideaDetail.title);
@@ -130,14 +130,17 @@ const WriteEditPage = () => {
       return;
     }
 
-    postIdeas({
-      title,
-      introduce,
-      recruitmentPlaceId,
-      cooperationWay,
-      branchIds,
-      purposeIds,
-      skillCategoryIds,
+    putIdea({
+      ideaId: Number(location.state.ideaId),
+      idea: {
+        title,
+        introduce,
+        recruitmentPlaceId,
+        cooperationWay,
+        branchIds,
+        purposeIds,
+        skillCategoryIds,
+      },
     });
   };
 
