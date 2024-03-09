@@ -26,7 +26,7 @@ const Profile = () => {
       <Suspense fallback={<Spinner />}>
         <ProfileWrapper>
           <ProfileInfoSection />
-          <TabLayout>
+          <TabLayout height="100%">
             <TabLayout.Tab label="아이디어">
               <TabPanelBox>
                 <Suspense fallback={<></>}>
@@ -61,7 +61,6 @@ const ProfileWrapper = styled.div`
 const TabPanelBox = styled.div`
   padding: 30px 20px 60px 20px;
   background-color: ${theme.color.bg1};
-  height: 100%;
   display: flex;
   flex-direction: column;
 `;
