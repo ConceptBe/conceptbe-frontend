@@ -1,19 +1,24 @@
 import styled from '@emotion/styled';
 import { Divider, Text, theme } from 'concept-be-design-system';
 import { MouseEventHandler } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import { ReactComponent as SVGPencil16 } from '../../assets/pencil16.svg';
 import { ReactComponent as SVGX16 } from '../../assets/x16.svg';
 
 type Props = {
   onClickEdit: () => void;
+  onClickDelete?: () => void;
 };
 
-const ContentEditDropdown = ({ onClickEdit }: Props) => {
+const ContentEditDropdown = ({ onClickEdit, onClickDelete }: Props) => {
   const handleClickEdit: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.stopPropagation();
     onClickEdit();
+  };
+
+  const handleClickDelete: MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.stopPropagation();
+    onClickDelete?.();
   };
 
   return (
@@ -26,7 +31,7 @@ const ContentEditDropdown = ({ onClickEdit }: Props) => {
         <SVGPencil16 />
       </DropdownItem>
       <Divider color="l3" />
-      <DropdownItem>
+      <DropdownItem onClick={handleClickDelete}>
         <Text font="suit12r" color="b6">
           삭제하기
         </Text>
