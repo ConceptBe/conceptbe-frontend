@@ -70,9 +70,7 @@ const ProfileInfoSection = ({ memberInfo }: Props) => {
               {renderWorkingAndLivingPlace()}
             </Text>
           </div>
-          {isMyProfile === true && (
-            <EditButton onClick={() => navigate(`/profile-edit/${getUserId()}`)}>프로필 수정</EditButton>
-          )}
+          {isMyProfile === true && <EditButton onClick={() => navigate(`/profile-edit`)}>프로필 수정</EditButton>}
         </ProfileMainBox>
         <Text font="suit15rb" color="b4" style={{ lineHeight: 1.5 }}>
           {introduction}

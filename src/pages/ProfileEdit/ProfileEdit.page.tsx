@@ -18,7 +18,7 @@ import {
 } from 'concept-be-design-system';
 import { FormEvent } from 'react';
 
-import useProfileQuery from './hooks/useProfileQuery.ts';
+import useProfileEditQuery from './hooks/useProfileEditQuery.ts';
 import usePutProfileMutation from './hooks/usePutProfileMutation.ts';
 import { DropdownValue, FieldValue } from './types';
 import Back from '../../layouts/Back.tsx';
@@ -37,7 +37,7 @@ interface CheckboxOption {
 }
 
 const ProfileEdit = () => {
-  const { mainSkills, detailSkills, skillLevels, regions, purposes, my } = useProfileQuery();
+  const { mainSkills, detailSkills, skillLevels, regions, purposes, my } = useProfileEditQuery();
   const { fieldValue, fieldErrorValue, setFieldErrorValue, onChangeField } = useField<FieldValue>({
     nickname: my.nickname ?? '',
     company: my.workingPlace ?? '',
