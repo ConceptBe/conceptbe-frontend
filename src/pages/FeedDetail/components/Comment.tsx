@@ -6,6 +6,7 @@ import EditComment from './EditComment';
 import ModifyDropdown from './ModifyDropdown';
 import Recomment from './Recomment';
 import WriteRecomment from './WriteRecomment';
+import { MemberSkills } from '../../Profile/types';
 import { get999PlusCount } from '../../utils';
 import useDeleteCommentMutation from '../hooks/mutations/useDeleteComment';
 import useFocusEditComment from '../hooks/useFocusEditComment';
@@ -17,7 +18,7 @@ interface Props {
   feedId: string;
   myImageUrl: string;
   myNickname: string;
-  mySkillList: string[];
+  mySkillList: MemberSkills[];
   comment: CommentParentResponse;
 }
 

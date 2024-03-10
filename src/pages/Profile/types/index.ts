@@ -10,7 +10,7 @@ export type Idea = {
   skillCategories: string[]; // 목적
 };
 
-type MemberSkills = {
+export type MemberSkills = {
   skillId: number;
   skillName: string;
   level: string;
