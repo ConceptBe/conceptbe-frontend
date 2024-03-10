@@ -29,6 +29,7 @@ export type Member = {
 };
 
 export interface MemberResponse {
+  id: number;
   profileImageUrl: string;
   nickname: string;
   skills: string[];
