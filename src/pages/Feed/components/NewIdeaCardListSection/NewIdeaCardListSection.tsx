@@ -3,7 +3,10 @@ import { Spacer, Text } from 'concept-be-design-system';
 import { Fragment, Suspense, useRef } from 'react';
 
 import NewIdeaCardListSkeleton from './NewIdeaCardListSkeleton';
+import { useDeleteIdea } from '../../../components/NewIdeaCard/hooks/mutations/useDeleteIdea';
 import NewIdeaCard from '../../../components/NewIdeaCard/NewIdeaCard';
+import useNavigatePage from '../../../hooks/useNavigatePage';
+import { getUserId } from '../../../Profile/utils/getUserId';
 import { useFilterParams } from '../../context/filterContext';
 import { useIdeasQuery } from '../../hooks/queries/useIdeasQuery';
 import { useFeedInfiniteFetch } from '../../hooks/useFeedInfiniteFetch';
@@ -14,10 +17,17 @@ const nickname = getUserNickname();
 const CardList = () => {
   const { filterParams, updateFilterParams } = useFilterParams();
   const { ideas, fetchNextPage } = useIdeasQuery(filterParams);
+  const { goProfilePage } = useNavigatePage();
+  const { deleteIdea } = useDeleteIdea();
 
   const intersectionRef = useRef(null);
 
   useFeedInfiniteFetch(intersectionRef, fetchNextPage);
+
+  const handleDeleteIdea = (ideaId: number) => {
+    //TODO: #54 머지 후 Confirm 컴포넌트로 대체
+    if (confirm('게시글을 삭제하시겠습니까?')) deleteIdea(ideaId);
+  };
 
   return (
     <>
@@ -49,12 +59,12 @@ const CardList = () => {
           <Fragment key={idx}>
             {isMine ? (
               <NewIdeaCard id={idea.id} content={content} footer={footer}>
-                <NewIdeaCard.Content />
+                <NewIdeaCard.Content onClickDelete={() => handleDeleteIdea(idea.id)} />
                 <NewIdeaCard.Footer />
               </NewIdeaCard>
             ) : (
               <NewIdeaCard id={idea.id} profile={profile} content={content} footer={footer}>
-                <NewIdeaCard.Profile />
+                <NewIdeaCard.Profile onClickProfile={() => goProfilePage(idea.memberResponse.id)} />
                 <NewIdeaCard.Content />
                 <NewIdeaCard.Footer />
               </NewIdeaCard>

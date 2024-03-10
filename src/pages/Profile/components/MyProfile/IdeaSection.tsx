@@ -1,18 +1,29 @@
 import { Spacer } from 'concept-be-design-system';
 import { Fragment, useRef } from 'react';
 
-import EmptyTabContentSection from './EmptyTabContentSection';
-import NewIdeaCard from '../../components/NewIdeaCard/NewIdeaCard';
-import { useFeedInfiniteFetch } from '../../Feed/hooks/useFeedInfiniteFetch';
-import { SVGMessageDotsCircle } from '../asset';
-import { useMyIdeasQuery } from '../hooks/queries/useMyIdeasQuery';
+import { useDeleteIdea } from '../../../components/NewIdeaCard/hooks/mutations/useDeleteIdea';
+import NewIdeaCard from '../../../components/NewIdeaCard/NewIdeaCard';
+import { useFeedInfiniteFetch } from '../../../Feed/hooks/useFeedInfiniteFetch';
+import { SVGMessageDotsCircle } from '../../asset';
+import { useIdeasQuery } from '../../hooks/queries/useIdeasQuery';
+import EmptyTabContentSection from '../EmptyTabContentSection';
 
-const IdeaSection = () => {
-  const { ideas, fetchNextPage } = useMyIdeasQuery();
+type Props = {
+  userId: number;
+};
+
+const IdeaSection = ({ userId }: Props) => {
+  const { ideas, fetchNextPage } = useIdeasQuery(userId);
 
   const intersectionRef = useRef(null);
 
   useFeedInfiniteFetch(intersectionRef, fetchNextPage);
+
+  const { deleteIdea } = useDeleteIdea();
+  const handleDeleteIdea = (ideaId: number) => {
+    //TODO: #54 머지 후 Confirm 컴포넌트로 대체
+    if (confirm('게시글을 삭제하시겠습니까?')) deleteIdea(ideaId);
+  };
 
   if (ideas.length === 0) {
     return (
@@ -45,7 +56,7 @@ const IdeaSection = () => {
         return (
           <Fragment key={idx}>
             <NewIdeaCard id={idea.id} content={content} footer={footer}>
-              <NewIdeaCard.Content />
+              <NewIdeaCard.Content onClickDelete={() => handleDeleteIdea(idea.id)} />
               <NewIdeaCard.Footer />
             </NewIdeaCard>
             <Spacer size={20} />

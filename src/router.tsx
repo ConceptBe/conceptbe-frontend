@@ -79,12 +79,12 @@ const routes: RouteElement[] = [
         withAuth: false,
       },
       {
-        path: '/profile',
+        path: '/profile/:id',
         element: <Profile />,
         withAuth: true,
       },
       {
-        path: '/profile/:id',
+        path: '/profile-edit/:id',
         element: (
           <Suspense>
             <ProfileEdit />

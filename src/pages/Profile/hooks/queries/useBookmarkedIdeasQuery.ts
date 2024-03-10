@@ -2,7 +2,7 @@ import { useSuspenseInfiniteQuery } from '@tanstack/react-query';
 
 import { BookmarkedIdea } from './../../types/index';
 import { http } from '../../../../api/http';
-import { memberId } from '../../utils/memberId';
+import { getUserId } from '../../utils/getUserId';
 
 type GetBookMarkedIdeasRequest = {
   page: number;
@@ -10,13 +10,13 @@ type GetBookMarkedIdeasRequest = {
 };
 
 const getBookmarkedIdeas = ({ page, size }: GetBookMarkedIdeasRequest) => {
-  return http.get<BookmarkedIdea[]>(`/members/${memberId}/bookmarks?page=${page}&size=${size}`);
+  return http.get<BookmarkedIdea[]>(`/members/${getUserId()}/bookmarks?page=${page}&size=${size}`);
 };
 
 export const useBookmarkedIdeasQuery = () => {
   const sizePerPage = 20; // 한 페이지에 보여줄 아이디어 개수
   const { data, fetchNextPage, hasNextPage } = useSuspenseInfiniteQuery({
-    queryKey: ['members', 'detail', memberId, 'bookmarkedIdeas'],
+    queryKey: ['members', 'detail', getUserId(), 'bookmarkedIdeas'],
     initialPageParam: { page: 0, size: sizePerPage },
     queryFn: ({ pageParam: { page, size } }) => getBookmarkedIdeas({ page, size }),
 

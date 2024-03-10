@@ -21,7 +21,7 @@ const usePutProfileMutation = (memberId: string, newNickname: string) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['members', 'detail', memberId] });
       updateUserNickname(newNickname);
-      navigate('/profile');
+      navigate(`/profile/${memberId}`);
     },
     onError: (error: AxiosError<{ message: string }>) => {
       // TODO: #54 머지 이후 Alert 컴포넌트 사용

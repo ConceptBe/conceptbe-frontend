@@ -4,6 +4,7 @@ import { Fragment, useRef } from 'react';
 import Comment from './Comment';
 import WriteComment from './WriteComment';
 import { useMemberInfoQuery } from '../../Profile/hooks/queries/useMemberInfoQuery';
+import { getUserId } from '../../Profile/utils/getUserId';
 import useCommentsQuery from '../hooks/queries/useCommentsQuery';
 import useCommentInfiniteFetch from '../hooks/useCommentInfiniteFetch';
 
@@ -13,7 +14,7 @@ interface Props {
 
 const Comments = ({ feedId }: Props) => {
   const { comments, fetchNextPage } = useCommentsQuery(feedId);
-  const { profileImageUrl: myImageUrl, nickname: myNickname, skills: mySkillList } = useMemberInfoQuery();
+  const { profileImageUrl: myImageUrl, nickname: myNickname, skills: mySkillList } = useMemberInfoQuery(getUserId());
 
   const intersectionRef = useRef(null);
   useCommentInfiniteFetch(intersectionRef, fetchNextPage);

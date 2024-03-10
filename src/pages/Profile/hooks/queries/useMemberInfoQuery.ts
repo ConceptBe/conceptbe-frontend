@@ -2,16 +2,15 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { http } from '../../../../api/http';
 import { Member } from '../../types';
-import { memberId } from '../../utils/memberId';
 
-const getMemberInfo = () => {
-  return http.get<Member>(`/members/${memberId}`);
+const getMemberInfo = (userId: number) => {
+  return http.get<Member>(`/members/${userId}`);
 };
 
-export const useMemberInfoQuery = () => {
+export const useMemberInfoQuery = (userId: number) => {
   const { data: memberInfo, ...rest } = useSuspenseQuery({
-    queryKey: ['members', 'detail', memberId],
-    queryFn: getMemberInfo,
+    queryKey: ['members', 'detail', userId],
+    queryFn: () => getMemberInfo(userId),
   });
 
   return { ...memberInfo, ...rest };

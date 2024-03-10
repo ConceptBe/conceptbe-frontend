@@ -10,7 +10,7 @@ export type Idea = {
   skillCategories: string[]; // 목적
 };
 
-type MemberSkills = {
+export type MemberSkills = {
   skillId: number;
   skillName: string;
   level: string;
@@ -29,6 +29,7 @@ export type Member = {
 };
 
 export interface MemberResponse {
+  id: number;
   profileImageUrl: string;
   nickname: string;
   skills: string[];

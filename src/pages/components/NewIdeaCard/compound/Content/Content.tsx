@@ -7,7 +7,11 @@ import ContentEditDropdown from './ContentEditDropdown';
 import { ReactComponent as SVGMore24 } from '../../assets/more24.svg';
 import { useContentContext, useIdeaIdContext } from '../../NewIdeaCardContext';
 
-const Content = () => {
+type Props = {
+  onClickDelete?: () => void;
+};
+
+const Content = ({ onClickDelete }: Props) => {
   const ideaId = useIdeaIdContext();
   const { canEdit, branches, title, introduce, skillCategories } = useContentContext();
 
@@ -51,7 +55,7 @@ const Content = () => {
           <Flex position="relative">
             {/* TODO: SVGMore24 디자인시스템에 추가 */}
             <SVGMore24 onClick={toggleDropdown} />
-            {isDropdownOpen && <ContentEditDropdown onClickEdit={goWriteEditPage} />}
+            {isDropdownOpen && <ContentEditDropdown onClickEdit={goWriteEditPage} onClickDelete={onClickDelete} />}
           </Flex>
         )}
       </Flex>

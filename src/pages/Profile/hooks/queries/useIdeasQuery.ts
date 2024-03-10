@@ -2,24 +2,24 @@ import { useSuspenseInfiniteQuery } from '@tanstack/react-query';
 
 import { http } from '../../../../api/http';
 import { Idea } from '../../types';
-import { memberId } from '../../utils/memberId';
 
 type GetMyIdeasRequest = {
   page: number;
   size: number;
+  userId: number;
 };
 
-const getMyIdeas = ({ page, size }: GetMyIdeasRequest) => {
-  return http.get<Idea[]>(`/members/${memberId}/ideas?page=${page}&size=${size}`);
+const getIdeas = ({ page, size, userId }: GetMyIdeasRequest) => {
+  return http.get<Idea[]>(`/members/${userId}/ideas?page=${page}&size=${size}`);
 };
 
-export const useMyIdeasQuery = () => {
+export const useIdeasQuery = (userId: number) => {
   const sizePerPage = 20; // 한 페이지에 보여줄 아이디어 개수
   const { data, fetchNextPage, hasNextPage } = useSuspenseInfiniteQuery({
-    queryKey: ['members', 'detail', memberId, 'ideas'],
+    queryKey: ['members', 'detail', userId, 'ideas'],
     initialPageParam: { page: 0, size: sizePerPage },
     queryFn: ({ pageParam: { page, size } }) => {
-      return getMyIdeas({ page, size });
+      return getIdeas({ page, size, userId });
     },
 
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
