@@ -9,6 +9,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 
 import useRouteMatched from '../hooks/useRouteMatch';
+import { getUserId } from '../pages/Profile/utils/getUserId';
 
 const Navbar = () => {
   const { hasMatched } = useRouteMatched();
@@ -35,7 +36,7 @@ const Navbar = () => {
           <Navigation.Item position="center" onClick={() => navigate('/write')}>
             <SVGNavWrite24 />
           </Navigation.Item>
-          <Navigation.Item onClick={() => navigate('/profile')}>
+          <Navigation.Item onClick={() => navigate(`/profile/${getUserId()}`)}>
             {location.pathname.startsWith('/profile') ? <SVGNavActiveProfile /> : <SVGNavProfile />}
           </Navigation.Item>
         </Navigation>
