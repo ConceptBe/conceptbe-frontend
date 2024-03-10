@@ -84,7 +84,7 @@ const routes: RouteElement[] = [
         withAuth: true,
       },
       {
-        path: '/profile-edit/:id',
+        path: '/profile-edit',
         element: (
           <Suspense>
             <ProfileEdit />

@@ -15,7 +15,7 @@ const Navbar = () => {
   const { hasMatched } = useRouteMatched();
   const navigate = useNavigate();
   const isMatchedNavigation = hasMatched(
-    '/profile-edit/:id',
+    '/profile-edit',
     '/login',
     '/write',
     '/agreement',
