@@ -15,7 +15,11 @@ import { usePostBookmarkIdea } from '../../../../Feed/hooks/mutations/usePostBoo
 import { formatCommentDate } from '../../../../Feed/utils/formatCommentDate';
 import { useIdeaIdContext, useProfileContext } from '../../NewIdeaCardContext';
 
-const Profile = () => {
+type Props = {
+  onClickProfile?: () => void;
+};
+
+const Profile = ({ onClickProfile }: Props) => {
   const id = useIdeaIdContext();
   const { profileImageUrl, nickname, skills, isBookmarked, createdAt } = useProfileContext();
   const { postBookmarkIdea } = usePostBookmarkIdea();
@@ -39,9 +43,14 @@ const Profile = () => {
     deleteBookmarkIdea(id);
   };
 
+  const handleClickProfile: MouseEventHandler<HTMLDivElement> = (e) => {
+    e.stopPropagation();
+    onClickProfile?.();
+  };
+
   return (
     <ProfileWrapper>
-      <ProfileBox>
+      <ProfileBox onClick={handleClickProfile}>
         {imageError === true ? (
           <SVGLoginDefaultProfile />
         ) : (
