@@ -1,11 +1,10 @@
 import styled from '@emotion/styled';
-import { Header, theme, SVGHeaderSetting } from 'concept-be-design-system';
+import { theme } from 'concept-be-design-system';
 import { Suspense } from 'react';
-import { useNavigate } from 'react-router-dom';
 
+import Header from './Header';
 import IdeaSection from './IdeaSection';
 import Spinner from '../../../../components/Spinner/Spinner';
-import Logo from '../../../../layouts/Logo';
 import { Member } from '../../types';
 import ProfileInfoSection from '../ProfileInfoSection';
 
@@ -15,18 +14,9 @@ type Props = {
 };
 
 const OtherProfile = ({ userId, memberInfo }: Props) => {
-  const navigate = useNavigate();
-
   return (
     <ProfileContainer>
-      <Header main>
-        <Header.Item>
-          <Logo />
-        </Header.Item>
-        <Header.Item>
-          <SVGHeaderSetting onClick={() => navigate(`/profile/${userId}/more`)} cursor="pointer" />
-        </Header.Item>
-      </Header>
+      <Header />
 
       <Suspense fallback={<Spinner />}>
         <ProfileWrapper>
