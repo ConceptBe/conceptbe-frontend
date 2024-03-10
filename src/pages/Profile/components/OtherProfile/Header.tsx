@@ -1,26 +1,33 @@
 import styled from '@emotion/styled';
-import { Text } from 'concept-be-design-system';
+import { Divider, Text, theme } from 'concept-be-design-system';
 
 import Back from '../../../../layouts/Back';
 
 const Header = () => {
   return (
-    <HeaderBox>
-      <Back />
-      <Text font="suit16sb" color="b4">
-        프로필
-      </Text>
-      <EmptyIcon />
-    </HeaderBox>
+    <StickyContainer>
+      <HeaderBox>
+        <Back />
+        <Text font="suit16sb" color="b4">
+          프로필
+        </Text>
+        <EmptyIcon />
+      </HeaderBox>
+      <Divider color="l3" />
+    </StickyContainer>
   );
 };
 
 export default Header;
 
-const HeaderBox = styled.div`
+const StickyContainer = styled.div`
   position: sticky;
   top: 0;
+  z-index: 10;
+`;
 
+const HeaderBox = styled.div`
+  background-color: ${theme.color.w1};
   box-sizing: border-box;
   display: flex;
   flex-direction: row;

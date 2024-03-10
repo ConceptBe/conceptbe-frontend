@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { theme } from 'concept-be-design-system';
+import { Divider, theme } from 'concept-be-design-system';
 import { Suspense } from 'react';
 
 import Header from './Header';
@@ -17,7 +17,6 @@ const OtherProfile = ({ userId, memberInfo }: Props) => {
   return (
     <ProfileContainer>
       <Header />
-
       <Suspense fallback={<Spinner />}>
         <ProfileWrapper>
           <ProfileInfoSection memberInfo={memberInfo} />
