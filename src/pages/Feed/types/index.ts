@@ -6,6 +6,7 @@ export type BestIdea = {
 
 // IdeaCard 글 글쓴이 정보
 type MemberResponse = {
+  id: number;
   profileImageUrl: string;
   nickname: string;
   skills: string[];

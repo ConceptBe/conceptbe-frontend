@@ -4,6 +4,7 @@ import { Fragment, Suspense, useRef } from 'react';
 
 import NewIdeaCardListSkeleton from './NewIdeaCardListSkeleton';
 import NewIdeaCard from '../../../components/NewIdeaCard/NewIdeaCard';
+import useNavigatePage from '../../../hooks/useNavigatePage';
 import { useFilterParams } from '../../context/filterContext';
 import { useIdeasQuery } from '../../hooks/queries/useIdeasQuery';
 import { useFeedInfiniteFetch } from '../../hooks/useFeedInfiniteFetch';
@@ -14,6 +15,7 @@ const nickname = getUserNickname();
 const CardList = () => {
   const { filterParams, updateFilterParams } = useFilterParams();
   const { ideas, fetchNextPage } = useIdeasQuery(filterParams);
+  const { goProfilePage } = useNavigatePage();
 
   const intersectionRef = useRef(null);
 
@@ -54,7 +56,7 @@ const CardList = () => {
               </NewIdeaCard>
             ) : (
               <NewIdeaCard id={idea.id} profile={profile} content={content} footer={footer}>
-                <NewIdeaCard.Profile />
+                <NewIdeaCard.Profile onClickProfile={() => goProfilePage(idea.memberResponse.id)} />
                 <NewIdeaCard.Content />
                 <NewIdeaCard.Footer />
               </NewIdeaCard>
