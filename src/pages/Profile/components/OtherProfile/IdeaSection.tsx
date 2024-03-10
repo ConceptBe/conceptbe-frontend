@@ -1,14 +1,18 @@
 import { Spacer } from 'concept-be-design-system';
 import { Fragment, useRef } from 'react';
 
-import EmptyTabContentSection from './EmptyTabContentSection';
-import NewIdeaCard from '../../components/NewIdeaCard/NewIdeaCard';
-import { useFeedInfiniteFetch } from '../../Feed/hooks/useFeedInfiniteFetch';
-import { SVGMessageDotsCircle } from '../asset';
-import { useMyIdeasQuery } from '../hooks/queries/useMyIdeasQuery';
+import NewIdeaCard from '../../../components/NewIdeaCard/NewIdeaCard';
+import { useFeedInfiniteFetch } from '../../../Feed/hooks/useFeedInfiniteFetch';
+import { SVGMessageDotsCircle } from '../../asset';
+import { useIdeasQuery } from '../../hooks/queries/useIdeasQuery';
+import EmptyTabContentSection from '../EmptyTabContentSection';
 
-const IdeaSection = () => {
-  const { ideas, fetchNextPage } = useMyIdeasQuery();
+type Props = {
+  userId: number;
+};
+
+const IdeaSection = ({ userId }: Props) => {
+  const { ideas, fetchNextPage } = useIdeasQuery(userId);
 
   const intersectionRef = useRef(null);
 
@@ -26,7 +30,7 @@ const IdeaSection = () => {
   return (
     <>
       {ideas.map((idea, idx) => {
-        const isMine = true;
+        const isMine = false;
 
         const content = {
           canEdit: isMine,

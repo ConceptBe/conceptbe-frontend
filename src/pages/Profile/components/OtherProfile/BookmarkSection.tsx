@@ -1,14 +1,17 @@
 import { Spacer } from 'concept-be-design-system';
 import { Fragment, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import EmptyTabContentSection from './EmptyTabContentSection';
-import NewIdeaCard from '../../components/NewIdeaCard/NewIdeaCard';
-import { useFeedInfiniteFetch } from '../../Feed/hooks/useFeedInfiniteFetch';
-import { SVGBookOpen } from '../asset';
-import { useBookmarkedIdeasQuery } from '../hooks/queries/useBookmarkedIdeasQuery';
+import NewIdeaCard from '../../../components/NewIdeaCard/NewIdeaCard';
+import { useFeedInfiniteFetch } from '../../../Feed/hooks/useFeedInfiniteFetch';
+import useNavigatePage from '../../../hooks/useNavigatePage';
+import { SVGBookOpen } from '../../asset';
+import { useBookmarkedIdeasQuery } from '../../hooks/queries/useBookmarkedIdeasQuery';
+import EmptyTabContentSection from '../EmptyTabContentSection';
 
 const BookmarkSection = () => {
   const { bookmarkedIdeas, fetchNextPage } = useBookmarkedIdeasQuery();
+  const { goProfilePage } = useNavigatePage();
 
   const intersectionRef = useRef(null);
 
@@ -53,7 +56,7 @@ const BookmarkSection = () => {
         return (
           <Fragment key={idx}>
             <NewIdeaCard id={idea.id} profile={profile} content={content} footer={footer}>
-              <NewIdeaCard.Profile />
+              <NewIdeaCard.Profile onClickProfile={() => goProfilePage(idea.memberResponse.id)} />
               <NewIdeaCard.Content />
               <NewIdeaCard.Footer />
             </NewIdeaCard>

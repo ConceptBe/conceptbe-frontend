@@ -5,10 +5,14 @@ import { useNavigate } from 'react-router-dom';
 
 import Padding from '../../../components/Padding';
 import { ProfileImageDefault } from '../asset';
-import { useMemberInfoQuery } from '../hooks/queries/useMemberInfoQuery';
+import { Member } from '../types';
 import { getUserId } from '../utils/getUserId';
 
-const ProfileInfoSection = () => {
+type Props = {
+  memberInfo: Member;
+};
+
+const ProfileInfoSection = ({ memberInfo }: Props) => {
   const navigate = useNavigate();
   const {
     profileImageUrl,
@@ -20,7 +24,7 @@ const ProfileInfoSection = () => {
     introduction,
     skills,
     joinPurposes,
-  } = useMemberInfoQuery();
+  } = memberInfo;
 
   const [profileImageError, setProfileImageError] = useState(false);
 
@@ -66,7 +70,9 @@ const ProfileInfoSection = () => {
               {renderWorkingAndLivingPlace()}
             </Text>
           </div>
-          <EditButton onClick={() => navigate(`/profile/${getUserId()}`)}>프로필 수정</EditButton>
+          {isMyProfile === true && (
+            <EditButton onClick={() => navigate(`/profile-edit/${getUserId()}`)}>프로필 수정</EditButton>
+          )}
         </ProfileMainBox>
         <Text font="suit15rb" color="b4" style={{ lineHeight: 1.5 }}>
           {introduction}
