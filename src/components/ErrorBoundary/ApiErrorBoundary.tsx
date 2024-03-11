@@ -5,7 +5,8 @@ import { Component, ReactElement, ReactNode } from 'react';
 import ErrorFallback from './ErrorFallback';
 
 interface FallbackProps {
-  onResetQuery: () => void;
+  error: null | unknown | AxiosError;
+  resetErrorBoundary: () => void;
 }
 
 interface Props {
@@ -78,6 +79,7 @@ class ErrorBoundary extends Component<Props, State> {
       if (this.props.fallback) {
         const FallbackComponent = this.props.fallback.type;
         const fallbackProps = {
+          error: this.state.error,
           onResetQuery: () => this.resetErrorBoundary(),
         };
         return <FallbackComponent {...fallbackProps} />;
