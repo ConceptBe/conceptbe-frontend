@@ -6,19 +6,20 @@ import { useNavigate } from 'react-router-dom';
 interface Props {
   title: string;
   children: ReactNode;
-  onClickRetry?: () => void;
+  resetErrorBoundary: () => void;
+  buttonContent?: string;
 }
 
-const ErrorFallback = ({ title, children, onClickRetry }: Props) => {
+const ErrorFallback = ({ title, children, buttonContent = '메인으로 가기', resetErrorBoundary }: Props) => {
   const navigate = useNavigate();
 
   const goToPrevPage = () => {
-    if (onClickRetry) onClickRetry();
+    resetErrorBoundary();
     navigate(-1);
   };
 
-  const goToHome = () => {
-    if (onClickRetry) onClickRetry();
+  const onClickRetry = async () => {
+    resetErrorBoundary();
     navigate('/');
   };
 
@@ -44,7 +45,7 @@ const ErrorFallback = ({ title, children, onClickRetry }: Props) => {
         <Button isGrayOut onClick={goToPrevPage}>
           이전 페이지
         </Button>
-        <Button onClick={goToHome}>메인으로 가기</Button>
+        <Button onClick={onClickRetry}>{buttonContent}</Button>
       </Flex>
     </Flex>
   );
