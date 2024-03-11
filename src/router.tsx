@@ -1,6 +1,7 @@
 import { ReactNode, Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 
+import ApiErrorBoundary from './components/ErrorBoundary/ApiErrorBoundary';
 import MobileView from './layouts/MobileView';
 import Feed from './pages/Feed/Feed.page';
 import FeedDetailPage from './pages/FeedDetail/FeedDetail.page';
@@ -44,9 +45,11 @@ const routes: RouteElement[] = [
       {
         path: '/feed/:id',
         element: (
-          <Suspense>
-            <FeedDetailPage />
-          </Suspense>
+          <ApiErrorBoundary>
+            <Suspense>
+              <FeedDetailPage />
+            </Suspense>
+          </ApiErrorBoundary>
         ),
         withAuth: true,
       },
