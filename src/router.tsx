@@ -2,6 +2,7 @@ import { ReactNode, Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 
 import ApiErrorBoundary from './components/ErrorBoundary/ApiErrorBoundary';
+import Spinner from './components/Spinner/Spinner';
 import MobileView from './layouts/MobileView';
 import Feed from './pages/Feed/Feed.page';
 import FeedDetailPage from './pages/FeedDetail/FeedDetail.page';
@@ -35,40 +36,22 @@ const routes: RouteElement[] = [
     children: [
       {
         path: '',
-        element: (
-          <Suspense>
-            <Feed />
-          </Suspense>
-        ),
+        element: <Feed />,
         withAuth: false,
       },
       {
         path: '/feed/:id',
-        element: (
-          <ApiErrorBoundary>
-            <Suspense>
-              <FeedDetailPage />
-            </Suspense>
-          </ApiErrorBoundary>
-        ),
+        element: <FeedDetailPage />,
         withAuth: true,
       },
       {
         path: '/write',
-        element: (
-          <Suspense>
-            <WritePage />
-          </Suspense>
-        ),
+        element: <WritePage />,
         withAuth: true,
       },
       {
         path: '/write-edit',
-        element: (
-          <Suspense>
-            <WriteEditPage />
-          </Suspense>
-        ),
+        element: <WriteEditPage />,
         withAuth: true,
       },
       {
@@ -108,11 +91,7 @@ const routes: RouteElement[] = [
       },
       {
         path: '/sign-up',
-        element: (
-          <Suspense>
-            <SignUpPage />
-          </Suspense>
-        ),
+        element: <SignUpPage />,
         withAuth: false,
       },
     ],
