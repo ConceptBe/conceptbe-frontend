@@ -33,7 +33,7 @@ const useConfirm = () => {
     });
   };
 
-  return { openConfirm };
+  return openConfirm;
 };
 
 export default useConfirm;
