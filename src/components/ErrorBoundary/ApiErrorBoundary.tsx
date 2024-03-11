@@ -80,13 +80,13 @@ class ErrorBoundary extends Component<Props, State> {
         const FallbackComponent = this.props.fallback.type;
         const fallbackProps = {
           error: this.state.error,
-          onResetQuery: () => this.resetErrorBoundary(),
+          resetErrorBoundary: () => this.resetErrorBoundary(),
         };
         return <FallbackComponent {...fallbackProps} />;
       }
 
       return (
-        <ErrorFallback title="일시적인 오류입니다." onClickRetry={() => this.resetErrorBoundary()}>
+        <ErrorFallback title="일시적인 오류입니다." resetErrorBoundary={() => this.resetErrorBoundary()}>
           지금 이 서비스와 연결할 수 없습니다. <br />
           문제를 해결하기 위해 열심히 노력하고 있습니다. <br /> 잠시 후 다시 확인해주세요.
         </ErrorFallback>
