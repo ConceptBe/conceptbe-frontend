@@ -1,11 +1,17 @@
+import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { Component, ReactNode } from 'react';
+import { Component, ReactElement, ReactNode } from 'react';
 
 import ErrorFallback from './ErrorFallback';
 
+interface FallbackProps {
+  onResetQuery: () => void;
+}
+
 interface Props {
   children: ReactNode;
-  fallback?: ReactNode;
+  onResetQuery: () => void;
+  fallback?: ReactElement<FallbackProps>;
 }
 
 type State =
@@ -22,7 +28,7 @@ type State =
       errorDetail: 'network';
     };
 
-export default class ApiErrorBoundary extends Component<Props, State> {
+class ErrorBoundary extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = this.initErrorBoundaryState();
@@ -33,6 +39,11 @@ export default class ApiErrorBoundary extends Component<Props, State> {
       error: null,
       errorDetail: null,
     };
+  }
+
+  resetErrorBoundary() {
+    this.props.onResetQuery();
+    this.setState(this.initErrorBoundaryState());
   }
 
   static getDerivedStateFromError(error: unknown): State {
@@ -64,10 +75,16 @@ export default class ApiErrorBoundary extends Component<Props, State> {
     }
 
     if (this.state.errorDetail === 'network') {
-      if (this.props.fallback) return this.props.fallback;
+      if (this.props.fallback) {
+        const FallbackComponent = this.props.fallback.type;
+        const fallbackProps = {
+          onResetQuery: () => this.resetErrorBoundary(),
+        };
+        return <FallbackComponent {...fallbackProps} />;
+      }
 
       return (
-        <ErrorFallback title="일시적인 오류입니다." onClickRetry={() => this.setState(this.initErrorBoundaryState())}>
+        <ErrorFallback title="일시적인 오류입니다." onClickRetry={() => this.resetErrorBoundary()}>
           지금 이 서비스와 연결할 수 없습니다. <br />
           문제를 해결하기 위해 열심히 노력하고 있습니다. <br /> 잠시 후 다시 확인해주세요.
         </ErrorFallback>
@@ -76,4 +93,16 @@ export default class ApiErrorBoundary extends Component<Props, State> {
 
     throw new Error('Unknown Error');
   }
+}
+
+export default function ApiErrorBoundary({ children, fallback }: Omit<Props, 'onResetQuery'>) {
+  return (
+    <QueryErrorResetBoundary>
+      {({ reset }) => (
+        <ErrorBoundary onResetQuery={reset} fallback={fallback}>
+          {children}
+        </ErrorBoundary>
+      )}
+    </QueryErrorResetBoundary>
+  );
 }
