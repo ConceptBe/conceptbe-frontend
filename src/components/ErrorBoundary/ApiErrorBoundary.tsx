@@ -5,6 +5,7 @@ import ErrorFallback from './ErrorFallback';
 
 interface Props {
   children: ReactNode;
+  fallback?: ReactNode;
 }
 
 type State =
@@ -63,6 +64,8 @@ export default class ApiErrorBoundary extends Component<Props, State> {
     }
 
     if (this.state.errorDetail === 'network') {
+      if (this.props.fallback) return this.props.fallback;
+
       return (
         <ErrorFallback title="일시적인 오류입니다." onClickRetry={() => this.setState(this.initErrorBoundaryState())}>
           지금 이 서비스와 연결할 수 없습니다. <br />
