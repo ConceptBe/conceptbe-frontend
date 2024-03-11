@@ -11,14 +11,14 @@ import GlobalErrorBoundary from './components/ErrorBoundary/GlobalErrorBoundary.
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById('root')!).render(
-  <GlobalErrorBoundary>
-    <QueryClientProvider client={queryClient}>
-      <ConceptBeProvider>
-        <OverlayProvider>
+  <QueryClientProvider client={queryClient}>
+    <ConceptBeProvider>
+      <OverlayProvider>
+        <GlobalErrorBoundary>
           <App />
-        </OverlayProvider>
-      </ConceptBeProvider>
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
-  </GlobalErrorBoundary>,
+        </GlobalErrorBoundary>
+      </OverlayProvider>
+    </ConceptBeProvider>
+    <ReactQueryDevtools initialIsOpen={false} />
+  </QueryClientProvider>,
 );
