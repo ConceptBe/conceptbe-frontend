@@ -7,10 +7,9 @@ interface Props {
   title: string;
   children: ReactNode;
   onClickRetry?: () => void;
-  isGlobal?: boolean;
 }
 
-const ErrorFallback = ({ title, children, isGlobal, onClickRetry }: Props) => {
+const ErrorFallback = ({ title, children, onClickRetry }: Props) => {
   const navigate = useNavigate();
 
   const goToPrevPage = () => {
@@ -25,17 +24,14 @@ const ErrorFallback = ({ title, children, isGlobal, onClickRetry }: Props) => {
 
   return (
     <Flex
-      {...(isGlobal && {
-        maxWidth: 375,
-        margin: '0 auto',
-        shadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px',
-      })}
+      maxWidth={375}
+      margin="0 auto"
+      shadow="rgba(149, 157, 165, 0.2) 0px 8px 24px"
       height="100%"
       direction="column"
       padding="20px 22px"
       boxSizing="border-box"
     >
-      {isGlobal ? <></> : <Spacer size={40} />}
       <img src={PNGErrorBackground} />
       <Spacer size={26} />
       <Flex direction="column" alignItems="center" justifyContent="center">
