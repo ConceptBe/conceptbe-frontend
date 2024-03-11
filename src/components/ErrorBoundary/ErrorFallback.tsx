@@ -7,10 +7,10 @@ interface Props {
   title: string;
   children: ReactNode;
   resetErrorBoundary: () => void;
-  buttonContent?: string;
+  isInApiErrorBoundary?: boolean;
 }
 
-const ErrorFallback = ({ title, children, buttonContent = '메인으로 가기', resetErrorBoundary }: Props) => {
+const ErrorFallback = ({ title, children, isInApiErrorBoundary, resetErrorBoundary }: Props) => {
   const navigate = useNavigate();
 
   const goToPrevPage = () => {
@@ -19,8 +19,7 @@ const ErrorFallback = ({ title, children, buttonContent = '메인으로 가기',
   };
 
   const onClickRetry = async () => {
-    resetErrorBoundary();
-    navigate('/');
+    isInApiErrorBoundary ? resetErrorBoundary() : navigate('/');
   };
 
   return (
@@ -45,7 +44,7 @@ const ErrorFallback = ({ title, children, buttonContent = '메인으로 가기',
         <Button isGrayOut onClick={goToPrevPage}>
           이전 페이지
         </Button>
-        <Button onClick={onClickRetry}>{buttonContent}</Button>
+        <Button onClick={onClickRetry}>{isInApiErrorBoundary ? '다시 시도' : '메인으로 가기'}</Button>
       </Flex>
     </Flex>
   );
