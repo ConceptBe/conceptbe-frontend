@@ -5,7 +5,7 @@ import { Component, ReactElement, ReactNode } from 'react';
 import ErrorFallback from './ErrorFallback';
 
 interface FallbackProps {
-  error: null | unknown | AxiosError;
+  error: AxiosError;
   resetErrorBoundary: () => void;
 }
 
