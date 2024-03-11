@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Button, Flex, PNGErrorBackground, Spacer, Text, theme } from 'concept-be-design-system';
+import { Button, Flex, PNGErrorBackground, Spacer, theme } from 'concept-be-design-system';
 import { ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 
