@@ -27,6 +27,12 @@ interface RouteElement {
   children: { path: string; element: ReactNode; withAuth: boolean }[];
 }
 
+const withAsyncBoundary = (children: ReactNode) => (
+  <ApiErrorBoundary>
+    <Suspense fallback={<Spinner />}>{children}</Suspense>
+  </ApiErrorBoundary>
+);
+
 const routes: RouteElement[] = [
   {
     path: '/',
@@ -36,22 +42,22 @@ const routes: RouteElement[] = [
     children: [
       {
         path: '',
-        element: <Feed />,
+        element: withAsyncBoundary(<Feed />),
         withAuth: false,
       },
       {
         path: '/feed/:id',
-        element: <FeedDetailPage />,
+        element: withAsyncBoundary(<FeedDetailPage />),
         withAuth: true,
       },
       {
         path: '/write',
-        element: <WritePage />,
+        element: withAsyncBoundary(<WritePage />),
         withAuth: true,
       },
       {
         path: '/write-edit',
-        element: <WriteEditPage />,
+        element: withAsyncBoundary(<WriteEditPage />),
         withAuth: true,
       },
       {
@@ -66,16 +72,12 @@ const routes: RouteElement[] = [
       },
       {
         path: '/profile/:id',
-        element: <Profile />,
+        element: withAsyncBoundary(<Profile />),
         withAuth: true,
       },
       {
         path: '/profile-edit',
-        element: (
-          <Suspense>
-            <ProfileEdit />
-          </Suspense>
-        ),
+        element: withAsyncBoundary(<ProfileEdit />),
         withAuth: true,
       },
       {
@@ -91,7 +93,7 @@ const routes: RouteElement[] = [
       },
       {
         path: '/sign-up',
-        element: <SignUpPage />,
+        element: withAsyncBoundary(<SignUpPage />),
         withAuth: false,
       },
     ],
