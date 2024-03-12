@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Button, Flex, PNGErrorBackground, Spacer, theme } from 'concept-be-design-system';
+import { Box, Button, Flex, PNGErrorBackground, Spacer, theme } from 'concept-be-design-system';
 import { ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -18,8 +18,14 @@ const ErrorFallback = ({ title, children, isInApiErrorBoundary, resetErrorBounda
     navigate(-1);
   };
 
-  const onClickRetry = async () => {
-    isInApiErrorBoundary ? resetErrorBoundary() : navigate('/');
+  const goToMainPate = async () => {
+    // navigate('/')시 에만 동작하지 않습니다. await로 setState 배치 업데이트를 강제하여 실행하도록 했습니다.
+    await resetErrorBoundary();
+    navigate('/');
+  };
+
+  const onClickRetry = () => {
+    resetErrorBoundary();
   };
 
   return (
@@ -40,12 +46,18 @@ const ErrorFallback = ({ title, children, isInApiErrorBoundary, resetErrorBounda
         <ContentWrapper>{children}</ContentWrapper>
       </Flex>
       <Spacer size={20} />
-      <Flex gap={10}>
-        <Button isGrayOut onClick={goToPrevPage}>
-          이전 페이지
-        </Button>
-        <Button onClick={onClickRetry}>{isInApiErrorBoundary ? '다시 시도' : '메인으로 가기'}</Button>
-      </Flex>
+      {isInApiErrorBoundary ? (
+        <Box width={160} margin="0 auto" onClick={onClickRetry}>
+          <Button>다시 시도하기</Button>
+        </Box>
+      ) : (
+        <Flex gap={10}>
+          <Button isGrayOut onClick={goToPrevPage}>
+            이전 페이지
+          </Button>
+          <Button onClick={goToMainPate}>메인으로 가기</Button>
+        </Flex>
+      )}
     </Flex>
   );
 };
