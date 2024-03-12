@@ -3,9 +3,11 @@ import { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 import { _postSignUp } from '../../../api';
+import useAlert from '../../../hooks/useAlert';
 
 const useSignUpMutation = () => {
   const navigate = useNavigate();
+  const openAlert = useAlert();
   const { mutate: postSignUp, ...rest } = useMutation({
     mutationFn: _postSignUp,
     onSuccess: (data) => {
@@ -15,7 +17,7 @@ const useSignUpMutation = () => {
       navigate('/');
     },
     onError: (error: AxiosError<{ message: string }>) => {
-      alert(error.response?.data.message ?? '필수 정보를 입력하지 않아 저장할 수 없습니다.');
+      openAlert({ content: error.response?.data.message ?? '필수 정보를 입력하지 않아 저장할 수 없습니다.' });
     },
   });
 

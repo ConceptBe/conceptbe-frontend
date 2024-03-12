@@ -1,6 +1,8 @@
 import { ReactNode, Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 
+import ApiErrorBoundary from './components/ErrorBoundary/ApiErrorBoundary';
+import Spinner from './components/Spinner/Spinner';
 import MobileView from './layouts/MobileView';
 import Feed from './pages/Feed/Feed.page';
 import FeedDetailPage from './pages/FeedDetail/FeedDetail.page';
@@ -25,6 +27,12 @@ interface RouteElement {
   children: { path: string; element: ReactNode; withAuth: boolean }[];
 }
 
+const withAsyncBoundary = (children: ReactNode) => (
+  <ApiErrorBoundary>
+    <Suspense fallback={<Spinner />}>{children}</Suspense>
+  </ApiErrorBoundary>
+);
+
 const routes: RouteElement[] = [
   {
     path: '/',
@@ -34,38 +42,22 @@ const routes: RouteElement[] = [
     children: [
       {
         path: '',
-        element: (
-          <Suspense>
-            <Feed />
-          </Suspense>
-        ),
+        element: withAsyncBoundary(<Feed />),
         withAuth: false,
       },
       {
         path: '/feed/:id',
-        element: (
-          <Suspense>
-            <FeedDetailPage />
-          </Suspense>
-        ),
+        element: withAsyncBoundary(<FeedDetailPage />),
         withAuth: true,
       },
       {
         path: '/write',
-        element: (
-          <Suspense>
-            <WritePage />
-          </Suspense>
-        ),
+        element: withAsyncBoundary(<WritePage />),
         withAuth: true,
       },
       {
         path: '/write-edit',
-        element: (
-          <Suspense>
-            <WriteEditPage />
-          </Suspense>
-        ),
+        element: withAsyncBoundary(<WriteEditPage />),
         withAuth: true,
       },
       {
@@ -80,16 +72,12 @@ const routes: RouteElement[] = [
       },
       {
         path: '/profile/:id',
-        element: <Profile />,
+        element: withAsyncBoundary(<Profile />),
         withAuth: true,
       },
       {
         path: '/profile-edit',
-        element: (
-          <Suspense>
-            <ProfileEdit />
-          </Suspense>
-        ),
+        element: withAsyncBoundary(<ProfileEdit />),
         withAuth: true,
       },
       {
@@ -105,11 +93,7 @@ const routes: RouteElement[] = [
       },
       {
         path: '/sign-up',
-        element: (
-          <Suspense>
-            <SignUpPage />
-          </Suspense>
-        ),
+        element: withAsyncBoundary(<SignUpPage />),
         withAuth: false,
       },
     ],
