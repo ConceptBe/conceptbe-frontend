@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { BottomSheet, Divider, Header, Spacer, Text, theme } from 'concept-be-design-system';
 import { useState } from 'react';
 
+import SEOMeta from '../../components/SEOMeta/SEOMeta';
 import Privacy from '../../components/Terms/Privacy';
 import UsageTerms from '../../components/Terms/UsageTerms';
 import Back from '../../layouts/Back';
@@ -21,6 +22,8 @@ const More = () => {
 
   return (
     <>
+      <SEOMeta title="컨셉비 | 더보기" description="아이디어 기반의 안전하고 자유로운 팀원 찾기 플랫폼" />
+
       <Container>
         <Header spacerPosition="end">
           <Header.Item>
