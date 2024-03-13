@@ -5,13 +5,14 @@ interface Props {
   description: string;
 }
 
-const HelmetMeta = ({ title, description }: Props) => {
+const SEOMeta = ({ title, description }: Props) => {
   return (
     <Helmet>
+      <title>{title}</title>
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
     </Helmet>
   );
 };
 
-export default HelmetMeta;
+export default SEOMeta;
