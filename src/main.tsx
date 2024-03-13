@@ -3,6 +3,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { OverlayProvider } from '@toss/use-overlay';
 import { ConceptBeProvider } from 'concept-be-design-system';
 import { createRoot } from 'react-dom/client';
+import { HelmetProvider } from 'react-helmet-async';
 
 import App from './App.tsx';
 import './styles/reset.css';
@@ -11,14 +12,16 @@ import GlobalErrorBoundary from './components/ErrorBoundary/GlobalErrorBoundary.
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById('root')!).render(
-  <QueryClientProvider client={queryClient}>
-    <ConceptBeProvider>
-      <OverlayProvider>
-        <GlobalErrorBoundary>
-          <App />
-        </GlobalErrorBoundary>
-      </OverlayProvider>
-    </ConceptBeProvider>
-    <ReactQueryDevtools initialIsOpen={false} />
-  </QueryClientProvider>,
+  <HelmetProvider>
+    <QueryClientProvider client={queryClient}>
+      <ConceptBeProvider>
+        <OverlayProvider>
+          <GlobalErrorBoundary>
+            <App />
+          </GlobalErrorBoundary>
+        </OverlayProvider>
+      </ConceptBeProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
+  </HelmetProvider>,
 );

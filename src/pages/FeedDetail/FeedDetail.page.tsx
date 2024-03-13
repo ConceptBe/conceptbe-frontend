@@ -7,6 +7,7 @@ import ReactionBar from './components/ReactionBar';
 import { CommentFocusProvider } from './contexts/CommentFocusContext';
 import useFeedDetailQuery from './hooks/queries/useFeedDetailQuery';
 import ProfileInfo from '../../components/ProfileInfo';
+import SEOMeta from '../../components/SEOMeta/SEOMeta';
 import Back from '../../layouts/Back';
 import Logo from '../../layouts/Logo';
 import { formatCommentDate } from '../Feed/utils/formatCommentDate';
@@ -46,6 +47,8 @@ const FeedDetailPage = () => {
 
   return (
     <CommentFocusProvider>
+      <SEOMeta title="컨셉비 | 글 상세" description={title} />
+
       <Header main>
         <Back />
         <Logo />

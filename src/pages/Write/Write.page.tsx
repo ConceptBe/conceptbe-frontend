@@ -26,6 +26,7 @@ import { usePostIdeasMutation } from './hooks/mutations/usePostIdeasMutation';
 import { useWritingInfoQuery } from './hooks/queries/useWritingInfoQuery';
 import { Info } from './types';
 import { get2DepthCountsBy1Depth } from './utils/get2DepthCountsBy1Depth';
+import SEOMeta from '../../components/SEOMeta/SEOMeta';
 
 const cooperationWays = [
   { id: 1, name: '상관없음' },
@@ -144,141 +145,145 @@ const WritePage = () => {
   };
 
   return (
-    <MainWrapper>
-      <Header onClickCheckButton={writeIdea} isCheckButtonEnabled={canSubmit} />
+    <>
+      <SEOMeta title="컨셉비 | 글 작성" description="자유롭고 안전한 아이디어 공유의 장" />
 
-      <Divider color="l3" />
-      <TitleAndIntroduceSection
-        title={title}
-        introduce={introduce}
-        onTitleChange={handleTitleChange}
-        onIntroduceChange={handleIntroduceChange}
-      />
+      <MainWrapper>
+        <Header onClickCheckButton={writeIdea} isCheckButtonEnabled={canSubmit} />
 
-      <Divider color="bg1" height={8} bottom={30} />
-      <BottomWrapper>
-        <BottomBox>
-          <CheckboxContainer
-            label="분야"
-            checkboxKey="branches"
-            options={checkboxValue.branches}
-            onChange={onChangeCheckbox}
-            required
-          />
-        </BottomBox>
-        <BottomBox>
-          <CheckboxContainer
-            label="목적"
-            checkboxKey="purposes"
-            options={checkboxValue.purposes}
-            onChange={onChangeCheckbox}
-            required
-          />
-        </BottomBox>
-        <BottomBox>
-          <RadioContainer
-            label="협업방식"
-            radioKey="cooperationWays"
-            options={radioValue.cooperationWays}
-            onChange={(e) => onChangeRadio(e, 'cooperationWays')}
-            gap="large"
-            required
-          />
-        </BottomBox>
-        <BottomBox>
-          <RecruitmentPlaceSection
-            places={recruitmentPlaces}
-            selectedPlace={dropdownValue.recruitmentPlace}
-            onPlaceChange={(selectedPlace) => onClickDropdown(selectedPlace, 'recruitmentPlace')}
-          />
-        </BottomBox>
+        <Divider color="l3" />
+        <TitleAndIntroduceSection
+          title={title}
+          introduce={introduce}
+          onTitleChange={handleTitleChange}
+          onIntroduceChange={handleIntroduceChange}
+        />
 
-        <BottomBox>
-          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Text font="suit15m" color="b9">
-              팀원 모집
-            </Text>
-            <div
-              onClick={() => {
-                setIsOpenBottomSheet(true);
-              }}
-            >
-              <Text font="suit13m" color="b9" style={{ lineHeight: '20px' }}>
-                <Flex alignItems="center">
-                  <SVGAdd24 />
-                  팀원추가
-                </Flex>
+        <Divider color="bg1" height={8} bottom={30} />
+        <BottomWrapper>
+          <BottomBox>
+            <CheckboxContainer
+              label="분야"
+              checkboxKey="branches"
+              options={checkboxValue.branches}
+              onChange={onChangeCheckbox}
+              required
+            />
+          </BottomBox>
+          <BottomBox>
+            <CheckboxContainer
+              label="목적"
+              checkboxKey="purposes"
+              options={checkboxValue.purposes}
+              onChange={onChangeCheckbox}
+              required
+            />
+          </BottomBox>
+          <BottomBox>
+            <RadioContainer
+              label="협업방식"
+              radioKey="cooperationWays"
+              options={radioValue.cooperationWays}
+              onChange={(e) => onChangeRadio(e, 'cooperationWays')}
+              gap="large"
+              required
+            />
+          </BottomBox>
+          <BottomBox>
+            <RecruitmentPlaceSection
+              places={recruitmentPlaces}
+              selectedPlace={dropdownValue.recruitmentPlace}
+              onPlaceChange={(selectedPlace) => onClickDropdown(selectedPlace, 'recruitmentPlace')}
+            />
+          </BottomBox>
+
+          <BottomBox>
+            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+              <Text font="suit15m" color="b9">
+                팀원 모집
               </Text>
+              <div
+                onClick={() => {
+                  setIsOpenBottomSheet(true);
+                }}
+              >
+                <Text font="suit13m" color="b9" style={{ lineHeight: '20px' }}>
+                  <Flex alignItems="center">
+                    <SVGAdd24 />
+                    팀원추가
+                  </Flex>
+                </Text>
+              </div>
             </div>
-          </div>
 
-          <Spacer size={12} />
-          <TeamLabelBox>
-            {selectedSkillResponses.map((item) => {
-              return (
-                <TeamLabel key={item.id}>
-                  {item.name}
-                  <SVGCancel onClick={() => onDeleteTeamRecruitment(item.id)} />
-                </TeamLabel>
-              );
-            })}
-          </TeamLabelBox>
-
-          <Spacer size={40} />
-        </BottomBox>
-      </BottomWrapper>
-
-      <BottomSheet isOpen={isOpenBottomSheet} onClose={() => setIsOpenBottomSheet(false)}>
-        <Sheet_TopBox>
-          <SVGCancel
-            onClick={() => {
-              setIsOpenBottomSheet(false);
-            }}
-          />
-          <Text font="suit16sb" color="b4">
-            팀원선택
-          </Text>
-          <SVGHeaderCheck24
-            onClick={() => {
-              setIsOpenBottomSheet(false);
-            }}
-          />
-        </Sheet_TopBox>
-        <Sheet_BodyBox>
-          <Sheet_Left>
-            {sheetLeftItems.map((item) => {
-              return (
-                <Sheet_leftItem
-                  key={item}
-                  onClick={() => setSelectedTeamRecruitment1Depth(item)}
-                  checked={selectedTeamRecruitment1Depth === item}
-                >
-                  <Text font="suit14m" color={selectedTeamRecruitment1Depth === item ? 'b2' : 'ba'}>
-                    {item}
-                  </Text>
-                  <Spacer size={3} />
-                  <Text font="suit14m" color={selectedTeamRecruitment1Depth === item ? 'c1' : 'ba'}>
-                    {get2DepthCountsBy1Depth(selectedSkillResponses, skillCategoryResponses)[item]}
-                  </Text>
-                </Sheet_leftItem>
-              );
-            })}
-          </Sheet_Left>
-          <Sheet_right>
-            {sheetRightItems.map((item) => {
-              return (
-                <Sheet_radioDiv key={item.name} onClick={() => onClickTeamRecruitment(item)}>
-                  <Text font="suit14m" color="b4">
+            <Spacer size={12} />
+            <TeamLabelBox>
+              {selectedSkillResponses.map((item) => {
+                return (
+                  <TeamLabel key={item.id}>
                     {item.name}
-                  </Text>
-                  {selectedSkillResponses.includes(item) ? <SVGRadioCheck24 /> : <SVGRadioUncheck24 />}
-                </Sheet_radioDiv>
-              );
-            })}
-          </Sheet_right>
-        </Sheet_BodyBox>
-      </BottomSheet>
-    </MainWrapper>
+                    <SVGCancel onClick={() => onDeleteTeamRecruitment(item.id)} />
+                  </TeamLabel>
+                );
+              })}
+            </TeamLabelBox>
+
+            <Spacer size={40} />
+          </BottomBox>
+        </BottomWrapper>
+
+        <BottomSheet isOpen={isOpenBottomSheet} onClose={() => setIsOpenBottomSheet(false)}>
+          <Sheet_TopBox>
+            <SVGCancel
+              onClick={() => {
+                setIsOpenBottomSheet(false);
+              }}
+            />
+            <Text font="suit16sb" color="b4">
+              팀원선택
+            </Text>
+            <SVGHeaderCheck24
+              onClick={() => {
+                setIsOpenBottomSheet(false);
+              }}
+            />
+          </Sheet_TopBox>
+          <Sheet_BodyBox>
+            <Sheet_Left>
+              {sheetLeftItems.map((item) => {
+                return (
+                  <Sheet_leftItem
+                    key={item}
+                    onClick={() => setSelectedTeamRecruitment1Depth(item)}
+                    checked={selectedTeamRecruitment1Depth === item}
+                  >
+                    <Text font="suit14m" color={selectedTeamRecruitment1Depth === item ? 'b2' : 'ba'}>
+                      {item}
+                    </Text>
+                    <Spacer size={3} />
+                    <Text font="suit14m" color={selectedTeamRecruitment1Depth === item ? 'c1' : 'ba'}>
+                      {get2DepthCountsBy1Depth(selectedSkillResponses, skillCategoryResponses)[item]}
+                    </Text>
+                  </Sheet_leftItem>
+                );
+              })}
+            </Sheet_Left>
+            <Sheet_right>
+              {sheetRightItems.map((item) => {
+                return (
+                  <Sheet_radioDiv key={item.name} onClick={() => onClickTeamRecruitment(item)}>
+                    <Text font="suit14m" color="b4">
+                      {item.name}
+                    </Text>
+                    {selectedSkillResponses.includes(item) ? <SVGRadioCheck24 /> : <SVGRadioUncheck24 />}
+                  </Sheet_radioDiv>
+                );
+              })}
+            </Sheet_right>
+          </Sheet_BodyBox>
+        </BottomSheet>
+      </MainWrapper>
+    </>
   );
 };
 

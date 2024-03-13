@@ -7,6 +7,7 @@ import FilterBottomSheet from './components/FilterBottomSheet/FilterBottomSheet'
 import NewIdeaCardListSection from './components/NewIdeaCardListSection/NewIdeaCardListSection';
 import { getUserNickname } from './utils/getUserNickname';
 import Padding from '../../components/Padding';
+import SEOMeta from '../../components/SEOMeta/SEOMeta';
 import Logo from '../../layouts/Logo';
 import { useWritingInfoQuery } from '../Write/hooks/queries/useWritingInfoQuery';
 
@@ -24,6 +25,8 @@ const Feed = () => {
 
   return (
     <>
+      <SEOMeta title="컨셉비 | 전체 피드" description="자유롭고 안전한 아이디어 공유의 장" />
+
       <Header main>
         <Header.Item>
           <Logo />
@@ -92,10 +95,6 @@ const FeedFixBox = styled.div`
   flex-direction: column;
   background-color: ${theme.color.c1};
   color: ${theme.color.w1};
-`;
-
-const FeedWrapper = styled.div`
-  padding-top: 47px;
 `;
 
 const FeedFixTextWrapper = styled.div`

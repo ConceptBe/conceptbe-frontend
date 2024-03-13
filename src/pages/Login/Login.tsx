@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { Spacer, Text, theme, SVGLoginKakao, SVGLoginNaver, SVGLoginLogo, Flex } from 'concept-be-design-system';
 
+import SEOMeta from '../../components/SEOMeta/SEOMeta';
 import { BASE_URL } from '../../constants';
 
 const REQUEST_URL = `${BASE_URL}/oauth/kakao`;
@@ -11,29 +12,33 @@ const Login = () => {
   };
 
   return (
-    <Flex direction="column" justifyContent="center" alignItems="center" height="100%">
-      <SVGLoginLogo />
-      <Spacer size={40} />
-      <ButtonWrapper onClick={onClickOauthKakao}>
-        <LogoBox color="#FAE100">
-          <SVGLoginKakao />
-        </LogoBox>
-        <TextWrapper>
-          <Text font="suit15rb">카카오 로그인</Text>
-        </TextWrapper>
-      </ButtonWrapper>
+    <>
+      <SEOMeta title="컨셉비 | 로그인" description="컨셉비 시작하기 (로그인/회원가입)" />
 
-      <Spacer size={10} />
+      <Flex direction="column" justifyContent="center" alignItems="center" height="100%">
+        <SVGLoginLogo />
+        <Spacer size={40} />
+        <ButtonWrapper onClick={onClickOauthKakao}>
+          <LogoBox color="#FAE100">
+            <SVGLoginKakao />
+          </LogoBox>
+          <TextWrapper>
+            <Text font="suit15rb">카카오 로그인</Text>
+          </TextWrapper>
+        </ButtonWrapper>
 
-      <ButtonWrapper>
-        <LogoBox color="#03C75A">
-          <SVGLoginNaver />
-        </LogoBox>
-        <TextWrapper>
-          <Text font="suit15rb">네이버 로그인</Text>
-        </TextWrapper>
-      </ButtonWrapper>
-    </Flex>
+        <Spacer size={10} />
+
+        <ButtonWrapper>
+          <LogoBox color="#03C75A">
+            <SVGLoginNaver />
+          </LogoBox>
+          <TextWrapper>
+            <Text font="suit15rb">네이버 로그인</Text>
+          </TextWrapper>
+        </ButtonWrapper>
+      </Flex>
+    </>
   );
 };
 
