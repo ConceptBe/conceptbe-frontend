@@ -90,7 +90,6 @@ const ContentText = styled.div`
   color: ${theme.color.b6};
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
-  word-break: keep-all;
   display: -webkit-box;
   text-overflow: ellipsis;
   overflow: hidden;
