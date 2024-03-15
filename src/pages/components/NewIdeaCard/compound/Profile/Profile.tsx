@@ -1,13 +1,14 @@
 import styled from '@emotion/styled';
 import {
   Box,
+  Flex,
   ImageView,
   PNGDefaultProfileInfo36,
   SVGScrap24,
   SVGScrapFilled24,
   Spacer,
   Text,
-  theme,
+  TextDivider,
 } from 'concept-be-design-system';
 import { MouseEventHandler } from 'react';
 
@@ -48,24 +49,26 @@ const Profile = ({ onClickProfile }: Props) => {
           <ImageView src={profileImageUrl} alt="프로필" defaultSrc={PNGDefaultProfileInfo36} />
         </Box>
 
-        <div>
+        <Box paddingTop={2}>
           <Text font="suit14m" color="b4">
             {nickname}
           </Text>
           <Spacer size={7} />
 
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <Text font="suit12r" color="b9">
-              {skills.join(' | ')}
-            </Text>
+          <Flex>
+            <Box maxWidth={110}>
+              <Text font="suit12r" color="b9">
+                {skills.join(' | ')}
+              </Text>
+            </Box>
             <Spacer size={6} />
-            <div style={{ width: 1, height: 10, backgroundColor: theme.color.l2 }} />
+            <TextDivider width={1} height={10} color="l2" />
             <Spacer size={6} />
             <Text font="suit12r" color="b9">
               {formatCommentDate(createdAt)}
             </Text>
-          </div>
-        </div>
+          </Flex>
+        </Box>
       </ProfileBox>
       {isBookmarked ? <SVGScrapFilled24 onClick={unbookmarkIdea} /> : <SVGScrap24 onClick={bookmarkIdea} />}
     </ProfileWrapper>
@@ -83,6 +86,5 @@ const ProfileWrapper = styled.div`
 
 const ProfileBox = styled.div`
   display: flex;
-  align-items: center;
   gap: 10px;
 `;
