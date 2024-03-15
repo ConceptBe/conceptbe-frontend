@@ -15,6 +15,8 @@ import {
   useDropdown,
   Flex,
   Box,
+  ImageView,
+  PNGDefaultProfileInfo100,
 } from 'concept-be-design-system';
 import { FormEvent } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -137,7 +139,11 @@ const SignUpPage = () => {
               cursor="pointer"
             >
               <Box width={100} height={100} overflow="hidden" borderRadius="0 150px 150px 0">
-                <Img src={memberInfo?.profileImageUrl} />
+                <ImageView
+                  src={memberInfo?.profileImageUrl}
+                  alt="프로필 이미지"
+                  defaultSrc={PNGDefaultProfileInfo100}
+                />
               </Box>
               <Flex
                 justifyContent="center"
@@ -328,11 +334,6 @@ const SignUpPage = () => {
 
 const MainWrapper = styled.form`
   background-color: ${theme.color.c1};
-  height: 100%;
-`;
-
-const Img = styled.img`
-  width: 100%;
   height: 100%;
 `;
 

@@ -1,14 +1,15 @@
 import styled from '@emotion/styled';
 import {
   Box,
-  SVGLoginDefaultProfile,
+  ImageView,
+  PNGDefaultProfileInfo36,
   SVGScrap24,
   SVGScrapFilled24,
   Spacer,
   Text,
   theme,
 } from 'concept-be-design-system';
-import { MouseEventHandler, useState } from 'react';
+import { MouseEventHandler } from 'react';
 
 import { useDeleteBookmarkIdea } from '../../../../Feed/hooks/mutations/useDeleteBookmarkIdea';
 import { usePostBookmarkIdea } from '../../../../Feed/hooks/mutations/usePostBookmarkIdea';
@@ -24,14 +25,6 @@ const Profile = ({ onClickProfile }: Props) => {
   const { profileImageUrl, nickname, skills, isBookmarked, createdAt } = useProfileContext();
   const { postBookmarkIdea } = usePostBookmarkIdea();
   const { deleteBookmarkIdea } = useDeleteBookmarkIdea();
-
-  // 이미지 로딩 실패를 처리하기 위한 상태
-  const [imageError, setImageError] = useState(false);
-
-  // 이미지 로딩 실패 처리 함수
-  const handleImageError = () => {
-    setImageError(true); // 이미지 로딩 실패 상태를 true로 설정
-  };
 
   const bookmarkIdea: MouseEventHandler<SVGSVGElement> = (e) => {
     e.stopPropagation();
@@ -51,13 +44,10 @@ const Profile = ({ onClickProfile }: Props) => {
   return (
     <ProfileWrapper>
       <ProfileBox onClick={handleClickProfile}>
-        {imageError === true ? (
-          <SVGLoginDefaultProfile />
-        ) : (
-          <Box width={36} height={36} overflow="hidden" borderRadius="0 150px 150px 0">
-            <Img src={profileImageUrl} onError={handleImageError} />
-          </Box>
-        )}
+        <Box width={36} height={36} overflow="hidden" borderRadius="0 150px 150px 0">
+          <ImageView src={profileImageUrl} alt="프로필" defaultSrc={PNGDefaultProfileInfo36} />
+        </Box>
+
         <div>
           <Text font="suit14m" color="b4">
             {nickname}
@@ -95,9 +85,4 @@ const ProfileBox = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
-`;
-
-const Img = styled.img`
-  width: 100%;
-  height: 100%;
 `;

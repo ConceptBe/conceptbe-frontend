@@ -1,8 +1,6 @@
-import styled from '@emotion/styled';
-import { Box, Flex, Text, TextDivider } from 'concept-be-design-system';
+import { Box, Flex, ImageView, PNGDefaultProfileInfo36, Text, TextDivider } from 'concept-be-design-system';
 import { Fragment } from 'react';
 
-import { DEFAULT_IMAGE_URL } from '../../../constants';
 import { formatCommentDate } from '../../Feed/utils/formatCommentDate';
 
 interface Props {
@@ -16,7 +14,7 @@ const CommentProfileInfo = ({ imageUrl, nickname, skillList, createdAt }: Props)
   return (
     <Flex alignItems="center" gap={10}>
       <Box width={36} height={36} overflow="hidden" borderRadius="0 150px 150px 0">
-        <Img src={imageUrl || DEFAULT_IMAGE_URL} />
+        <ImageView src={imageUrl} alt="프로필" defaultSrc={PNGDefaultProfileInfo36} />
       </Box>
       <Flex direction="column" gap={4}>
         <Text font="suit14m" color="b4">
@@ -39,10 +37,5 @@ const CommentProfileInfo = ({ imageUrl, nickname, skillList, createdAt }: Props)
     </Flex>
   );
 };
-
-const Img = styled.img`
-  width: 100%;
-  height: 100%;
-`;
 
 export default CommentProfileInfo;

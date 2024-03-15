@@ -15,6 +15,8 @@ import {
   useDropdown,
   Flex,
   Box,
+  ImageView,
+  PNGDefaultProfileInfo100,
 } from 'concept-be-design-system';
 import { FormEvent } from 'react';
 
@@ -119,7 +121,7 @@ const ProfileEdit = () => {
         >
           <Box position="relative" top={-50} left={0} right={0} margin="auto" width={100} height={100} cursor="pointer">
             <Box width={100} height={100} overflow="hidden" borderRadius="0 150px 150px 0">
-              <Img src={my.profileImageUrl} />
+              <ImageView src={my.profileImageUrl} alt="프로필 이미지" defaultSrc={PNGDefaultProfileInfo100} />
             </Box>
             <Flex
               justifyContent="center"
@@ -321,11 +323,6 @@ const ProfileEdit = () => {
 
 const MainWrapper = styled.form`
   background-color: ${theme.color.c1};
-  height: 100%;
-`;
-
-const Img = styled.img`
-  width: 100%;
   height: 100%;
 `;
 
