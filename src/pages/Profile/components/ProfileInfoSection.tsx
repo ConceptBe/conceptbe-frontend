@@ -1,8 +1,9 @@
 import styled from '@emotion/styled';
-import { theme, Badge, Spacer, Text, Flex, SVGProfileDefaultImage, ImageView } from 'concept-be-design-system';
+import { theme, Badge, Spacer, Text, Flex, ImageView } from 'concept-be-design-system';
 import { useNavigate } from 'react-router-dom';
 
 import Padding from '../../../components/Padding';
+import { DEFAULT_PROFILE_IMAGE_URL } from '../../../constants';
 import { Member } from '../types';
 
 type Props = {
@@ -39,11 +40,7 @@ const ProfileInfoSection = ({ memberInfo }: Props) => {
   return (
     <>
       <ImageWrapper>
-        {profileImageUrl === 'test' ? (
-          <SVGProfileDefaultImage />
-        ) : (
-          <ImageView src={profileImageUrl} alt="프로필 이미지" />
-        )}
+        <ImageView src={profileImageUrl} alt="프로필 이미지" defaultSrc={DEFAULT_PROFILE_IMAGE_URL} />
       </ImageWrapper>
 
       <Padding top={300} />
