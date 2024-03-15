@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Box, Button, Flex, PNGErrorBackground, Spacer, theme } from 'concept-be-design-system';
+import { Box, Button, Flex, ImageView, PNGErrorBackground, Spacer, theme } from 'concept-be-design-system';
 import { ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -30,7 +30,7 @@ const ErrorFallback = ({ title, children, isInApiErrorBoundary, resetErrorBounda
 
   return (
     <Flex
-      maxWidth={375}
+      maxWidth={420}
       margin="0 auto"
       shadow="rgba(149, 157, 165, 0.2) 0px 8px 24px"
       height="100%"
@@ -38,7 +38,9 @@ const ErrorFallback = ({ title, children, isInApiErrorBoundary, resetErrorBounda
       padding="20px 22px"
       boxSizing="border-box"
     >
-      <img src={PNGErrorBackground} />
+      <Box maxWidth={375} maxHeight={375}>
+        <ImageView src={PNGErrorBackground} alt="에러 페이지 이미지" />
+      </Box>
       <Spacer size={26} />
       <Flex direction="column" alignItems="center" justifyContent="center">
         <TitleWrapper>{title}</TitleWrapper>

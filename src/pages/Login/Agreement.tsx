@@ -1,5 +1,14 @@
 import styled from '@emotion/styled';
-import { BottomSheet, Button, Spacer, Text, PNGAgreementBackground, Flex, Box } from 'concept-be-design-system';
+import {
+  BottomSheet,
+  Button,
+  Spacer,
+  Text,
+  PNGAgreementBackground,
+  Flex,
+  Box,
+  ImageView,
+} from 'concept-be-design-system';
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -37,7 +46,7 @@ const Agreement = () => {
 
       <Wrapper height="100%" direction="column" padding="20px 22px">
         <Box maxWidth={375} maxHeight={375}>
-          <AgreementImage src={PNGAgreementBackground} />
+          <ImageView src={PNGAgreementBackground} alt="동의 페이지 이미지" />
         </Box>
         <Spacer size={50} />
 
@@ -126,12 +135,6 @@ export default Agreement;
 
 const Wrapper = styled(Flex)`
   box-sizing: border-box;
-`;
-
-const AgreementImage = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 `;
 
 const DynamicSpacer = styled(Spacer)`
