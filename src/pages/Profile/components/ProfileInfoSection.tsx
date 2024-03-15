@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import Padding from '../../../components/Padding';
 import { ProfileImageDefault } from '../asset';
 import { Member } from '../types';
-import { getUserId } from '../utils/getUserId';
 
 type Props = {
   memberInfo: Member;
@@ -111,13 +110,14 @@ export default ProfileInfoSection;
 const ProfileImage = styled.img`
   width: 100%;
   height: 100%;
+  object-fit: cover;
 `;
 
 const ImageWrapper = styled.div`
+  max-width: 420px;
   width: 100%;
   height: 375px;
   position: fixed;
-  max-width: 375px;
   top: 50px;
   z-index: -1;
 `;

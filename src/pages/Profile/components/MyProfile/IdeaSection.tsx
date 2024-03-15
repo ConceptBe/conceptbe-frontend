@@ -1,5 +1,6 @@
-import { Spacer } from 'concept-be-design-system';
-import { Fragment, useRef } from 'react';
+import styled from '@emotion/styled';
+import { Box, Spacer } from 'concept-be-design-system';
+import { useRef } from 'react';
 
 import { useDeleteIdea } from '../../../components/NewIdeaCard/hooks/mutations/useDeleteIdea';
 import NewIdeaCard from '../../../components/NewIdeaCard/NewIdeaCard';
@@ -54,18 +55,23 @@ const IdeaSection = ({ userId }: Props) => {
         };
 
         return (
-          <Fragment key={idx}>
+          <Wrapper key={idx}>
             <NewIdeaCard id={idea.id} content={content} footer={footer}>
               <NewIdeaCard.Content onClickDelete={() => handleDeleteIdea(idea.id)} />
               <NewIdeaCard.Footer />
             </NewIdeaCard>
             <Spacer size={20} />
-          </Fragment>
+          </Wrapper>
         );
       })}
       <div ref={intersectionRef}></div>
     </>
   );
 };
+
+const Wrapper = styled(Box)`
+  max-width: 335px;
+  margin: 0 auto;
+`;
 
 export default IdeaSection;

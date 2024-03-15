@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Divider, theme } from 'concept-be-design-system';
+import { theme } from 'concept-be-design-system';
 import { Suspense } from 'react';
 
 import Header from './Header';
