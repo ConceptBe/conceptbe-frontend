@@ -6,7 +6,6 @@ import NewIdeaCardListSkeleton from './NewIdeaCardListSkeleton';
 import { useDeleteIdea } from '../../../components/NewIdeaCard/hooks/mutations/useDeleteIdea';
 import NewIdeaCard from '../../../components/NewIdeaCard/NewIdeaCard';
 import useNavigatePage from '../../../hooks/useNavigatePage';
-import { getUserId } from '../../../Profile/utils/getUserId';
 import { useFilterParams } from '../../context/filterContext';
 import { useIdeasQuery } from '../../hooks/queries/useIdeasQuery';
 import { useFeedInfiniteFetch } from '../../hooks/useFeedInfiniteFetch';
@@ -15,7 +14,7 @@ import { getUserNickname } from '../../utils/getUserNickname';
 const nickname = getUserNickname();
 
 const CardList = () => {
-  const { filterParams, updateFilterParams } = useFilterParams();
+  const { filterParams } = useFilterParams();
   const { ideas, fetchNextPage } = useIdeasQuery(filterParams);
   const { goProfilePage } = useNavigatePage();
   const { deleteIdea } = useDeleteIdea();
@@ -95,5 +94,7 @@ const NewIdeaCardListSection = () => {
 export default NewIdeaCardListSection;
 
 export const Wrapper = styled.div`
+  max-width: 331px;
   padding: 47px 22px 0 22px;
+  margin: 0 auto;
 `;

@@ -90,7 +90,9 @@ const Wrapper = styled.section`
 `;
 
 const FeedFixBox = styled.div`
+  max-width: 315px;
   padding: 90px 30px 50px 30px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   background-color: ${theme.color.c1};
