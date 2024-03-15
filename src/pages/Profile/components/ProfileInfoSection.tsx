@@ -1,10 +1,8 @@
 import styled from '@emotion/styled';
-import { theme, Badge, Spacer, Text, Flex } from 'concept-be-design-system';
-import { useState } from 'react';
+import { theme, Badge, Spacer, Text, Flex, SVGProfileDefaultImage, ImageView } from 'concept-be-design-system';
 import { useNavigate } from 'react-router-dom';
 
 import Padding from '../../../components/Padding';
-import { ProfileImageDefault } from '../asset';
 import { Member } from '../types';
 
 type Props = {
@@ -25,12 +23,6 @@ const ProfileInfoSection = ({ memberInfo }: Props) => {
     joinPurposes,
   } = memberInfo;
 
-  const [profileImageError, setProfileImageError] = useState(false);
-
-  const handleProfileImageError = () => {
-    setProfileImageError(true);
-  };
-
   const renderWorkingAndLivingPlace = () => {
     if (workingPlace && livingPlace) {
       return `${workingPlace} | ${livingPlace}`;
@@ -47,10 +39,10 @@ const ProfileInfoSection = ({ memberInfo }: Props) => {
   return (
     <>
       <ImageWrapper>
-        {profileImageError === true ? (
-          <ProfileImageDefault />
+        {profileImageUrl === 'test' ? (
+          <SVGProfileDefaultImage />
         ) : (
-          <ProfileImage src={profileImageUrl} onError={handleProfileImageError} />
+          <ImageView src={profileImageUrl} alt="프로필 이미지" />
         )}
       </ImageWrapper>
 
@@ -106,12 +98,6 @@ const ProfileInfoSection = ({ memberInfo }: Props) => {
 };
 
 export default ProfileInfoSection;
-
-const ProfileImage = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-`;
 
 const ImageWrapper = styled.div`
   max-width: 420px;
