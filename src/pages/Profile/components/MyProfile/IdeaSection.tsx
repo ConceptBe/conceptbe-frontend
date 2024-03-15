@@ -37,7 +37,7 @@ const IdeaSection = ({ userId }: Props) => {
 
   return (
     <>
-      {ideas.map((idea, idx) => {
+      {ideas.map((idea) => {
         const isMine = true;
 
         const content = {
@@ -55,7 +55,7 @@ const IdeaSection = ({ userId }: Props) => {
         };
 
         return (
-          <Wrapper key={idx}>
+          <Wrapper key={idea.id}>
             <NewIdeaCard id={idea.id} content={content} footer={footer}>
               <NewIdeaCard.Content onClickDelete={() => handleDeleteIdea(idea.id)} />
               <NewIdeaCard.Footer />
