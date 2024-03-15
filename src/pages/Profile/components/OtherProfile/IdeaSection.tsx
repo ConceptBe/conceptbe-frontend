@@ -1,10 +1,9 @@
 import styled from '@emotion/styled';
-import { Box, Spacer } from 'concept-be-design-system';
+import { Box, Spacer, SVGProfileMessageDots } from 'concept-be-design-system';
 import { useRef } from 'react';
 
 import NewIdeaCard from '../../../components/NewIdeaCard/NewIdeaCard';
 import { useFeedInfiniteFetch } from '../../../Feed/hooks/useFeedInfiniteFetch';
-import { SVGMessageDotsCircle } from '../../asset';
 import { useIdeasQuery } from '../../hooks/queries/useIdeasQuery';
 import EmptyTabContentSection from '../EmptyTabContentSection';
 
@@ -20,12 +19,7 @@ const IdeaSection = ({ userId }: Props) => {
   useFeedInfiniteFetch(intersectionRef, fetchNextPage);
 
   if (ideas.length === 0) {
-    return (
-      <EmptyTabContentSection
-        svg={SVGMessageDotsCircle}
-        textList={['작성한 글이 없어요', '재밌는 아이디어를 공유해보세요.']}
-      />
-    );
+    return <EmptyTabContentSection svg={SVGProfileMessageDots} textList={['', '아직 작성한 글이 없어요.']} />;
   }
 
   return (

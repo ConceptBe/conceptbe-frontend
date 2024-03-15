@@ -5,16 +5,17 @@ import { Fragment } from 'react';
 type Props = {
   svg: React.FC<React.SVGProps<SVGSVGElement>>;
   textList: string[];
+  onClickSVG?: () => void;
 };
 
-const EmptyTabContentSection = ({ svg, textList }: Props) => {
+const EmptyTabContentSection = ({ svg, textList, onClickSVG }: Props) => {
   const SVGElement = svg;
 
   return (
     <EmptyIdeaSectionContainer>
       <Spacer size="15rem" />
       <EmptyIdeaTextContainer>
-        <SVGElement />
+        <SVGElement onClick={onClickSVG} cursor={onClickSVG ? 'pointer' : ''} />
         <Spacer size="0.6rem" />
         {textList.map((text, idx) => (
           <Fragment key={idx}>
