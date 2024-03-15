@@ -91,6 +91,7 @@ const SignUpPage = () => {
       joinPurposes: checkboxValue.goal.filter(({ checked }) => checked).map(({ id }) => id),
       livingPlace: dropdownValue.region,
       workingPlace: fieldValue.company,
+      introduction: fieldValue.intro,
       email: memberInfo?.email || '',
       oauthId: memberInfo?.oauthId || '',
       oauthServerType: memberInfo?.oauthServerType || '',
