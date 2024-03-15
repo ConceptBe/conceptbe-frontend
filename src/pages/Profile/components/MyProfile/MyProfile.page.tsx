@@ -32,7 +32,7 @@ const MyProfile = ({ userId, memberInfo }: Props) => {
       <Suspense fallback={<Spinner />}>
         <Box>
           <ProfileInfoSection memberInfo={memberInfo} />
-          <TabLayout width={420} height="100%">
+          <TabLayout maxWidth={420} height="100%">
             <TabLayout.Tab label="아이디어">
               <TabPanelBox>
                 <Suspense fallback={<></>}>
