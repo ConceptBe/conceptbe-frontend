@@ -1,9 +1,6 @@
 import styled from '@emotion/styled';
-import { Divider, Text, theme } from 'concept-be-design-system';
+import { Divider, Text, theme, SVGFeedPencil, SVGCancel } from 'concept-be-design-system';
 import { MouseEventHandler } from 'react';
-
-import { ReactComponent as SVGPencil16 } from '../../assets/pencil16.svg';
-import { ReactComponent as SVGX16 } from '../../assets/x16.svg';
 
 type Props = {
   onClickEdit: () => void;
@@ -28,14 +25,14 @@ const ContentEditDropdown = ({ onClickEdit, onClickDelete }: Props) => {
           수정하기
         </Text>
         {/* TODO: 드롭다운에 쓰이는 연필, 삭제버튼 아이콘 디자인시스템에 추가 */}
-        <SVGPencil16 />
+        <SVGFeedPencil />
       </DropdownItem>
       <Divider color="l3" />
       <DropdownItem onClick={handleClickDelete}>
         <Text font="suit12r" color="b6">
           삭제하기
         </Text>
-        <SVGX16 />
+        <SVGCancel />
       </DropdownItem>
     </DropdownWrapper>
   );
