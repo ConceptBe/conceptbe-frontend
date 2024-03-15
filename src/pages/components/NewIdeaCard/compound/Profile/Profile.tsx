@@ -10,7 +10,7 @@ import {
   Text,
   TextDivider,
 } from 'concept-be-design-system';
-import { MouseEventHandler } from 'react';
+import { Fragment, MouseEventHandler } from 'react';
 
 import { useDeleteBookmarkIdea } from '../../../../Feed/hooks/mutations/useDeleteBookmarkIdea';
 import { usePostBookmarkIdea } from '../../../../Feed/hooks/mutations/usePostBookmarkIdea';
@@ -55,15 +55,15 @@ const Profile = ({ onClickProfile }: Props) => {
           </Text>
           <Spacer size={7} />
 
-          <Flex>
-            <Box maxWidth={110}>
-              <Text font="suit12r" color="b9">
-                {skills.join(' | ')}
-              </Text>
-            </Box>
-            <Spacer size={6} />
-            <TextDivider width={1} height={10} color="l2" />
-            <Spacer size={6} />
+          <Flex width={200} wrap="wrap" alignItems="center" gap={4}>
+            {skills.map((skill) => (
+              <Fragment key={skill}>
+                <FixedSizeText font="suit12r" color="b9">
+                  {skill}
+                </FixedSizeText>
+                <TextDivider left={2} right={2} color="l2" />
+              </Fragment>
+            ))}
             <Text font="suit12r" color="b9">
               {formatCommentDate(createdAt)}
             </Text>
@@ -87,4 +87,8 @@ const ProfileWrapper = styled.div`
 const ProfileBox = styled.div`
   display: flex;
   gap: 10px;
+`;
+
+const FixedSizeText = styled(Text)`
+  width: max-content;
 `;
