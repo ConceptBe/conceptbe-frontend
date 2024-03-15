@@ -53,9 +53,9 @@ const Feed = () => {
           </FeedFixTextWrapper>
 
           <Spacer size={8} />
-          <Text font="suit22r" color="w1">
+          <WordBreakText font="suit22r" color="w1">
             재밌는 아이디어를 들려주세요!
-          </Text>
+          </WordBreakText>
           <Spacer size={14} />
 
           <Box onClick={() => navigate('/write')} cursor="pointer">
@@ -111,4 +111,9 @@ const FeedFixTextWrapper = styled.div`
 const IdeaSectionBox = styled.div`
   background-color: ${theme.color.bg1};
   border-radius: 16px 16px 0 0;
+`;
+
+const WordBreakText = styled(Text)`
+  word-break: keep-all;
+  line-height: 120%;
 `;
