@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { BottomSheet, Button, Spacer, Text, PNGAgreementBackground, Flex } from 'concept-be-design-system';
+import { BottomSheet, Button, Spacer, Text, PNGAgreementBackground, Flex, Box } from 'concept-be-design-system';
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -33,7 +33,9 @@ const Agreement = () => {
       <SEOMeta title="컨셉비 | 약관동의" description="컨셉비 시작하기 (로그인/회원가입)" />
 
       <Wrapper height="100%" direction="column" padding="20px 22px">
-        <img src={PNGAgreementBackground} />
+        <Box maxWidth={375} maxHeight={375}>
+          <AgreementImage src={PNGAgreementBackground} />
+        </Box>
         <Spacer size={50} />
 
         <Text
@@ -56,23 +58,21 @@ const Agreement = () => {
           보호하는 플랫폼입니다.
         </Text>
         <Spacer size={20} />
-        <Text
-          font="suit14r"
-          color="b6"
-          style={{
-            lineHeight: '22px',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            textAlign: 'center',
-          }}
-        >
-          게시글을 조회하면 아이디어를 확인하였다는 <br /> 사실이 자동으로 데이터베이스에 저장됩니다. <br />
-          아이디어 표절이나 도용 시 해당 사실을 근거로 <br />
-          불이익이 발생할 수 있습니다.
-        </Text>
+        <Flex width={248} justifyContent="center" alignItems="center" margin="0 auto">
+          <Text
+            font="suit14r"
+            color="b6"
+            style={{
+              lineHeight: '22px',
+              textAlign: 'center',
+            }}
+          >
+            게시글을 조회하면 아이디어를 확인하였다는 사실이 자동으로 데이터베이스에 저장됩니다. 아이디어 표절이나 도용
+            시 해당 사실을 근거로 불이익이 발생할 수 있습니다.
+          </Text>
+        </Flex>
 
-        <DynamicSpacer size={50} />
+        <DynamicSpacer size={28} />
 
         <Text
           font="suit13m"
@@ -123,6 +123,12 @@ export default Agreement;
 
 const Wrapper = styled(Flex)`
   box-sizing: border-box;
+`;
+
+const AgreementImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 `;
 
 const DynamicSpacer = styled(Spacer)`
