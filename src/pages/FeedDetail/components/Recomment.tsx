@@ -68,7 +68,7 @@ const Recomment = ({
               </Text>
               <Spacer size={10} />
               <Flex>
-                <Flex alignItems="center" gap={4} onClick={toggleLikeComment}>
+                <Flex alignItems="center" gap={4} onClick={toggleLikeComment} cursor="pointer">
                   {likes ? <SVGFeedLike /> : <SVGFeedUnLike />}
                   <Text font="suit12r" color="b9">
                     {get999PlusCount(likesCount)}
