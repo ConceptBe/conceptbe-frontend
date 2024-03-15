@@ -1,15 +1,17 @@
 import styled from '@emotion/styled';
 import { BottomSheet, Button, Spacer, Text, PNGAgreementBackground, Flex, Box } from 'concept-be-design-system';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import SEOMeta from '../../components/SEOMeta/SEOMeta';
 import Privacy from '../../components/Terms/Privacy';
 import UsageTerms from '../../components/Terms/UsageTerms';
+import useConfirm from '../../hooks/useConfrim';
 import { OauthMemberInfo } from '../../types/login';
 
 const Agreement = () => {
-  const { state: memberInfo }: { state: OauthMemberInfo } = useLocation();
+  const { state: memberInfo }: { state: OauthMemberInfo | null } = useLocation();
+  const openConfirm = useConfirm();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isOpenPrivacy, setIsOpenPrivacy] = useState(false);
@@ -27,6 +29,19 @@ const Agreement = () => {
   const onCloseBottomSheet = () => {
     setIsOpen(false);
   };
+
+  useEffect(() => {
+    if (memberInfo) return;
+
+    (async () => {
+      if (await openConfirm({ content: '잘못된 접근 방식입니다. 로그인 이후 시도해 주세요.' })) {
+        navigate('/login');
+        return;
+      }
+
+      navigate('/');
+    })();
+  }, [memberInfo, navigate, openConfirm]);
 
   return (
     <>
