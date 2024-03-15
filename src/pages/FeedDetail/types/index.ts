@@ -40,7 +40,7 @@ export interface CommentChildResponse {
   profileImageUrl: string;
   memberSkills: string[];
   content: string;
-  createAt: string;
+  createdAt: string;
   likesCount: number;
   owner: boolean;
   deleted: boolean;

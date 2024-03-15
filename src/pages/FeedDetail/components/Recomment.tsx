@@ -1,9 +1,9 @@
 import { Box, Flex, SVGFeedLike, SVGFeedReCommentLine, SVGFeedUnLike, Spacer, Text } from 'concept-be-design-system';
 import { useState } from 'react';
 
+import CommentProfileInfo from './CommentProfileInfo';
 import EditComment from './EditComment';
 import ModifyDropdown from './ModifyDropdown';
-import ProfileInfo from '../../../components/ProfileInfo';
 import { get999PlusCount } from '../../utils';
 import useDeleteCommentMutation from '../hooks/mutations/useDeleteComment';
 import useFocusEditComment from '../hooks/useFocusEditComment';
@@ -21,7 +21,18 @@ const Recomment = ({
   feedId,
   myImageUrl,
   myNickname,
-  recomment: { childCommentId, profileImageUrl, nickname, memberSkills, content, likesCount, owner, deleted, likes },
+  recomment: {
+    childCommentId,
+    profileImageUrl,
+    nickname,
+    memberSkills,
+    content,
+    likesCount,
+    owner,
+    createdAt,
+    deleted,
+    likes,
+  },
 }: Props) => {
   const [isEditComment, setIsEditComment] = useState<boolean>(false);
   const { deleteComment } = useDeleteCommentMutation({ feedId });
@@ -61,10 +72,15 @@ const Recomment = ({
               <SVGFeedReCommentLine />
             </div>
             <Box margin="0 0 20px 0">
-              <ProfileInfo imageUrl={profileImageUrl} nickname={nickname} skillList={memberSkills} />
+              <CommentProfileInfo
+                imageUrl={profileImageUrl}
+                nickname={nickname}
+                skillList={memberSkills}
+                createdAt={createdAt}
+              />
               <Spacer size={20} />
               <Text font="suit14r" color="t" style={{ lineHeight: '22px', whiteSpace: 'pre-wrap' }}>
-                {content}
+                {deleted ? '삭제된 답글입니다.' : content}
               </Text>
               <Spacer size={10} />
               <Flex>
