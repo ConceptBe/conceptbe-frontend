@@ -8,7 +8,7 @@ const Back = () => {
   const { hasMatched } = useRouteMatched();
   const navigate = useNavigate();
 
-  const isMatchedWhiteStyle = hasMatched('/feed/:id');
+  const isMatchedWhiteStyle = hasMatched('/feed/:id', '/profile-edit');
 
   return (
     <Wrapper onClick={() => navigate(-1)} isWhiteStyle={isMatchedWhiteStyle}>
