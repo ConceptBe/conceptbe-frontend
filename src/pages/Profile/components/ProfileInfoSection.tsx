@@ -138,15 +138,14 @@ const ProfileMainBox = styled.div`
 `;
 
 const EditButton = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
   cursor: pointer;
   border: 1px solid ${theme.color.l2};
   font-size: ${theme.font.suit13m.fontSize}px;
   font-weight: ${theme.font.suit13m.fontWeight};
   border-radius: 100px;
   padding: 8px 14px;
+  word-break: keep-all;
+  text-align: center;
 `;
 
 const TagWrapper = styled.div`
