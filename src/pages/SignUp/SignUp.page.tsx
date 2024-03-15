@@ -23,6 +23,7 @@ import useCheckDuplicateNickname from './hooks/useCheckDuplicateNickname.ts';
 import useSetDetailSkills from './hooks/useSetDetailSkills.ts';
 import useSignUpMutation from './hooks/useSignUpMutation.ts';
 import useSignUpQuery from './hooks/useSignUpQuery.ts';
+import useValidateUserInfo from './hooks/useValidateUserInfo.ts';
 import { DropdownValue, FieldValue } from './types';
 import SEOMeta from '../../components/SEOMeta/SEOMeta.tsx';
 import { OauthMemberInfo } from '../../types/login.ts';
@@ -63,6 +64,7 @@ const SignUpPage = () => {
     onResetDropdown,
   });
 
+  useValidateUserInfo(memberInfo);
   useCheckDuplicateNickname({ nickname: fieldValue.nickname, setFieldErrorValue });
 
   const validateInput = () => {
