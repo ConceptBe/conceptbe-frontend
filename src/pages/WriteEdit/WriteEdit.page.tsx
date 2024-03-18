@@ -227,9 +227,10 @@ const WriteEditPage = () => {
               }}
             >
               <Text font="suit13m" color="b9" style={{ lineHeight: '20px' }}>
-                <Flex alignItems="center">
+                <Flex alignItems="center" cursor="pointer">
                   <SVGAdd24 />
-                  팀원추가
+                  <Spacer size={6} />
+                  팀원 추가
                 </Flex>
               </Text>
             </div>
