@@ -22,7 +22,7 @@ export default MobileView;
 const Container = styled.main`
   width: auto;
   height: 100dvh;
-  max-width: 375px;
+  max-width: 420px;
   max-height: 100%;
   margin: 0 auto;
   overflow: hidden;

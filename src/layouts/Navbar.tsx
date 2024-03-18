@@ -6,12 +6,13 @@ import {
   SVGNavProfile,
   SVGNavWrite24,
 } from 'concept-be-design-system';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import useRouteMatched from '../hooks/useRouteMatch';
 import { getUserId } from '../pages/Profile/utils/getUserId';
 
 const Navbar = () => {
+  const { id: userIdFromParams } = useParams();
   const { hasMatched } = useRouteMatched();
   const navigate = useNavigate();
   const isMatchedNavigation = hasMatched(
@@ -37,7 +38,7 @@ const Navbar = () => {
             <SVGNavWrite24 />
           </Navigation.Item>
           <Navigation.Item onClick={() => navigate(`/profile/${getUserId()}`)}>
-            {location.pathname.startsWith('/profile') ? <SVGNavActiveProfile /> : <SVGNavProfile />}
+            {Number(userIdFromParams) === getUserId() ? <SVGNavActiveProfile /> : <SVGNavProfile />}
           </Navigation.Item>
         </Navigation>
       )}

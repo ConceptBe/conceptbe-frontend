@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { theme } from 'concept-be-design-system';
-import { PropsWithChildren, createContext, useContext } from 'react';
+import { PropsWithChildren } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Content from './compound/Content/Content';

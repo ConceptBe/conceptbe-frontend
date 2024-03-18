@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
-import { Header, Spacer, Text, theme, SVGHeaderFilter, SVGFeedWrite40 } from 'concept-be-design-system';
+import { Header, Spacer, Text, theme, SVGHeaderFilter, SVGFeedWrite40, Box } from 'concept-be-design-system';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import BestIdeaCardListSection from './components/BestIdeaCardListSection/BestIdeaCardListSection';
 import FilterBottomSheet from './components/FilterBottomSheet/FilterBottomSheet';
@@ -12,6 +13,7 @@ import Logo from '../../layouts/Logo';
 import { useWritingInfoQuery } from '../Write/hooks/queries/useWritingInfoQuery';
 
 const Feed = () => {
+  const navigate = useNavigate();
   const [isFilterBottomSheetOpen, setIsFilterBottomSheetOpen] = useState(false);
   const { branches, purposes, recruitmentPlaces, skillCategoryResponses } = useWritingInfoQuery();
 
@@ -38,7 +40,7 @@ const Feed = () => {
 
       <Wrapper>
         <FeedFixBox>
-          <SVGFeedWrite40 />
+          <SVGFeedWrite40 onClick={() => navigate('/write')} cursor="pointer" />
 
           <Spacer size={27} />
           <FeedFixTextWrapper>
@@ -51,12 +53,14 @@ const Feed = () => {
           </FeedFixTextWrapper>
 
           <Spacer size={8} />
-          <Text font="suit22r" color="w1">
+          <WordBreakText font="suit22r" color="w1">
             재밌는 아이디어를 들려주세요!
-          </Text>
+          </WordBreakText>
           <Spacer size={14} />
 
-          <Text font="suit15ra" color="w2">{`아이디어 적으러 가기 >`}</Text>
+          <Box onClick={() => navigate('/write')} cursor="pointer">
+            <Text font="suit15ra" color="w2">{`아이디어 적으러 가기 >`}</Text>
+          </Box>
         </FeedFixBox>
         <IdeaSectionBox>
           <BestIdeaCardListSection />
@@ -90,7 +94,9 @@ const Wrapper = styled.section`
 `;
 
 const FeedFixBox = styled.div`
+  max-width: 315px;
   padding: 90px 30px 50px 30px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   background-color: ${theme.color.c1};
@@ -105,4 +111,9 @@ const FeedFixTextWrapper = styled.div`
 const IdeaSectionBox = styled.div`
   background-color: ${theme.color.bg1};
   border-radius: 16px 16px 0 0;
+`;
+
+const WordBreakText = styled(Text)`
+  word-break: keep-all;
+  line-height: 120%;
 `;

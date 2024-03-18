@@ -1,8 +1,5 @@
-import styled from '@emotion/styled';
-import { Text, TextDivider, Box, Flex } from 'concept-be-design-system';
+import { Text, TextDivider, Box, Flex, ImageView, PNGDefaultProfileInfo36 } from 'concept-be-design-system';
 import { Fragment } from 'react';
-
-import { DEFAULT_IMAGE_URL } from '../constants';
 
 interface Props {
   imageUrl: string;
@@ -16,7 +13,7 @@ const ProfileInfo = ({ imageUrl, nickname, skillList }: Props) => {
   return (
     <Flex alignItems="center" gap={10}>
       <Box width={36} height={36} overflow="hidden" borderRadius="0 150px 150px 0">
-        <Img src={imageUrl || DEFAULT_IMAGE_URL} />
+        <ImageView src={imageUrl} alt="프로필" defaultSrc={PNGDefaultProfileInfo36} />
       </Box>
       <Flex direction="column" gap={4}>
         <Text font="suit14m" color="b4">
@@ -38,8 +35,3 @@ const ProfileInfo = ({ imageUrl, nickname, skillList }: Props) => {
 };
 
 export default ProfileInfo;
-
-const Img = styled.img`
-  width: 100%;
-  height: 100%;
-`;

@@ -1,10 +1,9 @@
 import styled from '@emotion/styled';
-import { Badge, Flex, Spacer, Text, theme } from 'concept-be-design-system';
+import { Badge, Flex, Spacer, Text, theme, SVGMore24 } from 'concept-be-design-system';
 import { MouseEventHandler, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import ContentEditDropdown from './ContentEditDropdown';
-import { ReactComponent as SVGMore24 } from '../../assets/more24.svg';
 import { useContentContext, useIdeaIdContext } from '../../NewIdeaCardContext';
 
 type Props = {
@@ -53,7 +52,6 @@ const Content = ({ onClickDelete }: Props) => {
 
         {canEdit && (
           <Flex position="relative">
-            {/* TODO: SVGMore24 디자인시스템에 추가 */}
             <SVGMore24 onClick={toggleDropdown} />
             {isDropdownOpen && <ContentEditDropdown onClickEdit={goWriteEditPage} onClickDelete={onClickDelete} />}
           </Flex>
@@ -90,7 +88,6 @@ const ContentText = styled.div`
   color: ${theme.color.b6};
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
-  word-break: keep-all;
   display: -webkit-box;
   text-overflow: ellipsis;
   overflow: hidden;

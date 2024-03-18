@@ -1,12 +1,9 @@
 import styled from '@emotion/styled';
-import { theme, Badge, Spacer, Text, Flex } from 'concept-be-design-system';
-import { useState } from 'react';
+import { theme, Badge, Spacer, Text, Flex, ImageView, PNGDefaultProfileBackground } from 'concept-be-design-system';
 import { useNavigate } from 'react-router-dom';
 
 import Padding from '../../../components/Padding';
-import { ProfileImageDefault } from '../asset';
 import { Member } from '../types';
-import { getUserId } from '../utils/getUserId';
 
 type Props = {
   memberInfo: Member;
@@ -26,12 +23,6 @@ const ProfileInfoSection = ({ memberInfo }: Props) => {
     joinPurposes,
   } = memberInfo;
 
-  const [profileImageError, setProfileImageError] = useState(false);
-
-  const handleProfileImageError = () => {
-    setProfileImageError(true);
-  };
-
   const renderWorkingAndLivingPlace = () => {
     if (workingPlace && livingPlace) {
       return `${workingPlace} | ${livingPlace}`;
@@ -48,11 +39,7 @@ const ProfileInfoSection = ({ memberInfo }: Props) => {
   return (
     <>
       <ImageWrapper>
-        {profileImageError === true ? (
-          <ProfileImageDefault />
-        ) : (
-          <ProfileImage src={profileImageUrl} onError={handleProfileImageError} />
-        )}
+        <ImageView src={profileImageUrl} alt="프로필 이미지" defaultSrc={PNGDefaultProfileBackground} />
       </ImageWrapper>
 
       <Padding top={300} />
@@ -108,16 +95,11 @@ const ProfileInfoSection = ({ memberInfo }: Props) => {
 
 export default ProfileInfoSection;
 
-const ProfileImage = styled.img`
-  width: 100%;
-  height: 100%;
-`;
-
 const ImageWrapper = styled.div`
+  max-width: 420px;
   width: 100%;
   height: 375px;
   position: fixed;
-  max-width: 375px;
   top: 50px;
   z-index: -1;
 `;
@@ -138,15 +120,14 @@ const ProfileMainBox = styled.div`
 `;
 
 const EditButton = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
   cursor: pointer;
   border: 1px solid ${theme.color.l2};
   font-size: ${theme.font.suit13m.fontSize}px;
   font-weight: ${theme.font.suit13m.fontWeight};
   border-radius: 100px;
   padding: 8px 14px;
+  word-break: keep-all;
+  text-align: center;
 `;
 
 const TagWrapper = styled.div`

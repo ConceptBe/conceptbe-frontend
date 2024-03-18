@@ -33,20 +33,41 @@ const BestIdeaCardListSection = () => {
       <Suspense fallback={<BestIdeaCardListSkeleton />}>
         <CardList />
       </Suspense>
+      <TransparentBox />
     </Wrapper>
   );
 };
 
 export default BestIdeaCardListSection;
 
+const TransparentBox = styled.div`
+  width: 22px;
+  opacity: 0;
+`;
+
 export const Wrapper = styled.div`
   padding: 47px 0 0 22px;
+  max-width: 375px;
+  margin-left: auto;
+
+  @media (max-width: 420px) {
+    // NewIdeaSection은 margin이 좌우 auto인 반면 BestIdeaSection은 left만 auto여서 margin-left 1/2 연산을 직접 수행
+    margin-left: calc((100vw - 375px) * 0.5);
+  }
+
+  @media (max-width: 375px) {
+    // BestIdeaSection은 위 미디어쿼리문으로 인해 margin이 음수값이 될 수 있으므로 0으로 일괄 지정
+    margin-left: 0;
+  }
 `;
 
 export const CardListWrapper = styled.div`
   display: flex;
   flex-wrap: nowrap;
   gap: 10px;
-  overflow-x: scroll;
-  overflow-y: hidden;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;

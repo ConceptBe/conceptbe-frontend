@@ -7,6 +7,7 @@ import {
   PNGIdeaBackground3,
   PNGIdeaBackground4,
   PNGIdeaBackground5,
+  ImageView,
 } from 'concept-be-design-system';
 import { useNavigate } from 'react-router-dom';
 
@@ -32,7 +33,7 @@ const BestIdeaCard = ({ id, branches, title, idx }: Props) => {
 
   return (
     <BestIdeaCardWrapper onClick={() => navigate(`/feed/${id}`)}>
-      <img src={ideaBackground[idx % 5]} />
+      <ImageView src={ideaBackground[idx % 5]} alt="인기 아이디어 이미지" />
       <CardBoxBack />
       <CardBox>
         <Text style={{ fontSize: 13, fontWeight: 800 }} color="w1">

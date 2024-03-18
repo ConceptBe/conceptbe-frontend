@@ -15,6 +15,8 @@ import {
   useDropdown,
   Flex,
   Box,
+  ImageView,
+  PNGDefaultProfileInfo100,
 } from 'concept-be-design-system';
 import { FormEvent } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -23,6 +25,7 @@ import useCheckDuplicateNickname from './hooks/useCheckDuplicateNickname.ts';
 import useSetDetailSkills from './hooks/useSetDetailSkills.ts';
 import useSignUpMutation from './hooks/useSignUpMutation.ts';
 import useSignUpQuery from './hooks/useSignUpQuery.ts';
+import useValidateUserInfo from './hooks/useValidateUserInfo.ts';
 import { DropdownValue, FieldValue } from './types';
 import SEOMeta from '../../components/SEOMeta/SEOMeta.tsx';
 import { OauthMemberInfo } from '../../types/login.ts';
@@ -63,6 +66,7 @@ const SignUpPage = () => {
     onResetDropdown,
   });
 
+  useValidateUserInfo(memberInfo);
   useCheckDuplicateNickname({ nickname: fieldValue.nickname, setFieldErrorValue });
 
   const validateInput = () => {
@@ -73,7 +77,7 @@ const SignUpPage = () => {
       },
       {
         validateFn: (input: string) => input.length < 2,
-        errorMessage: '2글자 이상의 닉네임으로 입력해 주세요.',
+        errorMessage: '두 글자 이상의 닉네임으로 입력해 주세요.',
       },
     ];
   };
@@ -89,6 +93,7 @@ const SignUpPage = () => {
       joinPurposes: checkboxValue.goal.filter(({ checked }) => checked).map(({ id }) => id),
       livingPlace: dropdownValue.region,
       workingPlace: fieldValue.company,
+      introduction: fieldValue.intro,
       email: memberInfo?.email || '',
       oauthId: memberInfo?.oauthId || '',
       oauthServerType: memberInfo?.oauthServerType || '',
@@ -134,7 +139,12 @@ const SignUpPage = () => {
               cursor="pointer"
             >
               <Box width={100} height={100} overflow="hidden" borderRadius="0 150px 150px 0">
-                <Img src={memberInfo?.profileImageUrl} />
+                <ImageView
+                  // memberInfo.profileImageUrl이 없을 경우 defaultSrc 요소를 보이기 위해 `|| 'error'` 추가
+                  src={memberInfo?.profileImageUrl || 'error'}
+                  alt="프로필 이미지"
+                  defaultSrc={PNGDefaultProfileInfo100}
+                />
               </Box>
               <Flex
                 justifyContent="center"
@@ -325,11 +335,6 @@ const SignUpPage = () => {
 
 const MainWrapper = styled.form`
   background-color: ${theme.color.c1};
-  height: 100%;
-`;
-
-const Img = styled.img`
-  width: 100%;
   height: 100%;
 `;
 

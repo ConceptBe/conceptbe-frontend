@@ -1,14 +1,15 @@
-import { Spacer } from 'concept-be-design-system';
+import { Spacer, SVGProfileBookOpen } from 'concept-be-design-system';
 import { Fragment, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import NewIdeaCard from '../../../components/NewIdeaCard/NewIdeaCard';
 import { useFeedInfiniteFetch } from '../../../Feed/hooks/useFeedInfiniteFetch';
 import useNavigatePage from '../../../hooks/useNavigatePage';
-import { SVGBookOpen } from '../../asset';
 import { useBookmarkedIdeasQuery } from '../../hooks/queries/useBookmarkedIdeasQuery';
 import EmptyTabContentSection from '../EmptyTabContentSection';
 
 const BookmarkSection = () => {
+  const navigate = useNavigate();
   const { bookmarkedIdeas, fetchNextPage } = useBookmarkedIdeasQuery();
   const { goProfilePage } = useNavigatePage();
 
@@ -19,8 +20,9 @@ const BookmarkSection = () => {
   if (bookmarkedIdeas.length === 0) {
     return (
       <EmptyTabContentSection
-        svg={SVGBookOpen}
+        svg={SVGProfileBookOpen}
         textList={['북마크한 글이 없어요.', '관심있는 아이디어를 수집해보세요.']}
+        onClickSVG={() => navigate('/')}
       />
     );
   }

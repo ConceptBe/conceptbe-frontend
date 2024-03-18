@@ -9,9 +9,9 @@ import {
   SVGTripleDots,
   SVGFeedPencil,
   theme,
+  SVGMore24,
 } from 'concept-be-design-system';
 
-import { ReactComponent as SVGMore24 } from '../../components/NewIdeaCard/assets/more24.svg';
 import useHandleModifyDropdown from '../hooks/useHandleModifyDropdown';
 
 interface Props {

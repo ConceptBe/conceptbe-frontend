@@ -24,7 +24,7 @@ const Header = ({ onClickCheckButton, isCheckButtonEnabled }: Props) => {
         글쓰기
       </Text>
       <button onClick={handleClickCheckButton}>
-        {isCheckButtonEnabled ? <SVGHeaderCheck24 /> : <SVGHeaderUncheck24 />}
+        {isCheckButtonEnabled ? <SVGHeaderCheck24 cursor="pointer" /> : <SVGHeaderUncheck24 />}
       </button>
     </HeaderBox>
   );

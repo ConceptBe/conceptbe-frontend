@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Header, TabLayout, theme, SVGHeaderSetting } from 'concept-be-design-system';
+import { Header, TabLayout, theme, SVGHeaderSetting, Box } from 'concept-be-design-system';
 import { Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -30,9 +30,9 @@ const MyProfile = ({ userId, memberInfo }: Props) => {
       </Header>
 
       <Suspense fallback={<Spinner />}>
-        <ProfileWrapper>
+        <Box>
           <ProfileInfoSection memberInfo={memberInfo} />
-          <TabLayout height="100%">
+          <TabLayout maxWidth={420} height="100%">
             <TabLayout.Tab label="아이디어">
               <TabPanelBox>
                 <Suspense fallback={<></>}>
@@ -49,7 +49,7 @@ const MyProfile = ({ userId, memberInfo }: Props) => {
               </TabPanelBox>
             </TabLayout.Tab>
           </TabLayout>
-        </ProfileWrapper>
+        </Box>
       </Suspense>
     </ProfileContainer>
   );
@@ -59,10 +59,6 @@ export default MyProfile;
 
 const ProfileContainer = styled.div`
   padding-bottom: 60px;
-`;
-
-const ProfileWrapper = styled.div`
-  position: relative;
 `;
 
 const TabPanelBox = styled.div`
