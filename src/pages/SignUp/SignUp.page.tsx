@@ -140,7 +140,8 @@ const SignUpPage = () => {
             >
               <Box width={100} height={100} overflow="hidden" borderRadius="0 150px 150px 0">
                 <ImageView
-                  src={memberInfo?.profileImageUrl}
+                  // memberInfo.profileImageUrl이 없을 경우 defaultSrc 요소를 보이기 위해 `|| 'error'` 추가
+                  src={memberInfo?.profileImageUrl || 'error'}
                   alt="프로필 이미지"
                   defaultSrc={PNGDefaultProfileInfo100}
                 />
