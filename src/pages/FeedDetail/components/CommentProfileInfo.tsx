@@ -40,7 +40,7 @@ const CommentProfileInfo = ({ imageUrl, nickname, skillList, createdAt }: Props)
 };
 
 const FixedSizeText = styled(Text)`
-  min-width: max-content;
+  width: max-content;
 `;
 
 export default CommentProfileInfo;
