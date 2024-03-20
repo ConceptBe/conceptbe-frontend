@@ -36,10 +36,10 @@ const focusTextareaRef = ({ textareaRef, mobileViewRef, isInComment }: FocusText
   textareaRef.current.focus();
 
   const textareaRect = textareaRef.current.getBoundingClientRect();
+  // 댓글 / 대댓글, (대)댓글수정 입력창의 위치에 영향을 주는 요소가 서로 달라 위치 조정값 분기처리
   const difference = isInComment ? RECOMMENT_DIFF : COMMENT_DIFF;
 
-  console.log(mobileViewRef.current.scrollTop + textareaRect.top - difference);
-
+  // MobileView 컴포넌트의 스크롤 Top(가장 상단)을 유저가 선택한 (대)댓글 입력창 위치의 절대값 - 위치 조정값으로 이동
   mobileViewRef.current.scroll({
     top: mobileViewRef.current.scrollTop + textareaRect.top - difference,
     behavior: 'smooth',
