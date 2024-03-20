@@ -9,7 +9,7 @@ const MobileView = () => {
 
   return (
     <Container>
-      <Wrapper>
+      <Wrapper id="main">
         <Outlet />
       </Wrapper>
       <Navbar />

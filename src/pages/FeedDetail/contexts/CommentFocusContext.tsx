@@ -3,8 +3,8 @@ import { useContext, useState, createContext, MutableRefObject, useRef } from 'r
 type CommentFocusContextType = {
   isFocusComment: boolean;
   openCommentTextarea: () => void;
-  focusRecommentTextarea: () => void;
   closeCommentTextarea: () => void;
+  focusRecommentTextarea: () => void;
   initRecommentTextarea: () => void;
   focusEditCommentTextarea: () => void;
   initEditCommentTextarea: () => void;
@@ -17,13 +17,26 @@ type Props = {
   children: React.ReactNode;
 };
 
+type FocusTextareaRefProps = {
+  textareaRef: MutableRefObject<HTMLTextAreaElement | null>;
+  isInComment: boolean;
+};
+
+const COMMENT_ADJUST_DIFF = 58;
+const RECOMMENT_ADJUST_DIFF = 108;
+
 const CommentFocusContext = createContext<CommentFocusContextType | null>(null);
 
-const focusTextareaRef = (textareaRef: MutableRefObject<HTMLTextAreaElement | null>) => {
+const focusTextareaRef = ({ textareaRef, isInComment }: FocusTextareaRefProps) => {
   if (!textareaRef.current) return;
 
-  textareaRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
   textareaRef.current.focus();
+
+  const root = document.getElementById('main') as HTMLDivElement;
+  const textareaRect = textareaRef.current.getBoundingClientRect();
+  const difference = isInComment ? RECOMMENT_ADJUST_DIFF : COMMENT_ADJUST_DIFF;
+
+  root.scroll({ top: root.scrollTop + textareaRect.top - difference, behavior: 'smooth' });
 };
 
 const initTextareaRef = (textareaRef: MutableRefObject<HTMLTextAreaElement | null>) => {
@@ -37,7 +50,7 @@ export const CommentFocusProvider = ({ children }: Props) => {
   const editCommentTextareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const openCommentTextarea = () => {
-    focusTextareaRef(commentTextareaRef);
+    focusTextareaRef({ textareaRef: commentTextareaRef, isInComment: false });
 
     setIsFocusComment(true);
   };
@@ -47,7 +60,7 @@ export const CommentFocusProvider = ({ children }: Props) => {
   };
 
   const focusRecommentTextarea = () => {
-    focusTextareaRef(recommentTextareaRef);
+    focusTextareaRef({ textareaRef: recommentTextareaRef, isInComment: true });
   };
 
   const initRecommentTextarea = () => {
@@ -55,7 +68,7 @@ export const CommentFocusProvider = ({ children }: Props) => {
   };
 
   const focusEditCommentTextarea = () => {
-    focusTextareaRef(editCommentTextareaRef);
+    focusTextareaRef({ textareaRef: editCommentTextareaRef, isInComment: true });
   };
 
   const initEditCommentTextarea = () => {
@@ -67,8 +80,8 @@ export const CommentFocusProvider = ({ children }: Props) => {
       value={{
         isFocusComment,
         openCommentTextarea,
-        focusRecommentTextarea,
         closeCommentTextarea,
+        focusRecommentTextarea,
         initRecommentTextarea,
         focusEditCommentTextarea,
         initEditCommentTextarea,
