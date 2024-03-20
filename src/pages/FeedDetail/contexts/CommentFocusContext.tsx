@@ -25,8 +25,8 @@ type FocusTextareaRefProps = {
   isInComment: boolean;
 };
 
-const COMMENT_ADJUST_DIFF = 58;
-const RECOMMENT_ADJUST_DIFF = 108;
+const COMMENT_DIFF = 58;
+const RECOMMENT_DIFF = 108;
 
 const CommentFocusContext = createContext<CommentFocusContextType | null>(null);
 
@@ -36,7 +36,9 @@ const focusTextareaRef = ({ textareaRef, mobileViewRef, isInComment }: FocusText
   textareaRef.current.focus();
 
   const textareaRect = textareaRef.current.getBoundingClientRect();
-  const difference = isInComment ? RECOMMENT_ADJUST_DIFF : COMMENT_ADJUST_DIFF;
+  const difference = isInComment ? RECOMMENT_DIFF : COMMENT_DIFF;
+
+  console.log(mobileViewRef.current.scrollTop + textareaRect.top - difference);
 
   mobileViewRef.current.scroll({
     top: mobileViewRef.current.scrollTop + textareaRect.top - difference,
