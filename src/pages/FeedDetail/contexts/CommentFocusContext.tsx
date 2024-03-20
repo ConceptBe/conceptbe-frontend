@@ -1,5 +1,7 @@
 import { useContext, useState, createContext, MutableRefObject, useRef } from 'react';
 
+import { useMobileViewRefContext } from '../../../layouts/contexts/MobileViewContext';
+
 type CommentFocusContextType = {
   isFocusComment: boolean;
   openCommentTextarea: () => void;
@@ -19,6 +21,7 @@ type Props = {
 
 type FocusTextareaRefProps = {
   textareaRef: MutableRefObject<HTMLTextAreaElement | null>;
+  mobileViewRef: MutableRefObject<HTMLDivElement | null>;
   isInComment: boolean;
 };
 
@@ -27,16 +30,18 @@ const RECOMMENT_ADJUST_DIFF = 108;
 
 const CommentFocusContext = createContext<CommentFocusContextType | null>(null);
 
-const focusTextareaRef = ({ textareaRef, isInComment }: FocusTextareaRefProps) => {
-  if (!textareaRef.current) return;
+const focusTextareaRef = ({ textareaRef, mobileViewRef, isInComment }: FocusTextareaRefProps) => {
+  if (!textareaRef.current || !mobileViewRef.current) return;
 
   textareaRef.current.focus();
 
-  const root = document.getElementById('main') as HTMLDivElement;
   const textareaRect = textareaRef.current.getBoundingClientRect();
   const difference = isInComment ? RECOMMENT_ADJUST_DIFF : COMMENT_ADJUST_DIFF;
 
-  root.scroll({ top: root.scrollTop + textareaRect.top - difference, behavior: 'smooth' });
+  mobileViewRef.current.scroll({
+    top: mobileViewRef.current.scrollTop + textareaRect.top - difference,
+    behavior: 'smooth',
+  });
 };
 
 const initTextareaRef = (textareaRef: MutableRefObject<HTMLTextAreaElement | null>) => {
@@ -44,13 +49,14 @@ const initTextareaRef = (textareaRef: MutableRefObject<HTMLTextAreaElement | nul
 };
 
 export const CommentFocusProvider = ({ children }: Props) => {
+  const mobileViewRef = useMobileViewRefContext();
   const [isFocusComment, setIsFocusComment] = useState<boolean>(false);
   const commentTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const recommentTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const editCommentTextareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const openCommentTextarea = () => {
-    focusTextareaRef({ textareaRef: commentTextareaRef, isInComment: false });
+    focusTextareaRef({ textareaRef: commentTextareaRef, mobileViewRef, isInComment: false });
 
     setIsFocusComment(true);
   };
@@ -60,7 +66,7 @@ export const CommentFocusProvider = ({ children }: Props) => {
   };
 
   const focusRecommentTextarea = () => {
-    focusTextareaRef({ textareaRef: recommentTextareaRef, isInComment: true });
+    focusTextareaRef({ textareaRef: recommentTextareaRef, mobileViewRef, isInComment: true });
   };
 
   const initRecommentTextarea = () => {
@@ -68,7 +74,7 @@ export const CommentFocusProvider = ({ children }: Props) => {
   };
 
   const focusEditCommentTextarea = () => {
-    focusTextareaRef({ textareaRef: editCommentTextareaRef, isInComment: true });
+    focusTextareaRef({ textareaRef: editCommentTextareaRef, mobileViewRef, isInComment: true });
   };
 
   const initEditCommentTextarea = () => {

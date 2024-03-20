@@ -1,19 +1,25 @@
 import styled from '@emotion/styled';
+import { useRef } from 'react';
 import { Outlet } from 'react-router-dom';
 
+import { MobileViewRefContext } from './contexts/MobileViewContext';
 import Navbar from './Navbar';
 
 const MobileView = () => {
   // TODO: Header 도메인 얽힘 문제 해결 확인 시 사용 예정
   // const isMatchedHeader = hasMatched('/feed', '/feed/:id', '/profile', '/profile/:id', '/profile/:id/more');
 
+  const mobileViewRef = useRef<HTMLDivElement | null>(null);
+
   return (
-    <Container>
-      <Wrapper id="main">
-        <Outlet />
-      </Wrapper>
-      <Navbar />
-    </Container>
+    <MobileViewRefContext.Provider value={{ mobileViewRef }}>
+      <Container>
+        <Wrapper ref={mobileViewRef}>
+          <Outlet />
+        </Wrapper>
+        <Navbar />
+      </Container>
+    </MobileViewRefContext.Provider>
   );
 };
 
