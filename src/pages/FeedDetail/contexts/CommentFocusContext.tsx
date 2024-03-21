@@ -39,9 +39,6 @@ const focusTextareaRef = ({ textareaRef, mobileViewRef }: FocusTextareaRefProps)
   const currentRatioDiff = window.innerHeight / window.innerWidth - RATIO;
   const keyboardHeight = window.innerHeight * currentRatioDiff;
 
-  console.log(keyboardHeight);
-  console.log(currentRatioDiff > 0 && mobileViewHeight - textareaRect.y < keyboardHeight);
-
   if (currentRatioDiff > 0 && mobileViewHeight - textareaRect.y < keyboardHeight) {
     textareaRef.current.scrollIntoView({ block: 'center', behavior: 'smooth' });
   }
