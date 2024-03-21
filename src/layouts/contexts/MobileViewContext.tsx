@@ -1,7 +1,7 @@
 import { MutableRefObject, createContext, useContext } from 'react';
 
 interface MobileViewMainContextProps {
-  mobileViewRef: MutableRefObject<HTMLDivElement | null>;
+  mobileViewRef: MutableRefObject<HTMLElement | null>;
 }
 
 export const MobileViewRefContext = createContext<MobileViewMainContextProps | null>(null);
