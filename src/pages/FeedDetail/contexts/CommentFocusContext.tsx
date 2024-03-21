@@ -34,7 +34,7 @@ const handleVisualViewPortResize = (mobileViewRef: MutableRefObject<HTMLElement 
   const currentVisualViewHeight = Number(window.visualViewport?.height);
 
   if (mobileViewRef) {
-    mobileViewRef.current!.style.height = `${currentVisualViewHeight}px`;
+    mobileViewRef.current!.style.height = `${window.innerHeight}px`;
   }
 };
 
