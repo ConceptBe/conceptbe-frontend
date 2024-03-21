@@ -1,8 +1,8 @@
-import { useContext, useState, createContext, MutableRefObject, useRef } from 'react';
+import { useContext, useState, createContext, MutableRefObject, useRef, ReactNode } from 'react';
 
 import { useMobileViewRefContext } from '../../../layouts/contexts/MobileViewContext';
 
-type CommentFocusContextType = {
+interface CommentFocusContextType {
   isFocusComment: boolean;
   openCommentTextarea: () => void;
   closeCommentTextarea: () => void;
@@ -13,30 +13,23 @@ type CommentFocusContextType = {
   commentTextareaRef: MutableRefObject<HTMLTextAreaElement | null>;
   recommentTextareaRef: MutableRefObject<HTMLTextAreaElement | null>;
   editCommentTextareaRef: MutableRefObject<HTMLTextAreaElement | null>;
-};
+}
 
-type Props = {
-  children: React.ReactNode;
-};
+interface Props {
+  children: ReactNode;
+}
 
-type FocusTextareaRefProps = {
+interface FocusTextareaRefProps {
   textareaRef: MutableRefObject<HTMLTextAreaElement | null>;
   mobileViewRef: MutableRefObject<HTMLElement | null>;
   isInComment: boolean;
-};
+}
 
 const CommentFocusContext = createContext<CommentFocusContextType | null>(null);
 
+// 댓글 / 대댓글, (대)댓글수정 입력창의 위치에 영향을 주는 요소가 서로 달라 위치 조정값 분리 및 상수화
 const COMMENT_DIFF = 58;
 const RECOMMENT_DIFF = 108;
-
-const handleVisualViewPortResize = (mobileViewRef: MutableRefObject<HTMLElement | null>) => {
-  const currentVisualViewHeight = Number(window.visualViewport?.height);
-
-  if (mobileViewRef) {
-    mobileViewRef.current!.style.height = `${window.innerHeight}px`;
-  }
-};
 
 const focusTextareaRef = ({ textareaRef, mobileViewRef, isInComment }: FocusTextareaRefProps) => {
   if (!textareaRef.current || !mobileViewRef.current) return;
@@ -44,17 +37,12 @@ const focusTextareaRef = ({ textareaRef, mobileViewRef, isInComment }: FocusText
   textareaRef.current.focus();
 
   const textareaRect = textareaRef.current.getBoundingClientRect();
-  // 댓글 / 대댓글, (대)댓글수정 입력창의 위치에 영향을 주는 요소가 서로 달라 위치 조정값 분기처리
   const difference = isInComment ? RECOMMENT_DIFF : COMMENT_DIFF;
-
-  if (window.visualViewport) {
-    window.visualViewport.onresize = () => handleVisualViewPortResize(mobileViewRef);
-  }
 
   // MobileView 컴포넌트의 스크롤 Top(가장 상단)을 유저가 선택한 (대)댓글 입력창 위치의 절대값 - 위치 조정값으로 이동
   mobileViewRef.current.scroll({
     top: mobileViewRef.current.scrollTop + textareaRect.top - difference,
-    behavior: 'auto',
+    behavior: 'smooth',
   });
 };
 
