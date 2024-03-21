@@ -21,7 +21,7 @@ type Props = {
 
 type FocusTextareaRefProps = {
   textareaRef: MutableRefObject<HTMLTextAreaElement | null>;
-  mobileViewRef: MutableRefObject<HTMLDivElement | null>;
+  mobileViewRef: MutableRefObject<HTMLElement | null>;
   isInComment: boolean;
 };
 
