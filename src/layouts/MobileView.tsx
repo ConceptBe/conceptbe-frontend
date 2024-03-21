@@ -20,9 +20,14 @@ const MobileView = () => {
   };
 
   useEffect(() => {
-    if (window.visualViewport) {
-      window.visualViewport.onresize = () => handleVisualViewPortResize(mobileViewRef);
-    }
+    if (!window.visualViewport) return;
+
+    const windowVisualViewPort = window.visualViewport;
+    windowVisualViewPort.addEventListener('resize', () => handleVisualViewPortResize(mobileViewRef));
+
+    return () => {
+      windowVisualViewPort.removeEventListener('resize', () => handleVisualViewPortResize(mobileViewRef));
+    };
   }, []);
 
   return (
