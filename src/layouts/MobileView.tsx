@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { MutableRefObject, useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import { MobileViewRefContext } from './contexts/MobileViewContext';
@@ -10,25 +10,6 @@ const MobileView = () => {
   // const isMatchedHeader = hasMatched('/feed', '/feed/:id', '/profile', '/profile/:id', '/profile/:id/more');
 
   const mobileViewRef = useRef<HTMLElement | null>(null);
-
-  const handleVisualViewPortResize = (mobileViewRef: MutableRefObject<HTMLElement | null>) => {
-    if (!mobileViewRef.current) return;
-
-    const currentVisualViewHeight = Number(window.visualViewport?.height);
-
-    mobileViewRef.current.style.height = `${currentVisualViewHeight}px`;
-  };
-
-  useEffect(() => {
-    if (!window.visualViewport) return;
-
-    const windowVisualViewPort = window.visualViewport;
-    windowVisualViewPort.addEventListener('resize', () => handleVisualViewPortResize(mobileViewRef));
-
-    return () => {
-      windowVisualViewPort.removeEventListener('resize', () => handleVisualViewPortResize(mobileViewRef));
-    };
-  }, []);
 
   return (
     <MobileViewRefContext.Provider value={{ mobileViewRef }}>
