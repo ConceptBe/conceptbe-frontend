@@ -1,10 +1,12 @@
 import { useContext, useState, createContext, MutableRefObject, useRef } from 'react';
 
+import { useMobileViewRefContext } from '../../../layouts/contexts/MobileViewContext';
+
 type CommentFocusContextType = {
   isFocusComment: boolean;
   openCommentTextarea: () => void;
-  focusRecommentTextarea: () => void;
   closeCommentTextarea: () => void;
+  focusRecommentTextarea: () => void;
   initRecommentTextarea: () => void;
   focusEditCommentTextarea: () => void;
   initEditCommentTextarea: () => void;
@@ -17,13 +19,31 @@ type Props = {
   children: React.ReactNode;
 };
 
+type FocusTextareaRefProps = {
+  textareaRef: MutableRefObject<HTMLTextAreaElement | null>;
+  mobileViewRef: MutableRefObject<HTMLDivElement | null>;
+  isInComment: boolean;
+};
+
+const COMMENT_DIFF = 58;
+const RECOMMENT_DIFF = 108;
+
 const CommentFocusContext = createContext<CommentFocusContextType | null>(null);
 
-const focusTextareaRef = (textareaRef: MutableRefObject<HTMLTextAreaElement | null>) => {
-  if (!textareaRef.current) return;
+const focusTextareaRef = ({ textareaRef, mobileViewRef, isInComment }: FocusTextareaRefProps) => {
+  if (!textareaRef.current || !mobileViewRef.current) return;
 
-  textareaRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
   textareaRef.current.focus();
+
+  const textareaRect = textareaRef.current.getBoundingClientRect();
+  // 댓글 / 대댓글, (대)댓글수정 입력창의 위치에 영향을 주는 요소가 서로 달라 위치 조정값 분기처리
+  const difference = isInComment ? RECOMMENT_DIFF : COMMENT_DIFF;
+
+  // MobileView 컴포넌트의 스크롤 Top(가장 상단)을 유저가 선택한 (대)댓글 입력창 위치의 절대값 - 위치 조정값으로 이동
+  mobileViewRef.current.scroll({
+    top: mobileViewRef.current.scrollTop + textareaRect.top - difference,
+    behavior: 'smooth',
+  });
 };
 
 const initTextareaRef = (textareaRef: MutableRefObject<HTMLTextAreaElement | null>) => {
@@ -31,13 +51,14 @@ const initTextareaRef = (textareaRef: MutableRefObject<HTMLTextAreaElement | nul
 };
 
 export const CommentFocusProvider = ({ children }: Props) => {
+  const mobileViewRef = useMobileViewRefContext();
   const [isFocusComment, setIsFocusComment] = useState<boolean>(false);
   const commentTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const recommentTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const editCommentTextareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const openCommentTextarea = () => {
-    focusTextareaRef(commentTextareaRef);
+    focusTextareaRef({ textareaRef: commentTextareaRef, mobileViewRef, isInComment: false });
 
     setIsFocusComment(true);
   };
@@ -47,7 +68,7 @@ export const CommentFocusProvider = ({ children }: Props) => {
   };
 
   const focusRecommentTextarea = () => {
-    focusTextareaRef(recommentTextareaRef);
+    focusTextareaRef({ textareaRef: recommentTextareaRef, mobileViewRef, isInComment: true });
   };
 
   const initRecommentTextarea = () => {
@@ -55,7 +76,7 @@ export const CommentFocusProvider = ({ children }: Props) => {
   };
 
   const focusEditCommentTextarea = () => {
-    focusTextareaRef(editCommentTextareaRef);
+    focusTextareaRef({ textareaRef: editCommentTextareaRef, mobileViewRef, isInComment: true });
   };
 
   const initEditCommentTextarea = () => {
@@ -67,8 +88,8 @@ export const CommentFocusProvider = ({ children }: Props) => {
       value={{
         isFocusComment,
         openCommentTextarea,
-        focusRecommentTextarea,
         closeCommentTextarea,
+        focusRecommentTextarea,
         initRecommentTextarea,
         focusEditCommentTextarea,
         initEditCommentTextarea,
