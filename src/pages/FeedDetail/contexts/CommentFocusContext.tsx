@@ -42,7 +42,7 @@ const focusTextareaRef = ({ textareaRef, mobileViewRef, isInComment }: FocusText
   // MobileView 컴포넌트의 스크롤 Top(가장 상단)을 유저가 선택한 (대)댓글 입력창 위치의 절대값 - 위치 조정값으로 이동
   mobileViewRef.current.scroll({
     top: mobileViewRef.current.scrollTop + textareaRect.top - difference,
-    behavior: 'smooth',
+    behavior: 'auto',
   });
 };
 
