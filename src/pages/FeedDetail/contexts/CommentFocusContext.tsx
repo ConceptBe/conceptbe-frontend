@@ -25,10 +25,18 @@ type FocusTextareaRefProps = {
   isInComment: boolean;
 };
 
+const CommentFocusContext = createContext<CommentFocusContextType | null>(null);
+
 const COMMENT_DIFF = 58;
 const RECOMMENT_DIFF = 108;
 
-const CommentFocusContext = createContext<CommentFocusContextType | null>(null);
+const handleVisualViewPortResize = (mobileViewRef: MutableRefObject<HTMLElement | null>, difference: number) => {
+  const currentVisualViewHeight = Number(window.visualViewport?.height);
+
+  if (mobileViewRef) {
+    mobileViewRef.current!.style.height = `${currentVisualViewHeight - difference}px`;
+  }
+};
 
 const focusTextareaRef = ({ textareaRef, mobileViewRef, isInComment }: FocusTextareaRefProps) => {
   if (!textareaRef.current || !mobileViewRef.current) return;
@@ -38,6 +46,10 @@ const focusTextareaRef = ({ textareaRef, mobileViewRef, isInComment }: FocusText
   const textareaRect = textareaRef.current.getBoundingClientRect();
   // 댓글 / 대댓글, (대)댓글수정 입력창의 위치에 영향을 주는 요소가 서로 달라 위치 조정값 분기처리
   const difference = isInComment ? RECOMMENT_DIFF : COMMENT_DIFF;
+
+  if (window.visualViewport) {
+    window.visualViewport.onresize = () => handleVisualViewPortResize(mobileViewRef, difference);
+  }
 
   // MobileView 컴포넌트의 스크롤 Top(가장 상단)을 유저가 선택한 (대)댓글 입력창 위치의 절대값 - 위치 조정값으로 이동
   mobileViewRef.current.scroll({
