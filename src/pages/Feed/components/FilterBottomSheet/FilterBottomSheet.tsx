@@ -139,6 +139,9 @@ const FilterBottomSheet = ({
   return (
     <BottomSheet isOpen={open} onClose={onClose}>
       <FilterBox>
+        <Flex justifyContent="end" padding="22px 22px 0 22px" cursor="pointer" onClick={() => onClose()}>
+          <SVGCancel width={24} height={24} />
+        </Flex>
         <FilterContent>
           <FilterWrapper>
             <CheckboxContainer
@@ -230,7 +233,7 @@ const FilterContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: 25px;
-  padding: 22px;
+  padding: 0 22px 60px 22px;
 `;
 
 const FilterBottom = styled.div`
