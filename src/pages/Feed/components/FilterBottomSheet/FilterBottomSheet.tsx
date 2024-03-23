@@ -54,7 +54,7 @@ const FilterBottomSheet = ({
     checked: filterParams?.purposeIds?.includes(properties.id) ? true : false,
     ...properties,
   }));
-  const { checkboxValue, onChangeCheckbox } = useCheckbox({
+  const { checkboxValue, onChangeCheckbox, onResetCheckbox } = useCheckbox({
     branches: branchOptions,
     purposes: purposeOptions,
   });
@@ -69,7 +69,7 @@ const FilterBottomSheet = ({
           checked: filterParams?.cooperationWay === properties.name ? true : false,
           ...properties,
         }));
-  const { radioValue, onChangeRadio } = useRadio({
+  const { radioValue, onChangeRadio, onResetRadio } = useRadio({
     cooperationWays: cooperationWayOptions,
   });
 
@@ -95,7 +95,6 @@ const FilterBottomSheet = ({
 
     return name;
   };
-
   const { dropdownValue, onClickDropdown, onResetDropdown } = useDropdown({
     recruitmentPlace: recruitmentPlaces.find((place) => place.id === filterParams?.recruitmentPlaceId)?.name ?? '',
     skillCategory1Depth:
@@ -134,6 +133,14 @@ const FilterBottomSheet = ({
   const handleClose = () => {
     resetFilterParams(); // filter Context 초기화
     onClose(); // 바텀시트 닫기
+
+    // 초기화 버튼 클릭 시 직접 각 checkbox, radio, dropdown 값 초기화
+    onResetCheckbox('branches');
+    onResetCheckbox('purposes');
+    onResetRadio({ radioKey: 'cooperationWays', resetId: 1 });
+    onResetDropdown('recruitmentPlace');
+    onResetDropdown('skillCategory1Depth');
+    onResetDropdown('skillCategory2Depth');
   };
 
   return (
