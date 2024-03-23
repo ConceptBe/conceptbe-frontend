@@ -109,7 +109,7 @@ const Textarea = styled.textarea`
 `;
 
 const CancelButton = styled(Button)`
-  width: 43px;
+  width: max-content;
   height: 32px;
   color: ${theme.color.b6};
   background-color: ${theme.color.l3};
@@ -119,7 +119,7 @@ const CancelButton = styled(Button)`
 `;
 
 const ConfirmButton = styled(Button)`
-  width: 43px;
+  width: max-content;
   height: 32px;
   font-size: ${theme.font.suit13m.fontSize}px;
   font-weight: ${theme.font.suit13m.fontWeight};
