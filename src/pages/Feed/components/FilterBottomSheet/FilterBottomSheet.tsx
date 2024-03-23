@@ -4,7 +4,9 @@ import {
   Button,
   CheckboxContainer,
   Dropdown,
+  Flex,
   RadioContainer,
+  SVGCancel,
   Spacer,
   Text,
   theme,
@@ -52,7 +54,7 @@ const FilterBottomSheet = ({
     checked: filterParams?.purposeIds?.includes(properties.id) ? true : false,
     ...properties,
   }));
-  const { checkboxValue, onChangeCheckbox } = useCheckbox({
+  const { checkboxValue, onChangeCheckbox, onResetCheckbox } = useCheckbox({
     branches: branchOptions,
     purposes: purposeOptions,
   });
@@ -67,7 +69,7 @@ const FilterBottomSheet = ({
           checked: filterParams?.cooperationWay === properties.name ? true : false,
           ...properties,
         }));
-  const { radioValue, onChangeRadio } = useRadio({
+  const { radioValue, onChangeRadio, onResetRadio } = useRadio({
     cooperationWays: cooperationWayOptions,
   });
 
@@ -93,30 +95,21 @@ const FilterBottomSheet = ({
 
     return name;
   };
-
-  const { dropdownValue, onClickDropdown } = useDropdown({
+  const { dropdownValue, onClickDropdown, onResetDropdown } = useDropdown({
     recruitmentPlace: recruitmentPlaces.find((place) => place.id === filterParams?.recruitmentPlaceId)?.name ?? '',
+    skillCategory1Depth:
+      filterParams?.skillCategoryIds?.[0] !== undefined
+        ? getSkillCategory1DepthFrom2DepthSkillId(filterParams?.skillCategoryIds?.[0]).name
+        : undefined ?? '',
+    skillCategory2Depth:
+      filterParams?.skillCategoryIds?.[0] !== undefined
+        ? get2DepthNameFrom2DepthId(filterParams?.skillCategoryIds?.[0])
+        : undefined ?? '',
   });
-
-  const { dropdownValue: skillCategory1DepthDropDownValue, onClickDropdown: onClickSkillCategory1DepthDropDown } =
-    useDropdown({
-      skillCategory1Depth:
-        filterParams?.skillCategoryIds?.[0] !== undefined
-          ? getSkillCategory1DepthFrom2DepthSkillId(filterParams?.skillCategoryIds?.[0]).name
-          : undefined ?? '',
-    });
-
-  const { dropdownValue: skillCategory2DepthDropDownValue, onClickDropdown: onCklickSkillCategory2DepthDropDown } =
-    useDropdown({
-      skillCategory2Depth:
-        filterParams?.skillCategoryIds?.[0] !== undefined
-          ? get2DepthNameFrom2DepthId(filterParams?.skillCategoryIds?.[0])
-          : undefined ?? '',
-    });
 
   const skillCategory1DepthItems = skillCategoryResponses.map((item) => ({ id: item.id, name: item.name }));
   const skillCategory2DepthItems = skillCategoryResponses.find(
-    (item) => item.name === skillCategory1DepthDropDownValue.skillCategory1Depth,
+    (item) => item.name === dropdownValue.skillCategory1Depth,
   )?.skillResponses;
 
   const applyFilter = () => {
@@ -130,7 +123,7 @@ const FilterBottomSheet = ({
     const purposeIds = checkboxValue.purposes.filter((branch) => branch.checked).map((purpose) => purpose.id);
     const cooperationWay = radioValue.cooperationWays.find((cooperationWay) => cooperationWay.checked)?.name;
     const recruitmentPlaceId = recruitmentPlaces.find((place) => place.name === dropdownValue.recruitmentPlace)?.id;
-    const skillCategoryId = get2DepthIdFrom2DepthName(skillCategory2DepthDropDownValue.skillCategory2Depth);
+    const skillCategoryId = get2DepthIdFrom2DepthName(dropdownValue.skillCategory2Depth);
     const skillCategoryIds = skillCategoryId ? [skillCategoryId] : undefined;
 
     updateFilterParams({ branchIds, purposeIds, cooperationWay, recruitmentPlaceId, skillCategoryIds });
@@ -140,11 +133,22 @@ const FilterBottomSheet = ({
   const handleClose = () => {
     resetFilterParams(); // filter Context 초기화
     onClose(); // 바텀시트 닫기
+
+    // 초기화 버튼 클릭 시 직접 각 checkbox, radio, dropdown 값 초기화
+    onResetCheckbox('branches');
+    onResetCheckbox('purposes');
+    onResetRadio({ radioKey: 'cooperationWays', resetId: 1 });
+    onResetDropdown('recruitmentPlace');
+    onResetDropdown('skillCategory1Depth');
+    onResetDropdown('skillCategory2Depth');
   };
 
   return (
     <BottomSheet isOpen={open} onClose={onClose}>
       <FilterBox>
+        <Flex justifyContent="end" padding="22px 22px 0 22px" cursor="pointer" onClick={() => onClose()}>
+          <SVGCancel width={24} height={24} />
+        </Flex>
         <FilterContent>
           <FilterWrapper>
             <CheckboxContainer
@@ -188,26 +192,26 @@ const FilterBottomSheet = ({
             </Text>
             <Spacer size={12} />
             <div style={{ display: 'flex', gap: 8 }}>
-              <Dropdown selectedValue={skillCategory1DepthDropDownValue.skillCategory1Depth} initialValue="분야">
+              <Dropdown selectedValue={dropdownValue.skillCategory1Depth} initialValue="분야">
                 {skillCategory1DepthItems.map(({ id, name }) => (
                   <Dropdown.Item
                     key={id}
                     value={name}
                     onClick={(value) => {
-                      onClickSkillCategory1DepthDropDown(value, 'skillCategory1Depth');
+                      onClickDropdown(value, 'skillCategory1Depth');
                     }}
                   >
                     {name}
                   </Dropdown.Item>
                 ))}
               </Dropdown>
-              <Dropdown selectedValue={skillCategory2DepthDropDownValue.skillCategory2Depth} initialValue="세부 분야">
+              <Dropdown selectedValue={dropdownValue.skillCategory2Depth} initialValue="세부 분야">
                 {skillCategory2DepthItems?.map(({ id, name }) => (
                   <Dropdown.Item
                     key={id}
                     value={name}
                     onClick={(value) => {
-                      onCklickSkillCategory2DepthDropDown(value, 'skillCategory2Depth');
+                      onClickDropdown(value, 'skillCategory2Depth');
                     }}
                   >
                     {name}
@@ -219,10 +223,10 @@ const FilterBottomSheet = ({
         </FilterContent>
         <FilterBottom>
           <Button style={{ flex: 1 }} onClick={handleClose} isGrayOut>
-            닫기
+            초기화
           </Button>
-          <Button style={{ flex: 2 }} onClick={applyFilter}>
-            적용
+          <Button style={{ flex: 1 }} onClick={applyFilter}>
+            적용하기
           </Button>
         </FilterBottom>
       </FilterBox>
@@ -236,7 +240,7 @@ const FilterContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: 25px;
-  padding: 22px;
+  padding: 0 22px 60px 22px;
 `;
 
 const FilterBottom = styled.div`

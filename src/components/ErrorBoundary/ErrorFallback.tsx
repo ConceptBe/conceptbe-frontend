@@ -31,47 +31,50 @@ const ErrorFallback = ({ title, children, isInApiErrorBoundary, resetErrorBounda
   return (
     <Flex
       maxWidth={420}
+      height="100dvh"
       margin="0 auto"
       shadow="rgba(149, 157, 165, 0.2) 0px 8px 24px"
-      height="100%"
       direction="column"
-      padding="20px 22px"
       boxSizing="border-box"
     >
-      <Box maxWidth={375} maxHeight={375}>
+      <Box maxWidth={420} maxHeight={420}>
         <ImageView src={PNGErrorBackground} alt="에러 페이지 이미지" />
       </Box>
-      <Spacer size={26} />
-      <Flex direction="column" alignItems="center" justifyContent="center">
-        <TitleWrapper>{title}</TitleWrapper>
-        <Spacer size={20} />
-        <ContentWrapper>{children}</ContentWrapper>
-      </Flex>
-      <Spacer size={20} />
-      {isInApiErrorBoundary ? (
-        <Box width={160} margin="0 auto" onClick={onClickRetry}>
-          <Button>다시 시도하기</Button>
-        </Box>
-      ) : (
-        <Flex gap={10}>
-          <Button isGrayOut onClick={goToPrevPage}>
-            이전 페이지
-          </Button>
-          <Button onClick={goToMainPate}>메인으로 가기</Button>
+      <Box padding="0 22px">
+        <Spacer size={26} />
+        <Flex direction="column" alignItems="center" justifyContent="center">
+          <TitleWrapper>{title}</TitleWrapper>
+          <Spacer size={20} />
+          <ContentWrapper>{children}</ContentWrapper>
         </Flex>
-      )}
+        <Spacer size={20} />
+        {isInApiErrorBoundary ? (
+          <Box width={160} margin="0 auto" onClick={onClickRetry}>
+            <Button>다시 시도하기</Button>
+          </Box>
+        ) : (
+          <Flex gap={10}>
+            <Button isGrayOut onClick={goToPrevPage}>
+              이전 페이지
+            </Button>
+            <Button onClick={goToMainPate}>메인으로 가기</Button>
+          </Flex>
+        )}
+      </Box>
     </Flex>
   );
 };
 
 const TitleWrapper = styled.div`
   display: flex;
+  font-family: 'SUIT Variable', sans-serif;
   font-size: ${theme.font.suit22sb.fontSize}px;
   font-weight: ${theme.font.suit22sb.fontWeight};
   color: ${theme.color.b2};
 `;
 
 const ContentWrapper = styled.div`
+  font-family: 'SUIT Variable', sans-serif;
   font-size: ${theme.font.suit14r.fontSize}px;
   font-weight: ${theme.font.suit14r.fontWeight};
   color: ${theme.color.b6};
