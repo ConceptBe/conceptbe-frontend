@@ -23,6 +23,7 @@ const focusTextareaRef = (textareaRef: MutableRefObject<HTMLTextAreaElement | nu
   if (!textareaRef.current) return;
 
   textareaRef.current.focus();
+  textareaRef.current.scrollIntoView({ block: 'center', behavior: 'smooth' });
 };
 
 const initTextareaRef = (textareaRef: MutableRefObject<HTMLTextAreaElement | null>) => {
