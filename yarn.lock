@@ -1291,10 +1291,10 @@ concat-map@0.0.1:
   resolved "https://registry.npmjs.org/concat-map/-/concat-map-0.0.1.tgz"
   integrity sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==
 
-concept-be-design-system@^0.4.11:
-  version "0.4.11"
-  resolved "https://registry.npmjs.org/concept-be-design-system/-/concept-be-design-system-0.4.11.tgz"
-  integrity sha512-Nz5NIwMiyLOckVlyo1ZgysAe9Y+1mvcPDluK9uSqgZN8Ztr0dzVxbkrQSIlC7Whn8Om3PtfUY5TavqM9OOFhmg==
+concept-be-design-system@^0.4.12:
+  version "0.4.12"
+  resolved "https://registry.npmjs.org/concept-be-design-system/-/concept-be-design-system-0.4.12.tgz"
+  integrity sha512-ktgcRqgo1PKlRkcu4qU33fdNTeZZZVor+pF1QF/ibaemagYjvESsgiluLHwxqxxhUOK+sGEhVy9dUPWUEkSF8g==
   dependencies:
     "@emotion/react" "^11.11.1"
     "@emotion/styled" "^11.11.0"
