@@ -67,12 +67,14 @@ const ErrorFallback = ({ title, children, isInApiErrorBoundary, resetErrorBounda
 
 const TitleWrapper = styled.div`
   display: flex;
+  font-family: 'SUIT Variable', sans-serif;
   font-size: ${theme.font.suit22sb.fontSize}px;
   font-weight: ${theme.font.suit22sb.fontWeight};
   color: ${theme.color.b2};
 `;
 
 const ContentWrapper = styled.div`
+  font-family: 'SUIT Variable', sans-serif;
   font-size: ${theme.font.suit14r.fontSize}px;
   font-weight: ${theme.font.suit14r.fontWeight};
   color: ${theme.color.b6};
