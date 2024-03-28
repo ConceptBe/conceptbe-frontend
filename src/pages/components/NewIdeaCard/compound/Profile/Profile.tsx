@@ -55,7 +55,7 @@ const Profile = ({ onClickProfile }: Props) => {
           </Text>
           <Spacer size={7} />
 
-          <Flex width={200} wrap="wrap" alignItems="center" gap={4}>
+          <Flex maxWidth={200} wrap="wrap" alignItems="center" gap={4}>
             {skills.map((skill) => (
               <Fragment key={skill}>
                 <FixedSizeText font="suit12r" color="b9">
