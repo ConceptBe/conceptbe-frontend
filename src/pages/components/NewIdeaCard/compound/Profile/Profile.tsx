@@ -70,7 +70,7 @@ const Profile = ({ onClickProfile }: Props) => {
           </Flex>
         </Box>
       </ProfileBox>
-      {isBookmarked ? <SVGScrapFilled24 onClick={unbookmarkIdea} /> : <SVGScrap24 onClick={bookmarkIdea} />}
+      <Box>{isBookmarked ? <SVGScrapFilled24 onClick={unbookmarkIdea} /> : <SVGScrap24 onClick={bookmarkIdea} />}</Box>
     </ProfileWrapper>
   );
 };
