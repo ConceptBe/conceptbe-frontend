@@ -14,8 +14,6 @@ function App() {
   useEffect(() => {
     window.addEventListener('pagehide', clearSessionStorage);
 
-    console.log('here');
-
     return () => window.removeEventListener('pagehide', clearSessionStorage);
   }, []);
 
