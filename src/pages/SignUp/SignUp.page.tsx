@@ -28,6 +28,7 @@ import useSignUpQuery from './hooks/useSignUpQuery.ts';
 import useValidateUserInfo from './hooks/useValidateUserInfo.ts';
 import { DropdownValue, FieldValue } from './types';
 import SEOMeta from '../../components/SEOMeta/SEOMeta.tsx';
+import useInitScrollPosition from '../../hooks/useInitScrollPosition.ts';
 import { OauthMemberInfo } from '../../types/login.ts';
 
 interface CheckboxValue {
@@ -65,6 +66,8 @@ const SignUpPage = () => {
     dropdownValue,
     onResetDropdown,
   });
+
+  useInitScrollPosition('signUp');
 
   useValidateUserInfo(memberInfo);
   useCheckDuplicateNickname({ nickname: fieldValue.nickname, setFieldErrorValue });

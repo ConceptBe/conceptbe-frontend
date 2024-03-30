@@ -8,6 +8,7 @@ import { CommentFocusProvider } from './contexts/CommentFocusContext';
 import useFeedDetailQuery from './hooks/queries/useFeedDetailQuery';
 import ProfileInfo from '../../components/ProfileInfo';
 import SEOMeta from '../../components/SEOMeta/SEOMeta';
+import useInitScrollPosition from '../../hooks/useInitScrollPosition';
 import Back from '../../layouts/Back';
 import Logo from '../../layouts/Logo';
 import { formatCommentDate } from '../Feed/utils/formatCommentDate';
@@ -35,6 +36,8 @@ const FeedDetailPage = () => {
     ownerScrap,
     ownerLike,
   } = useFeedDetailQuery(feedId);
+
+  useInitScrollPosition(`feed/${feedId}`);
 
   const onModifyFeedDetail = () => {
     // 게시글 수정 로직 필요
