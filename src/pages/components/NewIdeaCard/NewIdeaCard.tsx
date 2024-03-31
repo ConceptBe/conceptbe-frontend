@@ -27,9 +27,15 @@ NewIdeaCard.Footer = Footer;
 export default NewIdeaCard;
 
 export const CardContainer = styled.div`
+  width: 331px;
   padding: 30px 20px;
   border-radius: 8px;
   box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.08);
   background-color: ${theme.color.w1};
   cursor: pointer;
+  box-sizing: border-box;
+
+  @media (max-width: 375px) {
+    width: 100%;
+  }
 `;

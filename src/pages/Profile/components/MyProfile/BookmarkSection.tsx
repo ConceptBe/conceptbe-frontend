@@ -1,5 +1,6 @@
-import { Spacer, SVGProfileBookOpen } from 'concept-be-design-system';
-import { Fragment, useRef } from 'react';
+import styled from '@emotion/styled';
+import { Box, Spacer, SVGProfileBookOpen } from 'concept-be-design-system';
+import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import NewIdeaCard from '../../../components/NewIdeaCard/NewIdeaCard';
@@ -29,7 +30,7 @@ const BookmarkSection = () => {
 
   return (
     <>
-      {bookmarkedIdeas.map((idea, idx) => {
+      {bookmarkedIdeas.map((idea) => {
         const isMine = false;
 
         const profile = {
@@ -55,19 +56,24 @@ const BookmarkSection = () => {
         };
 
         return (
-          <Fragment key={idx}>
+          <Wrapper key={idea.id}>
             <NewIdeaCard id={idea.id} profile={profile} content={content} footer={footer}>
               <NewIdeaCard.Profile onClickProfile={() => goProfilePage(idea.memberResponse.id)} />
               <NewIdeaCard.Content />
               <NewIdeaCard.Footer />
             </NewIdeaCard>
             <Spacer size={20} />
-          </Fragment>
+          </Wrapper>
         );
       })}
       <div ref={intersectionRef}></div>
     </>
   );
 };
+
+const Wrapper = styled(Box)`
+  max-width: 335px;
+  margin: 0 auto;
+`;
 
 export default BookmarkSection;

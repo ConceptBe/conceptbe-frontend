@@ -68,20 +68,16 @@ const Feed = () => {
           <Padding bottom={80} />
         </IdeaSectionBox>
       </Wrapper>
-
-      {/* `open` prop과 조건부 렌더링을 둘 다 적용하는 이유는 바텀시트에서 닫기 버튼을 눌렀을 때 선택값 초기화를 위해서입니다.
-      onClose시 바텀시트를 언마운트하여 선택값을 초기화합니다. */}
-      {isFilterBottomSheetOpen && (
-        <FilterBottomSheet
-          branches={branches}
-          purposes={purposes}
-          recruitmentPlaces={recruitmentPlaces}
-          skillCategoryResponses={skillCategoryResponses}
-          open={isFilterBottomSheetOpen}
-          onClose={closeFilterBottomSheet}
-          onApply={closeFilterBottomSheet}
-        />
-      )}
+      {/* Pop Up 애니메이션이 사라짐에 따라 조건부 렌더링 로직을 제거해야할 것 같습니다. 초기화하는 로직을 직접 작성하도록 하겠습니다.*/}
+      <FilterBottomSheet
+        branches={branches}
+        purposes={purposes}
+        recruitmentPlaces={recruitmentPlaces}
+        skillCategoryResponses={skillCategoryResponses}
+        open={isFilterBottomSheetOpen}
+        onClose={closeFilterBottomSheet}
+        onApply={closeFilterBottomSheet}
+      />
     </>
   );
 };
