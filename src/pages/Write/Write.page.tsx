@@ -27,6 +27,7 @@ import { useWritingInfoQuery } from './hooks/queries/useWritingInfoQuery';
 import { Info } from './types';
 import { get2DepthCountsBy1Depth } from './utils/get2DepthCountsBy1Depth';
 import SEOMeta from '../../components/SEOMeta/SEOMeta';
+import useInitScrollPosition from '../../hooks/useInitScrollPosition';
 
 const cooperationWays = [
   { id: 1, name: '상관없음' },
@@ -75,6 +76,8 @@ const WritePage = () => {
   const purposeIds = checkboxValue.purposes.filter((branch) => branch.checked).map((purpose) => purpose.id);
   const cooperationWay = radioValue.cooperationWays.find((cooperationWay) => cooperationWay.checked)?.name;
   const canSubmit = branchIds.length > 0 && purposeIds.length > 0 && !!cooperationWay;
+
+  useInitScrollPosition('write');
 
   if (!sheetRightItems) {
     console.error('sheetRightItems is null');

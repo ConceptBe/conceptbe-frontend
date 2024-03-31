@@ -5,13 +5,14 @@ import OtherProfile from './components/OtherProfile/OtherProfile.page';
 import { useMemberInfoQuery } from './hooks/queries/useMemberInfoQuery';
 import { getUserId } from './utils/getUserId';
 import SEOMeta from '../../components/SEOMeta/SEOMeta';
+import useInitScrollPosition from '../../hooks/useInitScrollPosition';
 
 const Profile = () => {
   const { id: userIdFromParams } = useParams();
-
   const userId = userIdFromParams ?? getUserId();
-
   const memberInfo = useMemberInfoQuery(userId);
+
+  useInitScrollPosition(`profile/${userIdFromParams}`);
 
   return memberInfo.isMyProfile === true ? (
     <>
