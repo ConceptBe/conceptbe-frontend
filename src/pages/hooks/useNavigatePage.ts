@@ -7,7 +7,11 @@ const useNavigatePage = () => {
     navigate(`/profile/${userId}`);
   };
 
-  return { goProfilePage };
+  const goLoginPage = () => {
+    navigate('/login');
+  };
+
+  return { goProfilePage, goLoginPage };
 };
 
 export default useNavigatePage;
