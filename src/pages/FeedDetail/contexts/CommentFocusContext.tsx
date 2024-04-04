@@ -50,7 +50,9 @@ const focusUsingKeyboardHeight = ({
   textareaRefCurrent.focus();
 
   // focus() 동작 완료 이후 포커싱 로직 동작토록 의도적으로 비동기 상황으로 수행
-  new Promise((resolve) => setTimeout(resolve, 0)).then(() => {
+  const timerId = setTimeout(() => {
+    clearTimeout(timerId);
+
     // 가상 키보드 내에 댓글 및 답글 입력창이 가려질 가능성이 있는 경우에만 포커싱 로직 동작
     if (innerHeight - textareaRect.top >= keyboardHeight) return;
 
@@ -65,7 +67,7 @@ const focusUsingKeyboardHeight = ({
 
     // 답글 입력창 및 IOS 외 모든 디바이스는 아래 포커싱 로직으로 동작
     textareaRefCurrent.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-  });
+  }, 0);
 };
 
 const resetTextareaFocus = (textareaRef: MutableRefObject<HTMLTextAreaElement | null>) => {
