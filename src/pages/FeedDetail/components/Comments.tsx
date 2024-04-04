@@ -22,7 +22,6 @@ const Comments = ({ feedId }: Props) => {
 
   return (
     <Box padding="20px 22px">
-      <div ref={intersectionRef}></div>
       <WriteComment feedId={feedId} myImageUrl={myImageUrl} myNickname={myNickname} />
       {comments.length > 0 ? (
         comments.map((comment, idx) => (
@@ -40,6 +39,7 @@ const Comments = ({ feedId }: Props) => {
       ) : (
         <EmptyTabContentSection svg={SVGProfileMessageDots} textList={['', '아직 작성된 댓글이 없어요.']} />
       )}
+      <div ref={intersectionRef}></div>
     </Box>
   );
 };
