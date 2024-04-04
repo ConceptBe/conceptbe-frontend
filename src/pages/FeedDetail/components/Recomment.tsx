@@ -22,6 +22,7 @@ const Recomment = ({
   myImageUrl,
   myNickname,
   recomment: {
+    memberId,
     childCommentId,
     profileImageUrl,
     nickname,
@@ -73,6 +74,7 @@ const Recomment = ({
             </div>
             <Box margin="0 0 20px 0">
               <CommentProfileInfo
+                memberId={memberId}
                 imageUrl={profileImageUrl}
                 nickname={nickname}
                 skillList={memberSkills}

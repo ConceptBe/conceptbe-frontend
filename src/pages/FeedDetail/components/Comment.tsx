@@ -27,6 +27,7 @@ const Comment = ({
   myImageUrl,
   myNickname,
   comment: {
+    memberId,
     parentCommentId,
     nickname,
     profileImageUrl,
@@ -86,6 +87,7 @@ const Comment = ({
         <Box margin="20px 0">
           <Flex justifyContent="space-between">
             <CommentProfileInfo
+              memberId={memberId}
               imageUrl={profileImageUrl}
               nickname={nickname}
               skillList={memberSkills}
