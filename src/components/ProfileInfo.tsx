@@ -1,7 +1,10 @@
 import { Text, TextDivider, Box, Flex, ImageView, PNGDefaultProfileInfo36 } from 'concept-be-design-system';
 import { Fragment } from 'react';
 
+import useNavigatePage from '../pages/hooks/useNavigatePage';
+
 interface Props {
+  memberId: number;
   imageUrl: string;
   nickname: string;
   skillList: string[];
@@ -9,9 +12,11 @@ interface Props {
 
 // TODO: 프로필 이미지 사진 오류 시 보여줄 기본 프로필 이미지 사진 URL
 
-const ProfileInfo = ({ imageUrl, nickname, skillList }: Props) => {
+const ProfileInfo = ({ memberId, imageUrl, nickname, skillList }: Props) => {
+  const { goProfilePage } = useNavigatePage();
+
   return (
-    <Flex alignItems="center" gap={10}>
+    <Flex alignItems="center" gap={10} onClick={() => goProfilePage(memberId)} cursor="pointer">
       <Box width={36} height={36} overflow="hidden" borderRadius="0 150px 150px 0">
         <ImageView src={imageUrl} alt="프로필" defaultSrc={PNGDefaultProfileInfo36} />
       </Box>

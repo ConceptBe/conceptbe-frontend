@@ -3,18 +3,28 @@ import { Box, Flex, ImageView, PNGDefaultProfileInfo36, Text, TextDivider } from
 import { Fragment } from 'react';
 
 import { formatCommentDate } from '../../Feed/utils/formatCommentDate';
+import useNavigatePage from '../../hooks/useNavigatePage';
 
 interface Props {
+  memberId: number;
   imageUrl: string;
   nickname: string;
   skillList: string[];
   createdAt: string;
 }
 
-const CommentProfileInfo = ({ imageUrl, nickname, skillList, createdAt }: Props) => {
+const CommentProfileInfo = ({ memberId, imageUrl, nickname, skillList, createdAt }: Props) => {
+  const { goProfilePage } = useNavigatePage();
   return (
     <Flex gap={10}>
-      <Box width={36} height={36} overflow="hidden" borderRadius="0 150px 150px 0">
+      <Box
+        width={36}
+        height={36}
+        overflow="hidden"
+        borderRadius="0 150px 150px 0"
+        onClick={() => goProfilePage(memberId)}
+        cursor="pointer"
+      >
         <ImageView src={imageUrl} alt="프로필" defaultSrc={PNGDefaultProfileInfo36} />
       </Box>
       <Flex paddingTop={2} direction="column" gap={4}>

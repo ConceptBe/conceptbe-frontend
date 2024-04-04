@@ -1,5 +1,7 @@
 import { useContext, useState, createContext, MutableRefObject, useRef, ReactNode } from 'react';
 
+import { useMobileViewRefContext } from '../../../layouts/contexts/MobileViewContext';
+
 interface CommentFocusContextType {
   isFocusComment: boolean;
   openCommentTextarea: () => void;
@@ -17,49 +19,111 @@ interface Props {
   children: ReactNode;
 }
 
+interface FocusUsingKeyboardHeightProps {
+  textareaRef: MutableRefObject<HTMLTextAreaElement | null>;
+  mobileViewRef: MutableRefObject<HTMLElement | null>;
+  keyboardCurrent: number;
+  isComment?: boolean;
+}
+
 const CommentFocusContext = createContext<CommentFocusContextType | null>(null);
 
-const focusTextareaRef = (textareaRef: MutableRefObject<HTMLTextAreaElement | null>) => {
-  if (!textareaRef.current) return;
+const isIphone = /ip/i.test(navigator.userAgent.toLowerCase());
+const INIT_KEYBOARD_HEIGHT = 280;
+const FOCUSING_DIFFERENCE = 1.4;
 
-  textareaRef.current.focus();
-  textareaRef.current.scrollIntoView({ block: 'center', behavior: 'smooth' });
+const focusUsingKeyboardHeight = ({
+  textareaRef,
+  mobileViewRef,
+  keyboardCurrent,
+  isComment,
+}: FocusUsingKeyboardHeightProps) => {
+  if (!textareaRef.current || !mobileViewRef.current) return;
+
+  const textareaRefCurrent = textareaRef.current;
+  const mobileViewRefCurrent = mobileViewRef.current;
+  const textareaRect = textareaRefCurrent.getBoundingClientRect();
+  const innerHeight = window.innerHeight;
+  const keyboardHeight = keyboardCurrent || INIT_KEYBOARD_HEIGHT;
+  const elementAbsolutePosition = mobileViewRefCurrent.scrollTop + textareaRect.top;
+
+  textareaRefCurrent.focus();
+
+  // focus() 동작 완료 이후 포커싱 로직 동작토록 의도적으로 비동기 상황으로 수행
+  const timerId = setTimeout(() => {
+    clearTimeout(timerId);
+
+    // 가상 키보드 내에 댓글 및 답글 입력창이 가려질 가능성이 있는 경우에만 포커싱 로직 동작
+    if (innerHeight - textareaRect.top >= keyboardHeight) return;
+
+    // 댓글 입력창 및 IOS 디바이스는 아래 포커싱 로직으로 동작
+    if (isIphone && isComment) {
+      mobileViewRefCurrent.scroll({
+        top: elementAbsolutePosition - innerHeight + keyboardHeight * FOCUSING_DIFFERENCE,
+        behavior: 'smooth',
+      });
+      return;
+    }
+
+    // 답글 입력창 및 IOS 외 모든 디바이스는 아래 포커싱 로직으로 동작
+    textareaRefCurrent.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }, 0);
 };
 
-const initTextareaRef = (textareaRef: MutableRefObject<HTMLTextAreaElement | null>) => {
+const resetTextareaFocus = (textareaRef: MutableRefObject<HTMLTextAreaElement | null>) => {
   textareaRef.current = null;
 };
 
 export const CommentFocusProvider = ({ children }: Props) => {
+  const { mobileViewRef, keyboardHeightRef } = useMobileViewRefContext();
   const [isFocusComment, setIsFocusComment] = useState<boolean>(false);
   const commentTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const recommentTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const editCommentTextareaRef = useRef<HTMLTextAreaElement | null>(null);
 
+  /* --- 댓글 입력창 포커싱 및 초기화 --- */
   const openCommentTextarea = () => {
-    focusTextareaRef(commentTextareaRef);
-
     setIsFocusComment(true);
+
+    focusUsingKeyboardHeight({
+      textareaRef: commentTextareaRef,
+      mobileViewRef,
+      keyboardCurrent: keyboardHeightRef.current,
+      isComment: true,
+    });
+    return;
   };
 
   const closeCommentTextarea = () => {
     setIsFocusComment(false);
   };
 
+  /* --- 대댓글 입력창 포커싱 및 초기화 --- */
   const focusRecommentTextarea = () => {
-    focusTextareaRef(recommentTextareaRef);
+    focusUsingKeyboardHeight({
+      textareaRef: recommentTextareaRef,
+      mobileViewRef,
+      keyboardCurrent: keyboardHeightRef.current,
+      isComment: false,
+    });
   };
 
   const initRecommentTextarea = () => {
-    initTextareaRef(recommentTextareaRef);
+    resetTextareaFocus(recommentTextareaRef);
   };
 
+  /* --- 댓글 및 대댓글 수정 입력창 포커싱 및 초기화 --- */
   const focusEditCommentTextarea = () => {
-    focusTextareaRef(editCommentTextareaRef);
+    focusUsingKeyboardHeight({
+      textareaRef: editCommentTextareaRef,
+      mobileViewRef,
+      keyboardCurrent: keyboardHeightRef.current,
+      isComment: false,
+    });
   };
 
   const initEditCommentTextarea = () => {
-    initTextareaRef(editCommentTextareaRef);
+    resetTextareaFocus(editCommentTextareaRef);
   };
 
   return (

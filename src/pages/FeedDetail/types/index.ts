@@ -1,4 +1,5 @@
 export interface FeedDetailResponse {
+  memberId: number;
   imageUrl: string;
   nickname: string;
   skillList: string[];
@@ -20,6 +21,7 @@ export interface FeedDetailResponse {
 }
 
 export interface CommentParentResponse {
+  memberId: number;
   parentCommentId: string;
   nickname: string;
   profileImageUrl: string;
@@ -35,6 +37,7 @@ export interface CommentParentResponse {
 }
 
 export interface CommentChildResponse {
+  memberId: number;
   childCommentId: string;
   nickname: string;
   profileImageUrl: string;
