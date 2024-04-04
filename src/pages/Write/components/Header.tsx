@@ -19,7 +19,8 @@ const Header = ({ onClickCheckButton, isCheckButtonEnabled }: Props) => {
 
   return (
     <HeaderBox>
-      <Back />
+      <Back confirmBeforeNavigate />
+
       <Text font="suit16sb" color="b4">
         글쓰기
       </Text>
