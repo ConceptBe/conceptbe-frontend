@@ -1,8 +1,9 @@
-import { Box, Divider } from 'concept-be-design-system';
+import { Box, Divider, SVGProfileMessageDots } from 'concept-be-design-system';
 import { Fragment, useRef } from 'react';
 
 import Comment from './Comment';
 import WriteComment from './WriteComment';
+import EmptyTabContentSection from '../../Profile/components/EmptyTabContentSection';
 import { useMemberInfoQuery } from '../../Profile/hooks/queries/useMemberInfoQuery';
 import { getUserId } from '../../Profile/utils/getUserId';
 import useCommentsQuery from '../hooks/queries/useCommentsQuery';
@@ -21,20 +22,24 @@ const Comments = ({ feedId }: Props) => {
 
   return (
     <Box padding="20px 22px">
-      <WriteComment feedId={feedId} myImageUrl={myImageUrl} myNickname={myNickname} />
-      {comments.map((comment, idx) => (
-        <Fragment key={comment.parentCommentId}>
-          <Comment
-            comment={comment}
-            feedId={feedId}
-            myImageUrl={myImageUrl}
-            myNickname={myNickname}
-            mySkillList={mySkillList}
-          />
-          {idx !== comments.length - 1 ? <Divider color="l3" /> : <></>}
-        </Fragment>
-      ))}
       <div ref={intersectionRef}></div>
+      <WriteComment feedId={feedId} myImageUrl={myImageUrl} myNickname={myNickname} />
+      {comments.length > 0 ? (
+        comments.map((comment, idx) => (
+          <Fragment key={comment.parentCommentId}>
+            <Comment
+              comment={comment}
+              feedId={feedId}
+              myImageUrl={myImageUrl}
+              myNickname={myNickname}
+              mySkillList={mySkillList}
+            />
+            {idx !== comments.length - 1 ? <Divider color="l3" /> : <></>}
+          </Fragment>
+        ))
+      ) : (
+        <EmptyTabContentSection svg={SVGProfileMessageDots} textList={['', '아직 작성된 댓글이 없어요.']} />
+      )}
     </Box>
   );
 };
