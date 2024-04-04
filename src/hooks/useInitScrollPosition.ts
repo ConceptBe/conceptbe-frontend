@@ -12,7 +12,7 @@ const setPageScrollPosition = (pageName: string, position: number) => {
 };
 
 const useInitScrollPosition = (pageName: string) => {
-  const mobileViewRef = useMobileViewRefContext();
+  const { mobileViewRef } = useMobileViewRefContext();
   const { hasMatched } = useRouteMatched();
 
   useLayoutEffect(() => {
