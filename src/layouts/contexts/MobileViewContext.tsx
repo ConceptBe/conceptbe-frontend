@@ -2,6 +2,7 @@ import { MutableRefObject, createContext, useContext } from 'react';
 
 interface MobileViewMainContextProps {
   mobileViewRef: MutableRefObject<HTMLElement | null>;
+  keyboardHeightRef: MutableRefObject<number>;
 }
 
 export const MobileViewRefContext = createContext<MobileViewMainContextProps | null>(null);
@@ -17,7 +18,7 @@ const useMobileViewContext = () => {
 
 export const useMobileViewRefContext = () => {
   const context = useMobileViewContext();
-  const { mobileViewRef } = context;
+  const { mobileViewRef, keyboardHeightRef } = context;
 
-  return mobileViewRef;
+  return { mobileViewRef, keyboardHeightRef };
 };
