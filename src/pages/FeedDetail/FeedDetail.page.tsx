@@ -17,6 +17,7 @@ const FeedDetailPage = () => {
   const navigate = useNavigate();
   const { id: feedId } = useParams() as { id: string };
   const {
+    memberId,
     imageUrl,
     nickname,
     skillList,
@@ -59,7 +60,7 @@ const FeedDetailPage = () => {
       </Header>
 
       <Box padding="30px 22px 30px 22px" marginTop={48}>
-        <ProfileInfo imageUrl={imageUrl} nickname={nickname} skillList={skillList} />
+        <ProfileInfo memberId={memberId} imageUrl={imageUrl} nickname={nickname} skillList={skillList} />
         <Spacer size={20} />
         <Box>
           <div>

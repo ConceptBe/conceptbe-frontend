@@ -1,4 +1,5 @@
 export interface FeedDetailResponse {
+  memberId: number;
   imageUrl: string;
   nickname: string;
   skillList: string[];
