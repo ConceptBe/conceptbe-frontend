@@ -28,11 +28,14 @@ const useDeleteAccount = () => {
     onSuccess: async () => {
       localStorage.removeItem('user');
       localStorage.removeItem('userToken');
-      await openConfirm({ content: '탈퇴하였습니다.' });
+      await openConfirm({ content: '탈퇴하였습니다.', closeButtonContent: '' });
       goFeedPage();
     },
     onError: async (error: DeleteAccountError) => {
-      await openConfirm({ content: error.response?.data.message ?? '탈퇴에 실패했습니다. 메일로 문의 부탁드립니다.' });
+      await openConfirm({
+        content: error.response?.data.message ?? '탈퇴에 실패했습니다. 메일로 문의 부탁드립니다.',
+        closeButtonContent: '',
+      });
     },
   });
 
