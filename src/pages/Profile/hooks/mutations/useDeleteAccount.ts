@@ -8,12 +8,6 @@ import { getUserId } from '../../utils/getUserId';
 
 const _deleteAccount = () => {
   const userId = getUserId();
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      // reject(new Error('error'));
-      resolve(true);
-    }, 1000);
-  });
   return http.delete(`/members/${userId}`);
 };
 
