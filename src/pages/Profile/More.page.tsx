@@ -27,10 +27,11 @@ const More = () => {
   };
 
   const logout = async () => {
+    const isLogout = await openConfirm({ content: '정말 로그아웃하시겠습니까?' });
+    if (!isLogout) return;
+
     localStorage.removeItem('user');
     localStorage.removeItem('userToken');
-
-    await openConfirm({ content: '로그아웃 되었습니다.', closeButtonContent: '' });
     goFeedPage();
   };
 
