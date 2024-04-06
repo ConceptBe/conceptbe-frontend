@@ -2,8 +2,9 @@ import styled from '@emotion/styled';
 import { BottomSheet, Divider, Header, Spacer, Text, theme } from 'concept-be-design-system';
 import { useState } from 'react';
 
-import logout from './utils/logout';
+import useDeleteAccount from './hooks/mutations/useDeleteAccount';
 import SEOMeta from '../../components/SEOMeta/SEOMeta';
+import Spinner from '../../components/Spinner/Spinner';
 import Privacy from '../../components/Terms/Privacy';
 import UsageTerms from '../../components/Terms/UsageTerms';
 import useConfirm from '../../hooks/useConfrim';
@@ -15,6 +16,7 @@ const More = () => {
   const [moreState, setMoreState] = useState('');
   const isLoggedIn = Boolean(localStorage.getItem('user')) && Boolean(localStorage.getItem('userToken'));
   const { goFeedPage, goLoginPage } = useNavigatePage();
+  const { deleteAccount, isPending: isDeleteAccountPending } = useDeleteAccount();
   const openConfirm = useConfirm();
 
   const onMoreClick = (string: string) => {
@@ -35,10 +37,17 @@ const More = () => {
     goFeedPage();
   };
 
+  const handleDeleteAccount = async () => {
+    const isDelete = await openConfirm({ content: '정말 탈퇴하시겠습니까?' });
+    if (!isDelete) return;
+
+    deleteAccount();
+  };
+
   return (
     <>
+      {isDeleteAccountPending && <Spinner backdrop />}
       <SEOMeta title="컨셉비 | 더보기" description="아이디어 기반의 안전하고 자유로운 팀원 찾기 플랫폼" />
-
       <Container>
         <Header spacerPosition="end">
           <Header.Item>
@@ -86,8 +95,8 @@ const More = () => {
             기타 문의사항이 있으실 경우, ABCDEFG123456@gmail.com으로 연락주세요
           </Text>
           <Divider color="l3" top={22} bottom={22} />
-          <MoreButton>
-            <Text font="suit15rb" color="ba">
+          <MoreButton onClick={handleDeleteAccount}>
+            <Text font="suit15m" color="ba">
               회원탈퇴
             </Text>
           </MoreButton>
