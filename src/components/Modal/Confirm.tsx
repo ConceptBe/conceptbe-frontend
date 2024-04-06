@@ -42,23 +42,27 @@ const Confirm = ({
               cursor="pointer"
               onClick={onClose}
             >
-              <Flex
-                width="50%"
-                height="100%"
-                justifyContent="center"
-                alignItems="center"
-                borderRight={`1px solid ${theme.color.l3}`}
-                onClick={onClose}
-              >
-                <Text color="b9" font="suit15m">
-                  {closeButtonContent}
-                </Text>
-              </Flex>
-              <Flex width="50%" height="100%" justifyContent="center" alignItems="center" onClick={onClickConfirm}>
-                <Text color="c1" font="suit15m">
-                  {confirmButtonContent}
-                </Text>
-              </Flex>
+              {closeButtonContent !== '' && (
+                <Flex
+                  width="50%"
+                  height="100%"
+                  justifyContent="center"
+                  alignItems="center"
+                  borderRight={`1px solid ${theme.color.l3}`}
+                  onClick={onClose}
+                >
+                  <Text color="b9" font="suit15m">
+                    {closeButtonContent}
+                  </Text>
+                </Flex>
+              )}
+              {confirmButtonContent !== '' && (
+                <Flex width="50%" height="100%" justifyContent="center" alignItems="center" onClick={onClickConfirm}>
+                  <Text color="c1" font="suit15m">
+                    {confirmButtonContent}
+                  </Text>
+                </Flex>
+              )}
             </Flex>
           </ModalWrapper>
         </Wrapper>
