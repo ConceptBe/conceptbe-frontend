@@ -3,6 +3,10 @@ import { useNavigate } from 'react-router-dom';
 const useNavigatePage = () => {
   const navigate = useNavigate();
 
+  const goFeedPage = () => {
+    navigate('/');
+  };
+
   const goProfilePage = (userId: number) => {
     navigate(`/profile/${userId}`);
   };
@@ -11,7 +15,7 @@ const useNavigatePage = () => {
     navigate('/login');
   };
 
-  return { goProfilePage, goLoginPage };
+  return { goFeedPage, goProfilePage, goLoginPage };
 };
 
 export default useNavigatePage;

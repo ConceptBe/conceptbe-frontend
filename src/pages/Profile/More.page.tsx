@@ -6,6 +6,7 @@ import logout from './utils/logout';
 import SEOMeta from '../../components/SEOMeta/SEOMeta';
 import Privacy from '../../components/Terms/Privacy';
 import UsageTerms from '../../components/Terms/UsageTerms';
+import useConfirm from '../../hooks/useConfrim';
 import Back from '../../layouts/Back';
 import useNavigatePage from '../hooks/useNavigatePage';
 
@@ -13,7 +14,8 @@ const More = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [moreState, setMoreState] = useState('');
   const isLoggedIn = Boolean(localStorage.getItem('user')) && Boolean(localStorage.getItem('userToken'));
-  const { goLoginPage } = useNavigatePage();
+  const { goFeedPage, goLoginPage } = useNavigatePage();
+  const openConfirm = useConfirm();
 
   const onMoreClick = (string: string) => {
     if (isOpen) {
@@ -22,6 +24,14 @@ const More = () => {
       setIsOpen(true);
       setMoreState(string);
     }
+  };
+
+  const logout = async () => {
+    localStorage.removeItem('user');
+    localStorage.removeItem('userToken');
+
+    await openConfirm({ content: '로그아웃 되었습니다.', closeButtonContent: '' });
+    goFeedPage();
   };
 
   return (
