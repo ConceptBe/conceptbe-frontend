@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
+import useAlert from '../../../hooks/useAlert';
 import { DetailSkills, DropdownValue, MainSkillOption, Skill } from '../types';
 
 interface Props {
@@ -13,6 +14,7 @@ interface Props {
 const useSetDetailSkills = ({ initialValue = [], mainSkills, detailSkills, dropdownValue, onResetDropdown }: Props) => {
   const [selectedSkillDepths, setSelectedSkillDepths] = useState<Skill[]>(initialValue);
   const skillDepthOneId = mainSkills.find(({ name }) => name === dropdownValue.skillDepthOne)?.id;
+  const openAlert = useAlert();
 
   const onDeleteSkill = useCallback((value: string) => {
     setSelectedSkillDepths((prevSkillDepths) => prevSkillDepths.filter(({ name }) => name !== value));
@@ -30,8 +32,8 @@ const useSetDetailSkills = ({ initialValue = [], mainSkills, detailSkills, dropd
     const selectedValue = `${dropdownValue.skillDepthTwo}, ${dropdownValue.skillDepthThree}`;
     const selectedId = detailSkills[skillDepthOneId].find(({ name }) => name === dropdownValue.skillDepthTwo)?.id;
 
-    if (selectedSkillDepths.map(({ name }) => name).includes(selectedValue)) {
-      alert('세부 스킬은 중복될 수 없습니다.');
+    if (selectedSkillDepths.find(({ name }) => name.includes(dropdownValue.skillDepthTwo))) {
+      openAlert({ content: '세부 스킬은 중복될 수 없습니다.' });
       resetSkillDropdowns();
       return;
     }
@@ -40,7 +42,7 @@ const useSetDetailSkills = ({ initialValue = [], mainSkills, detailSkills, dropd
       setSelectedSkillDepths((prev) => [...prev, { id: selectedId, name: selectedValue }]);
       resetSkillDropdowns();
     }
-  }, [detailSkills, skillDepthOneId, selectedSkillDepths, dropdownValue, resetSkillDropdowns]);
+  }, [detailSkills, skillDepthOneId, selectedSkillDepths, dropdownValue, resetSkillDropdowns, openAlert]);
 
   useEffect(() => {
     if (dropdownValue.skillDepthThree === '' || !dropdownValue.skillDepthTwo) return;
