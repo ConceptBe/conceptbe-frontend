@@ -17,7 +17,7 @@ import {
   Flex,
   useDropdown,
 } from 'concept-be-design-system';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 import Header from './components/Header';
 import RecruitmentPlaceSection from './components/RecruitmentPlaceSection';
@@ -147,12 +147,22 @@ const WritePage = () => {
     setSelectedSkillResponses((prev) => prev.filter((item) => item.id !== id));
   };
 
+  // 글 작성중인지 여부: 뒤로가기 시 경고창 띄우기
+  const isWritingActive =
+    title !== '' ||
+    introduce !== '' ||
+    selectedSkillResponses.length > 0 ||
+    branchIds.length > 0 ||
+    purposeIds.length > 0 ||
+    cooperationWay !== '상관없음' ||
+    !!dropdownValue.recruitmentPlace;
+
   return (
     <>
       <SEOMeta title="컨셉비 | 글 작성" description="자유롭고 안전한 아이디어 공유의 장" />
 
       <MainWrapper>
-        <Header onClickCheckButton={writeIdea} isCheckButtonEnabled={canSubmit} />
+        <Header onClickCheckButton={writeIdea} isCheckButtonEnabled={canSubmit} isWritingActive={isWritingActive} />
 
         <Divider color="l3" />
         <TitleAndIntroduceSection
