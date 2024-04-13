@@ -6,20 +6,22 @@ import Back from '../../../layouts/Back';
 type Props = {
   onClickCheckButton: () => void;
   isCheckButtonEnabled: boolean;
+  isWritingActive: boolean;
 };
 
 /**
  * 글쓰기 페이지 헤더
  * checkButton을 클릭해서 글을 작성한다.
  */
-const Header = ({ onClickCheckButton, isCheckButtonEnabled }: Props) => {
+const Header = ({ onClickCheckButton, isCheckButtonEnabled, isWritingActive }: Props) => {
   const handleClickCheckButton = () => {
     onClickCheckButton();
   };
 
   return (
     <HeaderBox>
-      <Back />
+      <Back confirmBeforeNavigate={isWritingActive} />
+
       <Text font="suit16sb" color="b4">
         글쓰기
       </Text>
