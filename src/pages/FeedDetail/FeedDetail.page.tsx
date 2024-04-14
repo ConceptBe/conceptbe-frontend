@@ -8,9 +8,11 @@ import { CommentFocusProvider } from './contexts/CommentFocusContext';
 import useFeedDetailQuery from './hooks/queries/useFeedDetailQuery';
 import ProfileInfo from '../../components/ProfileInfo';
 import SEOMeta from '../../components/SEOMeta/SEOMeta';
+import useConfirm from '../../hooks/useConfrim';
 import useInitScrollPosition from '../../hooks/useInitScrollPosition';
 import Back from '../../layouts/Back';
 import Logo from '../../layouts/Logo';
+import { useDeleteIdea } from '../components/NewIdeaCard/hooks/mutations/useDeleteIdea';
 import { formatCommentDate } from '../Feed/utils/formatCommentDate';
 
 const FeedDetailPage = () => {
@@ -37,6 +39,8 @@ const FeedDetailPage = () => {
     ownerScrap,
     ownerLike,
   } = useFeedDetailQuery(feedId);
+  const openConfirm = useConfirm();
+  const { deleteIdea } = useDeleteIdea();
 
   useInitScrollPosition(`feed/${feedId}`);
 
@@ -44,9 +48,12 @@ const FeedDetailPage = () => {
     // 게시글 수정 로직 필요
   };
 
-  const onDeleteFeedDetail = () => {
-    // 게시글 삭제 로직 필요
-    navigate(-1);
+  const onDeleteFeedDetail = async () => {
+    if (await openConfirm({ content: '게시글을 삭제하시겠습니까?' })) {
+      // feedId === ideaId
+      deleteIdea(Number(feedId));
+      navigate(-1);
+    }
   };
 
   return (

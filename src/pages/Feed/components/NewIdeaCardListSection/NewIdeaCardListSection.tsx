@@ -3,6 +3,7 @@ import { Spacer, Text } from 'concept-be-design-system';
 import { Fragment, Suspense, useRef } from 'react';
 
 import NewIdeaCardListSkeleton from './NewIdeaCardListSkeleton';
+import useConfirm from '../../../../hooks/useConfrim';
 import { useDeleteIdea } from '../../../components/NewIdeaCard/hooks/mutations/useDeleteIdea';
 import NewIdeaCard from '../../../components/NewIdeaCard/NewIdeaCard';
 import useNavigatePage from '../../../hooks/useNavigatePage';
@@ -18,14 +19,16 @@ const CardList = () => {
   const { ideas, fetchNextPage } = useIdeasQuery(filterParams);
   const { goProfilePage } = useNavigatePage();
   const { deleteIdea } = useDeleteIdea();
+  const openConfirm = useConfirm();
 
   const intersectionRef = useRef(null);
 
   useFeedInfiniteFetch(intersectionRef, fetchNextPage);
 
-  const handleDeleteIdea = (ideaId: number) => {
-    //TODO: #54 머지 후 Confirm 컴포넌트로 대체
-    if (confirm('게시글을 삭제하시겠습니까?')) deleteIdea(ideaId);
+  const handleDeleteIdea = async (ideaId: number) => {
+    if (await openConfirm({ content: '게시글을 삭제하시겠습니까?' })) {
+      deleteIdea(ideaId);
+    }
   };
 
   return (
