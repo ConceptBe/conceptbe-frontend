@@ -38,7 +38,7 @@ const More = () => {
   };
 
   const handleDeleteAccount = async () => {
-    const isDelete = await openConfirm({ content: '정말 탈퇴하시겠습니까?' });
+    const isDelete = await openConfirm({ content: '정말 탈퇴하시겠습니까? 회원 정보가 즉시 삭제됩니다.' });
     if (!isDelete) return;
 
     deleteAccount();
