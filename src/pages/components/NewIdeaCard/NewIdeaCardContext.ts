@@ -5,7 +5,7 @@ export interface NewIdeaCardContextType {
   profile?: {
     profileImageUrl: string;
     nickname: string;
-    skills: string[];
+    mainSkill: string;
     isBookmarked: boolean;
     createdAt: string;
   };

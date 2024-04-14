@@ -1,4 +1,4 @@
-import { useSuspenseInfiniteQuery, useSuspenseQuery } from '@tanstack/react-query';
+import { useSuspenseInfiniteQuery } from '@tanstack/react-query';
 
 import { http } from '../../../../api/http';
 import { BestIdea } from '../../types';

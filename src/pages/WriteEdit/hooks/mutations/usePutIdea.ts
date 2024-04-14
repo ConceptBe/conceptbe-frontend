@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom';
 
 import { http } from '../../../../api/http';
 
-import type { PutIdeaRequest } from '../../types';
+import type { PutIdeasRequest } from '../../types';
 
-const _putIdea = ({ ideaId, idea }: { ideaId: number; idea: PutIdeaRequest }) => {
+const _putIdea = ({ ideaId, idea }: { ideaId: number; idea: PutIdeasRequest }) => {
   return http.put(`/ideas/${ideaId}`, idea);
 };
 
