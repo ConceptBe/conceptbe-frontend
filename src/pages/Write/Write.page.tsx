@@ -17,7 +17,7 @@ import {
   Flex,
   useDropdown,
 } from 'concept-be-design-system';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 import Header from './components/Header';
 import RecruitmentPlaceSection from './components/RecruitmentPlaceSection';
@@ -77,7 +77,7 @@ const WritePage = () => {
   const cooperationWay = radioValue.cooperationWays.find((cooperationWay) => cooperationWay.checked)?.name;
   const canSubmit = branchIds.length > 0 && purposeIds.length > 0 && !!cooperationWay;
 
-  useInitScrollPosition('write');
+  useInitScrollPosition();
 
   if (!sheetRightItems) {
     console.error('sheetRightItems is null');

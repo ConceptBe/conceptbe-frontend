@@ -67,7 +67,7 @@ const SignUpPage = () => {
     onResetDropdown,
   });
 
-  useInitScrollPosition('signUp');
+  useInitScrollPosition();
 
   useValidateUserInfo(memberInfo);
   useCheckDuplicateNickname({ nickname: fieldValue.nickname, setFieldErrorValue });

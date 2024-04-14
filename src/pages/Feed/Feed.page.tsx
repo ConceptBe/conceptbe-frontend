@@ -18,7 +18,7 @@ const Feed = () => {
   const [isFilterBottomSheetOpen, setIsFilterBottomSheetOpen] = useState(false);
   const { branches, purposes, recruitmentPlaces, skillCategoryResponses } = useWritingInfoQuery();
 
-  useInitScrollPosition('feed');
+  useInitScrollPosition();
 
   const closeFilterBottomSheet = () => {
     setIsFilterBottomSheetOpen(false);

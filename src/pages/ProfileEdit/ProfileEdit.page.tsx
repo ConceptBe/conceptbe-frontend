@@ -65,7 +65,7 @@ const ProfileEdit = () => {
   });
   const { putProfile } = usePutProfileMutation(getUserId(), fieldValue.nickname);
 
-  useInitScrollPosition('profileEdit');
+  useInitScrollPosition();
 
   useCheckDuplicateNickname({ nickname: fieldValue.nickname, setFieldErrorValue });
 

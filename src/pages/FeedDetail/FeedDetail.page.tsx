@@ -42,7 +42,7 @@ const FeedDetailPage = () => {
   const openConfirm = useConfirm();
   const { deleteIdea } = useDeleteIdea();
 
-  useInitScrollPosition(`feed/${feedId}`);
+  useInitScrollPosition();
 
   const onModifyFeedDetail = () => {
     // 게시글 수정 로직 필요
