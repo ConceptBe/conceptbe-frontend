@@ -9,7 +9,7 @@ type MemberResponse = {
   id: number;
   profileImageUrl: string;
   nickname: string;
-  skills: string[];
+  mainSkill: string;
 };
 
 export type Idea = {

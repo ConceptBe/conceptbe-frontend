@@ -1,5 +1,5 @@
 // 글쓰기 요청 body 타입
-export type PostIdeasRequest = {
+export type PutIdeasRequest = {
   title: string; // 제목
   introduce: string; // 소개
   branchIds: number[]; // 분야

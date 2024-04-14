@@ -32,7 +32,7 @@ export interface MemberResponse {
   id: number;
   profileImageUrl: string;
   nickname: string;
-  skills: string[];
+  mainSkill: string;
 }
 export interface BookmarkedIdea {
   id: number;

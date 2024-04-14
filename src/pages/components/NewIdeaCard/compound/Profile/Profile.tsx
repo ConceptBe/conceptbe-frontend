@@ -10,7 +10,7 @@ import {
   Text,
   TextDivider,
 } from 'concept-be-design-system';
-import { Fragment, MouseEventHandler } from 'react';
+import { MouseEventHandler } from 'react';
 
 import { useDeleteBookmarkIdea } from '../../../../Feed/hooks/mutations/useDeleteBookmarkIdea';
 import { usePostBookmarkIdea } from '../../../../Feed/hooks/mutations/usePostBookmarkIdea';
@@ -23,7 +23,7 @@ type Props = {
 
 const Profile = ({ onClickProfile }: Props) => {
   const id = useIdeaIdContext();
-  const { profileImageUrl, nickname, skills, isBookmarked, createdAt } = useProfileContext();
+  const { profileImageUrl, nickname, mainSkill, isBookmarked, createdAt } = useProfileContext();
   const { postBookmarkIdea } = usePostBookmarkIdea();
   const { deleteBookmarkIdea } = useDeleteBookmarkIdea();
 
@@ -56,14 +56,12 @@ const Profile = ({ onClickProfile }: Props) => {
           <Spacer size={7} />
 
           <Flex maxWidth={200} wrap="wrap" alignItems="center" gap={4}>
-            {skills.map((skill) => (
-              <Fragment key={skill}>
-                <FixedSizeText font="suit12r" color="b9">
-                  {skill}
-                </FixedSizeText>
-                <TextDivider left={2} right={2} color="l2" />
-              </Fragment>
-            ))}
+            <FixedSizeText font="suit12r" color="b9">
+              {mainSkill}
+            </FixedSizeText>
+
+            <TextDivider left={2} right={2} color="l2" />
+
             <Text font="suit12r" color="b9">
               {formatCommentDate(createdAt)}
             </Text>

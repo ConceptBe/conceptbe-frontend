@@ -39,7 +39,7 @@ const CardList = () => {
         const profile = {
           profileImageUrl: idea.memberResponse.profileImageUrl,
           nickname: idea.memberResponse.nickname,
-          skills: idea.memberResponse.skills,
+          mainSkill: idea.memberResponse.mainSkill,
           isBookmarked: idea.isBookmarked,
           createdAt: idea.createdAt,
         };
