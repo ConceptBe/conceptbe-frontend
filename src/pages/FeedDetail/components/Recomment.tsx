@@ -4,6 +4,7 @@ import { useState } from 'react';
 import CommentProfileInfo from './CommentProfileInfo';
 import EditComment from './EditComment';
 import ModifyDropdown from './ModifyDropdown';
+import useConfirm from '../../../hooks/useConfrim';
 import { get999PlusCount } from '../../utils';
 import useDeleteCommentMutation from '../hooks/mutations/useDeleteComment';
 import useFocusEditComment from '../hooks/useFocusEditComment';
@@ -35,6 +36,7 @@ const Recomment = ({
     likes,
   },
 }: Props) => {
+  const openConfirm = useConfirm();
   const [isEditComment, setIsEditComment] = useState<boolean>(false);
   const { deleteComment } = useDeleteCommentMutation({ feedId });
   const toggleLikeComment = useToggleLikeComment({ feedId, commentId: childCommentId, isLike: likes });
@@ -49,9 +51,8 @@ const Recomment = ({
     setIsEditComment(true);
   };
 
-  const onDeleteComment = () => {
-    //TODO: #54 머지 후 Confirm 컴포넌트로 대체
-    if (confirm('답글을 삭제하시겠습니까?')) deleteComment(childCommentId);
+  const onDeleteComment = async () => {
+    if (await openConfirm({ content: '답글을 삭제하시겠습니까?' })) deleteComment(childCommentId);
   };
 
   return (
