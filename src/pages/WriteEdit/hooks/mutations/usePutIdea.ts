@@ -3,6 +3,7 @@ import { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 import { http } from '../../../../api/http';
+import useAlert from '../../../../hooks/useAlert';
 
 import type { PutIdeasRequest } from '../../types';
 
@@ -14,6 +15,7 @@ const _putIdea = ({ ideaId, idea }: { ideaId: number; idea: PutIdeasRequest }) =
 type PutIdeaError = AxiosError<{ message: string }>;
 
 export const usePutIdea = () => {
+  const openAlert = useAlert();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
@@ -24,7 +26,7 @@ export const usePutIdea = () => {
       navigate('/');
     },
     onError: (error: PutIdeaError) => {
-      alert(error.response?.data.message ?? '글 수정에 실패했습니다.');
+      openAlert({ content: error.response?.data.message ?? '글 수정에 실패했습니다.' });
     },
   });
 

@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
 import { http } from '../../../../api/http';
+import useAlert from '../../../../hooks/useAlert';
 
 interface CommentPayload {
   ideaId: string;
@@ -16,6 +17,7 @@ interface Props {
 const _postComment = (payload: CommentPayload) => http.post('/comments', payload);
 
 const usePostComment = ({ feedId }: Props) => {
+  const openAlert = useAlert();
   const queryClient = useQueryClient();
   const { mutate: postComment, ...rest } = useMutation({
     mutationFn: _postComment,
@@ -24,7 +26,7 @@ const usePostComment = ({ feedId }: Props) => {
       queryClient.invalidateQueries({ queryKey: ['feed', 'detail', feedId] });
     },
     onError: (error: AxiosError<{ message: string }>) => {
-      alert(error.response?.data.message ?? '댓글 작성에 실패했습니다.');
+      openAlert({ content: error.response?.data.message ?? '댓글 작성에 실패했습니다.' });
     },
   });
 
