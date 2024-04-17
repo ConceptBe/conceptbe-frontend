@@ -15,7 +15,7 @@ interface Props {
 
 const Comments = ({ feedId }: Props) => {
   const { comments, fetchNextPage } = useCommentsQuery(feedId);
-  const { profileImageUrl: myImageUrl, nickname: myNickname, skills: mySkillList } = useMemberInfoQuery(getUserId());
+  const { profileImageUrl: myImageUrl, nickname: myNickname } = useMemberInfoQuery(getUserId());
 
   const intersectionRef = useRef(null);
   useCommentInfiniteFetch(intersectionRef, fetchNextPage);
@@ -26,13 +26,7 @@ const Comments = ({ feedId }: Props) => {
       {comments.length > 0 ? (
         comments.map((comment, idx) => (
           <Fragment key={comment.parentCommentId}>
-            <Comment
-              comment={comment}
-              feedId={feedId}
-              myImageUrl={myImageUrl}
-              myNickname={myNickname}
-              mySkillList={mySkillList}
-            />
+            <Comment comment={comment} feedId={feedId} myImageUrl={myImageUrl} myNickname={myNickname} />
             {idx !== comments.length - 1 ? <Divider color="l3" /> : <></>}
           </Fragment>
         ))

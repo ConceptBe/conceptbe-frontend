@@ -27,7 +27,7 @@ const Recomment = ({
     childCommentId,
     profileImageUrl,
     nickname,
-    memberSkills,
+    mainSkill,
     content,
     likesCount,
     owner,
@@ -78,7 +78,7 @@ const Recomment = ({
                 memberId={memberId}
                 imageUrl={profileImageUrl}
                 nickname={nickname}
-                skillList={memberSkills}
+                mainSkill={mainSkill}
                 createdAt={createdAt}
                 owner={owner}
               />

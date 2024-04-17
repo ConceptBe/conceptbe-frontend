@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import { Box, Flex, ImageView, PNGDefaultProfileInfo36, Text, TextDivider } from 'concept-be-design-system';
-import { Fragment } from 'react';
 
 import { formatCommentDate } from '../../Feed/utils/formatCommentDate';
 import useNavigatePage from '../../hooks/useNavigatePage';
@@ -9,12 +8,12 @@ interface Props {
   memberId: number;
   imageUrl: string;
   nickname: string;
-  skillList: string[];
+  mainSkill: string;
   createdAt: string;
   owner: boolean;
 }
 
-const CommentProfileInfo = ({ memberId, imageUrl, nickname, skillList, createdAt, owner }: Props) => {
+const CommentProfileInfo = ({ memberId, imageUrl, nickname, mainSkill, createdAt, owner }: Props) => {
   const { goProfilePage } = useNavigatePage();
 
   const onClickProfileImage = () => {
@@ -33,14 +32,10 @@ const CommentProfileInfo = ({ memberId, imageUrl, nickname, skillList, createdAt
           {nickname}
         </Text>
         <Flex wrap="wrap" alignItems="center" gap={4}>
-          {skillList.map((skill) => (
-            <Fragment key={skill}>
-              <FixedSizeText font="suit12r" color="b9">
-                {skill}
-              </FixedSizeText>
-              <TextDivider left={2} right={2} color="l2" />
-            </Fragment>
-          ))}
+          <FixedSizeText font="suit12r" color="b9">
+            {mainSkill}
+          </FixedSizeText>
+          <TextDivider left={2} right={2} color="l2" />
           <Text font="suit12r" color="b9">
             {formatCommentDate(createdAt)}
           </Text>
