@@ -28,6 +28,7 @@ import { useIdeaDetailQuery } from './hooks/queries/useIdeaDetailQuery';
 import { useWritingInfoQuery } from './hooks/queries/useWritingInfoQuery';
 import { Info } from './types';
 import { get2DepthCountsBy1Depth } from './utils/get2DepthCountsBy1Depth';
+import useAlert from '../../hooks/useAlert';
 import useInitScrollPosition from '../../hooks/useInitScrollPosition';
 
 const cooperationWays = [
@@ -37,6 +38,7 @@ const cooperationWays = [
 ];
 
 const WriteEditPage = () => {
+  const openAlert = useAlert();
   const location = useLocation();
   const { ideaDetail } = useIdeaDetailQuery(Number(location.state.ideaId));
   const { putIdea } = usePutIdea();
@@ -109,27 +111,27 @@ const WriteEditPage = () => {
 
     // TODO: 글쓰기 필수 조건 누락 시 토스트 띄워주기 (alert -> toast)
     if (!title) {
-      alert('제목을 입력해 주세요');
+      openAlert({ content: '제목을 입력해 주세요' });
       return;
     }
     if (introduce.length < 10) {
-      alert('본문 내용을 10자 이상 입력해 주세요');
+      openAlert({ content: '본문 내용을 10자 이상 입력해 주세요' });
       return;
     }
     if (!branchIds.length) {
-      alert('분야를 1개 이상 선택해 주세요');
+      openAlert({ content: '분야를 1개 이상 선택해 주세요' });
       return;
     }
     if (!purposeIds.length) {
-      alert('목적을 1개 이상 선택해 주세요');
+      openAlert({ content: '목적을 1개 이상 선택해 주세요' });
       return;
     }
     if (!cooperationWay) {
-      alert('협업방식을 선택해 주세요');
+      openAlert({ content: '협업방식을 선택해 주세요' });
       return;
     }
     if (!recruitmentPlaceId) {
-      alert('모집지역을 선택해주세요.');
+      openAlert({ content: '모집지역을 선택해주세요.' });
       return;
     }
 
@@ -157,7 +159,7 @@ const WriteEditPage = () => {
 
   const onClickTeamRecruitment = (selected: Info) => {
     if (selectedSkillResponses.length >= 10) {
-      alert('10개 이상 선택할 수 없습니다.');
+      openAlert({ content: '10개 이상 선택할 수 없습니다.' });
       return;
     }
     setSelectedSkillResponses((prev) =>

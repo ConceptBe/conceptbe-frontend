@@ -3,6 +3,7 @@ import { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 import { http } from '../../../../api/http';
+import useAlert from '../../../../hooks/useAlert';
 import { PostIdeasRequest } from '../../types';
 
 const _postIdeas = (ideas: PostIdeasRequest) => {
@@ -13,6 +14,7 @@ const _postIdeas = (ideas: PostIdeasRequest) => {
 type PostIdeaError = AxiosError<{ message: string }>;
 
 export const usePostIdeasMutation = () => {
+  const openAlert = useAlert();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
@@ -23,7 +25,7 @@ export const usePostIdeasMutation = () => {
       navigate('/');
     },
     onError: (error: PostIdeaError) => {
-      alert(error.response?.data.message ?? '글 작성에 실패했습니다.');
+      openAlert({ content: error.response?.data.message ?? '글 작성에 실패했습니다.' });
     },
   });
 

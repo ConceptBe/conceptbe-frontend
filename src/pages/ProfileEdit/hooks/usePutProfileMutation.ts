@@ -3,6 +3,7 @@ import { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 import { http } from '../../../api/http';
+import useAlert from '../../../hooks/useAlert';
 import { PutSignUp } from '../types';
 
 const updateUserNickname = (newNickname: string) => {
@@ -14,6 +15,7 @@ const updateUserNickname = (newNickname: string) => {
 const _putProfile = (memberId: string, payload: PutSignUp) => http.put<void>(`/members/${memberId}`, payload);
 
 const usePutProfileMutation = (memberId: string, newNickname: string) => {
+  const openAlert = useAlert();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { mutate: putProfile, ...rest } = useMutation({
@@ -24,8 +26,7 @@ const usePutProfileMutation = (memberId: string, newNickname: string) => {
       navigate(`/profile/${memberId}`);
     },
     onError: (error: AxiosError<{ message: string }>) => {
-      // TODO: #54 머지 이후 Alert 컴포넌트 사용
-      alert(error.response?.data.message ?? '필수 정보를 입력하지 않아 저장할 수 없습니다.');
+      openAlert({ content: error.response?.data.message ?? '필수 정보를 입력하지 않아 저장할 수 없습니다.' });
     },
   });
 
