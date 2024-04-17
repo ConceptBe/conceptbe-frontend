@@ -79,6 +79,7 @@ const Recomment = ({
                 nickname={nickname}
                 skillList={memberSkills}
                 createdAt={createdAt}
+                owner={owner}
               />
               <Spacer size={20} />
               <Text font="suit14r" color="t" style={{ lineHeight: '22px', whiteSpace: 'pre-wrap' }}>

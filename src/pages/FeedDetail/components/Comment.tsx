@@ -92,6 +92,7 @@ const Comment = ({
               nickname={nickname}
               skillList={memberSkills}
               createdAt={createdAt}
+              owner={owner}
             />
             {!deleted && <ModifyDropdown owner={owner} isInComment onEdit={onEditComment} onDelete={onDeleteComment} />}
           </Flex>

@@ -11,20 +11,21 @@ interface Props {
   nickname: string;
   skillList: string[];
   createdAt: string;
+  owner: boolean;
 }
 
-const CommentProfileInfo = ({ memberId, imageUrl, nickname, skillList, createdAt }: Props) => {
+const CommentProfileInfo = ({ memberId, imageUrl, nickname, skillList, createdAt, owner }: Props) => {
   const { goProfilePage } = useNavigatePage();
+
+  const onClickProfileImage = () => {
+    if (owner) return;
+
+    goProfilePage(memberId);
+  };
+
   return (
-    <Flex gap={10}>
-      <Box
-        width={36}
-        height={36}
-        overflow="hidden"
-        borderRadius="0 150px 150px 0"
-        onClick={() => goProfilePage(memberId)}
-        cursor="pointer"
-      >
+    <Flex gap={10} onClick={onClickProfileImage} cursor={owner ? '' : 'pointer'}>
+      <Box width={36} height={36} overflow="hidden" borderRadius="0 150px 150px 0">
         <ImageView src={imageUrl} alt="프로필" defaultSrc={PNGDefaultProfileInfo36} />
       </Box>
       <Flex paddingTop={2} direction="column" gap={4}>
