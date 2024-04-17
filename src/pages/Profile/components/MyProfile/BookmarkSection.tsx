@@ -73,6 +73,10 @@ const BookmarkSection = () => {
 const Wrapper = styled(Box)`
   max-width: 335px;
   margin: 0 auto;
+
+  @media (max-width: 375px) {
+    margin: 0;
+  }
 `;
 
 export default BookmarkSection;
