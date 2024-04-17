@@ -2,11 +2,24 @@ import styled from '@emotion/styled';
 import { SVGHeaderMainLogo } from 'concept-be-design-system';
 import { useNavigate } from 'react-router-dom';
 
+import useRouteMatched from '../hooks/useRouteMatch';
+
 const Logo = () => {
   const navigate = useNavigate();
+  const { hasMatched } = useRouteMatched();
+  const isMatchedFeed = hasMatched('/');
+
+  const onClickLogo = () => {
+    if (isMatchedFeed) {
+      location.reload();
+      return;
+    }
+
+    navigate('/');
+  };
 
   return (
-    <Wrapper onClick={() => navigate('/')}>
+    <Wrapper onClick={onClickLogo}>
       <SVGHeaderMainLogo />
     </Wrapper>
   );
