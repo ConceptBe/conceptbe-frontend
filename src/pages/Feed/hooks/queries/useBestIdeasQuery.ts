@@ -1,32 +1,20 @@
-import { useSuspenseInfiniteQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { http } from '../../../../api/http';
 import { BestIdea } from '../../types';
 
-type GetBestIdeasRequest = {
-  page: number;
-  size: number;
+const getBestIdeas = () => {
+  // 기존 무한스크롤 방식에서 5개 고정 표시로 변경됨에 따라 다음과 같이 상수로 수정.
+  return http.get<BestIdea[]>('/ideas/best?page=0&size=5');
 };
 
-const getBestIdeas = ({ page, size }: GetBestIdeasRequest) => {
-  return http.get<BestIdea[]>(`/ideas/best?page=${page}&size=${size}`);
-};
-
-export const useBestIdeasQuery = () => {
-  const sizePerPage = 20; // 한 페이지에 보여줄 아이디어 개수
-  const { data, fetchNextPage, hasNextPage } = useSuspenseInfiniteQuery({
+const useBestIdeasQuery = () => {
+  const { data: bestIdeas, ...rest } = useSuspenseQuery({
     queryKey: ['bestIdeas'],
-    initialPageParam: { page: 0, size: sizePerPage },
-    queryFn: ({ pageParam: { page, size } }) => {
-      return getBestIdeas({ page, size });
-    },
-    getNextPageParam: (lastPage, allPages, lastPageParam) => {
-      const nextPageParam = { page: lastPageParam.page + 1, size: sizePerPage };
-
-      // 글이 0개 이거나 sizePerPage보다 작으면 마지막페이지로 간주(undefined를 반환)
-      return lastPage.length === 0 || lastPage.length < sizePerPage ? undefined : nextPageParam;
-    },
+    queryFn: getBestIdeas,
   });
 
-  return { bestIdeas: data.pages.flat(), fetchNextPage, hasNextPage };
+  return { bestIdeas, ...rest };
 };
+
+export default useBestIdeasQuery;
