@@ -2,7 +2,7 @@ export interface FeedDetailResponse {
   memberId: number;
   imageUrl: string;
   nickname: string;
-  skillList: string[];
+  mainSkill: string;
   title: string;
   date: string;
   introduce: string;
