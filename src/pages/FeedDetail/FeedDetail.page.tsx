@@ -45,7 +45,7 @@ const FeedDetailPage = () => {
   useInitScrollPosition(`feed/${feedId}`);
 
   const onModifyFeedDetail = () => {
-    // 게시글 수정 로직 필요
+    navigate('/write-edit', { state: { ideaId: memberId } });
   };
 
   const onDeleteFeedDetail = async () => {
