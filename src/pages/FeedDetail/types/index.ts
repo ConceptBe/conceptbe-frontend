@@ -2,7 +2,7 @@ export interface FeedDetailResponse {
   memberId: number;
   imageUrl: string;
   nickname: string;
-  skillList: string[];
+  mainSkill: string;
   title: string;
   date: string;
   introduce: string;
@@ -25,7 +25,7 @@ export interface CommentParentResponse {
   parentCommentId: string;
   nickname: string;
   profileImageUrl: string;
-  memberSkills: string[];
+  memberMainSkill: string;
   content: string;
   createdAt: string;
   likesCount: number;
@@ -41,7 +41,7 @@ export interface CommentChildResponse {
   childCommentId: string;
   nickname: string;
   profileImageUrl: string;
-  memberSkills: string[];
+  mainSkill: string;
   content: string;
   createdAt: string;
   likesCount: number;

@@ -22,7 +22,7 @@ const FeedDetailPage = () => {
     memberId,
     imageUrl,
     nickname,
-    skillList,
+    mainSkill,
     title,
     date,
     introduce,
@@ -67,7 +67,7 @@ const FeedDetailPage = () => {
       </Header>
 
       <Box padding="30px 22px 30px 22px" marginTop={48}>
-        <ProfileInfo memberId={memberId} imageUrl={imageUrl} nickname={nickname} skillList={skillList} />
+        <ProfileInfo memberId={memberId} imageUrl={imageUrl} nickname={nickname} mainSkill={mainSkill} />
         <Spacer size={20} />
         <Box>
           <div>

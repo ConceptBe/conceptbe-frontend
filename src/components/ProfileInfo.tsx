@@ -1,5 +1,4 @@
-import { Text, TextDivider, Box, Flex, ImageView, PNGDefaultProfileInfo36 } from 'concept-be-design-system';
-import { Fragment } from 'react';
+import { Text, Box, Flex, ImageView, PNGDefaultProfileInfo36 } from 'concept-be-design-system';
 
 import useNavigatePage from '../pages/hooks/useNavigatePage';
 
@@ -7,12 +6,12 @@ interface Props {
   memberId: number;
   imageUrl: string;
   nickname: string;
-  skillList: string[];
+  mainSkill: string;
 }
 
 // TODO: 프로필 이미지 사진 오류 시 보여줄 기본 프로필 이미지 사진 URL
 
-const ProfileInfo = ({ memberId, imageUrl, nickname, skillList }: Props) => {
+const ProfileInfo = ({ memberId, imageUrl, nickname, mainSkill }: Props) => {
   const { goProfilePage } = useNavigatePage();
 
   return (
@@ -25,14 +24,9 @@ const ProfileInfo = ({ memberId, imageUrl, nickname, skillList }: Props) => {
           {nickname}
         </Text>
         <Flex alignItems="center">
-          {skillList.map((skill, idx) => (
-            <Fragment key={skill}>
-              <Text font="suit12r" color="b9">
-                {skill}
-              </Text>
-              {idx !== skillList.length - 1 && <TextDivider left={6} right={6} color="l2" />}
-            </Fragment>
-          ))}
+          <Text font="suit12r" color="b9">
+            {mainSkill}
+          </Text>
         </Flex>
       </Flex>
     </Flex>

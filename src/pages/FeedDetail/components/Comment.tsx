@@ -7,7 +7,6 @@ import ModifyDropdown from './ModifyDropdown';
 import Recomment from './Recomment';
 import WriteRecomment from './WriteRecomment';
 import useConfirm from '../../../hooks/useConfrim';
-import { MemberSkills } from '../../Profile/types';
 import { get999PlusCount } from '../../utils';
 import useDeleteCommentMutation from '../hooks/mutations/useDeleteComment';
 import useFocusEditComment from '../hooks/useFocusEditComment';
@@ -19,7 +18,6 @@ interface Props {
   feedId: string;
   myImageUrl: string;
   myNickname: string;
-  mySkillList: MemberSkills[];
   comment: CommentParentResponse;
 }
 
@@ -33,7 +31,7 @@ const Comment = ({
     nickname,
     profileImageUrl,
     createdAt,
-    memberSkills,
+    memberMainSkill,
     content,
     likesCount,
     commentCount,
@@ -91,7 +89,7 @@ const Comment = ({
               memberId={memberId}
               imageUrl={profileImageUrl}
               nickname={nickname}
-              skillList={memberSkills}
+              mainSkill={memberMainSkill}
               createdAt={createdAt}
               owner={owner}
             />
