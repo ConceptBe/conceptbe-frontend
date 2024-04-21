@@ -48,9 +48,8 @@ export default MobileView;
 
 const Wrapper = styled.main`
   width: 100%;
-  height: 100dvh;
+  height: 100%;
   max-width: 420px;
-  max-height: 100%;
   overflow: auto;
   margin: 0 auto;
   -ms-overflow-style: none; /* IE and Edge */
