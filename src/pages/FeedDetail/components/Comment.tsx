@@ -31,7 +31,7 @@ const Comment = ({
     nickname,
     profileImageUrl,
     createdAt,
-    mainSkill,
+    memberMainSkill,
     content,
     likesCount,
     commentCount,
@@ -89,7 +89,7 @@ const Comment = ({
               memberId={memberId}
               imageUrl={profileImageUrl}
               nickname={nickname}
-              mainSkill={mainSkill}
+              mainSkill={memberMainSkill}
               createdAt={createdAt}
               owner={owner}
             />

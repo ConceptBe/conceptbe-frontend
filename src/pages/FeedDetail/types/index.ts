@@ -25,7 +25,7 @@ export interface CommentParentResponse {
   parentCommentId: string;
   nickname: string;
   profileImageUrl: string;
-  mainSkill: string;
+  memberMainSkill: string;
   content: string;
   createdAt: string;
   likesCount: number;
