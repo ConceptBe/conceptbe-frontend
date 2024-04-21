@@ -98,7 +98,7 @@ const WriteEditPage = () => {
   const cooperationWay = radioValue.cooperationWays.find((cooperationWay) => cooperationWay.checked)?.name;
   const canSubmit = branchIds.length > 0 && purposeIds.length > 0 && !!cooperationWay;
 
-  useInitScrollPosition('writeEdit');
+  useInitScrollPosition();
 
   if (!sheetRightItems) {
     console.error('sheetRightItems is null');

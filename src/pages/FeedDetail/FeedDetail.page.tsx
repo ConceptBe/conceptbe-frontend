@@ -42,7 +42,7 @@ const FeedDetailPage = () => {
   const openConfirm = useConfirm();
   const { deleteIdea } = useDeleteIdea();
 
-  useInitScrollPosition(`feed/${feedId}`);
+  useInitScrollPosition();
 
   const onModifyFeedDetail = () => {
     navigate('/write-edit', { state: { ideaId: memberId } });

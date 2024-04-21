@@ -12,7 +12,7 @@ const Profile = () => {
   const userId = userIdFromParams ?? getUserId();
   const memberInfo = useMemberInfoQuery(userId);
 
-  useInitScrollPosition(`profile/${userIdFromParams}`);
+  useInitScrollPosition();
 
   return memberInfo.isMyProfile === true ? (
     <>
