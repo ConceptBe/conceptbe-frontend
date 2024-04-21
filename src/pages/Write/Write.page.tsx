@@ -87,7 +87,8 @@ const WritePage = () => {
   }
 
   const writeIdea = () => {
-    const recruitmentPlaceId = recruitmentPlaces.find((place) => place.name === dropdownValue.recruitmentPlace)?.id;
+    const recruitmentPlaceId =
+      recruitmentPlaces.find((place) => place.name === dropdownValue.recruitmentPlace)?.id || 1;
     const skillCategoryIds = selectedSkillResponses.map((selectedSkillResponse) => selectedSkillResponse.id);
 
     // TODO: 글쓰기 필수 조건 누락 시 토스트 띄워주기 (alert -> toast)
