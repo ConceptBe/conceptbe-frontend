@@ -91,7 +91,7 @@ const ProfileEdit = () => {
       profileImageUrl: my.profileImageUrl || '',
       skills: selectedSkillDepths.map(({ id, name }) => ({ skillId: id, level: name.split(', ')[1] })),
       joinPurposes: checkboxValue.goal.filter(({ checked }) => checked).map(({ id }) => id),
-      livingPlace: dropdownValue.region || null,
+      livingPlace: dropdownValue.region === '선택 안 함' ? null : dropdownValue.region,
       workingPlace: fieldValue.company,
       introduction: fieldValue.intro,
     });
