@@ -45,7 +45,7 @@ const FeedDetailPage = () => {
   useInitScrollPosition(`feed/${feedId}`);
 
   const onModifyFeedDetail = () => {
-    navigate('/write-edit', { state: { ideaId: memberId } });
+    navigate('/write-edit', { state: { ideaId: feedId } });
   };
 
   const onDeleteFeedDetail = async () => {
