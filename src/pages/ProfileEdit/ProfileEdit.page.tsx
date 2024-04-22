@@ -23,7 +23,6 @@ import { FormEvent } from 'react';
 import useProfileEditQuery from './hooks/useProfileEditQuery.ts';
 import usePutProfileMutation from './hooks/usePutProfileMutation.ts';
 import { DropdownValue, FieldValue } from './types';
-import useInitScrollPosition from '../../hooks/useInitScrollPosition.ts';
 import Back from '../../layouts/Back.tsx';
 import { getUserId } from '../Profile/utils/getUserId.ts';
 import useCheckDuplicateNickname from '../SignUp/hooks/useCheckDuplicateNickname.ts';
@@ -64,8 +63,6 @@ const ProfileEdit = () => {
     onResetDropdown,
   });
   const { putProfile } = usePutProfileMutation(getUserId(), fieldValue.nickname);
-
-  useInitScrollPosition();
 
   useCheckDuplicateNickname({ nickname: fieldValue.nickname, setFieldErrorValue });
 

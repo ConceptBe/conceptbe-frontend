@@ -9,7 +9,6 @@ import NewIdeaCardListSection from './components/NewIdeaCardListSection/NewIdeaC
 import { getUserNickname } from './utils/getUserNickname';
 import Padding from '../../components/Padding';
 import SEOMeta from '../../components/SEOMeta/SEOMeta';
-import useInitScrollPosition from '../../hooks/useInitScrollPosition';
 import Logo from '../../layouts/Logo';
 import { useWritingInfoQuery } from '../Write/hooks/queries/useWritingInfoQuery';
 
@@ -17,8 +16,6 @@ const Feed = () => {
   const navigate = useNavigate();
   const [isFilterBottomSheetOpen, setIsFilterBottomSheetOpen] = useState(false);
   const { branches, purposes, recruitmentPlaces, skillCategoryResponses } = useWritingInfoQuery();
-
-  useInitScrollPosition();
 
   const closeFilterBottomSheet = () => {
     setIsFilterBottomSheetOpen(false);

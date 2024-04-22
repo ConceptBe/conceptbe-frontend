@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { MutableRefObject, useEffect, useRef } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, ScrollRestoration } from 'react-router-dom';
 
 import { MobileViewRefContext } from './contexts/MobileViewContext';
 import Navbar from './Navbar';
@@ -37,6 +37,7 @@ const MobileView = () => {
   return (
     <MobileViewRefContext.Provider value={{ mobileViewRef, keyboardHeightRef }}>
       <Wrapper ref={mobileViewRef}>
+        <ScrollRestoration />
         <Outlet />
         <Navbar />
       </Wrapper>

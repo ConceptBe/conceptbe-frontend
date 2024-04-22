@@ -9,7 +9,6 @@ import useFeedDetailQuery from './hooks/queries/useFeedDetailQuery';
 import ProfileInfo from '../../components/ProfileInfo';
 import SEOMeta from '../../components/SEOMeta/SEOMeta';
 import useConfirm from '../../hooks/useConfrim';
-import useInitScrollPosition from '../../hooks/useInitScrollPosition';
 import Back from '../../layouts/Back';
 import Logo from '../../layouts/Logo';
 import { useDeleteIdea } from '../components/NewIdeaCard/hooks/mutations/useDeleteIdea';
@@ -41,8 +40,6 @@ const FeedDetailPage = () => {
   } = useFeedDetailQuery(feedId);
   const openConfirm = useConfirm();
   const { deleteIdea } = useDeleteIdea();
-
-  useInitScrollPosition();
 
   const onModifyFeedDetail = () => {
     navigate('/write-edit', { state: { ideaId: memberId } });
