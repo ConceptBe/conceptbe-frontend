@@ -9,7 +9,13 @@ import App from './App.tsx';
 import './styles/reset.css';
 import GlobalErrorBoundary from './components/ErrorBoundary/GlobalErrorBoundary.tsx';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+    },
+  },
+});
 
 createRoot(document.getElementById('root')!).render(
   <HelmetProvider>
