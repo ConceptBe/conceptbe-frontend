@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
 import { http } from '../../../../api/http';
-import useConfirm from '../../../../hooks/useConfrim';
+import useConfirm from '../../../../hooks/useConfirm';
 import useNavigatePage from '../../../hooks/useNavigatePage';
 import { getUserId } from '../../utils/getUserId';
 

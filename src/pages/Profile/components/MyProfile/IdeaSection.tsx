@@ -3,7 +3,7 @@ import { Box, Spacer, SVGProfileMessageDots } from 'concept-be-design-system';
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import useConfirm from '../../../../hooks/useConfrim';
+import useConfirm from '../../../../hooks/useConfirm';
 import { useDeleteIdea } from '../../../components/NewIdeaCard/hooks/mutations/useDeleteIdea';
 import NewIdeaCard from '../../../components/NewIdeaCard/NewIdeaCard';
 import { useFeedInfiniteFetch } from '../../../Feed/hooks/useFeedInfiniteFetch';

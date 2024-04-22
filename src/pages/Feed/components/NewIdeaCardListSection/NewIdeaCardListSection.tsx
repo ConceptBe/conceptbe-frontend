@@ -3,7 +3,7 @@ import { Spacer, Text } from 'concept-be-design-system';
 import { Fragment, Suspense, useRef } from 'react';
 
 import NewIdeaCardListSkeleton from './NewIdeaCardListSkeleton';
-import useConfirm from '../../../../hooks/useConfrim';
+import useConfirm from '../../../../hooks/useConfirm';
 import { useDeleteIdea } from '../../../components/NewIdeaCard/hooks/mutations/useDeleteIdea';
 import NewIdeaCard from '../../../components/NewIdeaCard/NewIdeaCard';
 import useNavigatePage from '../../../hooks/useNavigatePage';

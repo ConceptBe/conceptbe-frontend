@@ -7,7 +7,7 @@ import SEOMeta from '../../components/SEOMeta/SEOMeta';
 import Spinner from '../../components/Spinner/Spinner';
 import Privacy from '../../components/Terms/Privacy';
 import UsageTerms from '../../components/Terms/UsageTerms';
-import useConfirm from '../../hooks/useConfrim';
+import useConfirm from '../../hooks/useConfirm';
 import Back from '../../layouts/Back';
 import useNavigatePage from '../hooks/useNavigatePage';
 

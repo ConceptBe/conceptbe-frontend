@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import useConfirm from '../../../hooks/useConfrim';
+import useConfirm from '../../../hooks/useConfirm';
 import { OauthMemberInfo } from '../../../types/login';
 
 const useValidateUserInfo = (userInfo: OauthMemberInfo | null) => {

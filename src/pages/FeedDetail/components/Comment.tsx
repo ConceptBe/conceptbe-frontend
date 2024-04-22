@@ -6,7 +6,7 @@ import EditComment from './EditComment';
 import ModifyDropdown from './ModifyDropdown';
 import Recomment from './Recomment';
 import WriteRecomment from './WriteRecomment';
-import useConfirm from '../../../hooks/useConfrim';
+import useConfirm from '../../../hooks/useConfirm';
 import { get999PlusCount } from '../../utils';
 import useDeleteCommentMutation from '../hooks/mutations/useDeleteComment';
 import useFocusEditComment from '../hooks/useFocusEditComment';

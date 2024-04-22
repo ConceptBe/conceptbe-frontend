@@ -8,7 +8,7 @@ import { CommentFocusProvider } from './contexts/CommentFocusContext';
 import useFeedDetailQuery from './hooks/queries/useFeedDetailQuery';
 import ProfileInfo from '../../components/ProfileInfo';
 import SEOMeta from '../../components/SEOMeta/SEOMeta';
-import useConfirm from '../../hooks/useConfrim';
+import useConfirm from '../../hooks/useConfirm';
 import Back from '../../layouts/Back';
 import Logo from '../../layouts/Logo';
 import { useDeleteIdea } from '../components/NewIdeaCard/hooks/mutations/useDeleteIdea';
