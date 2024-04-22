@@ -1,8 +1,10 @@
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { Component, ReactElement, ReactNode } from 'react';
+import { Navigate } from 'react-router-dom';
 
 import ErrorFallback from './ErrorFallback';
+import UnauthorizedAlert from './UnauthorizedAlert';
 
 interface FallbackProps {
   error: AxiosError;
@@ -26,7 +28,7 @@ type State =
     }
   | {
       error: AxiosError;
-      errorDetail: 'network';
+      errorDetail: 'network' | 'unauthorized';
     };
 
 class ErrorBoundary extends Component<Props, State> {
@@ -56,6 +58,13 @@ class ErrorBoundary extends Component<Props, State> {
         };
       }
 
+      if (error.response?.status === 401) {
+        return {
+          error,
+          errorDetail: 'unauthorized',
+        };
+      }
+
       if (error.response?.status >= 400) {
         return {
           error,
@@ -70,9 +79,29 @@ class ErrorBoundary extends Component<Props, State> {
     };
   }
 
+  componentDidCatch(): void {
+    const { errorDetail } = this.state;
+
+    if (errorDetail === 'unauthorized') {
+      localStorage.removeItem('userToken');
+      localStorage.removeItem('user');
+
+      return;
+    }
+  }
+
   render() {
     if (!this.state.error && !this.state.errorDetail) {
       return this.props.children;
+    }
+
+    if (this.state.errorDetail === 'unauthorized') {
+      return (
+        <>
+          <UnauthorizedAlert />
+          <Navigate to="/login" />
+        </>
+      );
     }
 
     if (this.state.errorDetail === 'network') {
