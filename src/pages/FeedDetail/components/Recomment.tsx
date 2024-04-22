@@ -4,7 +4,7 @@ import { useState } from 'react';
 import CommentProfileInfo from './CommentProfileInfo';
 import EditComment from './EditComment';
 import ModifyDropdown from './ModifyDropdown';
-import useConfirm from '../../../hooks/useConfrim';
+import useConfirm from '../../../hooks/useConfirm';
 import { get999PlusCount } from '../../utils';
 import useDeleteCommentMutation from '../hooks/mutations/useDeleteComment';
 import useFocusEditComment from '../hooks/useFocusEditComment';

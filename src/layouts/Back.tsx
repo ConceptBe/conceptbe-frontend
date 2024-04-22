@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { SVGHeaderBack24B, theme } from 'concept-be-design-system';
 import { useNavigate } from 'react-router-dom';
 
-import useConfirm from '../hooks/useConfrim';
+import useConfirm from '../hooks/useConfirm';
 import useRouteMatched from '../hooks/useRouteMatch';
 
 type Props = {

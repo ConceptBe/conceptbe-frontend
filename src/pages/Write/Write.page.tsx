@@ -16,6 +16,7 @@ import {
   SVGRadioUncheck24,
   Flex,
   useDropdown,
+  Box,
 } from 'concept-be-design-system';
 import { useState } from 'react';
 
@@ -28,7 +29,6 @@ import { Info } from './types';
 import { get2DepthCountsBy1Depth } from './utils/get2DepthCountsBy1Depth';
 import SEOMeta from '../../components/SEOMeta/SEOMeta';
 import useAlert from '../../hooks/useAlert';
-import useInitScrollPosition from '../../hooks/useInitScrollPosition';
 
 const cooperationWays = [
   { id: 1, name: '상관없음' },
@@ -78,8 +78,6 @@ const WritePage = () => {
   const purposeIds = checkboxValue.purposes.filter((branch) => branch.checked).map((purpose) => purpose.id);
   const cooperationWay = radioValue.cooperationWays.find((cooperationWay) => cooperationWay.checked)?.name;
   const canSubmit = branchIds.length > 0 && purposeIds.length > 0 && !!cooperationWay;
-
-  useInitScrollPosition();
 
   if (!sheetRightItems) {
     console.error('sheetRightItems is null');
@@ -176,7 +174,7 @@ const WritePage = () => {
 
         <Divider color="bg1" height={8} bottom={30} />
         <BottomWrapper>
-          <BottomBox>
+          <Box>
             <CheckboxContainer
               label="분야"
               checkboxKey="branches"
@@ -184,8 +182,8 @@ const WritePage = () => {
               onChange={onChangeCheckbox}
               required
             />
-          </BottomBox>
-          <BottomBox>
+          </Box>
+          <Box>
             <CheckboxContainer
               label="목적"
               checkboxKey="purposes"
@@ -193,8 +191,8 @@ const WritePage = () => {
               onChange={onChangeCheckbox}
               required
             />
-          </BottomBox>
-          <BottomBox>
+          </Box>
+          <Box>
             <RadioContainer
               label="협업방식"
               radioKey="cooperationWays"
@@ -203,16 +201,16 @@ const WritePage = () => {
               gap="large"
               required
             />
-          </BottomBox>
-          <BottomBox>
+          </Box>
+          <Box>
             <RecruitmentPlaceSection
               places={recruitmentPlaces}
               selectedPlace={dropdownValue.recruitmentPlace}
               onPlaceChange={(selectedPlace) => onClickDropdown(selectedPlace, 'recruitmentPlace')}
             />
-          </BottomBox>
+          </Box>
 
-          <BottomBox>
+          <Box height={144}>
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
               <Text font="suit15m" color="b9">
                 팀원 모집
@@ -245,7 +243,7 @@ const WritePage = () => {
             </TeamLabelBox>
 
             <Spacer size={40} />
-          </BottomBox>
+          </Box>
         </BottomWrapper>
 
         <BottomSheet isOpen={isOpenBottomSheet} onClose={() => setIsOpenBottomSheet(false)}>
@@ -315,8 +313,6 @@ const BottomWrapper = styled.div`
   flex-direction: column;
   gap: 35px;
 `;
-
-const BottomBox = styled.div``;
 
 const Sheet_TopBox = styled.div`
   box-sizing: border-box;

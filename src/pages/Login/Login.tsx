@@ -15,7 +15,7 @@ const Login = () => {
     <>
       <SEOMeta title="컨셉비 | 로그인" description="컨셉비 시작하기 (로그인/회원가입)" />
 
-      <Flex direction="column" justifyContent="center" alignItems="center" height="100%">
+      <Flex direction="column" justifyContent="center" alignItems="center" height="100dvh">
         <SVGLoginLogo />
         <Spacer size={40} />
         <ButtonWrapper onClick={onClickOauthKakao}>

@@ -44,10 +44,12 @@ const Agreement = () => {
     <>
       <SEOMeta title="컨셉비 | 약관동의" description="컨셉비 시작하기 (로그인/회원가입)" />
 
-      <Wrapper height="100%" direction="column" padding="20px 22px">
-        <Box maxWidth={375} maxHeight={375}>
-          <ImageView src={PNGAgreementBackground} alt="동의 페이지 이미지" />
-        </Box>
+      <Wrapper height="100dvh" direction="column" padding="20px 22px">
+        <Flex justifyContent="center" alignItems="center">
+          <Box maxWidth={300} maxHeight={300}>
+            <ImageView src={PNGAgreementBackground} alt="동의 페이지 이미지" />
+          </Box>
+        </Flex>
         <Spacer size={50} />
 
         <Text
