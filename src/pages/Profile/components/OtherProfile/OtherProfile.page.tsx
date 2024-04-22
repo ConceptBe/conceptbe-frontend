@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
-import { theme } from 'concept-be-design-system';
+import { Text, theme, Header } from 'concept-be-design-system';
 import { Suspense } from 'react';
 
-import Header from './Header';
 import IdeaSection from './IdeaSection';
 import Spinner from '../../../../components/Spinner/Spinner';
+import Back from '../../../../layouts/Back';
 import { Member } from '../../types';
 import ProfileInfoSection from '../ProfileInfoSection';
 
@@ -16,7 +16,12 @@ type Props = {
 const OtherProfile = ({ userId, memberInfo }: Props) => {
   return (
     <ProfileContainer>
-      <Header />
+      <Header spacerPosition="end">
+        <Back />
+        <Text font="suit16sb" color="b4">
+          프로필
+        </Text>
+      </Header>
       <Suspense fallback={<Spinner />}>
         <ProfileWrapper>
           <ProfileInfoSection memberInfo={memberInfo} />
