@@ -42,7 +42,7 @@ const FeedDetailPage = () => {
   const { deleteIdea } = useDeleteIdea();
 
   const onModifyFeedDetail = () => {
-    navigate('/write-edit', { state: { ideaId: memberId } });
+    navigate('/write-edit', { state: { ideaId: feedId } });
   };
 
   const onDeleteFeedDetail = async () => {

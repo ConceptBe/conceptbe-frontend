@@ -30,9 +30,15 @@ export interface Skill {
   name: string;
 }
 
+interface Region {
+  id: number;
+  name: string;
+}
+
 export interface GetSignUp {
   mainSkillResponses: MainSkillOption[];
   purposeResponses: CheckboxOption[];
+  regionResponses: Region[];
 }
 
 export interface MainSkillOption {
