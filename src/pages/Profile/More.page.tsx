@@ -119,15 +119,12 @@ export default More;
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%;
-  /* height: calc(var(--vh, 1vh) * 100); */
+  height: 100dvh;
   overflow: hidden;
   background-color: ${theme.color.bg1};
 `;
 
 const MainWrapper = styled.section`
-  /* background-color: ${theme.color.bg1}; */
-  /* height: 100svh; */
   padding: 84px 30px 0 30px;
   overflow: hidden;
 `;
