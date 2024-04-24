@@ -4,8 +4,8 @@ import { useIntersection } from 'react-use';
 const useCommentInfiniteFetch = (intersectionRef: MutableRefObject<null>, fetchCallback: () => void) => {
   const intersection = useIntersection(intersectionRef, {
     root: null,
-    rootMargin: `0px`,
-    threshold: 1,
+    rootMargin: `400px`,
+    threshold: 0,
   });
 
   useEffect(() => {
