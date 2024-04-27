@@ -1,4 +1,3 @@
-import { useQueryClient } from '@tanstack/react-query';
 import { useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,7 +6,6 @@ import Spinner from '../../components/Spinner/Spinner';
 
 const KakaoRedirect = () => {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
   const searchParams = new URLSearchParams(location.search);
   const code = searchParams.get('code');
 
@@ -22,15 +20,13 @@ const KakaoRedirect = () => {
         localStorage.setItem('userToken', accessToken);
         localStorage.setItem('user', JSON.stringify(authMemberInformation));
 
-        await queryClient.refetchQueries({ queryKey: ['ideas'] });
-
         navigate('/');
         return;
       }
 
       navigate('/agreement', { state: data.oauthMemberInformation });
     },
-    [navigate, queryClient],
+    [navigate],
   );
 
   useEffect(() => {

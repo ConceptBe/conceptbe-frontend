@@ -12,14 +12,13 @@ import { useIdeasQuery } from '../../hooks/queries/useIdeasQuery';
 import { useFeedInfiniteFetch } from '../../hooks/useFeedInfiniteFetch';
 import { getUserNickname } from '../../utils/getUserNickname';
 
-const nickname = getUserNickname();
-
 const CardList = () => {
   const { filterParams } = useFilterParams();
   const { ideas, fetchNextPage } = useIdeasQuery(filterParams);
   const { goProfilePage } = useNavigatePage();
   const { deleteIdea } = useDeleteIdea();
   const openConfirm = useConfirm();
+  const nickname = getUserNickname();
 
   const intersectionRef = useRef(null);
 
