@@ -20,8 +20,17 @@ const useCommentsQuery = (feedId: string) => {
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
       const nextPageParam = { page: lastPageParam.page + 1, size: sizePerPage };
 
-      // 대댓글 또한 댓글로 간주되어 lastPage.length < sizePerPage 조건문이 정상적으로 동작하지 않아 제거했습니다.
-      return lastPage.length === 0 ? undefined : nextPageParam;
+      const commentsCount = allPages.reduce(
+        (acc, commentParents) =>
+          acc +
+          commentParents.reduce(
+            (acc, { commentChildResponses }) => acc + commentChildResponses.length,
+            commentParents.length,
+          ),
+        0,
+      );
+
+      return commentsCount < sizePerPage * (lastPageParam.page + 1) ? undefined : nextPageParam;
     },
   });
 
