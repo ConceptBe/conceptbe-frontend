@@ -22,9 +22,9 @@ const KakaoRedirect = () => {
         localStorage.setItem('userToken', accessToken);
         localStorage.setItem('user', JSON.stringify(authMemberInformation));
 
-        queryClient.refetchQueries({ queryKey: ['ideas'] });
-
         navigate('/');
+
+        queryClient.refetchQueries({ queryKey: ['ideas'] });
         return;
       }
 
