@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { Spacer, Text, theme, SVGLoginKakao, SVGLoginNaver, SVGLoginLogo, Flex } from 'concept-be-design-system';
+import { useNavigate } from 'react-router-dom';
 
 import SEOMeta from '../../components/SEOMeta/SEOMeta';
 import { BASE_URL } from '../../constants';
@@ -7,6 +8,8 @@ import { BASE_URL } from '../../constants';
 const REQUEST_URL = `${BASE_URL}/oauth/kakao`;
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const onClickOauthKakao = () => {
     window.location.href = REQUEST_URL;
   };
@@ -37,6 +40,11 @@ const Login = () => {
             <Text font="suit15rb">네이버 로그인</Text>
           </TextWrapper>
         </ButtonWrapper>
+
+        <Spacer size={40} />
+        <LinkText font="suit14r" color="b6" onClick={() => navigate('/')}>
+          메인페이지로 가기
+        </LinkText>
       </Flex>
     </>
   );
@@ -74,4 +82,9 @@ const TextWrapper = styled.div`
   box-sizing: border-box;
   height: 100%;
   width: 100%;
+`;
+
+const LinkText = styled(Text)`
+  text-decoration: underline;
+  cursor: pointer;
 `;
