@@ -88,7 +88,7 @@ const ProfileEdit = () => {
       profileImageUrl: my.profileImageUrl || '',
       skills: selectedSkillDepths.map(({ id, name }) => ({ skillId: id, level: name.split(', ')[1] })),
       joinPurposes: checkboxValue.goal.filter(({ checked }) => checked).map(({ id }) => id),
-      livingPlace: regions.find((place) => place.name === dropdownValue.region)?.id || 1,
+      livingPlaceId: regions.find((place) => place.name === dropdownValue.region)?.id || 1,
       workingPlace: fieldValue.company,
       introduction: fieldValue.intro,
     });
