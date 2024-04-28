@@ -237,7 +237,7 @@ const WritePage = () => {
                 return (
                   <TeamLabel key={item.id}>
                     {item.name}
-                    <SVGCancel onClick={() => onDeleteTeamRecruitment(item.id)} />
+                    <SVGCancel onClick={() => onDeleteTeamRecruitment(item.id)} cursor="pointer" />
                   </TeamLabel>
                 );
               })}
@@ -250,17 +250,21 @@ const WritePage = () => {
         <BottomSheet isOpen={isOpenBottomSheet} onClose={() => setIsOpenBottomSheet(false)}>
           <Sheet_TopBox>
             <SVGCancel
+              width={24}
+              height={24}
               onClick={() => {
                 setIsOpenBottomSheet(false);
               }}
+              cursor="pointer"
             />
             <Text font="suit16sb" color="b4">
-              팀원선택
+              팀원 선택
             </Text>
             <SVGHeaderCheck24
               onClick={() => {
                 setIsOpenBottomSheet(false);
               }}
+              cursor="pointer"
             />
           </Sheet_TopBox>
           <Sheet_BodyBox>
@@ -333,6 +337,7 @@ const Sheet_BodyBox = styled.div`
 
 const Sheet_Left = styled.div`
   width: 38%;
+  cursor: pointer;
 `;
 
 const Sheet_leftItem = styled.div<{ checked: boolean }>`
@@ -362,6 +367,7 @@ const Sheet_radioDiv = styled.div`
 
   height: 54px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  cursor: pointer;
 `;
 
 const TeamLabelBox = styled.div`
