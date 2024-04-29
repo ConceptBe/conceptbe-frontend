@@ -1,7 +1,5 @@
 import { useContext, useState, createContext, MutableRefObject, useRef, ReactNode } from 'react';
 
-import { useMobileViewRefContext } from '../../../layouts/contexts/MobileViewContext';
-
 interface CommentFocusContextType {
   isFocusComment: boolean;
   openCommentTextarea: () => void;
@@ -21,53 +19,14 @@ interface Props {
 
 interface FocusUsingKeyboardHeightProps {
   textareaRef: MutableRefObject<HTMLTextAreaElement | null>;
-  mobileViewRef: MutableRefObject<HTMLElement | null>;
-  keyboardCurrent: number;
-  isComment?: boolean;
 }
 
 const CommentFocusContext = createContext<CommentFocusContextType | null>(null);
 
-const isIphone = /ip/i.test(navigator.userAgent.toLowerCase());
-const INIT_KEYBOARD_HEIGHT = 280;
-const FOCUSING_DIFFERENCE = 1.4;
+const focusUsingKeyboardHeight = ({ textareaRef }: FocusUsingKeyboardHeightProps) => {
+  if (!textareaRef.current) return;
 
-const focusUsingKeyboardHeight = ({
-  textareaRef,
-  mobileViewRef,
-  keyboardCurrent,
-  isComment,
-}: FocusUsingKeyboardHeightProps) => {
-  if (!textareaRef.current || !mobileViewRef.current) return;
-
-  const textareaRefCurrent = textareaRef.current;
-  const mobileViewRefCurrent = mobileViewRef.current;
-  const textareaRect = textareaRefCurrent.getBoundingClientRect();
-  const innerHeight = window.innerHeight;
-  const keyboardHeight = keyboardCurrent || INIT_KEYBOARD_HEIGHT;
-  const elementAbsolutePosition = mobileViewRefCurrent.scrollTop + textareaRect.top;
-
-  textareaRefCurrent.focus();
-
-  // focus() 동작 완료 이후 포커싱 로직 동작토록 의도적으로 비동기 상황으로 수행
-  const timerId = setTimeout(() => {
-    clearTimeout(timerId);
-
-    // 가상 키보드 내에 댓글 및 답글 입력창이 가려질 가능성이 있는 경우에만 포커싱 로직 동작
-    if (innerHeight - textareaRect.top >= keyboardHeight) return;
-
-    // 댓글 입력창 및 IOS 디바이스는 아래 포커싱 로직으로 동작
-    if (isIphone && isComment) {
-      mobileViewRefCurrent.scroll({
-        top: elementAbsolutePosition - innerHeight + keyboardHeight * FOCUSING_DIFFERENCE,
-        behavior: 'smooth',
-      });
-      return;
-    }
-
-    // 답글 입력창 및 IOS 외 모든 디바이스는 아래 포커싱 로직으로 동작
-    textareaRefCurrent.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-  }, 0);
+  textareaRef.current.focus();
 };
 
 const resetTextareaFocus = (textareaRef: MutableRefObject<HTMLTextAreaElement | null>) => {
@@ -75,7 +34,6 @@ const resetTextareaFocus = (textareaRef: MutableRefObject<HTMLTextAreaElement | 
 };
 
 export const CommentFocusProvider = ({ children }: Props) => {
-  const { mobileViewRef, keyboardHeightRef } = useMobileViewRefContext();
   const [isFocusComment, setIsFocusComment] = useState<boolean>(false);
   const commentTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const recommentTextareaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -87,9 +45,6 @@ export const CommentFocusProvider = ({ children }: Props) => {
 
     focusUsingKeyboardHeight({
       textareaRef: commentTextareaRef,
-      mobileViewRef,
-      keyboardCurrent: keyboardHeightRef.current,
-      isComment: true,
     });
     return;
   };
@@ -102,9 +57,6 @@ export const CommentFocusProvider = ({ children }: Props) => {
   const focusRecommentTextarea = () => {
     focusUsingKeyboardHeight({
       textareaRef: recommentTextareaRef,
-      mobileViewRef,
-      keyboardCurrent: keyboardHeightRef.current,
-      isComment: false,
     });
   };
 
@@ -116,9 +68,6 @@ export const CommentFocusProvider = ({ children }: Props) => {
   const focusEditCommentTextarea = () => {
     focusUsingKeyboardHeight({
       textareaRef: editCommentTextareaRef,
-      mobileViewRef,
-      keyboardCurrent: keyboardHeightRef.current,
-      isComment: false,
     });
   };
 
