@@ -4,11 +4,13 @@ import { useNavigate } from 'react-router-dom';
 
 import SEOMeta from '../../components/SEOMeta/SEOMeta';
 import { BASE_URL } from '../../constants';
+import useAlert from '../../hooks/useAlert';
 
 const REQUEST_URL = `${BASE_URL}/oauth/kakao`;
 
 const Login = () => {
   const navigate = useNavigate();
+  const openAlert = useAlert();
 
   const onClickOauthKakao = () => {
     window.location.href = REQUEST_URL;
@@ -32,7 +34,10 @@ const Login = () => {
 
         <Spacer size={10} />
 
-        <ButtonWrapper>
+        {/* 네이버 로그인 기능 완료 시 수정 */}
+        <ButtonWrapper
+          onClick={() => openAlert({ content: '아직 준비 중인 기능입니다. 카카오로 로그인을 수행해 주세요.' })}
+        >
           <LogoBox color="#03C75A">
             <SVGLoginNaver />
           </LogoBox>
