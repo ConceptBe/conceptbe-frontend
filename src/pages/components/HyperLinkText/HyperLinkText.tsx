@@ -16,7 +16,7 @@ const convertHyperLinkTexts = ({ font, color, lineHeight = 'normal', children: t
     if (line === '') return <br key={idx} />;
 
     return (
-      <Description as="p" key={idx} font={font} color={color} lineHeight={lineHeight}>
+      <Paragraph as="p" key={idx} font={font} color={color} lineHeight={lineHeight}>
         {line.split(' ').map((word, idx) => {
           const isFirst = idx === 0;
 
@@ -30,7 +30,7 @@ const convertHyperLinkTexts = ({ font, color, lineHeight = 'normal', children: t
 
           return <>{isFirst ? word : ` ${word}`}</>;
         })}
-      </Description>
+      </Paragraph>
     );
   });
 
@@ -40,16 +40,19 @@ const convertHyperLinkTexts = ({ font, color, lineHeight = 'normal', children: t
 const HyperLinkText = (props: Props) => {
   const convertedTexts = convertHyperLinkTexts(props);
 
-  return <>{convertedTexts}</>;
+  return <Wrapper>{convertedTexts}</Wrapper>;
 };
 
 export default HyperLinkText;
 
-const Description = styled(Text)<{ lineHeight: string }>`
-  line-height: ${({ lineHeight }) => lineHeight};
+const Wrapper = styled.div`
   white-space: pre-wrap;
 `;
 
-const HyperLink = styled(Description)`
+const Paragraph = styled(Text)<{ lineHeight: string }>`
+  line-height: ${({ lineHeight }) => lineHeight};
+`;
+
+const HyperLink = styled(Paragraph)`
   color: #448cef;
 `;
