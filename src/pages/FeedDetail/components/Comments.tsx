@@ -18,7 +18,7 @@ const Comments = ({ feedId }: Props) => {
   const { profileImageUrl: myImageUrl, nickname: myNickname } = useMemberInfoQuery(getUserId());
 
   const intersectionRef = useRef(null);
-  useCommentInfiniteFetch(intersectionRef, fetchNextPage);
+  useCommentInfiniteFetch(intersectionRef, fetchNextPage, feedId);
 
   return (
     <Box padding="20px 22px">
@@ -31,13 +31,9 @@ const Comments = ({ feedId }: Props) => {
           </Fragment>
         ))
       ) : (
-        <>
-          <div ref={intersectionRef}></div>
-          <EmptyTabContentSection svg={SVGProfileMessageDots} textList={['', '아직 작성된 댓글이 없어요.']} />
-        </>
+        <EmptyTabContentSection svg={SVGProfileMessageDots} textList={['', '아직 작성된 댓글이 없어요.']} />
       )}
-      {/* 무한 스크롤이 간헐적으로 되지 않는 문제 때문에 생긴 중복 분기 처리 로직입니다. 문제 해결시 리팩토링 예정 */}
-      {comments.length > 0 && <div ref={intersectionRef}></div>}
+      <div ref={intersectionRef} id="comment-intersection-ref"></div>
     </Box>
   );
 };
