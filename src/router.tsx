@@ -9,7 +9,6 @@ import FeedDetailPage from './pages/FeedDetail/FeedDetail.page';
 import Agreement from './pages/Login/Agreement';
 import KakaoRedirect from './pages/Login/KakaoRedirect';
 import Login from './pages/Login/Login';
-import NeedAuth from './pages/NeedAuth';
 import NotFound from './pages/NotFound';
 import More from './pages/Profile/More.page';
 import Profile from './pages/Profile/Profile.page';
@@ -21,10 +20,9 @@ import WriteEditPage from './pages/WriteEdit/WriteEdit.page';
 interface RouteElement {
   path: string;
   element: ReactNode;
-  isAuth: boolean;
   redirectPath?: string;
   errorElement?: ReactNode;
-  children: { path: string; element: ReactNode; withAuth: boolean }[];
+  children: { path: string; element: ReactNode }[];
 }
 
 const withAsyncBoundary = (children: ReactNode) => (
@@ -37,90 +35,56 @@ const routes: RouteElement[] = [
   {
     path: '/',
     element: <MobileView />,
-    isAuth: false,
     errorElement: <NotFound />,
     children: [
       {
         path: '',
         element: withAsyncBoundary(<Feed />),
-        withAuth: false,
       },
       {
         path: '/feed/:id',
         element: withAsyncBoundary(<FeedDetailPage />),
-        withAuth: true,
       },
       {
         path: '/write',
         element: withAsyncBoundary(<WritePage />),
-        withAuth: true,
       },
       {
         path: '/write-edit',
         element: withAsyncBoundary(<WriteEditPage />),
-        withAuth: true,
       },
       {
         path: '/login',
         element: <Login />,
-        withAuth: false,
       },
       {
         path: '/oauth/redirected/kakao',
         element: <KakaoRedirect />,
-        withAuth: false,
       },
       {
         path: '/profile/:id',
         element: withAsyncBoundary(<Profile />),
-        withAuth: true,
       },
       {
         path: '/profile-edit',
         element: withAsyncBoundary(<ProfileEdit />),
-        withAuth: true,
       },
       {
         path: '/profile/:id/more',
         element: <More />,
-        withAuth: true,
       },
-
       {
         path: '/agreement',
         element: <Agreement />,
-        withAuth: false,
       },
       {
         path: '/sign-up',
         element: withAsyncBoundary(<SignUpPage />),
-        withAuth: false,
       },
     ],
   },
 ];
 
-const router = createBrowserRouter(
-  routes.map((route) => {
-    const childrenRoutes = route.children?.map((childRoute) => {
-      if (childRoute.withAuth) {
-        return {
-          path: childRoute.path,
-          element: <NeedAuth withAuth={childRoute.withAuth}>{childRoute.element}</NeedAuth>,
-        };
-      }
-
-      return {
-        path: childRoute.path,
-        element: childRoute.element,
-      };
-    });
-
-    return {
-      ...route,
-      children: childrenRoutes,
-    };
-  }),
-);
+const router = createBrowserRouter(routes);
 
 export default router;

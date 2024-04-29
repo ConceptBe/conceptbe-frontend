@@ -28,7 +28,7 @@ type State =
     }
   | {
       error: AxiosError;
-      errorDetail: 'network' | 'unauthorized';
+      errorDetail: 'server' | 'unauthorized' | 'auth-expired';
     };
 
 class ErrorBoundary extends Component<Props, State> {
@@ -59,16 +59,23 @@ class ErrorBoundary extends Component<Props, State> {
       }
 
       if (error.response?.status === 401) {
+        if (!localStorage.getItem('userToken')) {
+          return {
+            error,
+            errorDetail: 'unauthorized',
+          };
+        }
+
         return {
           error,
-          errorDetail: 'unauthorized',
+          errorDetail: 'auth-expired',
         };
       }
 
       if (error.response?.status >= 400) {
         return {
           error,
-          errorDetail: 'network',
+          errorDetail: 'server',
         };
       }
     }
@@ -82,7 +89,7 @@ class ErrorBoundary extends Component<Props, State> {
   componentDidCatch(): void {
     const { errorDetail } = this.state;
 
-    if (errorDetail === 'unauthorized') {
+    if (errorDetail === 'auth-expired') {
       localStorage.removeItem('userToken');
       localStorage.removeItem('user');
 
@@ -96,6 +103,10 @@ class ErrorBoundary extends Component<Props, State> {
     }
 
     if (this.state.errorDetail === 'unauthorized') {
+      return <Navigate to="/login" />;
+    }
+
+    if (this.state.errorDetail === 'auth-expired') {
       return (
         <>
           <UnauthorizedAlert />
@@ -104,7 +115,7 @@ class ErrorBoundary extends Component<Props, State> {
       );
     }
 
-    if (this.state.errorDetail === 'network') {
+    if (this.state.errorDetail === 'server') {
       if (this.props.fallback) {
         const FallbackComponent = this.props.fallback.type;
         const fallbackProps = {
