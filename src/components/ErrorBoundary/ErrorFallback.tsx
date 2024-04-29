@@ -3,6 +3,8 @@ import { Box, Button, Flex, ImageView, PNGErrorBackground, Spacer, theme } from 
 import { ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import useRouteMatched from '../../hooks/useRouteMatch';
+
 interface Props {
   title: string;
   children: ReactNode;
@@ -12,6 +14,14 @@ interface Props {
 
 const ErrorFallback = ({ title, children, isInApiErrorBoundary, resetErrorBoundary }: Props) => {
   const navigate = useNavigate();
+  const { hasMatched } = useRouteMatched();
+  const isShowedNavigation = hasMatched('/', '/profile/:id');
+
+  const getDynamicSpacerHeight = () => {
+    if (isInApiErrorBoundary && isShowedNavigation) return 80;
+
+    return 0;
+  };
 
   const goToPrevPage = () => {
     resetErrorBoundary();
@@ -31,7 +41,8 @@ const ErrorFallback = ({ title, children, isInApiErrorBoundary, resetErrorBounda
   return (
     <Flex
       maxWidth={420}
-      height="100dvh"
+      minHeight="100dvh"
+      height="100%"
       margin="0 auto"
       shadow="rgba(149, 157, 165, 0.2) 0px 8px 24px"
       direction="column"
@@ -40,7 +51,7 @@ const ErrorFallback = ({ title, children, isInApiErrorBoundary, resetErrorBounda
       <Box maxWidth={420} maxHeight={420}>
         <ImageView src={PNGErrorBackground} alt="에러 페이지 이미지" />
       </Box>
-      <Box padding="0 22px">
+      <Box padding="0 22px 22px">
         <Spacer size={26} />
         <Flex direction="column" alignItems="center" justifyContent="center">
           <TitleWrapper>{title}</TitleWrapper>
@@ -60,6 +71,7 @@ const ErrorFallback = ({ title, children, isInApiErrorBoundary, resetErrorBounda
             <Button onClick={goToMainPate}>메인으로 가기</Button>
           </Flex>
         )}
+        <Spacer size={getDynamicSpacerHeight()} />
       </Box>
     </Flex>
   );

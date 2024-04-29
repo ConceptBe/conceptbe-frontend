@@ -15,21 +15,11 @@ const Navbar = () => {
   const { id: userIdFromParams } = useParams();
   const { hasMatched } = useRouteMatched();
   const navigate = useNavigate();
-  const isMatchedNavigation = hasMatched(
-    '/profile-edit',
-    '/login',
-    '/write',
-    '/agreement',
-    '/auth',
-    '/feed/:id',
-    '/sign-up',
-    '/write-edit',
-    '/oauth/*',
-  );
+  const isShowNavigation = hasMatched('/', '/profile/:id');
 
   return (
     <>
-      {!isMatchedNavigation && (
+      {isShowNavigation && (
         <Navigation>
           <Navigation.Item onClick={() => navigate('/')}>
             {location.pathname.startsWith('/feed') || location.pathname === '/' ? <SVGNavActiveFeed /> : <SVGNavFeed />}

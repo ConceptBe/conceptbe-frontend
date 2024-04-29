@@ -14,7 +14,7 @@ export interface PutSignUp {
   profileImageUrl: string;
   skills: Omit<ProfileSkill, 'skillName'>[];
   joinPurposes: number[];
-  livingPlace: string | null;
+  livingPlaceId: number;
   workingPlace?: string;
   introduction?: string;
 }

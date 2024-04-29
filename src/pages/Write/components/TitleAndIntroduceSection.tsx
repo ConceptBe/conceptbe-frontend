@@ -29,7 +29,7 @@ const TitleAndIntroduceSection = ({ title, introduce, onTitleChange, onIntroduce
 
   return (
     <>
-      <HeaderInput placeholder="제목을 입력해 주세요 (최대20자)" value={title} onChange={handleChangeTitle} />
+      <HeaderInput placeholder="제목을 입력해 주세요 (최대20자)" value={title} onChange={handleChangeTitle} autoFocus />
       <Divider color="l3" />
       <div>
         <BodyTextarea
