@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
 
 import { getCheckDuplicateNickname } from '../../../api';
+import { getUserNickname } from '../../Feed/utils/getUserNickname';
 import { FieldValue } from '../types';
 
 interface Props {
@@ -9,11 +10,11 @@ interface Props {
 }
 
 const useCheckDuplicateNickname = ({ nickname, setFieldErrorValue }: Props) => {
-  const userInfo = JSON.parse(localStorage.getItem('user') ?? '{}');
+  const userNickname = getUserNickname();
   const timerId = useRef<number | null>(null);
 
   useEffect(() => {
-    if (userInfo.nickname === nickname) return;
+    if (userNickname === nickname || nickname.length < 2) return;
 
     if (timerId.current) {
       const timerIdCurrent = timerId.current;
@@ -32,7 +33,7 @@ const useCheckDuplicateNickname = ({ nickname, setFieldErrorValue }: Props) => {
         }));
       }
     }, 300);
-  }, [userInfo, nickname, setFieldErrorValue]);
+  }, [userNickname, nickname, setFieldErrorValue]);
 };
 
 export default useCheckDuplicateNickname;
