@@ -83,6 +83,7 @@ const BodyTextarea = styled.textarea`
   font-weight: 400;
   resize: none;
   color: ${theme.color.b4};
+  line-height: 22px;
 
   ::placeholder {
     color: ${theme.color.ba};
