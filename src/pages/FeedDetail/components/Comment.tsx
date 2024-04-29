@@ -7,6 +7,7 @@ import ModifyDropdown from './ModifyDropdown';
 import Recomment from './Recomment';
 import WriteRecomment from './WriteRecomment';
 import useConfirm from '../../../hooks/useConfirm';
+import HyperLinkText from '../../components/HyperLinkText/HyperLinkText';
 import { get999PlusCount } from '../../utils';
 import useDeleteCommentMutation from '../hooks/mutations/useDeleteComment';
 import useFocusEditComment from '../hooks/useFocusEditComment';
@@ -96,9 +97,9 @@ const Comment = ({
             {!deleted && <ModifyDropdown owner={owner} isInComment onEdit={onEditComment} onDelete={onDeleteComment} />}
           </Flex>
           <Spacer size={20} />
-          <Text font="suit14r" color="t" style={{ lineHeight: '22px', whiteSpace: 'pre-wrap' }}>
+          <HyperLinkText font="suit14r" color="t" lineHeight="22px">
             {deleted ? '삭제된 댓글입니다.' : content}
-          </Text>
+          </HyperLinkText>
           <Spacer size={10} />
           <Flex>
             <Flex alignItems="center" cursor="pointer" gap={4} onClick={onOpenRecommentTextarea}>

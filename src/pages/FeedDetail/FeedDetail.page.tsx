@@ -11,6 +11,7 @@ import SEOMeta from '../../components/SEOMeta/SEOMeta';
 import useConfirm from '../../hooks/useConfirm';
 import Back from '../../layouts/Back';
 import Logo from '../../layouts/Logo';
+import HyperLinkText from '../components/HyperLinkText/HyperLinkText';
 import { useDeleteIdea } from '../components/NewIdeaCard/hooks/mutations/useDeleteIdea';
 import { formatCommentDate } from '../Feed/utils/formatCommentDate';
 
@@ -64,7 +65,7 @@ const FeedDetailPage = () => {
       </Header>
 
       <Box padding="30px 22px 30px 22px" marginTop={48}>
-        <ProfileInfo memberId={memberId} imageUrl={imageUrl} nickname={nickname} mainSkill={mainSkill} />
+        <ProfileInfo memberId={memberId} imageUrl={imageUrl} nickname={nickname} mainSkill={mainSkill} owner={owner} />
         <Spacer size={20} />
         <Box>
           <div>
@@ -88,9 +89,9 @@ const FeedDetailPage = () => {
           </div>
         </Box>
         <Divider color="l3" top={16} bottom={16} />
-        <Text font="suit15ra" color="b6" style={{ lineHeight: '24px', whiteSpace: 'pre-wrap' }}>
+        <HyperLinkText font="suit15ra" color="b6" lineHeight="24px">
           {introduce}
-        </Text>
+        </HyperLinkText>
       </Box>
 
       <Divider color="bg1" height={8} />
