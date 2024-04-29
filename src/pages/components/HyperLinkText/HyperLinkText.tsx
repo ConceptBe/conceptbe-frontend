@@ -10,22 +10,26 @@ interface Props {
   children: string;
 }
 
-const LINK_REG_EXP = /^(https?:\/\/|www\.)/;
+const LINK_REG_EXP = /(https?:\/\/|www\.)/;
 const convertHyperLinkTexts = ({ font, color, lineHeight = 'normal', children: text }: Props) => {
   const generatedTexts = text.split('\n').map((line, idx) => {
     if (line === '') return <br key={idx} />;
 
-    if (LINK_REG_EXP.test(line)) {
-      return (
-        <HyperLink key={idx} as="a" font={font} color={color} lineHeight={lineHeight} href={line} target="_blank">
-          {line}
-        </HyperLink>
-      );
-    }
-
     return (
-      <Description key={idx} as="p" font={font} color={color} lineHeight={lineHeight}>
-        {line}
+      <Description as="p" key={idx} font={font} color={color} lineHeight={lineHeight}>
+        {line.split(' ').map((word, idx) => {
+          const isFirst = idx === 0;
+
+          if (LINK_REG_EXP.test(word)) {
+            return (
+              <HyperLink as="a" key={idx} href={word} target="_blank" font={font} color={color} lineHeight={lineHeight}>
+                {word}
+              </HyperLink>
+            );
+          }
+
+          return <>{isFirst ? word : ` ${word}`}</>;
+        })}
       </Description>
     );
   });
@@ -43,6 +47,7 @@ export default HyperLinkText;
 
 const Description = styled(Text)<{ lineHeight: string }>`
   line-height: ${({ lineHeight }) => lineHeight};
+  white-space: pre-wrap;
 `;
 
 const HyperLink = styled(Description)`
