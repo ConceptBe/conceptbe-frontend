@@ -10,20 +10,12 @@ import {
   Spacer,
   Text,
   theme,
-  useCheckbox,
-  useDropdown,
-  useRadio,
 } from 'concept-be-design-system';
 
 import RecruitmentPlaceSection from '../../../Write/components/RecruitmentPlaceSection';
 import { Idea } from '../../../Write/types';
 import { useFilterParams } from '../../context/filterContext';
-
-const cooperationWays = [
-  { id: 1, name: '상관없음' },
-  { id: 2, name: '온라인' },
-  { id: 3, name: '오프라인' },
-];
+import useFilteredBottomSheetState from '../../hooks/useFilteredBottomSheetState';
 
 type Props = {
   open: boolean;
@@ -45,72 +37,21 @@ const FilterBottomSheet = ({
   skillCategoryResponses,
 }: Props) => {
   const { filterParams, updateFilterParams, resetFilterParams } = useFilterParams();
-
-  const branchOptions = branches.map((properties) => ({
-    checked: filterParams?.branchIds?.includes(properties.id) ? true : false,
-    ...properties,
-  }));
-  const purposeOptions = purposes.map((properties) => ({
-    checked: filterParams?.purposeIds?.includes(properties.id) ? true : false,
-    ...properties,
-  }));
-  const { checkboxValue, selectedCheckboxId, onChangeCheckbox, onResetCheckbox } = useCheckbox({
-    branches: branchOptions,
-    purposes: purposeOptions,
-  });
-
-  const cooperationWayOptions =
-    filterParams?.cooperationWay === undefined
-      ? cooperationWays.map((properties) => {
-          // 필터 선택 안 되어 있을 경우 상관없음이 기본값(id === 1)
-          return properties.id === 1 ? { checked: true, ...properties } : { checked: false, ...properties };
-        })
-      : cooperationWays.map((properties) => ({
-          checked: filterParams?.cooperationWay === properties.name ? true : false,
-          ...properties,
-        }));
-  const { radioValue, selectedRadioName, onChangeRadio, onResetRadio } = useRadio({
-    cooperationWays: cooperationWayOptions,
-  });
-
-  const getSkillCategory1DepthFrom2DepthSkillId = (id: number) => {
-    const skillCategory1Depth = skillCategoryResponses.find((item) =>
-      item.skillResponses.find((skill) => skill.id === id),
-    );
-
-    if (skillCategory1Depth === undefined) {
-      throw new Error('skillCategory1Depth skill category not found');
-    }
-    return skillCategory1Depth;
-  };
-
-  const get2DepthNameFrom2DepthId = (id: number) => {
-    const name = skillCategoryResponses
-      .find((item) => item.skillResponses.find((skill) => skill.id === id))
-      ?.skillResponses.find((skill) => skill.id === id)?.name;
-
-    if (name === undefined) {
-      throw new Error('2depth skill category not found');
-    }
-
-    return name;
-  };
-  const { dropdownValue, onClickDropdown, onResetDropdown } = useDropdown({
-    recruitmentPlace: recruitmentPlaces.find((place) => place.id === filterParams?.recruitmentPlaceId)?.name ?? '',
-    skillCategory1Depth:
-      filterParams?.skillCategoryIds?.[0] !== undefined
-        ? getSkillCategory1DepthFrom2DepthSkillId(filterParams?.skillCategoryIds?.[0]).name
-        : undefined ?? '',
-    skillCategory2Depth:
-      filterParams?.skillCategoryIds?.[0] !== undefined
-        ? get2DepthNameFrom2DepthId(filterParams?.skillCategoryIds?.[0])
-        : undefined ?? '',
-  });
-
-  const skillCategory1DepthItems = skillCategoryResponses.map((item) => ({ id: item.id, name: item.name }));
-  const skillCategory2DepthItems = skillCategoryResponses.find(
-    (item) => item.name === dropdownValue.skillCategory1Depth,
-  )?.skillResponses;
+  const {
+    checkboxValue,
+    selectedCheckboxId,
+    onChangeCheckbox,
+    onResetCheckbox,
+    radioValue,
+    selectedRadioName,
+    onChangeRadio,
+    onResetRadio,
+    dropdownValue,
+    onClickDropdown,
+    onResetDropdown,
+    skillCategory1DepthItems,
+    skillCategory2DepthItems,
+  } = useFilteredBottomSheetState({ filterParams, branches, purposes, recruitmentPlaces, skillCategoryResponses });
 
   const applyFilter = () => {
     const get2DepthIdFrom2DepthName = (name: string) => {
@@ -119,7 +60,6 @@ const FilterBottomSheet = ({
       return id;
     };
 
-    const recruitmentPlaceId = recruitmentPlaces.find((place) => place.name === dropdownValue.recruitmentPlace)?.id;
     const skillCategoryId = get2DepthIdFrom2DepthName(dropdownValue.skillCategory2Depth);
     const skillCategoryIds = skillCategoryId ? [skillCategoryId] : undefined;
 
@@ -127,7 +67,7 @@ const FilterBottomSheet = ({
       branchIds: selectedCheckboxId.branches,
       purposeIds: selectedCheckboxId.purposes,
       cooperationWay: selectedRadioName.cooperationWays,
-      recruitmentPlaceId,
+      recruitmentPlaceId: recruitmentPlaces.find((place) => place.name === dropdownValue.recruitmentPlace)?.id,
       skillCategoryIds,
     });
     onApply();
