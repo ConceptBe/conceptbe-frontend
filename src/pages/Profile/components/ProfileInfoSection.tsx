@@ -2,7 +2,6 @@ import styled from '@emotion/styled';
 import { theme, Badge, Spacer, Text, Flex, ImageView, PNGDefaultProfileBackground } from 'concept-be-design-system';
 import { useNavigate } from 'react-router-dom';
 
-import Padding from '../../../components/Padding';
 import HyperLinkText from '../../components/HyperLinkText/HyperLinkText';
 import { Member } from '../types';
 
@@ -43,7 +42,7 @@ const ProfileInfoSection = ({ memberInfo }: Props) => {
         <ImageView src={profileImageUrl} alt="프로필 이미지" defaultSrc={PNGDefaultProfileBackground} />
       </ImageWrapper>
 
-      <Padding top={300} />
+      <Spacer size={300} />
       <ProfileBox>
         {/* 프로필설정 */}
         <ProfileMainBox>
