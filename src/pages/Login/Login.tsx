@@ -6,14 +6,18 @@ import SEOMeta from '../../components/SEOMeta/SEOMeta';
 import { BASE_URL } from '../../constants';
 import useAlert from '../../hooks/useAlert';
 
-const REQUEST_URL = `${BASE_URL}/oauth/kakao`;
+const KAKAO_REQUEST_URL = `${BASE_URL}/oauth/kakao`;
+const NAVER_REQUEST_URL = `${BASE_URL}/oauth/naver`;
 
 const Login = () => {
   const navigate = useNavigate();
-  const openAlert = useAlert();
 
   const onClickOauthKakao = () => {
-    window.location.href = REQUEST_URL;
+    window.location.href = KAKAO_REQUEST_URL;
+  };
+
+  const onClickOauthNaver = () => {
+    window.location.href = NAVER_REQUEST_URL;
   };
 
   return (
@@ -35,9 +39,7 @@ const Login = () => {
         <Spacer size={10} />
 
         {/* 네이버 로그인 기능 완료 시 수정 */}
-        <ButtonWrapper
-          onClick={() => openAlert({ content: '아직 준비 중인 기능입니다. 카카오로 로그인을 수행해 주세요.' })}
-        >
+        <ButtonWrapper onClick={onClickOauthNaver}>
           <LogoBox color="#03C75A">
             <SVGLoginNaver />
           </LogoBox>

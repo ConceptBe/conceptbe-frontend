@@ -4,19 +4,25 @@ import { useNavigate } from 'react-router-dom';
 import { getIsMember, getLogin } from '../../api';
 import Spinner from '../../components/Spinner/Spinner';
 
-const KakaoRedirect = () => {
+interface Props {
+  serverName: 'kakao' | 'naver';
+}
+
+const OauthRedirect = ({ serverName }: Props) => {
   const navigate = useNavigate();
   const searchParams = new URLSearchParams(location.search);
   const code = searchParams.get('code');
+
+  console.log(code);
 
   const getCode = useCallback(
     async (code: string | null) => {
       if (!code) throw new Error('OAUTH CODE ERROR');
 
-      const data = await getIsMember('kakao', code);
+      const data = await getIsMember(serverName, code);
 
       if (data.isMember) {
-        const { accessToken, authMemberInformation } = await getLogin('kakao', data.oauthMemberInformation.oauthId);
+        const { accessToken, authMemberInformation } = await getLogin(serverName, data.oauthMemberInformation.oauthId);
         localStorage.setItem('userToken', accessToken);
         localStorage.setItem('user', JSON.stringify(authMemberInformation));
 
@@ -26,7 +32,7 @@ const KakaoRedirect = () => {
 
       navigate('/agreement', { state: data.oauthMemberInformation });
     },
-    [navigate],
+    [serverName, navigate],
   );
 
   useEffect(() => {
@@ -36,4 +42,4 @@ const KakaoRedirect = () => {
   return <Spinner />;
 };
 
-export default KakaoRedirect;
+export default OauthRedirect;
