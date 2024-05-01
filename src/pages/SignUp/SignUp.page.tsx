@@ -49,7 +49,7 @@ const SignUpPage = () => {
     company: '',
     intro: '',
   });
-  const { checkboxValue, onChangeCheckbox } = useCheckbox<CheckboxValue>({
+  const { checkboxValue, selectedCheckboxId, onChangeCheckbox } = useCheckbox<CheckboxValue>({
     goal: purposes,
   });
   const { dropdownValue, onResetDropdown, onClickDropdown } = useDropdown<DropdownValue>({
@@ -90,7 +90,7 @@ const SignUpPage = () => {
       mainSkillId: mainSkills.find(({ name }) => dropdownValue.mainSkill === name)?.id || 0,
       profileImageUrl: memberInfo?.profileImageUrl || '',
       skills: selectedSkillDepths.map(({ id, name }) => ({ skillId: id, level: name.split(', ')[1] })),
-      joinPurposes: checkboxValue.goal.filter(({ checked }) => checked).map(({ id }) => id),
+      joinPurposes: selectedCheckboxId.goal,
       livingPlaceId: regions.find((place) => place.name === dropdownValue.region)?.id || 1,
       workingPlace: fieldValue.company,
       introduction: fieldValue.intro,

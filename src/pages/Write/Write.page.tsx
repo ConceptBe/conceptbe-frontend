@@ -46,7 +46,7 @@ const WritePage = () => {
 
   const branchOptions = branches.map((properties) => ({ checked: false, ...properties }));
   const purposeOptions = purposes.map((properties) => ({ checked: false, ...properties }));
-  const { checkboxValue, onChangeCheckbox } = useCheckbox({
+  const { checkboxValue, selectedCheckboxId, onChangeCheckbox } = useCheckbox({
     branches: branchOptions,
     purposes: purposeOptions,
   });
@@ -74,10 +74,9 @@ const WritePage = () => {
   const sheetRightItems = skillCategoryResponses.find((item) => item.name === selectedTeamRecruitment1Depth)
     ?.skillResponses;
 
-  const branchIds = checkboxValue.branches.filter((branch) => branch.checked).map((branch) => branch.id);
-  const purposeIds = checkboxValue.purposes.filter((branch) => branch.checked).map((purpose) => purpose.id);
   const cooperationWay = radioValue.cooperationWays.find((cooperationWay) => cooperationWay.checked)?.name;
-  const canSubmit = branchIds.length > 0 && purposeIds.length > 0 && !!cooperationWay;
+  const canSubmit =
+    selectedCheckboxId.branches.length > 0 && selectedCheckboxId.purposes.length > 0 && !!cooperationWay;
 
   if (!sheetRightItems) {
     console.error('sheetRightItems is null');
@@ -98,11 +97,11 @@ const WritePage = () => {
       openAlert({ content: '본문 내용을 10자 이상 입력해 주세요' });
       return;
     }
-    if (!branchIds.length) {
+    if (!selectedCheckboxId.branches.length) {
       openAlert({ content: '분야를 1개 이상 선택해 주세요' });
       return;
     }
-    if (!purposeIds.length) {
+    if (!selectedCheckboxId.purposes.length) {
       openAlert({ content: '목적을 1개 이상 선택해 주세요' });
       return;
     }
@@ -120,8 +119,8 @@ const WritePage = () => {
       introduce,
       recruitmentPlaceId,
       cooperationWay,
-      branchIds,
-      purposeIds,
+      branchIds: selectedCheckboxId.branches,
+      purposeIds: selectedCheckboxId.purposes,
       skillCategoryIds,
     });
   };
@@ -153,8 +152,8 @@ const WritePage = () => {
     title !== '' ||
     introduce !== '' ||
     selectedSkillResponses.length > 0 ||
-    branchIds.length > 0 ||
-    purposeIds.length > 0 ||
+    selectedCheckboxId.branches.length > 0 ||
+    selectedCheckboxId.purposes.length > 0 ||
     cooperationWay !== '상관없음' ||
     !!dropdownValue.recruitmentPlace;
 

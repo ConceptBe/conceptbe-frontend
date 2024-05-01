@@ -54,7 +54,7 @@ const FilterBottomSheet = ({
     checked: filterParams?.purposeIds?.includes(properties.id) ? true : false,
     ...properties,
   }));
-  const { checkboxValue, onChangeCheckbox, onResetCheckbox } = useCheckbox({
+  const { checkboxValue, selectedCheckboxId, onChangeCheckbox, onResetCheckbox } = useCheckbox({
     branches: branchOptions,
     purposes: purposeOptions,
   });
@@ -119,14 +119,18 @@ const FilterBottomSheet = ({
       return id;
     };
 
-    const branchIds = checkboxValue.branches.filter((branch) => branch.checked).map((branch) => branch.id);
-    const purposeIds = checkboxValue.purposes.filter((branch) => branch.checked).map((purpose) => purpose.id);
     const cooperationWay = radioValue.cooperationWays.find((cooperationWay) => cooperationWay.checked)?.name;
     const recruitmentPlaceId = recruitmentPlaces.find((place) => place.name === dropdownValue.recruitmentPlace)?.id;
     const skillCategoryId = get2DepthIdFrom2DepthName(dropdownValue.skillCategory2Depth);
     const skillCategoryIds = skillCategoryId ? [skillCategoryId] : undefined;
 
-    updateFilterParams({ branchIds, purposeIds, cooperationWay, recruitmentPlaceId, skillCategoryIds });
+    updateFilterParams({
+      branchIds: selectedCheckboxId.branches,
+      purposeIds: selectedCheckboxId.purposes,
+      cooperationWay,
+      recruitmentPlaceId,
+      skillCategoryIds,
+    });
     onApply();
   };
 
