@@ -56,7 +56,7 @@ const WritePage = () => {
     return properties.id === 1 ? { checked: true, ...properties } : { checked: false, ...properties };
   });
 
-  const { radioValue, onChangeRadio } = useRadio({
+  const { radioValue, selectedRadioName, onChangeRadio } = useRadio({
     cooperationWays: cooperationWayOptions,
   });
 
@@ -74,9 +74,10 @@ const WritePage = () => {
   const sheetRightItems = skillCategoryResponses.find((item) => item.name === selectedTeamRecruitment1Depth)
     ?.skillResponses;
 
-  const cooperationWay = radioValue.cooperationWays.find((cooperationWay) => cooperationWay.checked)?.name;
   const canSubmit =
-    selectedCheckboxId.branches.length > 0 && selectedCheckboxId.purposes.length > 0 && !!cooperationWay;
+    selectedCheckboxId.branches.length > 0 &&
+    selectedCheckboxId.purposes.length > 0 &&
+    !!selectedRadioName.cooperationWays;
 
   if (!sheetRightItems) {
     console.error('sheetRightItems is null');
@@ -84,10 +85,6 @@ const WritePage = () => {
   }
 
   const writeIdea = () => {
-    const recruitmentPlaceId =
-      recruitmentPlaces.find((place) => place.name === dropdownValue.recruitmentPlace)?.id || 1;
-    const skillCategoryIds = selectedSkillResponses.map((selectedSkillResponse) => selectedSkillResponse.id);
-
     // TODO: 글쓰기 필수 조건 누락 시 토스트 띄워주기 (alert -> toast)
     if (!title) {
       openAlert({ content: '제목을 입력해 주세요' });
@@ -105,23 +102,19 @@ const WritePage = () => {
       openAlert({ content: '목적을 1개 이상 선택해 주세요' });
       return;
     }
-    if (!cooperationWay) {
+    if (!selectedRadioName.cooperationWays) {
       openAlert({ content: '협업방식을 선택해 주세요' });
-      return;
-    }
-    if (!recruitmentPlaceId) {
-      openAlert({ content: '모집지역을 선택해주세요.' });
       return;
     }
 
     postIdeas({
       title,
       introduce,
-      recruitmentPlaceId,
-      cooperationWay,
+      recruitmentPlaceId: recruitmentPlaces.find((place) => place.name === dropdownValue.recruitmentPlace)?.id || 1,
+      cooperationWay: selectedRadioName.cooperationWays,
       branchIds: selectedCheckboxId.branches,
       purposeIds: selectedCheckboxId.purposes,
-      skillCategoryIds,
+      skillCategoryIds: selectedSkillResponses.map((selectedSkillResponse) => selectedSkillResponse.id),
     });
   };
 
@@ -154,7 +147,7 @@ const WritePage = () => {
     selectedSkillResponses.length > 0 ||
     selectedCheckboxId.branches.length > 0 ||
     selectedCheckboxId.purposes.length > 0 ||
-    cooperationWay !== '상관없음' ||
+    selectedRadioName.cooperationWays !== '상관없음' ||
     !!dropdownValue.recruitmentPlace;
 
   return (

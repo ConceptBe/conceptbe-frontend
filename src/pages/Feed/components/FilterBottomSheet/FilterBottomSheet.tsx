@@ -69,7 +69,7 @@ const FilterBottomSheet = ({
           checked: filterParams?.cooperationWay === properties.name ? true : false,
           ...properties,
         }));
-  const { radioValue, onChangeRadio, onResetRadio } = useRadio({
+  const { radioValue, selectedRadioName, onChangeRadio, onResetRadio } = useRadio({
     cooperationWays: cooperationWayOptions,
   });
 
@@ -119,7 +119,6 @@ const FilterBottomSheet = ({
       return id;
     };
 
-    const cooperationWay = radioValue.cooperationWays.find((cooperationWay) => cooperationWay.checked)?.name;
     const recruitmentPlaceId = recruitmentPlaces.find((place) => place.name === dropdownValue.recruitmentPlace)?.id;
     const skillCategoryId = get2DepthIdFrom2DepthName(dropdownValue.skillCategory2Depth);
     const skillCategoryIds = skillCategoryId ? [skillCategoryId] : undefined;
@@ -127,7 +126,7 @@ const FilterBottomSheet = ({
     updateFilterParams({
       branchIds: selectedCheckboxId.branches,
       purposeIds: selectedCheckboxId.purposes,
-      cooperationWay,
+      cooperationWay: selectedRadioName.cooperationWays,
       recruitmentPlaceId,
       skillCategoryIds,
     });
