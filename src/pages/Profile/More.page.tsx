@@ -1,10 +1,9 @@
 import styled from '@emotion/styled';
-import { BottomSheet, Divider, Header, Spacer, Text, theme } from 'concept-be-design-system';
+import { BottomSheet, Divider, Header, Spacer, Spinner, Text, theme } from 'concept-be-design-system';
 import { useState } from 'react';
 
 import useDeleteAccount from './hooks/mutations/useDeleteAccount';
 import SEOMeta from '../../components/SEOMeta/SEOMeta';
-import Spinner from '../../components/Spinner/Spinner';
 import Privacy from '../../components/Terms/Privacy';
 import UsageTerms from '../../components/Terms/UsageTerms';
 import useConfirm from '../../hooks/useConfirm';

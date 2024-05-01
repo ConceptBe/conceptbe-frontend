@@ -1,8 +1,8 @@
+import { Spinner } from 'concept-be-design-system';
 import { ReactNode, Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 
 import ApiErrorBoundary from './components/ErrorBoundary/ApiErrorBoundary';
-import Spinner from './components/Spinner/Spinner';
 import MobileView from './layouts/MobileView';
 import Feed from './pages/Feed/Feed.page';
 import FeedDetailPage from './pages/FeedDetail/FeedDetail.page';

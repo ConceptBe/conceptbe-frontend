@@ -1,9 +1,8 @@
 import styled from '@emotion/styled';
-import { Text, theme, Header } from 'concept-be-design-system';
+import { Text, theme, Header, Spinner } from 'concept-be-design-system';
 import { Suspense } from 'react';
 
 import IdeaSection from './IdeaSection';
-import Spinner from '../../../../components/Spinner/Spinner';
 import Back from '../../../../layouts/Back';
 import { Member } from '../../types';
 import ProfileInfoSection from '../ProfileInfoSection';
