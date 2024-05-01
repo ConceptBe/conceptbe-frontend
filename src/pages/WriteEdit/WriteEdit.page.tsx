@@ -25,62 +25,22 @@ import Header from './components/Header';
 import RecruitmentPlaceSection from './components/RecruitmentPlaceSection';
 import TitleAndIntroduceSection from './components/TitleAndIntroduceSection';
 import { usePutIdea } from './hooks/mutations/usePutIdea';
-import { useIdeaDetailQuery } from './hooks/queries/useIdeaDetailQuery';
-import { useWritingInfoQuery } from './hooks/queries/useWritingInfoQuery';
+import { useWritingEditInfoQuery } from './hooks/queries/useWritingInfoQuery';
 import { Info } from './types';
 import { get2DepthCountsBy1Depth } from './utils/get2DepthCountsBy1Depth';
 import useAlert from '../../hooks/useAlert';
 
-const cooperationWays = [
-  { id: 1, name: '상관없음' },
-  { id: 2, name: '온라인' },
-  { id: 3, name: '오프라인' },
-];
-
 const WriteEditPage = () => {
   const openAlert = useAlert();
   const location = useLocation();
-  const { ideaDetail } = useIdeaDetailQuery(Number(location.state.ideaId));
   const { putIdea } = usePutIdea();
 
-  const { branches, purposes, recruitmentPlaces, skillCategoryResponses } = useWritingInfoQuery();
+  const { ideaDetail, branches, purposes, recruitmentPlaces, cooperationWays, skillCategoryResponses } =
+    useWritingEditInfoQuery(Number(location.state.ideaId));
 
   const [title, setTitle] = useState(ideaDetail.title);
   const [introduce, setIntroduce] = useState(ideaDetail.introduce);
-
-  const branchOptions = branches.map((properties) =>
-    ideaDetail.branchList.includes(properties.name)
-      ? { checked: true, ...properties }
-      : { checked: false, ...properties },
-  );
-  const purposeOptions = purposes.map((properties) =>
-    ideaDetail.purposeList.includes(properties.name)
-      ? { checked: true, ...properties }
-      : { checked: false, ...properties },
-  );
-  const { checkboxValue, selectedCheckboxId, onChangeCheckbox } = useCheckbox({
-    branches: branchOptions,
-    purposes: purposeOptions,
-  });
-
-  const cooperationWayOptions = cooperationWays.map((properties) => {
-    // 협업방식: 상관없음이 기본값(id === 1)
-    return properties.name === ideaDetail.cooperationWay
-      ? { checked: true, ...properties }
-      : { checked: false, ...properties };
-  });
-
-  const { radioValue, selectedRadioName, onChangeRadio } = useRadio({
-    cooperationWays: cooperationWayOptions,
-  });
-
-  // 모집 지역도 백엔드와 형식 논의해야할듯(id 추가..?)
-  const { dropdownValue, onClickDropdown } = useDropdown({
-    recruitmentPlace: ideaDetail.recruitmentPlace,
-  });
-
   const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
-
   const [selectedTeamRecruitment1Depth, setSelectedTeamRecruitment1Depth] = useState(skillCategoryResponses[0].name);
   const [selectedSkillResponses, setSelectedSkillResponses] = useState<Info[]>(
     skillCategoryResponses
@@ -88,6 +48,17 @@ const WriteEditPage = () => {
       .flat()
       .filter((item) => ideaDetail.skillCategories.includes(item.name)),
   );
+
+  const { checkboxValue, selectedCheckboxId, onChangeCheckbox } = useCheckbox({
+    branches,
+    purposes,
+  });
+  const { radioValue, selectedRadioName, onChangeRadio } = useRadio({
+    cooperationWays,
+  });
+  const { dropdownValue, onClickDropdown } = useDropdown({
+    recruitmentPlace: ideaDetail.recruitmentPlace,
+  });
 
   const sheetLeftItems = skillCategoryResponses.map((item) => item.name);
   const sheetRightItems = skillCategoryResponses.find((item) => item.name === selectedTeamRecruitment1Depth)
@@ -238,7 +209,7 @@ const WriteEditPage = () => {
               return (
                 <TeamLabel key={item.id}>
                   {item.name}
-                  <SVGCancel onClick={() => onDeleteTeamRecruitment(item.id)} />
+                  <SVGCancel onClick={() => onDeleteTeamRecruitment(item.id)} cursor="pointer" />
                 </TeamLabel>
               );
             })}
@@ -251,17 +222,21 @@ const WriteEditPage = () => {
       <BottomSheet isOpen={isOpenBottomSheet} onClose={() => setIsOpenBottomSheet(false)}>
         <Sheet_TopBox>
           <SVGCancel
+            width={24}
+            height={24}
             onClick={() => {
               setIsOpenBottomSheet(false);
             }}
+            cursor="pointer"
           />
           <Text font="suit16sb" color="b4">
-            팀원선택
+            팀원 선택
           </Text>
           <SVGHeaderCheck24
             onClick={() => {
               setIsOpenBottomSheet(false);
             }}
+            cursor="pointer"
           />
         </Sheet_TopBox>
         <Sheet_BodyBox>
@@ -333,6 +308,7 @@ const Sheet_BodyBox = styled.div`
 
 const Sheet_Left = styled.div`
   width: 38%;
+  cursor: pointer;
 `;
 
 const Sheet_leftItem = styled.div<{ checked: boolean }>`
@@ -362,6 +338,7 @@ const Sheet_radioDiv = styled.div`
 
   height: 54px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  cursor: pointer;
 `;
 
 const TeamLabelBox = styled.div`
