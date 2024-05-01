@@ -34,6 +34,8 @@ const WriteComment = ({ feedId, myImageUrl, myNickname }: Props) => {
   };
 
   const onSubmitComment = () => {
+    if (!commentInput) return;
+
     postComment(
       { ideaId: feedId, parentId: ROOT_COMMENT_ID, content: commentInput },
       {

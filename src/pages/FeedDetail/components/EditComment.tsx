@@ -30,10 +30,6 @@ const EditComment = ({
   const { editComment } = usePatchComment({
     feedId,
     commentId,
-    onSuccess: () => {
-      initEditCommentTextarea();
-      onCloseEditCommentTextarea();
-    },
   });
 
   const onChangeTextarea = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -47,7 +43,17 @@ const EditComment = ({
   };
 
   const onSubmitComment = () => {
-    editComment({ content: commentInput });
+    if (!commentInput) return;
+
+    editComment(
+      { content: commentInput },
+      {
+        onSuccess: () => {
+          initEditCommentTextarea();
+          onCloseEditCommentTextarea();
+        },
+      },
+    );
   };
 
   return (

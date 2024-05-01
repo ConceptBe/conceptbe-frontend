@@ -30,6 +30,8 @@ const WriteRecomment = ({ feedId, parentCommentId, myImageUrl, myNickname, onClo
   };
 
   const onSubmitComment = () => {
+    if (!recommentInput) return;
+
     postComment(
       { ideaId: feedId, parentId: parentCommentId, content: recommentInput },
       {
