@@ -21,11 +21,11 @@ export interface FeedDetailResponse {
 }
 
 export interface CommentParentResponse {
-  memberId: number;
+  memberId: number | null;
   parentCommentId: string;
-  nickname: string;
-  profileImageUrl: string;
-  memberMainSkill: string;
+  nickname: string | null;
+  profileImageUrl: string | null;
+  memberMainSkill: string | null;
   content: string;
   createdAt: string;
   likesCount: number;
@@ -37,11 +37,11 @@ export interface CommentParentResponse {
 }
 
 export interface CommentChildResponse {
-  memberId: number;
+  memberId: number | null;
   childCommentId: string;
-  nickname: string;
-  profileImageUrl: string;
-  mainSkill: string;
+  nickname: string | null;
+  profileImageUrl: string | null;
+  mainSkill: string | null;
   content: string;
   createdAt: string;
   likesCount: number;
