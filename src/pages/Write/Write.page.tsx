@@ -30,45 +30,27 @@ import { get2DepthCountsBy1Depth } from './utils/get2DepthCountsBy1Depth';
 import SEOMeta from '../../components/SEOMeta/SEOMeta';
 import useAlert from '../../hooks/useAlert';
 
-const cooperationWays = [
-  { id: 1, name: '상관없음' },
-  { id: 2, name: '온라인' },
-  { id: 3, name: '오프라인' },
-];
-
 const WritePage = () => {
   const openAlert = useAlert();
   const { postIdeas } = usePostIdeasMutation();
-  const { branches, purposes, recruitmentPlaces, skillCategoryResponses } = useWritingInfoQuery();
+  const { branches, purposes, recruitmentPlaces, cooperationWays, skillCategoryResponses } = useWritingInfoQuery();
 
   const [title, setTitle] = useState('');
   const [introduce, setIntroduce] = useState('');
+  const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
+  const [selectedTeamRecruitment1Depth, setSelectedTeamRecruitment1Depth] = useState(skillCategoryResponses[0].name);
+  const [selectedSkillResponses, setSelectedSkillResponses] = useState<Info[]>([]);
 
-  const branchOptions = branches.map((properties) => ({ checked: false, ...properties }));
-  const purposeOptions = purposes.map((properties) => ({ checked: false, ...properties }));
   const { checkboxValue, selectedCheckboxId, onChangeCheckbox } = useCheckbox({
-    branches: branchOptions,
-    purposes: purposeOptions,
+    branches,
+    purposes,
   });
-
-  const cooperationWayOptions = cooperationWays.map((properties) => {
-    // 협업방식: 상관없음이 기본값(id === 1)
-    return properties.id === 1 ? { checked: true, ...properties } : { checked: false, ...properties };
-  });
-
   const { radioValue, selectedRadioName, onChangeRadio } = useRadio({
-    cooperationWays: cooperationWayOptions,
+    cooperationWays,
   });
-
-  // 모집 지역도 백엔드와 형식 논의해야할듯(id 추가..?)
   const { dropdownValue, onClickDropdown } = useDropdown({
     recruitmentPlace: '',
   });
-
-  const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
-
-  const [selectedTeamRecruitment1Depth, setSelectedTeamRecruitment1Depth] = useState(skillCategoryResponses[0].name);
-  const [selectedSkillResponses, setSelectedSkillResponses] = useState<Info[]>([]);
 
   const sheetLeftItems = skillCategoryResponses.map((item) => item.name);
   const sheetRightItems = skillCategoryResponses.find((item) => item.name === selectedTeamRecruitment1Depth)
