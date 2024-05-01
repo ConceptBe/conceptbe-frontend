@@ -14,7 +14,7 @@ import { useWritingInfoQuery } from '../Write/hooks/queries/useWritingInfoQuery'
 const Feed = () => {
   const navigate = useNavigate();
   const [isFilterBottomSheetOpen, setIsFilterBottomSheetOpen] = useState(false);
-  const { branches, purposes, recruitmentPlaces, skillCategoryResponses } = useWritingInfoQuery();
+  const { branches, purposes, recruitmentPlaces, cooperationWays, skillCategoryResponses } = useWritingInfoQuery();
 
   const closeFilterBottomSheet = () => {
     setIsFilterBottomSheetOpen(false);
@@ -72,6 +72,7 @@ const Feed = () => {
         branches={branches}
         purposes={purposes}
         recruitmentPlaces={recruitmentPlaces}
+        cooperationWays={cooperationWays}
         skillCategoryResponses={skillCategoryResponses}
         open={isFilterBottomSheetOpen}
         onClose={closeFilterBottomSheet}

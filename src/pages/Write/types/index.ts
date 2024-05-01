@@ -26,3 +26,9 @@ export type Idea = {
     skillResponses: Info[]; // IT기획, 게임기획, 제품기획, 사업기획
   }[];
 };
+
+export type CooperationWay = {
+  id: number;
+  name: string;
+  checked: boolean;
+};

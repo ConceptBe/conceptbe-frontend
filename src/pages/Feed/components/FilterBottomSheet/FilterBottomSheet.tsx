@@ -13,7 +13,7 @@ import {
 } from 'concept-be-design-system';
 
 import RecruitmentPlaceSection from '../../../Write/components/RecruitmentPlaceSection';
-import { Idea } from '../../../Write/types';
+import { CooperationWay, Idea } from '../../../Write/types';
 import { useFilterParams } from '../../context/filterContext';
 import useFilteredBottomSheetState from '../../hooks/useFilteredBottomSheetState';
 
@@ -23,6 +23,7 @@ type Props = {
   onApply: () => void;
   branches: Idea['branches'];
   purposes: Idea['purposes'];
+  cooperationWays: CooperationWay[];
   recruitmentPlaces: Idea['regions'];
   skillCategoryResponses: Idea['skillCategoryResponses'];
 };
@@ -34,6 +35,7 @@ const FilterBottomSheet = ({
   branches,
   purposes,
   recruitmentPlaces,
+  cooperationWays,
   skillCategoryResponses,
 }: Props) => {
   const { filterParams, updateFilterParams, resetFilterParams } = useFilterParams();
@@ -51,7 +53,14 @@ const FilterBottomSheet = ({
     onResetDropdown,
     skillCategory1DepthItems,
     skillCategory2DepthItems,
-  } = useFilteredBottomSheetState({ filterParams, branches, purposes, recruitmentPlaces, skillCategoryResponses });
+  } = useFilteredBottomSheetState({
+    filterParams,
+    branches,
+    purposes,
+    recruitmentPlaces,
+    cooperationWays,
+    skillCategoryResponses,
+  });
 
   const applyFilter = () => {
     const get2DepthIdFrom2DepthName = (name: string) => {
