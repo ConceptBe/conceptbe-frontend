@@ -1,7 +1,6 @@
 import { useOverlay } from '@toss/use-overlay';
+import { Confirm } from 'concept-be-design-system';
 import { useCallback } from 'react';
-
-import Confirm from '../components/Modal/Confirm';
 
 interface OpenConfirmProps {
   content: string;
