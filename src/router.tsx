@@ -7,8 +7,8 @@ import MobileView from './layouts/MobileView';
 import Feed from './pages/Feed/Feed.page';
 import FeedDetailPage from './pages/FeedDetail/FeedDetail.page';
 import Agreement from './pages/Login/Agreement';
-import KakaoRedirect from './pages/Login/KakaoRedirect';
 import Login from './pages/Login/Login';
+import OauthRedirect from './pages/Login/OauthRedirect';
 import NotFound from './pages/NotFound';
 import More from './pages/Profile/More.page';
 import Profile from './pages/Profile/Profile.page';
@@ -59,7 +59,11 @@ const routes: RouteElement[] = [
       },
       {
         path: '/oauth/redirected/kakao',
-        element: <KakaoRedirect />,
+        element: <OauthRedirect serverName="kakao" />,
+      },
+      {
+        path: '/oauth/redirected/naver',
+        element: <OauthRedirect serverName="naver" />,
       },
       {
         path: '/profile/:id',
