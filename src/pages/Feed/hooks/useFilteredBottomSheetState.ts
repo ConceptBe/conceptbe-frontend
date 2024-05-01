@@ -1,5 +1,3 @@
-import { useCheckbox, useDropdown, useRadio } from 'concept-be-design-system';
-
 import { CooperationWay, Idea } from '../../Write/types';
 import { FilterParams } from '../context/filterContext';
 
@@ -60,44 +58,24 @@ const useFilteredBottomSheetState = ({
     return skillCategory2Depth;
   };
 
-  const { checkboxValue, selectedCheckboxId, onChangeCheckbox, onResetCheckbox } = useCheckbox({
-    branches: filteredBranches,
-    purposes: filteredPurposes,
-  });
-  const { radioValue, selectedRadioName, onChangeRadio, onResetRadio } = useRadio({
-    cooperationWays: filteredCooperationWays,
-  });
-  const { dropdownValue, onClickDropdown, onResetDropdown } = useDropdown({
-    recruitmentPlace: recruitmentPlaces.find((place) => place.id === filterParams?.recruitmentPlaceId)?.name ?? '',
-    skillCategory1Depth:
-      filterParams?.skillCategoryIds?.[0] !== undefined
-        ? getSkillCategory1DepthFrom2DepthSkillId(filterParams?.skillCategoryIds?.[0]).name
-        : undefined ?? '',
-    skillCategory2Depth:
-      filterParams?.skillCategoryIds?.[0] !== undefined
-        ? get2DepthNameFrom2DepthId(filterParams?.skillCategoryIds?.[0])
-        : undefined ?? '',
-  });
-
-  const skillCategory1DepthItems = skillCategoryResponses.map((item) => ({ id: item.id, name: item.name }));
-  const skillCategory2DepthItems = skillCategoryResponses.find(
-    (item) => item.name === dropdownValue.skillCategory1Depth,
-  )?.skillResponses;
+  const filteredRecruitmentPlace =
+    recruitmentPlaces.find((place) => place.id === filterParams?.recruitmentPlaceId)?.name ?? '';
+  const filteredSkillCategory1Depth =
+    filterParams?.skillCategoryIds?.[0] !== undefined
+      ? getSkillCategory1DepthFrom2DepthSkillId(filterParams?.skillCategoryIds?.[0]).name
+      : undefined ?? '';
+  const filteredSkillCategory2Depth =
+    filterParams?.skillCategoryIds?.[0] !== undefined
+      ? get2DepthNameFrom2DepthId(filterParams?.skillCategoryIds?.[0])
+      : undefined ?? '';
 
   return {
-    checkboxValue,
-    selectedCheckboxId,
-    onChangeCheckbox,
-    onResetCheckbox,
-    radioValue,
-    selectedRadioName,
-    onChangeRadio,
-    onResetRadio,
-    dropdownValue,
-    onClickDropdown,
-    onResetDropdown,
-    skillCategory1DepthItems,
-    skillCategory2DepthItems,
+    filteredBranches,
+    filteredPurposes,
+    filteredCooperationWays,
+    filteredRecruitmentPlace,
+    filteredSkillCategory1Depth,
+    filteredSkillCategory2Depth,
   };
 };
 

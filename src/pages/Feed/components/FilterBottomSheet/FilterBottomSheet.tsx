@@ -10,6 +10,9 @@ import {
   Spacer,
   Text,
   theme,
+  useCheckbox,
+  useDropdown,
+  useRadio,
 } from 'concept-be-design-system';
 
 import RecruitmentPlaceSection from '../../../Write/components/RecruitmentPlaceSection';
@@ -40,19 +43,12 @@ const FilterBottomSheet = ({
 }: Props) => {
   const { filterParams, updateFilterParams, resetFilterParams } = useFilterParams();
   const {
-    checkboxValue,
-    selectedCheckboxId,
-    onChangeCheckbox,
-    onResetCheckbox,
-    radioValue,
-    selectedRadioName,
-    onChangeRadio,
-    onResetRadio,
-    dropdownValue,
-    onClickDropdown,
-    onResetDropdown,
-    skillCategory1DepthItems,
-    skillCategory2DepthItems,
+    filteredBranches,
+    filteredPurposes,
+    filteredCooperationWays,
+    filteredRecruitmentPlace,
+    filteredSkillCategory1Depth,
+    filteredSkillCategory2Depth,
   } = useFilteredBottomSheetState({
     filterParams,
     branches,
@@ -61,6 +57,24 @@ const FilterBottomSheet = ({
     cooperationWays,
     skillCategoryResponses,
   });
+
+  const { checkboxValue, selectedCheckboxId, onChangeCheckbox, onResetCheckbox } = useCheckbox({
+    branches: filteredBranches,
+    purposes: filteredPurposes,
+  });
+  const { radioValue, selectedRadioName, onChangeRadio, onResetRadio } = useRadio({
+    cooperationWays: filteredCooperationWays,
+  });
+  const { dropdownValue, onClickDropdown, onResetDropdown } = useDropdown({
+    recruitmentPlace: filteredRecruitmentPlace,
+    skillCategory1Depth: filteredSkillCategory1Depth,
+    skillCategory2Depth: filteredSkillCategory2Depth,
+  });
+
+  const skillCategory1DepthItems = skillCategoryResponses.map((item) => ({ id: item.id, name: item.name }));
+  const skillCategory2DepthItems = skillCategoryResponses.find(
+    (item) => item.name === dropdownValue.skillCategory1Depth,
+  )?.skillResponses;
 
   const applyFilter = () => {
     const get2DepthIdFrom2DepthName = (name: string) => {
@@ -79,6 +93,7 @@ const FilterBottomSheet = ({
       recruitmentPlaceId: recruitmentPlaces.find((place) => place.name === dropdownValue.recruitmentPlace)?.id,
       skillCategoryIds,
     });
+
     onApply();
   };
 
