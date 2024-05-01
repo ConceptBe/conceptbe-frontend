@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { BottomSheet, Divider, Header, Spacer, Spinner, Text, theme } from 'concept-be-design-system';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import useDeleteAccount from './hooks/mutations/useDeleteAccount';
 import SEOMeta from '../../components/SEOMeta/SEOMeta';
@@ -17,6 +18,7 @@ const More = () => {
   const { goFeedPage, goLoginPage } = useNavigatePage();
   const { deleteAccount, isPending: isDeleteAccountPending } = useDeleteAccount();
   const openConfirm = useConfirm();
+  const navigate = useNavigate();
 
   const onMoreClick = (string: string) => {
     if (isOpen) {
@@ -41,6 +43,8 @@ const More = () => {
     if (!isDelete) return;
 
     deleteAccount();
+
+    navigate('/');
   };
 
   return (
