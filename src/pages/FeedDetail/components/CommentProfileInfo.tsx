@@ -34,7 +34,7 @@ const CommentProfileInfo = ({ memberId, imageUrl, nickname, mainSkill, createdAt
         </Text>
         <Flex wrap="wrap" alignItems="center" gap={4}>
           <FixedSizeText font="suit12r" color="b9">
-            {mainSkill || '-'}
+            {mainSkill || '(알 수 없음)'}
           </FixedSizeText>
           <TextDivider left={2} right={2} color="l2" />
           <Text font="suit12r" color="b9">
