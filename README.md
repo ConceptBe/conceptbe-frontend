@@ -47,15 +47,13 @@
 
 ## 기술 스택 📚
 
-![image](https://github.com/ConceptBe/conceptbe-frontend/assets/89172499/6706c7fb-38a1-4f3a-9aae-1b25454c4d88)
+![image](https://github.com/ConceptBe/conceptbe-frontend/assets/89172499/951e92f4-1683-4ce3-92fa-f8914536a53d)
 
 ### 디자인 시스템
 
 - [Github](https://github.com/ConceptBe/conceptbe-design-system)
 - [NPM](https://www.npmjs.com/package/concept-be-design-system)
 - [Storybook](https://65a04fca8611ba47d7f8b115-dqgporpvoy.chromatic.com/)
-
-## 인프라 🧬
 
 ## 팀원 🧑‍🧑‍🧒‍🧒
 
