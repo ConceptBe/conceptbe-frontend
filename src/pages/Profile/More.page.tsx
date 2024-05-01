@@ -95,7 +95,7 @@ const More = () => {
           </Text>
           <Spacer size={8} />
           <Text style={{ lineHeight: '22px' }} font="suit14r" color="b6">
-            기타 문의사항이 있으실 경우, ABCDEFG123456@gmail.com으로 연락주세요
+            기타 문의사항이 있으실 경우, ABCDEFG123456@gmail.com으로 연락주세요.
           </Text>
           <Divider color="l3" top={22} bottom={22} />
           <MoreButton onClick={handleDeleteAccount}>

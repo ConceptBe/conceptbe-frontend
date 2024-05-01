@@ -77,23 +77,23 @@ const WriteEditPage = () => {
   const writeIdea = () => {
     // TODO: 글쓰기 필수 조건 누락 시 토스트 띄워주기 (alert -> toast)
     if (!title) {
-      openAlert({ content: '제목을 입력해 주세요' });
+      openAlert({ content: '제목을 입력해 주세요.' });
       return;
     }
     if (introduce.length < 10) {
-      openAlert({ content: '본문 내용을 10자 이상 입력해 주세요' });
+      openAlert({ content: '본문 내용을 10자 이상 입력해 주세요.' });
       return;
     }
     if (!selectedCheckboxId.branches.length) {
-      openAlert({ content: '분야를 1개 이상 선택해 주세요' });
+      openAlert({ content: '분야를 1개 이상 선택해 주세요.' });
       return;
     }
     if (!selectedCheckboxId.purposes.length) {
-      openAlert({ content: '목적을 1개 이상 선택해 주세요' });
+      openAlert({ content: '목적을 1개 이상 선택해 주세요.' });
       return;
     }
     if (!selectedRadioName.cooperationWays) {
-      openAlert({ content: '협업방식을 선택해 주세요' });
+      openAlert({ content: '협업방식을 선택해 주세요.' });
       return;
     }
 
