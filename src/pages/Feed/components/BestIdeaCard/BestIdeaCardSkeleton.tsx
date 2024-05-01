@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
+import { Skeleton } from 'concept-be-design-system';
 
 import { BestIdeaCardWrapper } from './BestIdeaCard';
-import Skeleton from '../../../../components/Skeleton/Skeleton';
 
 const BestIdeaCardSkeleton = () => {
   return (
