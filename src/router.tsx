@@ -4,6 +4,7 @@ import { createBrowserRouter } from 'react-router-dom';
 
 import ApiErrorBoundary from './components/ErrorBoundary/ApiErrorBoundary';
 import MobileView from './layouts/MobileView';
+import NeedAuth from './pages/NeedAuth';
 import More from './pages/Profile/More.page';
 
 const Feed = lazy(() => import('./pages/Feed/Feed.page'));
@@ -48,7 +49,11 @@ const routes: RouteElement[] = [
       },
       {
         path: '/write',
-        element: withAsyncBoundary(<WritePage />),
+        element: withAsyncBoundary(
+          <NeedAuth>
+            <WritePage />
+          </NeedAuth>,
+        ),
       },
       {
         path: '/write-edit',
