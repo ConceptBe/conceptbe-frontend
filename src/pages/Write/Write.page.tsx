@@ -110,7 +110,7 @@ const WritePage = () => {
 
   const onClickTeamRecruitment = (selected: Info) => {
     if (selectedSkillResponses.length >= 10) {
-      openAlert({ content: '10개 이상 선택할 수 없습니다.' });
+      openAlert({ content: '최대 10개까지 선택할 수 있습니다.' });
       return;
     }
     setSelectedSkillResponses((prev) =>
