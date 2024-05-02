@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
-import { BottomSheet, Divider, Header, Spinner, Text, theme } from 'concept-be-design-system';
+import { BottomSheet, Divider, Header, Text, theme } from 'concept-be-design-system';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import useDeleteAccount from './hooks/mutations/useDeleteAccount';
 import SEOMeta from '../../components/SEOMeta/SEOMeta';
@@ -16,9 +15,8 @@ const More = () => {
   const [moreState, setMoreState] = useState('');
   const isLoggedIn = Boolean(localStorage.getItem('user')) && Boolean(localStorage.getItem('userToken'));
   const { goFeedPage, goLoginPage } = useNavigatePage();
-  const { deleteAccount, isPending: isDeleteAccountPending } = useDeleteAccount();
+  const { deleteAccount } = useDeleteAccount();
   const openConfirm = useConfirm();
-  const navigate = useNavigate();
 
   const onMoreClick = (string: string) => {
     if (isOpen) {
@@ -43,14 +41,12 @@ const More = () => {
     if (!isDelete) return;
 
     deleteAccount();
-
-    navigate('/');
   };
 
   return (
     <>
-      {isDeleteAccountPending && <Spinner backdrop />}
-      <SEOMeta title="컨셉비 | 더 보기" description="아이디어 기반의 안전하고 자유로운 팀원 찾기 플랫폼" />
+      <SEOMeta title="컨셉비 | 더보기" description="아이디어 기반의 안전하고 자유로운 팀원 찾기 플랫폼" />
+
       <Container>
         <Header spacerPosition="end">
           <Header.Item>
