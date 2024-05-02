@@ -114,7 +114,7 @@ class ErrorBoundary extends Component<Props, State> {
     if (this.state.errorDetail === 'not-found') {
       return (
         <>
-          <StayDuringRoutingAlert content="삭제되었거나 존재하지 않는 페이지입니다." />
+          <StayDuringRoutingAlert content="삭제된 글이거나 탈퇴한 회원의 페이지입니다." />
           <Navigate to="/" />;
         </>
       );
