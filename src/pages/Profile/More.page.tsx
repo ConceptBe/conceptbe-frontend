@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { BottomSheet, Divider, Header, Spacer, Spinner, Text, theme } from 'concept-be-design-system';
+import { BottomSheet, Divider, Header, Spinner, Text, theme } from 'concept-be-design-system';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -90,12 +90,14 @@ const More = () => {
             </Text>
           </MoreButton>
           <Divider color="l3" top={22} bottom={22} />
-          <Text font="suit15m" color="b4">
+          <Text
+            as="a"
+            font="suit15m"
+            color="b4"
+            href="mailto:conceper.biz@gmail.com"
+            style={{ textDecoration: 'none' }}
+          >
             기타 문의 사항
-          </Text>
-          <Spacer size={8} />
-          <Text style={{ lineHeight: '22px' }} font="suit14r" color="b6">
-            기타 문의사항이 있으실 경우, ABCDEFG123456@gmail.com으로 연락주세요.
           </Text>
           <Divider color="l3" top={22} bottom={22} />
           <MoreButton onClick={handleDeleteAccount}>
