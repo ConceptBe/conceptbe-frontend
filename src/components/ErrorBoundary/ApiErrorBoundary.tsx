@@ -4,7 +4,7 @@ import { Component, ReactElement, ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
 
 import ErrorFallback from './ErrorFallback';
-import UnauthorizedAlert from './UnauthorizedAlert';
+import StayDuringRoutingAlert from './StayDuringRoutingAlert';
 
 interface FallbackProps {
   error: AxiosError;
@@ -17,6 +17,8 @@ interface Props {
   fallback?: ReactElement<FallbackProps>;
 }
 
+type AxiosErrorDetailType = 'auth-expired' | 'unauthorized' | 'not-found' | 'server';
+
 type State =
   | {
       error: null;
@@ -28,7 +30,7 @@ type State =
     }
   | {
       error: AxiosError;
-      errorDetail: 'server' | 'unauthorized' | 'auth-expired';
+      errorDetail: AxiosErrorDetailType;
     };
 
 class ErrorBoundary extends Component<Props, State> {
@@ -55,6 +57,13 @@ class ErrorBoundary extends Component<Props, State> {
         return {
           error,
           errorDetail: null,
+        };
+      }
+
+      if (error.response?.status === 404) {
+        return {
+          error,
+          errorDetail: 'not-found',
         };
       }
 
@@ -102,6 +111,15 @@ class ErrorBoundary extends Component<Props, State> {
       return this.props.children;
     }
 
+    if (this.state.errorDetail === 'not-found') {
+      return (
+        <>
+          <StayDuringRoutingAlert content="삭제되었거나 존재하지 않는 페이지입니다." />
+          <Navigate to="/" />;
+        </>
+      );
+    }
+
     if (this.state.errorDetail === 'unauthorized') {
       return <Navigate to="/login" />;
     }
@@ -109,7 +127,7 @@ class ErrorBoundary extends Component<Props, State> {
     if (this.state.errorDetail === 'auth-expired') {
       return (
         <>
-          <UnauthorizedAlert />
+          <StayDuringRoutingAlert content="인증 정보가 만료되었습니다. 다시 로그인해 주세요." />
           <Navigate to="/login" />
         </>
       );

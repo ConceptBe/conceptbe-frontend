@@ -8,9 +8,13 @@ interface OpenAlertProps {
   buttonContent?: string;
 }
 
+interface Props {
+  content: string;
+}
+
 let isOpenAlert = false;
 
-const UnauthorizedAlert = () => {
+const StayDuringRoutingAlert = ({ content }: Props) => {
   const overlay = useOverlay({
     exitOnUnmount: false,
   });
@@ -37,13 +41,13 @@ const UnauthorizedAlert = () => {
     if (isOpenAlert) return;
 
     openAlert({
-      content: '인증 정보가 만료되었습니다. 다시 로그인해 주세요.',
+      content,
     });
 
     isOpenAlert = true;
-  }, [openAlert]);
+  }, [openAlert, content]);
 
   return <></>;
 };
 
-export default UnauthorizedAlert;
+export default StayDuringRoutingAlert;
