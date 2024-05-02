@@ -113,8 +113,17 @@ const FilterBottomSheet = ({
   return (
     <BottomSheet isOpen={open} onClose={onClose}>
       <FilterBox>
-        <Flex justifyContent="end" padding="22px 22px 0 22px" cursor="pointer" onClick={() => onClose()}>
-          <SVGCancel width={24} height={24} />
+        <Flex
+          width="100%"
+          maxWidth="420px"
+          position="fixed"
+          boxSizing="border-box"
+          borderRadius="16px 16px 0 0"
+          backgroundColor="w1"
+          justifyContent="end"
+          padding="22px 22px 0 22px"
+        >
+          <SVGCancel width={24} height={24} onClick={onClose} cursor="pointer" />
         </Flex>
         <FilterContent>
           <FilterWrapper>
@@ -207,7 +216,7 @@ const FilterContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: 25px;
-  padding: 0 22px 60px 22px;
+  padding: 46px 22px 60px 22px;
 `;
 
 const FilterBottom = styled.div`
