@@ -67,9 +67,9 @@ const ProfileInfoSection = ({ memberInfo }: Props) => {
           <Spacer size={10} />
           <TagWrapper>
             <Flex wrap="wrap" gap={6}>
-              {skills.map(({ skillId, skillName }) => (
+              {skills.map(({ skillId, skillName, level }) => (
                 <Badge key={skillId} backgroundColor="c1" fontColor="w1">
-                  {skillName}
+                  {`${skillName}, ${level}`}
                 </Badge>
               ))}
             </Flex>
