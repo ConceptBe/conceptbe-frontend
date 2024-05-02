@@ -4,7 +4,6 @@ import { createBrowserRouter } from 'react-router-dom';
 
 import ApiErrorBoundary from './components/ErrorBoundary/ApiErrorBoundary';
 import MobileView from './layouts/MobileView';
-import NeedAuth from './pages/NeedAuth';
 import More from './pages/Profile/More.page';
 
 const Feed = lazy(() => import('./pages/Feed/Feed.page'));
@@ -18,6 +17,7 @@ const NotFound = lazy(() => import('./pages/NotFound'));
 const Profile = lazy(() => import('./pages/Profile/Profile.page'));
 const ProfileEdit = lazy(() => import('./pages/ProfileEdit/ProfileEdit.page'));
 const SignUpPage = lazy(() => import('./pages/SignUp/SignUp.page'));
+const NeedAuth = lazy(() => import('./pages/NeedAuth'));
 
 interface RouteElement {
   path: string;
