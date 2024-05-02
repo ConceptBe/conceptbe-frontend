@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Spacer, Text } from 'concept-be-design-system';
+import { SVGProfileMessageDots, Spacer, Text } from 'concept-be-design-system';
 import { Fragment, Suspense, useRef } from 'react';
 
 import NewIdeaCardListSkeleton from './NewIdeaCardListSkeleton';
@@ -7,6 +7,7 @@ import useConfirm from '../../../../hooks/useConfirm';
 import { useDeleteIdea } from '../../../components/NewIdeaCard/hooks/mutations/useDeleteIdea';
 import NewIdeaCard from '../../../components/NewIdeaCard/NewIdeaCard';
 import useNavigatePage from '../../../hooks/useNavigatePage';
+import EmptyTabContentSection from '../../../Profile/components/EmptyTabContentSection';
 import { useFilterParams } from '../../context/filterContext';
 import { useIdeasQuery } from '../../hooks/queries/useIdeasQuery';
 import { useFeedInfiniteFetch } from '../../hooks/useFeedInfiniteFetch';
@@ -29,6 +30,12 @@ const CardList = () => {
       deleteIdea(ideaId);
     }
   };
+
+  if (ideas.length === 0) {
+    return (
+      <EmptyTabContentSection svg={SVGProfileMessageDots} textList={['', '선택하신 조건에 해당하는 글이 없어요.']} />
+    );
+  }
 
   return (
     <>
