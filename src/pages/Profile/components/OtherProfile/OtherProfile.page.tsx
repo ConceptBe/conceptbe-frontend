@@ -6,6 +6,7 @@ import IdeaSection from './IdeaSection';
 import Back from '../../../../layouts/Back';
 import { Member } from '../../types';
 import ProfileInfoSection from '../ProfileInfoSection';
+import SectionSkeleton from '../SectionSkeleton';
 
 type Props = {
   userId: number;
@@ -25,7 +26,7 @@ const OtherProfile = ({ userId, memberInfo }: Props) => {
         <ProfileWrapper>
           <ProfileInfoSection memberInfo={memberInfo} />
           <TabPanelBox>
-            <Suspense fallback={<></>}>
+            <Suspense fallback={<SectionSkeleton />}>
               <IdeaSection userId={userId} />
             </Suspense>
           </TabPanelBox>
