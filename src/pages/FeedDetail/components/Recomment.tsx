@@ -5,6 +5,7 @@ import CommentProfileInfo from './CommentProfileInfo';
 import EditComment from './EditComment';
 import ModifyDropdown from './ModifyDropdown';
 import useConfirm from '../../../hooks/useConfirm';
+import HyperLinkText from '../../components/HyperLinkText/HyperLinkText';
 import { get999PlusCount } from '../../utils';
 import useDeleteCommentMutation from '../hooks/mutations/useDeleteComment';
 import useFocusEditComment from '../hooks/useFocusEditComment';
@@ -83,9 +84,9 @@ const Recomment = ({
                 owner={owner}
               />
               <Spacer size={20} />
-              <Text font="suit14r" color="t" style={{ lineHeight: '22px', whiteSpace: 'pre-wrap' }}>
+              <HyperLinkText font="suit14r" color="t" lineHeight="22px">
                 {deleted ? '삭제된 답글입니다.' : content}
-              </Text>
+              </HyperLinkText>
               <Spacer size={10} />
               <Flex>
                 <Flex alignItems="center" gap={4} onClick={toggleLikeComment} cursor="pointer">

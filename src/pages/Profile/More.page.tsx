@@ -47,7 +47,7 @@ const More = () => {
   return (
     <>
       {isDeleteAccountPending && <Spinner backdrop />}
-      <SEOMeta title="컨셉비 | 더보기" description="아이디어 기반의 안전하고 자유로운 팀원 찾기 플랫폼" />
+      <SEOMeta title="컨셉비 | 더 보기" description="아이디어 기반의 안전하고 자유로운 팀원 찾기 플랫폼" />
       <Container>
         <Header spacerPosition="end">
           <Header.Item>
@@ -55,7 +55,7 @@ const More = () => {
           </Header.Item>
           <Header.Item>
             <Text font="suit16sb" color="b4">
-              더보기
+              더 보기
             </Text>
           </Header.Item>
         </Header>

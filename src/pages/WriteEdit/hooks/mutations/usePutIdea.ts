@@ -23,7 +23,7 @@ export const usePutIdea = () => {
     mutationFn: _putIdea,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['ideas'] });
-      navigate('/');
+      navigate(-1);
     },
     onError: (error: PutIdeaError) => {
       openAlert({ content: error.response?.data.message ?? '글 수정에 실패했습니다.' });

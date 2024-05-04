@@ -3,6 +3,7 @@ import { theme, Badge, Spacer, Text, Flex, ImageView, PNGDefaultProfileBackgroun
 import { useNavigate } from 'react-router-dom';
 
 import Padding from '../../../components/Padding';
+import HyperLinkText from '../../components/HyperLinkText/HyperLinkText';
 import { Member } from '../types';
 
 type Props = {
@@ -59,9 +60,9 @@ const ProfileInfoSection = ({ memberInfo }: Props) => {
           </div>
           {isMyProfile === true && <EditButton onClick={() => navigate(`/profile-edit`)}>프로필 수정</EditButton>}
         </ProfileMainBox>
-        <Text font="suit15rb" color="b4" style={{ lineHeight: 1.5 }}>
+        <HyperLinkText font="suit15rb" color="b4" lineHeight="22px">
           {introduction}
-        </Text>
+        </HyperLinkText>
         <div>
           <Text font="suit14m">세부 스킬</Text>
           <Spacer size={10} />

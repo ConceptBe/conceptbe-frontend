@@ -101,7 +101,7 @@ const Textarea = styled.textarea`
   color: ${theme.color.b4};
   font-size: ${theme.font.suit14r.fontSize}px;
   font-weight: ${theme.font.suit14r.fontWeight};
-  line-height: 160%;
+  line-height: 22px;
 
   ::placeholder {
     color: ${theme.color.ba};
