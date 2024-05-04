@@ -28,6 +28,7 @@ import useSignUpQuery from './hooks/useSignUpQuery.ts';
 import useValidateUserInfo from './hooks/useValidateUserInfo.ts';
 import { DropdownValue, FieldValue } from './types';
 import SEOMeta from '../../components/SEOMeta/SEOMeta.tsx';
+import { NICKNAME_REG_EXP } from '../../constants/index.ts';
 import useAlert from '../../hooks/useAlert.tsx';
 import { OauthMemberInfo } from '../../types/login.ts';
 
@@ -74,7 +75,7 @@ const SignUpPage = () => {
   const validateInput = () => {
     return [
       {
-        validateFn: (input: string) => /[~!@#$%";'^,&*()_+|</>=>`?:{[\]}\s]/g.test(input),
+        validateFn: (input: string) => NICKNAME_REG_EXP.test(input),
         errorMessage: '사용 불가한 닉네임입니다.',
       },
       {

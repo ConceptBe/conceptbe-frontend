@@ -23,6 +23,7 @@ import { FormEvent } from 'react';
 import useProfileEditQuery from './hooks/useProfileEditQuery.ts';
 import usePutProfileMutation from './hooks/usePutProfileMutation.ts';
 import { DropdownValue, FieldValue } from './types';
+import { NICKNAME_REG_EXP } from '../../constants/index.ts';
 import useAlert from '../../hooks/useAlert.tsx';
 import Back from '../../layouts/Back.tsx';
 import { getUserId } from '../Profile/utils/getUserId.ts';
@@ -71,7 +72,7 @@ const ProfileEdit = () => {
   const validateInput = () => {
     return [
       {
-        validateFn: (input: string) => /[~!@#$%";'^,&*()_+|</>=>`?:{[\]}\s]/g.test(input),
+        validateFn: (input: string) => NICKNAME_REG_EXP.test(input),
         errorMessage: '사용 불가한 닉네임입니다.',
       },
       {

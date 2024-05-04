@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
 
 import { getCheckDuplicateNickname } from '../../../api';
+import { NICKNAME_REG_EXP } from '../../../constants';
 import { getUserNickname } from '../../Feed/utils/getUserNickname';
 import { FieldValue } from '../types';
 
@@ -14,7 +15,9 @@ const useCheckDuplicateNickname = ({ nickname, setFieldErrorValue }: Props) => {
   const timerId = useRef<number | null>(null);
 
   useEffect(() => {
-    if (userNickname === nickname || nickname.length < 2) return;
+    if (userNickname === nickname || nickname.length < 2 || NICKNAME_REG_EXP.test(nickname)) {
+      return;
+    }
 
     if (timerId.current) {
       const timerIdCurrent = timerId.current;

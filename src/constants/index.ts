@@ -1,4 +1,6 @@
 export const BASE_URL = 'https://conceptbe.kr/api';
 
-// 서버 작업으로 인한 임시 상수값
+// 댓글 작성 시 ID 값
 export const ROOT_COMMENT_ID = '0';
+
+export const NICKNAME_REG_EXP = /[^a-zA-Z0-9가-힣]|[ㄱ-ㅎㅏ-ㅣ]/;
