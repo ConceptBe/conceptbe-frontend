@@ -3,10 +3,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import Comments from './components/Comments';
 import ModifyDropdown from './components/ModifyDropdown';
+import ProfileInfo from './components/ProfileInfo';
 import ReactionBar from './components/ReactionBar';
 import { CommentFocusProvider } from './contexts/CommentFocusContext';
 import useFeedDetailQuery from './hooks/queries/useFeedDetailQuery';
-import ProfileInfo from '../../components/ProfileInfo';
 import SEOMeta from '../../components/SEOMeta/SEOMeta';
 import useConfirm from '../../hooks/useConfirm';
 import Back from '../../layouts/Back';

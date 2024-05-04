@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { Text } from 'concept-be-design-system';
+import { Fragment } from 'react';
 
 import { ColorKeyType, FontKeyType } from '../../../styles/theme';
 
@@ -13,22 +14,30 @@ interface Props {
 const LINK_REG_EXP = /(https?:\/\/|www\.)/;
 const convertHyperLinkTexts = ({ font, color, lineHeight = 'normal', children: text }: Props) => {
   const generatedTexts = text.split('\n').map((line, idx) => {
-    if (line === '') return <br key={idx} />;
+    if (line === '') return <br key={`${line}-${idx}`} />;
 
     return (
-      <Paragraph as="p" key={idx} font={font} color={color} lineHeight={lineHeight}>
+      <Paragraph as="p" key={`${line}-${idx}`} font={font} color={color} lineHeight={lineHeight}>
         {line.split(' ').map((word, idx) => {
           const isFirst = idx === 0;
 
           if (LINK_REG_EXP.test(word)) {
             return (
-              <HyperLink as="a" key={idx} href={word} target="_blank" font={font} color={color} lineHeight={lineHeight}>
+              <HyperLink
+                as="a"
+                key={`${word}-${idx}`}
+                href={word}
+                target="_blank"
+                font={font}
+                color={color}
+                lineHeight={lineHeight}
+              >
                 {word}
               </HyperLink>
             );
           }
 
-          return <>{isFirst ? word : ` ${word}`}</>;
+          return <Fragment key={`${word}-${idx}`}>{isFirst ? word : ` ${word}`}</Fragment>;
         })}
       </Paragraph>
     );

@@ -7,7 +7,6 @@ import BestIdeaCardListSection from './components/BestIdeaCardListSection/BestId
 import FilterBottomSheet from './components/FilterBottomSheet/FilterBottomSheet';
 import NewIdeaCardListSection from './components/NewIdeaCardListSection/NewIdeaCardListSection';
 import { getUserNickname } from './utils/getUserNickname';
-import Padding from '../../components/Padding';
 import SEOMeta from '../../components/SEOMeta/SEOMeta';
 import Logo from '../../layouts/Logo';
 import { useWritingInfoQuery } from '../Write/hooks/queries/useWritingInfoQuery';
@@ -15,7 +14,7 @@ import { useWritingInfoQuery } from '../Write/hooks/queries/useWritingInfoQuery'
 const Feed = () => {
   const navigate = useNavigate();
   const [isFilterBottomSheetOpen, setIsFilterBottomSheetOpen] = useState(false);
-  const { branches, purposes, recruitmentPlaces, skillCategoryResponses } = useWritingInfoQuery();
+  const { branches, purposes, recruitmentPlaces, cooperationWays, skillCategoryResponses } = useWritingInfoQuery();
 
   const closeFilterBottomSheet = () => {
     setIsFilterBottomSheetOpen(false);
@@ -65,7 +64,7 @@ const Feed = () => {
         <IdeaSectionBox>
           <BestIdeaCardListSection />
           <NewIdeaCardListSection />
-          <Padding bottom={80} />
+          <Spacer size={80} />
         </IdeaSectionBox>
       </Wrapper>
       {/* Pop Up 애니메이션이 사라짐에 따라 조건부 렌더링 로직을 제거해야할 것 같습니다. 초기화하는 로직을 직접 작성하도록 하겠습니다.*/}
@@ -73,6 +72,7 @@ const Feed = () => {
         branches={branches}
         purposes={purposes}
         recruitmentPlaces={recruitmentPlaces}
+        cooperationWays={cooperationWays}
         skillCategoryResponses={skillCategoryResponses}
         open={isFilterBottomSheetOpen}
         onClose={closeFilterBottomSheet}

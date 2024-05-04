@@ -23,6 +23,8 @@ import { FormEvent } from 'react';
 import useProfileEditQuery from './hooks/useProfileEditQuery.ts';
 import usePutProfileMutation from './hooks/usePutProfileMutation.ts';
 import { DropdownValue, FieldValue } from './types';
+import { NICKNAME_REG_EXP } from '../../constants/index.ts';
+import useAlert from '../../hooks/useAlert.tsx';
 import Back from '../../layouts/Back.tsx';
 import { getUserId } from '../Profile/utils/getUserId.ts';
 import useCheckDuplicateNickname from '../SignUp/hooks/useCheckDuplicateNickname.ts';
@@ -39,13 +41,14 @@ interface CheckboxOption {
 }
 
 const ProfileEdit = () => {
+  const openAlert = useAlert();
   const { mainSkills, detailSkills, skillLevels, regions, purposes, my } = useProfileEditQuery();
   const { fieldValue, fieldErrorValue, setFieldErrorValue, onChangeField } = useField<FieldValue>({
     nickname: my.nickname ?? '',
     company: my.workingPlace ?? '',
     intro: my.introduction ?? '',
   });
-  const { checkboxValue, onChangeCheckbox } = useCheckbox<CheckboxValue>({
+  const { checkboxValue, selectedCheckboxId, onChangeCheckbox } = useCheckbox<CheckboxValue>({
     goal: my.joinPurposes ?? purposes,
   });
   const { dropdownValue, onResetDropdown, onClickDropdown } = useDropdown<DropdownValue>({
@@ -69,7 +72,7 @@ const ProfileEdit = () => {
   const validateInput = () => {
     return [
       {
-        validateFn: (input: string) => /[~!@#$%";'^,&*()_+|</>=>`?:{[\]}\s]/g.test(input),
+        validateFn: (input: string) => NICKNAME_REG_EXP.test(input),
         errorMessage: '사용 불가한 닉네임입니다.',
       },
       {
@@ -82,12 +85,32 @@ const ProfileEdit = () => {
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (!fieldValue.nickname) {
+      openAlert({ content: '닉네임을 입력해 주세요.' });
+      return;
+    }
+
+    if (!dropdownValue.mainSkill) {
+      openAlert({ content: '대표 스킬을 선택해 주세요.' });
+      return;
+    }
+
+    if (selectedSkillDepths.length === 0) {
+      openAlert({ content: '세부 스킬을 하나 이상 선택해 주세요.' });
+      return;
+    }
+
+    if (selectedCheckboxId.goal.length === 0) {
+      openAlert({ content: '가입 목적을 하나 이상 선택해 주세요.' });
+      return;
+    }
+
     putProfile({
       nickname: fieldValue.nickname,
       mainSkillId: mainSkills.find(({ name }) => dropdownValue.mainSkill === name)?.id || 0,
       profileImageUrl: my.profileImageUrl || '',
       skills: selectedSkillDepths.map(({ id, name }) => ({ skillId: id, level: name.split(', ')[1] })),
-      joinPurposes: checkboxValue.goal.filter(({ checked }) => checked).map(({ id }) => id),
+      joinPurposes: selectedCheckboxId.goal,
       livingPlaceId: regions.find((place) => place.name === dropdownValue.region)?.id || 1,
       workingPlace: fieldValue.company,
       introduction: fieldValue.intro,
@@ -298,7 +321,7 @@ const ProfileEdit = () => {
             onValidate={validateInput}
             maxLength={10}
           >
-            <Field.Input name="company" placeholder="직장명을 입력해주세요" />
+            <Field.Input name="company" placeholder="직장명을 입력해주세요." />
           </Field>
 
           <Spacer size={35} />

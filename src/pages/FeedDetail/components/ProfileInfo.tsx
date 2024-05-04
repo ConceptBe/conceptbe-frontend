@@ -1,6 +1,6 @@
 import { Text, Box, Flex, ImageView, PNGDefaultProfileInfo36 } from 'concept-be-design-system';
 
-import useNavigatePage from '../pages/hooks/useNavigatePage';
+import useNavigatePage from '../../hooks/useNavigatePage';
 
 interface Props {
   memberId: number;

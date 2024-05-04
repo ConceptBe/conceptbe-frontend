@@ -22,12 +22,16 @@ const useDeleteAccount = () => {
     onSuccess: async () => {
       localStorage.removeItem('user');
       localStorage.removeItem('userToken');
-      await openConfirm({ content: '탈퇴하였습니다.', closeButtonContent: '' });
+      await openConfirm({
+        content: '회원 탈퇴를 완료했습니다. 그간 서비스를 이용해 주셔서 감사합니다.',
+        closeButtonContent: '',
+      });
       goFeedPage();
     },
     onError: async (error: DeleteAccountError) => {
       await openConfirm({
-        content: error.response?.data.message ?? '탈퇴에 실패했습니다. 메일로 문의 부탁드립니다.',
+        content:
+          error.response?.data.message ?? '회원 탈퇴를 실패했습니다. 기타 문의 사항을 클릭해 메일로 문의해 주세요.',
         closeButtonContent: '',
       });
     },

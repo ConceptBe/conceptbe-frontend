@@ -1,21 +1,23 @@
-import { ReactNode, Suspense } from 'react';
+import { Spinner } from 'concept-be-design-system';
+import { ReactNode, Suspense, lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 
 import ApiErrorBoundary from './components/ErrorBoundary/ApiErrorBoundary';
-import Spinner from './components/Spinner/Spinner';
 import MobileView from './layouts/MobileView';
-import Feed from './pages/Feed/Feed.page';
-import FeedDetailPage from './pages/FeedDetail/FeedDetail.page';
-import Agreement from './pages/Login/Agreement';
-import Login from './pages/Login/Login';
-import OauthRedirect from './pages/Login/OauthRedirect';
-import NotFound from './pages/NotFound';
 import More from './pages/Profile/More.page';
-import Profile from './pages/Profile/Profile.page';
-import ProfileEdit from './pages/ProfileEdit/ProfileEdit.page';
-import SignUpPage from './pages/SignUp/SignUp.page';
-import WritePage from './pages/Write/Write.page';
-import WriteEditPage from './pages/WriteEdit/WriteEdit.page';
+
+const Feed = lazy(() => import('./pages/Feed/Feed.page'));
+const FeedDetailPage = lazy(() => import('./pages/FeedDetail/FeedDetail.page'));
+const WritePage = lazy(() => import('./pages/Write/Write.page'));
+const WriteEditPage = lazy(() => import('./pages/WriteEdit/WriteEdit.page'));
+const Agreement = lazy(() => import('./pages/Login/Agreement'));
+const OauthRedirect = lazy(() => import('./pages/Login/OauthRedirect'));
+const Login = lazy(() => import('./pages/Login/Login'));
+const NotFound = lazy(() => import('./pages/NotFound'));
+const Profile = lazy(() => import('./pages/Profile/Profile.page'));
+const ProfileEdit = lazy(() => import('./pages/ProfileEdit/ProfileEdit.page'));
+const SignUpPage = lazy(() => import('./pages/SignUp/SignUp.page'));
+const NeedAuth = lazy(() => import('./pages/NeedAuth'));
 
 interface RouteElement {
   path: string;
@@ -47,7 +49,11 @@ const routes: RouteElement[] = [
       },
       {
         path: '/write',
-        element: withAsyncBoundary(<WritePage />),
+        element: withAsyncBoundary(
+          <NeedAuth>
+            <WritePage />
+          </NeedAuth>,
+        ),
       },
       {
         path: '/write-edit',

@@ -1,8 +1,8 @@
+import { Spinner } from 'concept-be-design-system';
 import { useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { getIsMember, getLogin } from '../../api';
-import Spinner from '../../components/Spinner/Spinner';
 
 interface Props {
   serverName: 'kakao' | 'naver';

@@ -1,7 +1,7 @@
 export function formatCommentDate(date: string) {
   const now = new Date();
   const commentDate = new Date(date);
-  const diffTime = Math.abs(now - commentDate);
+  const diffTime = Math.abs(now.getTime() - commentDate.getTime());
   const diffHours = Math.floor(diffTime / (1000 * 60 * 60));
 
   if (diffHours < 24) {
@@ -14,7 +14,7 @@ export function formatCommentDate(date: string) {
     const minutes = commentDate.getMinutes();
 
     // 숫자가 한 자리일 때 앞에 0을 붙여주는 함수
-    const padZero = (num) => num.toString().padStart(2, '0');
+    const padZero = (num: number) => num.toString().padStart(2, '0');
 
     return `${year}.${padZero(month)}.${padZero(day)} ${padZero(hours)}:${padZero(minutes)}`;
   }

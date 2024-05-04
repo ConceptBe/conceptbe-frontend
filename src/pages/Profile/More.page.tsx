@@ -1,10 +1,9 @@
 import styled from '@emotion/styled';
-import { BottomSheet, Divider, Header, Spacer, Text, theme } from 'concept-be-design-system';
+import { BottomSheet, Divider, Header, Text, theme } from 'concept-be-design-system';
 import { useState } from 'react';
 
 import useDeleteAccount from './hooks/mutations/useDeleteAccount';
 import SEOMeta from '../../components/SEOMeta/SEOMeta';
-import Spinner from '../../components/Spinner/Spinner';
 import Privacy from '../../components/Terms/Privacy';
 import UsageTerms from '../../components/Terms/UsageTerms';
 import useConfirm from '../../hooks/useConfirm';
@@ -16,7 +15,7 @@ const More = () => {
   const [moreState, setMoreState] = useState('');
   const isLoggedIn = Boolean(localStorage.getItem('user')) && Boolean(localStorage.getItem('userToken'));
   const { goFeedPage, goLoginPage } = useNavigatePage();
-  const { deleteAccount, isPending: isDeleteAccountPending } = useDeleteAccount();
+  const { deleteAccount } = useDeleteAccount();
   const openConfirm = useConfirm();
 
   const onMoreClick = (string: string) => {
@@ -46,8 +45,8 @@ const More = () => {
 
   return (
     <>
-      {isDeleteAccountPending && <Spinner backdrop />}
-      <SEOMeta title="컨셉비 | 더 보기" description="아이디어 기반의 안전하고 자유로운 팀원 찾기 플랫폼" />
+      <SEOMeta title="컨셉비 | 더보기" description="아이디어 기반의 안전하고 자유로운 팀원 찾기 플랫폼" />
+
       <Container>
         <Header spacerPosition="end">
           <Header.Item>
@@ -87,12 +86,14 @@ const More = () => {
             </Text>
           </MoreButton>
           <Divider color="l3" top={22} bottom={22} />
-          <Text font="suit15m" color="b4">
+          <Text
+            as="a"
+            font="suit15m"
+            color="b4"
+            href="mailto:conceper.biz@gmail.com"
+            style={{ textDecoration: 'none' }}
+          >
             기타 문의 사항
-          </Text>
-          <Spacer size={8} />
-          <Text style={{ lineHeight: '22px' }} font="suit14r" color="b6">
-            기타 문의사항이 있으실 경우, ABCDEFG123456@gmail.com으로 연락주세요
           </Text>
           <Divider color="l3" top={22} bottom={22} />
           <MoreButton onClick={handleDeleteAccount}>

@@ -1,7 +1,6 @@
 import { useOverlay } from '@toss/use-overlay';
+import { Alert } from 'concept-be-design-system';
 import { useCallback } from 'react';
-
-import Alert from '../components/Modal/Alert';
 
 interface OpenAlertProps {
   content: string;

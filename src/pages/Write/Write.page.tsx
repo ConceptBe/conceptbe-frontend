@@ -30,54 +30,36 @@ import { get2DepthCountsBy1Depth } from './utils/get2DepthCountsBy1Depth';
 import SEOMeta from '../../components/SEOMeta/SEOMeta';
 import useAlert from '../../hooks/useAlert';
 
-const cooperationWays = [
-  { id: 1, name: '상관없음' },
-  { id: 2, name: '온라인' },
-  { id: 3, name: '오프라인' },
-];
-
 const WritePage = () => {
   const openAlert = useAlert();
   const { postIdeas } = usePostIdeasMutation();
-  const { branches, purposes, recruitmentPlaces, skillCategoryResponses } = useWritingInfoQuery();
+  const { branches, purposes, recruitmentPlaces, cooperationWays, skillCategoryResponses } = useWritingInfoQuery();
 
   const [title, setTitle] = useState('');
   const [introduce, setIntroduce] = useState('');
+  const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
+  const [selectedTeamRecruitment1Depth, setSelectedTeamRecruitment1Depth] = useState(skillCategoryResponses[0].name);
+  const [selectedSkillResponses, setSelectedSkillResponses] = useState<Info[]>([]);
 
-  const branchOptions = branches.map((properties) => ({ checked: false, ...properties }));
-  const purposeOptions = purposes.map((properties) => ({ checked: false, ...properties }));
-  const { checkboxValue, onChangeCheckbox } = useCheckbox({
-    branches: branchOptions,
-    purposes: purposeOptions,
+  const { checkboxValue, selectedCheckboxId, onChangeCheckbox } = useCheckbox({
+    branches,
+    purposes,
   });
-
-  const cooperationWayOptions = cooperationWays.map((properties) => {
-    // 협업방식: 상관없음이 기본값(id === 1)
-    return properties.id === 1 ? { checked: true, ...properties } : { checked: false, ...properties };
+  const { radioValue, selectedRadioName, onChangeRadio } = useRadio({
+    cooperationWays,
   });
-
-  const { radioValue, onChangeRadio } = useRadio({
-    cooperationWays: cooperationWayOptions,
-  });
-
-  // 모집 지역도 백엔드와 형식 논의해야할듯(id 추가..?)
   const { dropdownValue, onClickDropdown } = useDropdown({
     recruitmentPlace: '',
   });
-
-  const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
-
-  const [selectedTeamRecruitment1Depth, setSelectedTeamRecruitment1Depth] = useState(skillCategoryResponses[0].name);
-  const [selectedSkillResponses, setSelectedSkillResponses] = useState<Info[]>([]);
 
   const sheetLeftItems = skillCategoryResponses.map((item) => item.name);
   const sheetRightItems = skillCategoryResponses.find((item) => item.name === selectedTeamRecruitment1Depth)
     ?.skillResponses;
 
-  const branchIds = checkboxValue.branches.filter((branch) => branch.checked).map((branch) => branch.id);
-  const purposeIds = checkboxValue.purposes.filter((branch) => branch.checked).map((purpose) => purpose.id);
-  const cooperationWay = radioValue.cooperationWays.find((cooperationWay) => cooperationWay.checked)?.name;
-  const canSubmit = branchIds.length > 0 && purposeIds.length > 0 && !!cooperationWay;
+  const canSubmit =
+    selectedCheckboxId.branches.length > 0 &&
+    selectedCheckboxId.purposes.length > 0 &&
+    !!selectedRadioName.cooperationWays;
 
   if (!sheetRightItems) {
     console.error('sheetRightItems is null');
@@ -85,44 +67,36 @@ const WritePage = () => {
   }
 
   const writeIdea = () => {
-    const recruitmentPlaceId =
-      recruitmentPlaces.find((place) => place.name === dropdownValue.recruitmentPlace)?.id || 1;
-    const skillCategoryIds = selectedSkillResponses.map((selectedSkillResponse) => selectedSkillResponse.id);
-
     // TODO: 글쓰기 필수 조건 누락 시 토스트 띄워주기 (alert -> toast)
     if (!title) {
-      openAlert({ content: '제목을 입력해 주세요' });
+      openAlert({ content: '제목을 입력해 주세요.' });
       return;
     }
     if (introduce.length < 10) {
-      openAlert({ content: '본문 내용을 10자 이상 입력해 주세요' });
+      openAlert({ content: '본문 내용을 10자 이상 입력해 주세요.' });
       return;
     }
-    if (!branchIds.length) {
-      openAlert({ content: '분야를 1개 이상 선택해 주세요' });
+    if (!selectedCheckboxId.branches.length) {
+      openAlert({ content: '분야를 1개 이상 선택해 주세요.' });
       return;
     }
-    if (!purposeIds.length) {
-      openAlert({ content: '목적을 1개 이상 선택해 주세요' });
+    if (!selectedCheckboxId.purposes.length) {
+      openAlert({ content: '목적을 1개 이상 선택해 주세요.' });
       return;
     }
-    if (!cooperationWay) {
-      openAlert({ content: '협업방식을 선택해 주세요' });
-      return;
-    }
-    if (!recruitmentPlaceId) {
-      openAlert({ content: '모집지역을 선택해주세요.' });
+    if (!selectedRadioName.cooperationWays) {
+      openAlert({ content: '협업방식을 선택해 주세요.' });
       return;
     }
 
     postIdeas({
       title,
       introduce,
-      recruitmentPlaceId,
-      cooperationWay,
-      branchIds,
-      purposeIds,
-      skillCategoryIds,
+      recruitmentPlaceId: recruitmentPlaces.find((place) => place.name === dropdownValue.recruitmentPlace)?.id || 1,
+      cooperationWay: selectedRadioName.cooperationWays,
+      branchIds: selectedCheckboxId.branches,
+      purposeIds: selectedCheckboxId.purposes,
+      skillCategoryIds: selectedSkillResponses.map((selectedSkillResponse) => selectedSkillResponse.id),
     });
   };
 
@@ -136,7 +110,7 @@ const WritePage = () => {
 
   const onClickTeamRecruitment = (selected: Info) => {
     if (selectedSkillResponses.length >= 10) {
-      openAlert({ content: '10개 이상 선택할 수 없습니다.' });
+      openAlert({ content: '최대 10개까지 선택할 수 있습니다.' });
       return;
     }
     setSelectedSkillResponses((prev) =>
@@ -153,9 +127,9 @@ const WritePage = () => {
     title !== '' ||
     introduce !== '' ||
     selectedSkillResponses.length > 0 ||
-    branchIds.length > 0 ||
-    purposeIds.length > 0 ||
-    cooperationWay !== '상관없음' ||
+    selectedCheckboxId.branches.length > 0 ||
+    selectedCheckboxId.purposes.length > 0 ||
+    selectedRadioName.cooperationWays !== '상관없음' ||
     !!dropdownValue.recruitmentPlace;
 
   return (

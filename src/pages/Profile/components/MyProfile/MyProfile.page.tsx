@@ -1,11 +1,10 @@
 import styled from '@emotion/styled';
-import { Header, TabLayout, theme, SVGHeaderSetting, Box } from 'concept-be-design-system';
+import { Header, TabLayout, theme, SVGHeaderSetting, Box, Spinner } from 'concept-be-design-system';
 import { Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import BookmarkSection from './BookmarkSection';
 import IdeaSection from './IdeaSection';
-import Spinner from '../../../../components/Spinner/Spinner';
 import Logo from '../../../../layouts/Logo';
 import { Member } from '../../types';
 import ProfileInfoSection from '../ProfileInfoSection';
