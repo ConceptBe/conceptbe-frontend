@@ -163,6 +163,16 @@ const ProfileEdit = () => {
             </Flex>
           </Box>
 
+          <Text font="suit15m" color="b9" required>
+            이메일
+          </Text>
+          <Spacer size={12} />
+          <Text font="suit15m" color="b4">
+            {my.email}
+          </Text>
+
+          <Spacer size={35} />
+
           <Field
             label="닉네임"
             value={fieldValue.nickname}
