@@ -44,7 +44,7 @@ const Feed = () => {
           <Spacer size={27} />
           <FeedFixTextWrapper>
             <Text font="suit22sb" color="w1">
-              {getUserNickname()}
+              {getUserNickname() || 'Guest1234'},
             </Text>
             <Text font="suit22r" color="w1">
               님,
