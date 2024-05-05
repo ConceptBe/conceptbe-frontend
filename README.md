@@ -29,7 +29,7 @@
 
 관심이 가는 게시글에 댓글과 답글을 남겨보세요. 프로필을 클릭해서 상대방의 세부 역량을 쉽게 파악할 수도 있어요. 😇
 
-![image](https://github.com/ConceptBe/conceptbe-frontend/assets/89172499/fc1c60f2-aac8-4bbc-9670-b9f95e4275fe)
+![image](https://github.com/ConceptBe/conceptbe-frontend/assets/89172499/15fbe1e3-0143-4857-be7f-df28c2600fa8)
 
 ### 상세한 프로필 설정
 
