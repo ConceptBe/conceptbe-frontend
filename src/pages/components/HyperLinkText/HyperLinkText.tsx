@@ -20,7 +20,7 @@ const convertHyperLinkTexts = ({ font, color, lineHeight = 'normal', children: t
       <Paragraph as="p" key={`${line}-${idx}`} font={font} color={color} lineHeight={lineHeight}>
         {line.split(' ').map((word, idx) => {
           const isFirst = idx === 0;
-          const link = word.startsWith('www') ? `https://${word}` : word;
+          const link = word.startsWith('www.') ? `https://${word}` : word;
 
           if (LINK_REG_EXP.test(word)) {
             return (
