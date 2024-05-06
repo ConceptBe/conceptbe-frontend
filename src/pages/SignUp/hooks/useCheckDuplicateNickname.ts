@@ -14,8 +14,10 @@ const useCheckDuplicateNickname = ({ nickname, setFieldErrorValue }: Props) => {
   const userNickname = getUserNickname();
   const timerId = useRef<number | null>(null);
 
+  console.log(userNickname);
+
   useEffect(() => {
-    if (userNickname === nickname || nickname.length < 2 || NICKNAME_REG_EXP.test(nickname)) {
+    if (nickname.length < 2 || NICKNAME_REG_EXP.test(nickname)) {
       return;
     }
 
@@ -28,8 +30,9 @@ const useCheckDuplicateNickname = ({ nickname, setFieldErrorValue }: Props) => {
       if (!nickname) return;
 
       const isUnique = await getCheckDuplicateNickname(nickname);
+      const isSameBeforeNickname = userNickname === nickname;
 
-      if (!isUnique) {
+      if (!isUnique && !isSameBeforeNickname) {
         setFieldErrorValue((prev) => ({
           ...prev,
           nickname: '이미 사용 중인 닉네임입니다.',

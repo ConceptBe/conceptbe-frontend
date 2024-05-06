@@ -17,7 +17,7 @@ const useProfileEditQuery = () => {
     skillLevels,
     regions,
     purposes,
-    my: { ...my, ['skills']: mySkills, ['joinPurposes']: myPurposes },
+    my: { ...my, skills: mySkills, joinPurposes: myPurposes, email: my.email },
   };
 };
 

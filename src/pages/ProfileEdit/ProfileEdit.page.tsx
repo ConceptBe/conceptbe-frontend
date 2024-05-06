@@ -23,6 +23,7 @@ import { FormEvent } from 'react';
 import useProfileEditQuery from './hooks/useProfileEditQuery.ts';
 import usePutProfileMutation from './hooks/usePutProfileMutation.ts';
 import { DropdownValue, FieldValue } from './types';
+import { ReactComponent as SVGToolTip24 } from '../../../public/assets/tool_tip_24.svg';
 import { NICKNAME_REG_EXP } from '../../constants/index.ts';
 import useAlert from '../../hooks/useAlert.tsx';
 import Back from '../../layouts/Back.tsx';
@@ -162,6 +163,28 @@ const ProfileEdit = () => {
               <SVGLoginImageWrite />
             </Flex>
           </Box>
+
+          <Flex gap={6}>
+            <Text font="suit15m" color="b9">
+              이메일
+            </Text>
+            <SVGToolTip24
+              width={15}
+              height={15}
+              onClick={() =>
+                openAlert({
+                  content: '가입 시 등록한 이메일입니다. 확인용이며 본인 외 다른 사람에게 노출되지 않습니다.',
+                })
+              }
+              cursor="pointer"
+            />
+          </Flex>
+          <Spacer size={12} />
+          <Text font="suit15m" color="b4">
+            {my.email}
+          </Text>
+
+          <Spacer size={35} />
 
           <Field
             label="닉네임"

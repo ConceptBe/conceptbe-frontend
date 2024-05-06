@@ -7,5 +7,5 @@ export const getUserNickname = (): string => {
     return user.nickname;
   }
 
-  return 'Guest1234';
+  return '';
 };
