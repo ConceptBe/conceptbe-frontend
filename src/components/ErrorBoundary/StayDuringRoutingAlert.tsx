@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query';
 import { useOverlay } from '@toss/use-overlay';
 import { Alert } from 'concept-be-design-system';
 import { useCallback, useEffect } from 'react';
@@ -14,6 +15,7 @@ interface Props {
 let isOpenAlert = false;
 
 const StayDuringRoutingAlert = ({ content }: Props) => {
+  const queryClient = useQueryClient();
   const overlay = useOverlay({
     exitOnUnmount: false,
   });
@@ -27,13 +29,14 @@ const StayDuringRoutingAlert = ({ content }: Props) => {
             close();
             exit();
             isOpenAlert = false;
+            queryClient.invalidateQueries({ queryKey: ['ideas'] });
           }}
           content={content}
           buttonContent={buttonContent}
         />
       ));
     },
-    [overlay],
+    [overlay, queryClient],
   );
 
   useEffect(() => {
