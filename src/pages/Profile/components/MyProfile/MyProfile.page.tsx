@@ -8,6 +8,7 @@ import IdeaSection from './IdeaSection';
 import Logo from '../../../../layouts/Logo';
 import { Member } from '../../types';
 import ProfileInfoSection from '../ProfileInfoSection';
+import SectionSkeleton from '../SectionSkeleton';
 
 type Props = {
   userId: number;
@@ -34,7 +35,7 @@ const MyProfile = ({ userId, memberInfo }: Props) => {
           <TabLayout maxWidth={420} height="100%">
             <TabLayout.Tab label="아이디어">
               <TabPanelBox>
-                <Suspense fallback={<></>}>
+                <Suspense fallback={<SectionSkeleton />}>
                   <IdeaSection userId={userId} />
                 </Suspense>
               </TabPanelBox>
@@ -42,7 +43,7 @@ const MyProfile = ({ userId, memberInfo }: Props) => {
 
             <TabLayout.Tab label="북마크">
               <TabPanelBox>
-                <Suspense fallback={<></>}>
+                <Suspense fallback={<SectionSkeleton />}>
                   <BookmarkSection />
                 </Suspense>
               </TabPanelBox>
