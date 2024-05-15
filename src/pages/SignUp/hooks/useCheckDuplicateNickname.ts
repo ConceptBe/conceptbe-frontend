@@ -14,8 +14,6 @@ const useCheckDuplicateNickname = ({ nickname, setFieldErrorValue }: Props) => {
   const userNickname = getUserNickname();
   const timerId = useRef<number | null>(null);
 
-  console.log(userNickname);
-
   useEffect(() => {
     if (nickname.length < 2 || NICKNAME_REG_EXP.test(nickname)) {
       return;

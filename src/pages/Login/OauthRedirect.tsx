@@ -13,8 +13,6 @@ const OauthRedirect = ({ serverName }: Props) => {
   const searchParams = new URLSearchParams(location.search);
   const code = searchParams.get('code');
 
-  console.log(code);
-
   const getCode = useCallback(
     async (code: string | null) => {
       if (!code) throw new Error('OAUTH CODE ERROR');
