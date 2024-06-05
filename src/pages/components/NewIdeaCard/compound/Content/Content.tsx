@@ -47,7 +47,7 @@ const Content = ({ onClickDelete }: Props) => {
           </Text>
           <Spacer size={7} />
 
-          <Text font="suit16sb">{title}</Text>
+          <LineHeightText font="suit16sb">{title}</LineHeightText>
         </Flex>
 
         {canEdit && (
@@ -96,4 +96,8 @@ const ContentText = styled.div`
 
 const TagWrapper = styled.div`
   padding: 0;
+`;
+
+const LineHeightText = styled(Text)`
+  line-height: 20px;
 `;
