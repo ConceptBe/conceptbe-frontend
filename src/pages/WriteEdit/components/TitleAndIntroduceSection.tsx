@@ -15,7 +15,7 @@ type Props = {
 const TitleAndIntroduceSection = ({ title, introduce, onTitleChange, onIntroduceChange }: Props) => {
   const handleChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {
     const newTitle = e.target.value;
-    if (newTitle.length > 20) return; // 제목 길이 제한
+    if (newTitle.length > 40) return; // 제목 길이 제한
 
     onTitleChange(newTitle);
   };

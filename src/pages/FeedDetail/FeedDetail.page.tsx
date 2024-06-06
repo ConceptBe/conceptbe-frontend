@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import { Badge, Divider, Header, Spacer, Text, TextDivider, Flex, Box } from 'concept-be-design-system';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -73,9 +74,9 @@ const FeedDetailPage = () => {
               {branchList.join(' / ')}
             </Text>
             <Spacer size={8} />
-            <Text font="suit18sb" color="b4">
+            <LineHeightText font="suit18sb" color="b4">
               {title}
-            </Text>
+            </LineHeightText>
             <Spacer size={8} />
             <Flex alignItems="center">
               <Text font="suit12r" color="b9">
@@ -178,3 +179,7 @@ const FeedDetailPage = () => {
 };
 
 export default FeedDetailPage;
+
+const LineHeightText = styled(Text)`
+  line-height: 20px;
+`;
