@@ -1,3 +1,9 @@
+export interface ImageResponse {
+  id: number;
+  ideaId: number;
+  imageUrl: string;
+}
+
 export interface FeedDetailResponse {
   memberId: number;
   imageUrl: string;
@@ -18,6 +24,7 @@ export interface FeedDetailResponse {
   owner: boolean;
   ownerScrap: boolean;
   ownerLike: boolean;
+  imageResponses: ImageResponse[];
 }
 
 export interface CommentParentResponse {

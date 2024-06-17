@@ -3,6 +3,7 @@ import { Badge, Divider, Header, Spacer, Text, TextDivider, Flex, Box } from 'co
 import { useNavigate, useParams } from 'react-router-dom';
 
 import Comments from './components/Comments';
+import IdeaImageList from './components/IdeaImageList';
 import ModifyDropdown from './components/ModifyDropdown';
 import ProfileInfo from './components/ProfileInfo';
 import ReactionBar from './components/ReactionBar';
@@ -39,6 +40,7 @@ const FeedDetailPage = () => {
     owner,
     ownerScrap,
     ownerLike,
+    imageResponses,
   } = useFeedDetailQuery(feedId);
   const openConfirm = useConfirm();
   const { deleteIdea } = useDeleteIdea();
@@ -94,6 +96,15 @@ const FeedDetailPage = () => {
           {introduce}
         </HyperLinkText>
       </Box>
+
+      {imageResponses.length > 0 && (
+        <>
+          <Divider color="l3" />
+          <Spacer size={22} />
+          <IdeaImageList imageResponses={imageResponses} />
+          <Spacer size={22} />
+        </>
+      )}
 
       <Divider color="bg1" height={8} />
 
