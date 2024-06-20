@@ -47,6 +47,10 @@ const Wrapper = styled.div`
   overflow-x: auto;
   flex-wrap: nowrap;
   gap: 8px;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const Item = styled.div`
