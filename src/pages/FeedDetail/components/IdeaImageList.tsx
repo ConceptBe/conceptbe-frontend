@@ -25,7 +25,7 @@ const IdeaImageList = ({ imageResponses }: Props) => {
       <Wrapper>
         {imageResponses.map(({ id, imageUrl }, index) => (
           <Item key={id} onClick={() => handleImageClick(index)}>
-            <img src={imageUrl} width={120} height={120} alt={`Thumbnail ${index}`} />
+            <Image src={imageUrl} alt={`Thumbnail ${index}`} />
           </Item>
         ))}
       </Wrapper>
@@ -55,4 +55,10 @@ const Wrapper = styled.div`
 
 const Item = styled.div`
   flex: 0 0 auto;
+`;
+
+const Image = styled.img`
+  object-fit: cover;
+  width: 120px;
+  height: 120px;
 `;
