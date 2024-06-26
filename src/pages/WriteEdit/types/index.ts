@@ -1,13 +1,24 @@
 // 글쓰기 요청 body 타입
-export type PutIdeasRequest = {
-  title: string; // 제목
-  introduce: string; // 소개
-  branchIds: number[]; // 분야
-  purposeIds: number[]; // 목적
-  cooperationWay: string; // 협업 방식
-  recruitmentPlaceId: number; // 팀원 모집 지역
-  skillCategoryIds: number[]; // 팀원 모집 종류
-};
+export interface PutIdeasRequest {
+  ideaId: number;
+  idea: PutFormData;
+}
+
+export interface PutFormData extends FormData {
+  request: {
+    title: string; // 제목
+    introduce: string; // 소개
+    branchIds: number[]; // 분야
+    purposeIds: number[]; // 목적
+    cooperationWay: string; // 협업 방식
+    recruitmentPlaceId: number; // 팀원 모집 지역
+    skillCategoryIds: number[]; // 팀원 모집 종류
+    imageIds: number[];
+  };
+  images: File[];
+  // imageIds 에는 변경이 없는 image들의 id를 넣어줘야함
+  // images에는 변경된 image file들을 넣어서 보내야함
+}
 
 // 글쓰기 필터 정보 타입
 export type Info = {
@@ -26,6 +37,12 @@ export type Idea = {
     skillResponses: Info[]; // IT기획, 게임기획, 제품기획, 사업기획
   }[];
 };
+
+export interface ImageResponse {
+  id: number;
+  ideaId: number;
+  imageUrl: string;
+}
 
 export type IdeaDetail = {
   imageUrl: string;
@@ -46,4 +63,5 @@ export type IdeaDetail = {
   owner: boolean;
   ownerLike: boolean;
   ownerScrap: boolean;
+  imageResponses: ImageResponse[];
 };

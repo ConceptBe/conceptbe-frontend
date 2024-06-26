@@ -1,34 +1,35 @@
 import styled from '@emotion/styled';
 import {
-  useCheckbox,
-  useRadio,
   BottomSheet,
+  Box,
   CheckboxContainer,
   Divider,
+  Flex,
   RadioContainer,
+  SVGAdd24,
+  SVGCancel,
+  SVGHeaderCheck24,
+  SVGRadioCheck24,
+  SVGRadioUncheck24,
   Spacer,
   Text,
   theme,
-  SVGAdd24,
-  SVGHeaderCheck24,
-  SVGCancel,
-  SVGRadioCheck24,
-  SVGRadioUncheck24,
-  Flex,
+  useCheckbox,
   useDropdown,
-  Box,
+  useRadio,
 } from 'concept-be-design-system';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
+import useAlert from '../../hooks/useAlert';
 import Header from './components/Header';
 import RecruitmentPlaceSection from './components/RecruitmentPlaceSection';
 import TitleAndIntroduceSection from './components/TitleAndIntroduceSection';
+import UpdateImages from './components/UpdateImages';
 import { usePutIdea } from './hooks/mutations/usePutIdea';
 import { useWritingEditInfoQuery } from './hooks/queries/useWritingInfoQuery';
-import { Info } from './types';
+import { ImageResponse, Info, PutFormData } from './types';
 import { get2DepthCountsBy1Depth } from './utils/get2DepthCountsBy1Depth';
-import useAlert from '../../hooks/useAlert';
 
 const WriteEditPage = () => {
   const openAlert = useAlert();
@@ -41,6 +42,11 @@ const WriteEditPage = () => {
   const [title, setTitle] = useState(ideaDetail.title);
   const [introduce, setIntroduce] = useState(ideaDetail.introduce);
   const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
+  const [images, setImages] = useState<ImageResponse[]>(ideaDetail.imageResponses); // 서버에서 받아온거 화면 보여주는용
+  const [imageFiles, setImageFiles] = useState<File[]>([]); // 새롭게 수정해서 올린거 서버에 보낼거
+  const [notDeletedImageIds, setNotDeletedImageIds] = useState<number[]>(
+    ideaDetail.imageResponses.map((image) => image.id),
+  ); // images 에서 삭제되지 않은 id를 기록해서 서버로 보낼거
   const [selectedTeamRecruitment1Depth, setSelectedTeamRecruitment1Depth] = useState(skillCategoryResponses[0].name);
   const [selectedSkillResponses, setSelectedSkillResponses] = useState<Info[]>(
     skillCategoryResponses
@@ -97,17 +103,31 @@ const WriteEditPage = () => {
       return;
     }
 
+    const formData = new FormData();
+
+    const userData = {
+      title,
+      introduce,
+      recruitmentPlaceId: recruitmentPlaces.find((place) => place.name === dropdownValue.recruitmentPlace)?.id || 1,
+      cooperationWay: selectedRadioName.cooperationWays,
+      branchIds: selectedCheckboxId.branches,
+      purposeIds: selectedCheckboxId.purposes,
+      skillCategoryIds: selectedSkillResponses.map((selectedSkillResponse) => selectedSkillResponse.id),
+      imageIds: notDeletedImageIds,
+    };
+
+    imageFiles.forEach((imageFile) => {
+      formData.append('images', imageFile);
+    });
+
+    const stringifiedUserData = JSON.stringify(userData);
+    const userDataBlob = new Blob([stringifiedUserData], { type: 'application/json' });
+
+    formData.append('request', userDataBlob);
+
     putIdea({
       ideaId: Number(location.state.ideaId),
-      idea: {
-        title,
-        introduce,
-        recruitmentPlaceId: recruitmentPlaces.find((place) => place.name === dropdownValue.recruitmentPlace)?.id || 1,
-        cooperationWay: selectedRadioName.cooperationWays,
-        branchIds: selectedCheckboxId.branches,
-        purposeIds: selectedCheckboxId.purposes,
-        skillCategoryIds: selectedSkillResponses.map((selectedSkillResponse) => selectedSkillResponse.id),
-      },
+      idea: formData as PutFormData,
     });
   };
 
@@ -133,6 +153,24 @@ const WriteEditPage = () => {
     setSelectedSkillResponses((prev) => prev.filter((item) => item.id !== id));
   };
 
+  const addImages = (addedImages: File[]) => {
+    setImageFiles([...imageFiles, ...addedImages]);
+  };
+
+  // server 에서 기존에 있던 이미지 제거 시
+  const deleteImage = (id: number) => {
+    const filteredImages = images.filter((image) => image.id !== id);
+    const filteredImageIds = filteredImages.map((image) => image.id);
+
+    setImages(filteredImages);
+    setNotDeletedImageIds(filteredImageIds);
+  };
+
+  // client 에서 새롭게 추가한 이미지 제거 시
+  const deleteImageFiles = (index: number) => {
+    setImageFiles(imageFiles.filter((_, idx) => idx + notDeletedImageIds.length !== index));
+  };
+
   return (
     <MainWrapper>
       <Header onClickCheckButton={writeIdea} isCheckButtonEnabled={canSubmit} />
@@ -145,7 +183,17 @@ const WriteEditPage = () => {
         onIntroduceChange={handleIntroduceChange}
       />
 
+      <Divider color="bg1" height={8} />
+
+      <UpdateImages
+        images={images}
+        onAddImages={addImages}
+        onDeleteImage={deleteImage}
+        onDeleteImageFiles={deleteImageFiles}
+      />
+
       <Divider color="bg1" height={8} bottom={30} />
+
       <BottomWrapper>
         <Box>
           <CheckboxContainer
