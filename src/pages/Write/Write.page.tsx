@@ -1,34 +1,34 @@
 import styled from '@emotion/styled';
 import {
-  useCheckbox,
-  useRadio,
   BottomSheet,
+  Box,
   CheckboxContainer,
   Divider,
+  Flex,
   RadioContainer,
+  SVGAdd24,
+  SVGCancel,
+  SVGHeaderCheck24,
+  SVGRadioCheck24,
+  SVGRadioUncheck24,
   Spacer,
   Text,
   theme,
-  SVGAdd24,
-  SVGHeaderCheck24,
-  SVGCancel,
-  SVGRadioCheck24,
-  SVGRadioUncheck24,
-  Flex,
+  useCheckbox,
   useDropdown,
-  Box,
+  useRadio,
 } from 'concept-be-design-system';
 import { useState } from 'react';
-
+import SEOMeta from '../../components/SEOMeta/SEOMeta';
+import useAlert from '../../hooks/useAlert';
+import AddImages from './components/AddImages';
 import Header from './components/Header';
 import RecruitmentPlaceSection from './components/RecruitmentPlaceSection';
 import TitleAndIntroduceSection from './components/TitleAndIntroduceSection';
 import { usePostIdeasMutation } from './hooks/mutations/usePostIdeasMutation';
 import { useWritingInfoQuery } from './hooks/queries/useWritingInfoQuery';
-import { Info } from './types';
+import { Info, PostIdeasRequest } from './types';
 import { get2DepthCountsBy1Depth } from './utils/get2DepthCountsBy1Depth';
-import SEOMeta from '../../components/SEOMeta/SEOMeta';
-import useAlert from '../../hooks/useAlert';
 
 const WritePage = () => {
   const openAlert = useAlert();
@@ -40,6 +40,7 @@ const WritePage = () => {
   const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
   const [selectedTeamRecruitment1Depth, setSelectedTeamRecruitment1Depth] = useState(skillCategoryResponses[0].name);
   const [selectedSkillResponses, setSelectedSkillResponses] = useState<Info[]>([]);
+  const [images, setImages] = useState<File[]>([]);
 
   const { checkboxValue, selectedCheckboxId, onChangeCheckbox } = useCheckbox({
     branches,
@@ -89,7 +90,8 @@ const WritePage = () => {
       return;
     }
 
-    postIdeas({
+    const formData = new FormData();
+    const userData = {
       title,
       introduce,
       recruitmentPlaceId: recruitmentPlaces.find((place) => place.name === dropdownValue.recruitmentPlace)?.id || 1,
@@ -97,7 +99,18 @@ const WritePage = () => {
       branchIds: selectedCheckboxId.branches,
       purposeIds: selectedCheckboxId.purposes,
       skillCategoryIds: selectedSkillResponses.map((selectedSkillResponse) => selectedSkillResponse.id),
+    };
+
+    images.forEach((image) => {
+      formData.append('images', image);
     });
+
+    const stringifiedUserData = JSON.stringify(userData);
+    const userDataBlob = new Blob([stringifiedUserData], { type: 'application/json' });
+
+    formData.append('request', userDataBlob);
+
+    postIdeas(formData as PostIdeasRequest);
   };
 
   const handleTitleChange = (newTitle: string) => {
@@ -147,7 +160,12 @@ const WritePage = () => {
           onIntroduceChange={handleIntroduceChange}
         />
 
-        <Divider color="bg1" height={8} bottom={30} />
+        <Divider color="bg1" height={8} />
+
+        <AddImages images={images} setImages={setImages} />
+
+        <Divider color="bg1" height={8} />
+
         <BottomWrapper>
           <Box>
             <CheckboxContainer
@@ -287,7 +305,7 @@ const MainWrapper = styled.div`
 `;
 
 const BottomWrapper = styled.div`
-  padding: 0px 22px;
+  padding: 30px 22px 0;
   display: flex;
   flex-direction: column;
   gap: 35px;

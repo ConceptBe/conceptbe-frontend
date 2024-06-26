@@ -4,11 +4,10 @@ import { useNavigate } from 'react-router-dom';
 
 import { http } from '../../../../api/http';
 import useAlert from '../../../../hooks/useAlert';
+import { PutIdeasRequest } from '../../types';
 
-import type { PutIdeasRequest } from '../../types';
-
-const _putIdea = ({ ideaId, idea }: { ideaId: number; idea: PutIdeasRequest }) => {
-  return http.put(`/ideas/${ideaId}`, idea);
+const _putIdea = ({ ideaId, idea }: PutIdeasRequest) => {
+  return http.put(`/ideas/${ideaId}`, idea, { headers: { 'Content-Type': 'multipart/form-data' } });
 };
 
 // TODO: 제대로 된 에러핸들링 추가(토스트 추가 등)
