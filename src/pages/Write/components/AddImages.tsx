@@ -4,8 +4,12 @@ import { useState } from 'react';
 import useAlert from '../../../hooks/useAlert';
 import useCompressImage from '../hooks/useCompressImage';
 
-const AddImages = () => {
-  const [images, setImages] = useState<File[]>([]);
+interface Props {
+  images: File[];
+  setImages: React.Dispatch<React.SetStateAction<File[]>>;
+}
+
+const AddImages = ({ images, setImages }: Props) => {
   const [imageUrls, setImageUrls] = useState<string[]>([]);
   const openAlert = useAlert();
   const { compressImages } = useCompressImage();

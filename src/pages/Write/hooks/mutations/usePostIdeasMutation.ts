@@ -7,7 +7,7 @@ import useAlert from '../../../../hooks/useAlert';
 import { PostIdeasRequest } from '../../types';
 
 const _postIdeas = (ideas: PostIdeasRequest) => {
-  return http.post('/ideas', ideas);
+  return http.post('/ideas', ideas, { headers: { 'Content-Type': 'multipart/form-data' } });
 };
 
 // TODO: 제대로 된 에러핸들링 추가(토스트 추가 등)

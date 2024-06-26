@@ -27,7 +27,7 @@ import RecruitmentPlaceSection from './components/RecruitmentPlaceSection';
 import TitleAndIntroduceSection from './components/TitleAndIntroduceSection';
 import { usePostIdeasMutation } from './hooks/mutations/usePostIdeasMutation';
 import { useWritingInfoQuery } from './hooks/queries/useWritingInfoQuery';
-import { Info } from './types';
+import { Info, PostIdeasRequest } from './types';
 import { get2DepthCountsBy1Depth } from './utils/get2DepthCountsBy1Depth';
 
 const WritePage = () => {
@@ -40,6 +40,7 @@ const WritePage = () => {
   const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
   const [selectedTeamRecruitment1Depth, setSelectedTeamRecruitment1Depth] = useState(skillCategoryResponses[0].name);
   const [selectedSkillResponses, setSelectedSkillResponses] = useState<Info[]>([]);
+  const [images, setImages] = useState<File[]>([]);
 
   const { checkboxValue, selectedCheckboxId, onChangeCheckbox } = useCheckbox({
     branches,
@@ -89,7 +90,8 @@ const WritePage = () => {
       return;
     }
 
-    postIdeas({
+    const formData = new FormData();
+    const userData = {
       title,
       introduce,
       recruitmentPlaceId: recruitmentPlaces.find((place) => place.name === dropdownValue.recruitmentPlace)?.id || 1,
@@ -97,7 +99,18 @@ const WritePage = () => {
       branchIds: selectedCheckboxId.branches,
       purposeIds: selectedCheckboxId.purposes,
       skillCategoryIds: selectedSkillResponses.map((selectedSkillResponse) => selectedSkillResponse.id),
+    };
+
+    images.forEach((image) => {
+      formData.append('images', image);
     });
+
+    const stringifiedUserData = JSON.stringify(userData);
+    const userDataBlob = new Blob([stringifiedUserData], { type: 'application/json' });
+
+    formData.append('request', userDataBlob);
+
+    postIdeas(formData as PostIdeasRequest);
   };
 
   const handleTitleChange = (newTitle: string) => {
@@ -149,7 +162,7 @@ const WritePage = () => {
 
         <Divider color="bg1" height={8} />
 
-        <AddImages />
+        <AddImages images={images} setImages={setImages} />
 
         <Divider color="bg1" height={8} />
 
