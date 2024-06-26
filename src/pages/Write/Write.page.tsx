@@ -1,25 +1,27 @@
 import styled from '@emotion/styled';
 import {
-  useCheckbox,
-  useRadio,
   BottomSheet,
+  Box,
   CheckboxContainer,
   Divider,
+  Flex,
   RadioContainer,
+  SVGAdd24,
+  SVGCancel,
+  SVGHeaderCheck24,
+  SVGRadioCheck24,
+  SVGRadioUncheck24,
   Spacer,
   Text,
   theme,
-  SVGAdd24,
-  SVGHeaderCheck24,
-  SVGCancel,
-  SVGRadioCheck24,
-  SVGRadioUncheck24,
-  Flex,
+  useCheckbox,
   useDropdown,
-  Box,
+  useRadio,
 } from 'concept-be-design-system';
 import { useState } from 'react';
-
+import SEOMeta from '../../components/SEOMeta/SEOMeta';
+import useAlert from '../../hooks/useAlert';
+import AddImages from './components/AddImages';
 import Header from './components/Header';
 import RecruitmentPlaceSection from './components/RecruitmentPlaceSection';
 import TitleAndIntroduceSection from './components/TitleAndIntroduceSection';
@@ -27,8 +29,6 @@ import { usePostIdeasMutation } from './hooks/mutations/usePostIdeasMutation';
 import { useWritingInfoQuery } from './hooks/queries/useWritingInfoQuery';
 import { Info } from './types';
 import { get2DepthCountsBy1Depth } from './utils/get2DepthCountsBy1Depth';
-import SEOMeta from '../../components/SEOMeta/SEOMeta';
-import useAlert from '../../hooks/useAlert';
 
 const WritePage = () => {
   const openAlert = useAlert();
@@ -147,7 +147,12 @@ const WritePage = () => {
           onIntroduceChange={handleIntroduceChange}
         />
 
-        <Divider color="bg1" height={8} bottom={30} />
+        <Divider color="bg1" height={8} />
+
+        <AddImages />
+
+        <Divider color="bg1" height={8} />
+
         <BottomWrapper>
           <Box>
             <CheckboxContainer
@@ -287,7 +292,7 @@ const MainWrapper = styled.div`
 `;
 
 const BottomWrapper = styled.div`
-  padding: 0px 22px;
+  padding: 30px 22px 0;
   display: flex;
   flex-direction: column;
   gap: 35px;
