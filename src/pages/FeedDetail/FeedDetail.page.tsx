@@ -1,7 +1,14 @@
 import styled from '@emotion/styled';
-import { Badge, Divider, Header, Spacer, Text, TextDivider, Flex, Box } from 'concept-be-design-system';
+import { Badge, Box, Divider, Flex, Header, Spacer, Text, TextDivider } from 'concept-be-design-system';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import SEOMeta from '../../components/SEOMeta/SEOMeta';
+import useConfirm from '../../hooks/useConfirm';
+import Back from '../../layouts/Back';
+import Logo from '../../layouts/Logo';
+import { formatCommentDate } from '../Feed/utils/formatCommentDate';
+import HyperLinkText from '../components/HyperLinkText/HyperLinkText';
+import { useDeleteIdea } from '../components/NewIdeaCard/hooks/mutations/useDeleteIdea';
 import Comments from './components/Comments';
 import IdeaImageList from './components/IdeaImageList';
 import ModifyDropdown from './components/ModifyDropdown';
@@ -9,13 +16,6 @@ import ProfileInfo from './components/ProfileInfo';
 import ReactionBar from './components/ReactionBar';
 import { CommentFocusProvider } from './contexts/CommentFocusContext';
 import useFeedDetailQuery from './hooks/queries/useFeedDetailQuery';
-import SEOMeta from '../../components/SEOMeta/SEOMeta';
-import useConfirm from '../../hooks/useConfirm';
-import Back from '../../layouts/Back';
-import Logo from '../../layouts/Logo';
-import HyperLinkText from '../components/HyperLinkText/HyperLinkText';
-import { useDeleteIdea } from '../components/NewIdeaCard/hooks/mutations/useDeleteIdea';
-import { formatCommentDate } from '../Feed/utils/formatCommentDate';
 
 const FeedDetailPage = () => {
   const navigate = useNavigate();
@@ -96,6 +96,8 @@ const FeedDetailPage = () => {
           {introduce}
         </HyperLinkText>
       </Box>
+
+      <Divider color="bg1" height={8} />
 
       {imageResponses.length > 0 && (
         <>
