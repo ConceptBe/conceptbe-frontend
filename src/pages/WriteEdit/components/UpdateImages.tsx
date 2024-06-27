@@ -7,6 +7,7 @@ import { ImageResponse } from '../types';
 
 interface Props {
   images: ImageResponse[];
+  imageFiles: File[];
   onAddImages: (images: File[]) => void;
   onDeleteImage: (id: number) => void; // 서버에 있는 이미지
   onDeleteImageFiles: (index: number) => void; // 클라이언트에서 추가한 이미지
@@ -30,7 +31,7 @@ const FROM_SERVER_IMAGE = 'cloudfront';
 
 // let addId = -1;
 
-const UpdateImages = ({ images, onAddImages, onDeleteImage, onDeleteImageFiles }: Props) => {
+const UpdateImages = ({ images, imageFiles, onAddImages, onDeleteImage, onDeleteImageFiles }: Props) => {
   const openAlert = useAlert();
   const { compressImages } = useCompressImage();
   const [imageUrls, setImageUrls] = useState<ImageUrls[]>(images);
@@ -39,7 +40,7 @@ const UpdateImages = ({ images, onAddImages, onDeleteImage, onDeleteImageFiles }
     const currentImages = e.target.files;
 
     if (!currentImages) return;
-    if (images.length + currentImages.length > 3) {
+    if (images.length + imageFiles.length + currentImages.length > 3) {
       openAlert({ content: '이미지는 최대 3개까지 업로드 가능합니다.' });
       return;
     }
