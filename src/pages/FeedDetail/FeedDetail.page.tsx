@@ -97,11 +97,11 @@ const FeedDetailPage = () => {
         </HyperLinkText>
       </Box>
 
-      <Divider color="bg1" height={8} />
-
       {imageResponses.length > 0 && (
         <>
-          <Divider color="l3" />
+          <Box padding="0 22px">
+            <Divider color="l3" />
+          </Box>
           <Spacer size={22} />
           <IdeaImageList imageResponses={imageResponses} />
           <Spacer size={22} />
