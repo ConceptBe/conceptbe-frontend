@@ -4,7 +4,7 @@ const useCompressImage = () => {
   const compressImage = async (file: File) => {
     const resizingBlob = await imageCompression(file, {
       maxSizeMB: 1,
-      maxWidthOrHeight: 750,
+      maxWidthOrHeight: 2200,
       useWebWorker: true,
     });
     const compressedImage = new File([resizingBlob], file.name, {
