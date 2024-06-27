@@ -37,15 +37,15 @@ const UpdateImages = ({ images, imageFiles, onAddImages, onDeleteImage, onDelete
   const [imageUrls, setImageUrls] = useState<ImageUrls[]>(images);
 
   const onChangeImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const currentImages = e.target.files;
+    const imageFileList = e.target.files;
 
-    if (!currentImages) return;
-    if (images.length + imageFiles.length + currentImages.length > 3) {
+    if (!imageFileList) return;
+    if (images.length + imageFiles.length + imageFileList.length > 3) {
       openAlert({ content: '이미지는 최대 3개까지 업로드 가능합니다.' });
-      return;
     }
 
-    const compressedImages = await compressImages(currentImages);
+    const updatedImages = [...imageFileList].filter((_, idx) => idx < 3);
+    const compressedImages = await compressImages(updatedImages);
     const imageObjectUrls = compressedImages.map((image) => URL.createObjectURL(image));
 
     onAddImages(compressedImages);

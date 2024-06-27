@@ -14,9 +14,9 @@ const useCompressImage = () => {
     return compressedImage;
   };
 
-  const compressImages = async (files: FileList) => {
+  const compressImages = async (files: File[]) => {
     const compressedImages = await Promise.all(
-      [...files].map((file) => new Promise((resolve) => resolve(compressImage(file)))),
+      files.map((file) => new Promise((resolve) => resolve(compressImage(file)))),
     );
 
     return compressedImages as File[];
