@@ -187,6 +187,7 @@ const WriteEditPage = () => {
 
       <UpdateImages
         images={images}
+        imageFiles={imageFiles}
         onAddImages={addImages}
         onDeleteImage={deleteImage}
         onDeleteImageFiles={deleteImageFiles}
