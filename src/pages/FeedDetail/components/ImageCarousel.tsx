@@ -80,9 +80,9 @@ const ImageCarousel = ({ imageUrls, initialIndex, onClose }: Props) => {
           }
         >
           {imageUrls.map((imageUrl, index) => (
-            <div key={index}>
-              <img src={imageUrl} alt={`${index}번째 이미지`} />
-            </div>
+            <ImageWrapper key={index}>
+              <Img src={imageUrl} alt={`${index}번째 이미지`} />
+            </ImageWrapper>
           ))}
         </Carousel>
       </ModalContent>
@@ -112,4 +112,17 @@ const ModalContent = styled.div`
   max-width: 420px;
   height: 100%;
   background: rgba(0, 0, 0, 1);
+`;
+
+const ImageWrapper = styled.div`
+  width: 100%;
+  max-width: 420px;
+  height: 100%;
+  max-height: calc(100dvh - 80px);
+`;
+
+const Img = styled.img`
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
 `;
