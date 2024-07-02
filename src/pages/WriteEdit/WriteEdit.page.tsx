@@ -28,8 +28,10 @@ import TitleAndIntroduceSection from './components/TitleAndIntroduceSection';
 import UpdateImages from './components/UpdateImages';
 import { usePutIdea } from './hooks/mutations/usePutIdea';
 import { useWritingEditInfoQuery } from './hooks/queries/useWritingInfoQuery';
-import { ImageResponse, Info, PutFormData } from './types';
+import { AddedImage, ImageResponse, Info, PutFormData } from './types';
 import { get2DepthCountsBy1Depth } from './utils/get2DepthCountsBy1Depth';
+
+type ImageType = AddedImage | ImageResponse;
 
 const WriteEditPage = () => {
   const openAlert = useAlert();
@@ -42,11 +44,7 @@ const WriteEditPage = () => {
   const [title, setTitle] = useState(ideaDetail.title);
   const [introduce, setIntroduce] = useState(ideaDetail.introduce);
   const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
-  const [images, setImages] = useState<ImageResponse[]>(ideaDetail.imageResponses); // 서버에서 받아온거 화면 보여주는용
-  const [imageFiles, setImageFiles] = useState<File[]>([]); // 새롭게 수정해서 올린거 서버에 보낼거
-  const [notDeletedImageIds, setNotDeletedImageIds] = useState<number[]>(
-    ideaDetail.imageResponses.map((image) => image.id),
-  ); // images 에서 삭제되지 않은 id를 기록해서 서버로 보낼거
+  const [images, setImages] = useState<ImageType[]>(ideaDetail.imageResponses);
   const [selectedTeamRecruitment1Depth, setSelectedTeamRecruitment1Depth] = useState(skillCategoryResponses[0].name);
   const [selectedSkillResponses, setSelectedSkillResponses] = useState<Info[]>(
     skillCategoryResponses
@@ -105,6 +103,9 @@ const WriteEditPage = () => {
 
     const formData = new FormData();
 
+    const alreadyUploadedImages = images.filter((image) => image.id > 0) as ImageResponse[];
+    const justUploadedImages = images.filter((image) => image.id < 0) as AddedImage[];
+
     const userData = {
       title,
       introduce,
@@ -113,10 +114,10 @@ const WriteEditPage = () => {
       branchIds: selectedCheckboxId.branches,
       purposeIds: selectedCheckboxId.purposes,
       skillCategoryIds: selectedSkillResponses.map((selectedSkillResponse) => selectedSkillResponse.id),
-      imageIds: notDeletedImageIds,
+      imageIds: alreadyUploadedImages.map((image) => image.id),
     };
 
-    imageFiles.forEach((imageFile) => {
+    justUploadedImages.forEach(({ imageFile }) => {
       formData.append('images', imageFile);
     });
 
@@ -153,22 +154,14 @@ const WriteEditPage = () => {
     setSelectedSkillResponses((prev) => prev.filter((item) => item.id !== id));
   };
 
-  const addImages = (addedImages: File[]) => {
-    setImageFiles([...imageFiles, ...addedImages]);
+  const addImages = (addedImages: AddedImage[]) => {
+    setImages([...images, ...addedImages]);
   };
 
-  // server 에서 기존에 있던 이미지 제거 시
-  const deleteImage = (id: number) => {
-    const filteredImages = images.filter((image) => image.id !== id);
-    const filteredImageIds = filteredImages.map((image) => image.id);
+  const deleteImages = (id: number) => {
+    const deletedImages = images.filter((image) => image.id !== id);
 
-    setImages(filteredImages);
-    setNotDeletedImageIds(filteredImageIds);
-  };
-
-  // client 에서 새롭게 추가한 이미지 제거 시
-  const deleteImageFiles = (index: number) => {
-    setImageFiles(imageFiles.filter((_, idx) => idx + notDeletedImageIds.length !== index));
+    setImages(deletedImages);
   };
 
   return (
@@ -185,13 +178,7 @@ const WriteEditPage = () => {
 
       <Divider color="bg1" height={8} />
 
-      <UpdateImages
-        images={images}
-        imageFiles={imageFiles}
-        onAddImages={addImages}
-        onDeleteImage={deleteImage}
-        onDeleteImageFiles={deleteImageFiles}
-      />
+      <UpdateImages images={images} onAddImages={addImages} onDeleteImage={deleteImages} />
 
       <Divider color="bg1" height={8} bottom={30} />
 
