@@ -11,12 +11,12 @@ export type DetailSkills = Record<number, DetailSkillOption[]>;
 export interface PutSignUp {
   nickname: string;
   mainSkillId: number;
-  profileImageUrl: string;
+  profileImageUrl: string | null;
   skills: Omit<ProfileSkill, 'skillName'>[];
   joinPurposes: number[];
   livingPlaceId: number;
-  workingPlace?: string;
-  introduction?: string;
+  workingPlace: string | null;
+  introduction: string | null;
 }
 
 export interface ProfileSkill {
