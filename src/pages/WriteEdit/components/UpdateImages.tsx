@@ -48,7 +48,7 @@ const UpdateImages = ({ images, onAddImages, onDeleteImage }: Props) => {
     <Wrapper width="100%" height="100%" padding="22px" overflow="scroll" boxSizing="border-box">
       <Flex gap={8}>
         <AddImageLabel htmlFor="add-image">+</AddImageLabel>
-        <AddImageInput id="add-image" type="file" multiple onChange={onClickAddImage}></AddImageInput>
+        <AddImageInput id="add-image" type="file" multiple onChange={onClickAddImage} />
         {images.map(({ id, imageUrl }, index) => (
           <Box position="relative" key={id} onClick={() => onClickDeleteImage(id)}>
             <Flex
