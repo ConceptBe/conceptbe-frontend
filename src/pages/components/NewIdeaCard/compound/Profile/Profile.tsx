@@ -46,7 +46,11 @@ const Profile = ({ onClickProfile }: Props) => {
     <ProfileWrapper>
       <ProfileBox onClick={handleClickProfile}>
         <Box width={36} height={36} overflow="hidden" borderRadius="0 150px 150px 0">
-          <ImageView src={profileImageUrl} alt="프로필" defaultSrc={PNGDefaultProfileInfo36} />
+          <ImageView
+            src={profileImageUrl || PNGDefaultProfileInfo36}
+            alt="프로필"
+            defaultSrc={PNGDefaultProfileInfo36}
+          />
         </Box>
 
         <Box paddingTop={2}>
