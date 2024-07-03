@@ -44,6 +44,12 @@ export interface ImageResponse {
   imageUrl: string;
 }
 
+export interface AddedImage {
+  id: number;
+  imageUrl: string;
+  imageFile: File;
+}
+
 export type IdeaDetail = {
   imageUrl: string;
   nickname: string;
