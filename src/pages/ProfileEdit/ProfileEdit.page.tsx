@@ -18,15 +18,15 @@ import {
   useDropdown,
   useField,
 } from 'concept-be-design-system';
-import { FormEvent, useState } from 'react';
+import { FormEvent } from 'react';
 
 import { ReactComponent as SVGToolTip24 } from '../../../public/assets/tool_tip_24.svg';
 import { NICKNAME_REG_EXP } from '../../constants/index.ts';
 import useAlert from '../../hooks/useAlert.tsx';
-import useConfirm from '../../hooks/useConfirm.tsx';
 import Back from '../../layouts/Back.tsx';
 import { getUserId } from '../Profile/utils/getUserId.ts';
 import useCheckDuplicateNickname from '../SignUp/hooks/useCheckDuplicateNickname.ts';
+import useDefaultProfileImage from '../SignUp/hooks/useDefaultProfileImage.ts';
 import useSetDetailSkills from '../SignUp/hooks/useSetDetailSkills.ts';
 import useProfileEditQuery from './hooks/useProfileEditQuery.ts';
 import usePutProfileMutation from './hooks/usePutProfileMutation.ts';
@@ -44,7 +44,6 @@ interface CheckboxOption {
 
 const ProfileEdit = () => {
   const openAlert = useAlert();
-  const openConfirm = useConfirm();
   const { mainSkills, detailSkills, skillLevels, regions, purposes, my } = useProfileEditQuery();
   const { fieldValue, fieldErrorValue, setFieldErrorValue, onChangeField } = useField<FieldValue>({
     nickname: my.nickname ?? '',
@@ -68,19 +67,14 @@ const ProfileEdit = () => {
     dropdownValue,
     onResetDropdown,
   });
-  const [isDefaultProfileImage, setIsDefaultProfileImage] = useState<boolean>(false);
+  const { profileImageUrl, profileImageUrlRequest, onClickSetDefaultProfileImage } = useDefaultProfileImage({
+    currentProfileImage: my.profileImageUrl,
+    defaultProfileImage: PNGDefaultProfileInfo100,
+  });
 
   const { putProfile } = usePutProfileMutation(getUserId(), fieldValue.nickname);
 
   useCheckDuplicateNickname({ nickname: fieldValue.nickname, setFieldErrorValue });
-
-  const onClickDeleteProfileImage = async () => {
-    const isDeleteProfileImage = await openConfirm({
-      content: '기본 프로필 이미지로 변경하시겠습니까?',
-    });
-
-    if (isDeleteProfileImage) setIsDefaultProfileImage(true);
-  };
 
   const validateInput = () => {
     return [
@@ -121,7 +115,7 @@ const ProfileEdit = () => {
     putProfile({
       nickname: fieldValue.nickname,
       mainSkillId: mainSkills.find(({ name }) => dropdownValue.mainSkill === name)?.id || 0,
-      profileImageUrl: isDefaultProfileImage ? null : my.profileImageUrl,
+      profileImageUrl: profileImageUrlRequest,
       skills: selectedSkillDepths.map(({ id, name }) => ({ skillId: id, level: name.split(', ')[1] })),
       joinPurposes: selectedCheckboxId.goal,
       livingPlaceId: regions.find((place) => place.name === dropdownValue.region)?.id || 1,
@@ -157,11 +151,7 @@ const ProfileEdit = () => {
         >
           <Box position="relative" top={-50} left={0} right={0} margin="auto" width={100} height={100} cursor="pointer">
             <Box width={100} height={100} overflow="hidden" borderRadius="0 150px 150px 0">
-              <ImageView
-                src={isDefaultProfileImage ? PNGDefaultProfileInfo100 : my.profileImageUrl || PNGDefaultProfileInfo100}
-                alt="프로필 이미지"
-                defaultSrc={PNGDefaultProfileInfo100}
-              />
+              <ImageView src={profileImageUrl} alt="프로필 이미지" defaultSrc={PNGDefaultProfileInfo100} />
             </Box>
             <Flex
               justifyContent="center"
@@ -175,7 +165,7 @@ const ProfileEdit = () => {
               shadow="rgba(100, 100, 111, 0.2) 0px 7px 29px"
               bottom={0}
               right={0}
-              onClick={onClickDeleteProfileImage}
+              onClick={onClickSetDefaultProfileImage}
             >
               <SVGLoginImageWrite />
             </Flex>
