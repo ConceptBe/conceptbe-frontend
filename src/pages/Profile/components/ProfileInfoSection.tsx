@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { theme, Badge, Spacer, Text, Flex, ImageView, PNGDefaultProfileBackground } from 'concept-be-design-system';
+import { Badge, Flex, ImageView, PNGDefaultProfileBackground, Spacer, Text, theme } from 'concept-be-design-system';
 import { useNavigate } from 'react-router-dom';
 
 import HyperLinkText from '../../components/HyperLinkText/HyperLinkText';
@@ -39,7 +39,11 @@ const ProfileInfoSection = ({ memberInfo }: Props) => {
   return (
     <>
       <ImageWrapper>
-        <ImageView src={profileImageUrl} alt="프로필 이미지" defaultSrc={PNGDefaultProfileBackground} />
+        <ImageView
+          src={profileImageUrl || PNGDefaultProfileBackground}
+          alt="프로필 이미지"
+          defaultSrc={PNGDefaultProfileBackground}
+        />
       </ImageWrapper>
 
       <Spacer size={300} />

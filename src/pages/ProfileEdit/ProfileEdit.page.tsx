@@ -1,35 +1,36 @@
 import styled from '@emotion/styled';
 import {
-  useCheckbox,
-  useField,
+  Box,
   Button,
   CheckboxContainer,
   Dropdown,
   Field,
-  Text,
-  theme,
-  Header,
-  Spacer,
-  Tag,
-  SVGLoginImageWrite,
-  useDropdown,
   Flex,
-  Box,
+  Header,
   ImageView,
   PNGDefaultProfileInfo100,
+  SVGLoginImageWrite,
+  Spacer,
+  Tag,
+  Text,
+  theme,
+  useCheckbox,
+  useDropdown,
+  useField,
 } from 'concept-be-design-system';
 import { FormEvent } from 'react';
 
-import useProfileEditQuery from './hooks/useProfileEditQuery.ts';
-import usePutProfileMutation from './hooks/usePutProfileMutation.ts';
-import { DropdownValue, FieldValue } from './types';
 import { ReactComponent as SVGToolTip24 } from '../../../public/assets/tool_tip_24.svg';
 import { NICKNAME_REG_EXP } from '../../constants/index.ts';
 import useAlert from '../../hooks/useAlert.tsx';
 import Back from '../../layouts/Back.tsx';
 import { getUserId } from '../Profile/utils/getUserId.ts';
 import useCheckDuplicateNickname from '../SignUp/hooks/useCheckDuplicateNickname.ts';
+import useDefaultProfileImage from '../SignUp/hooks/useDefaultProfileImage.ts';
 import useSetDetailSkills from '../SignUp/hooks/useSetDetailSkills.ts';
+import useProfileEditQuery from './hooks/useProfileEditQuery.ts';
+import usePutProfileMutation from './hooks/usePutProfileMutation.ts';
+import { DropdownValue, FieldValue } from './types';
 
 interface CheckboxValue {
   goal: CheckboxOption[];
@@ -66,6 +67,11 @@ const ProfileEdit = () => {
     dropdownValue,
     onResetDropdown,
   });
+  const { profileImageUrl, onClickSetDefaultProfileImage } = useDefaultProfileImage({
+    currentProfileImage: my.profileImageUrl,
+    defaultProfileImage: PNGDefaultProfileInfo100,
+  });
+
   const { putProfile } = usePutProfileMutation(getUserId(), fieldValue.nickname);
 
   useCheckDuplicateNickname({ nickname: fieldValue.nickname, setFieldErrorValue });
@@ -109,7 +115,7 @@ const ProfileEdit = () => {
     putProfile({
       nickname: fieldValue.nickname,
       mainSkillId: mainSkills.find(({ name }) => dropdownValue.mainSkill === name)?.id || 0,
-      profileImageUrl: my.profileImageUrl || '',
+      profileImageUrl: profileImageUrl === PNGDefaultProfileInfo100 ? null : my.profileImageUrl,
       skills: selectedSkillDepths.map(({ id, name }) => ({ skillId: id, level: name.split(', ')[1] })),
       joinPurposes: selectedCheckboxId.goal,
       livingPlaceId: regions.find((place) => place.name === dropdownValue.region)?.id || 1,
@@ -145,7 +151,7 @@ const ProfileEdit = () => {
         >
           <Box position="relative" top={-50} left={0} right={0} margin="auto" width={100} height={100} cursor="pointer">
             <Box width={100} height={100} overflow="hidden" borderRadius="0 150px 150px 0">
-              <ImageView src={my.profileImageUrl} alt="프로필 이미지" defaultSrc={PNGDefaultProfileInfo100} />
+              <ImageView src={profileImageUrl} alt="프로필 이미지" defaultSrc={PNGDefaultProfileInfo100} />
             </Box>
             <Flex
               justifyContent="center"
@@ -159,6 +165,7 @@ const ProfileEdit = () => {
               shadow="rgba(100, 100, 111, 0.2) 0px 7px 29px"
               bottom={0}
               right={0}
+              onClick={onClickSetDefaultProfileImage}
             >
               <SVGLoginImageWrite />
             </Flex>

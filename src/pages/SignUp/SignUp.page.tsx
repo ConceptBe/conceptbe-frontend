@@ -1,36 +1,37 @@
 import styled from '@emotion/styled';
 import {
-  useCheckbox,
-  useField,
+  Box,
   Button,
   CheckboxContainer,
   Dropdown,
   Field,
-  Text,
-  theme,
-  Header,
-  Spacer,
-  Tag,
-  SVGLoginImageWrite,
-  useDropdown,
   Flex,
-  Box,
+  Header,
   ImageView,
   PNGDefaultProfileInfo100,
+  SVGLoginImageWrite,
+  Spacer,
+  Tag,
+  Text,
+  theme,
+  useCheckbox,
+  useDropdown,
+  useField,
 } from 'concept-be-design-system';
 import { FormEvent } from 'react';
 import { useLocation } from 'react-router-dom';
 
+import SEOMeta from '../../components/SEOMeta/SEOMeta.tsx';
+import { NICKNAME_REG_EXP } from '../../constants/index.ts';
+import useAlert from '../../hooks/useAlert.tsx';
+import { OauthMemberInfo } from '../../types/login.ts';
 import useCheckDuplicateNickname from './hooks/useCheckDuplicateNickname.ts';
+import useDefaultProfileImage from './hooks/useDefaultProfileImage.ts';
 import useSetDetailSkills from './hooks/useSetDetailSkills.ts';
 import useSignUpMutation from './hooks/useSignUpMutation.ts';
 import useSignUpQuery from './hooks/useSignUpQuery.ts';
 import useValidateUserInfo from './hooks/useValidateUserInfo.ts';
 import { DropdownValue, FieldValue } from './types';
-import SEOMeta from '../../components/SEOMeta/SEOMeta.tsx';
-import { NICKNAME_REG_EXP } from '../../constants/index.ts';
-import useAlert from '../../hooks/useAlert.tsx';
-import { OauthMemberInfo } from '../../types/login.ts';
 
 interface CheckboxValue {
   goal: CheckboxOption[];
@@ -67,6 +68,10 @@ const SignUpPage = () => {
     detailSkills,
     dropdownValue,
     onResetDropdown,
+  });
+  const { profileImageUrl, onClickSetDefaultProfileImage } = useDefaultProfileImage({
+    currentProfileImage: memberInfo?.profileImageUrl || '',
+    defaultProfileImage: PNGDefaultProfileInfo100,
   });
 
   useValidateUserInfo(memberInfo);
@@ -111,7 +116,7 @@ const SignUpPage = () => {
     postSignUp({
       nickname: fieldValue.nickname,
       mainSkillId: mainSkills.find(({ name }) => dropdownValue.mainSkill === name)?.id || 0,
-      profileImageUrl: memberInfo?.profileImageUrl || '',
+      profileImageUrl: profileImageUrl === PNGDefaultProfileInfo100 ? null : memberInfo?.profileImageUrl || '',
       skills: selectedSkillDepths.map(({ id, name }) => ({ skillId: id, level: name.split(', ')[1] })),
       joinPurposes: selectedCheckboxId.goal,
       livingPlaceId: regions.find((place) => place.name === dropdownValue.region)?.id || 1,
@@ -162,11 +167,7 @@ const SignUpPage = () => {
               cursor="pointer"
             >
               <Box width={100} height={100} overflow="hidden" borderRadius="0 150px 150px 0">
-                <ImageView
-                  src={memberInfo?.profileImageUrl || PNGDefaultProfileInfo100}
-                  alt="프로필 이미지"
-                  defaultSrc={PNGDefaultProfileInfo100}
-                />
+                <ImageView src={profileImageUrl} alt="프로필 이미지" defaultSrc={PNGDefaultProfileInfo100} />
               </Box>
               <Flex
                 justifyContent="center"
@@ -180,6 +181,7 @@ const SignUpPage = () => {
                 shadow="rgba(100, 100, 111, 0.2) 0px 7px 29px"
                 bottom={0}
                 right={0}
+                onClick={onClickSetDefaultProfileImage}
               >
                 <SVGLoginImageWrite />
               </Flex>

@@ -11,15 +11,15 @@ export type DetailSkills = Record<number, DetailSkillOption[]>;
 export interface PostSignUp {
   nickname: string;
   mainSkillId: number;
-  profileImageUrl: string;
+  profileImageUrl: string | null;
   skills: {
     skillId: number;
     level: string;
   }[];
   joinPurposes: number[];
   livingPlaceId: number;
-  workingPlace?: string;
-  introduction?: string;
+  workingPlace: string | null;
+  introduction: string | null;
   email: string;
   oauthId: string;
   oauthServerType: string;
