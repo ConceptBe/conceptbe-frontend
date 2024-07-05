@@ -69,8 +69,8 @@ const SignUpPage = () => {
     dropdownValue,
     onResetDropdown,
   });
-  const { profileImageUrl, profileImageUrlRequest, onClickSetDefaultProfileImage } = useDefaultProfileImage({
-    currentProfileImage: memberInfo?.profileImageUrl || null,
+  const { profileImageUrl, onClickSetDefaultProfileImage } = useDefaultProfileImage({
+    currentProfileImage: memberInfo?.profileImageUrl || '',
     defaultProfileImage: PNGDefaultProfileInfo100,
   });
 
@@ -116,7 +116,7 @@ const SignUpPage = () => {
     postSignUp({
       nickname: fieldValue.nickname,
       mainSkillId: mainSkills.find(({ name }) => dropdownValue.mainSkill === name)?.id || 0,
-      profileImageUrl: profileImageUrlRequest,
+      profileImageUrl: profileImageUrl === PNGDefaultProfileInfo100 ? null : memberInfo?.profileImageUrl || '',
       skills: selectedSkillDepths.map(({ id, name }) => ({ skillId: id, level: name.split(', ')[1] })),
       joinPurposes: selectedCheckboxId.goal,
       livingPlaceId: regions.find((place) => place.name === dropdownValue.region)?.id || 1,

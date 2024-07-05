@@ -67,7 +67,7 @@ const ProfileEdit = () => {
     dropdownValue,
     onResetDropdown,
   });
-  const { profileImageUrl, profileImageUrlRequest, onClickSetDefaultProfileImage } = useDefaultProfileImage({
+  const { profileImageUrl, onClickSetDefaultProfileImage } = useDefaultProfileImage({
     currentProfileImage: my.profileImageUrl,
     defaultProfileImage: PNGDefaultProfileInfo100,
   });
@@ -115,7 +115,7 @@ const ProfileEdit = () => {
     putProfile({
       nickname: fieldValue.nickname,
       mainSkillId: mainSkills.find(({ name }) => dropdownValue.mainSkill === name)?.id || 0,
-      profileImageUrl: profileImageUrlRequest,
+      profileImageUrl: profileImageUrl === PNGDefaultProfileInfo100 ? null : my.profileImageUrl,
       skills: selectedSkillDepths.map(({ id, name }) => ({ skillId: id, level: name.split(', ')[1] })),
       joinPurposes: selectedCheckboxId.goal,
       livingPlaceId: regions.find((place) => place.name === dropdownValue.region)?.id || 1,

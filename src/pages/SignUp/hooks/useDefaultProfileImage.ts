@@ -9,7 +9,6 @@ interface Props {
 const useDefaultProfileImage = ({ currentProfileImage, defaultProfileImage }: Props) => {
   const openConfirm = useConfirm();
   const [profileImageUrl, setProfileImageUrl] = useState<string>(currentProfileImage || defaultProfileImage);
-  const profileImageUrlRequest = profileImageUrl === defaultProfileImage ? null : currentProfileImage;
 
   const onClickSetDefaultProfileImage = async () => {
     const isDeleteProfileImage = await openConfirm({
@@ -19,7 +18,7 @@ const useDefaultProfileImage = ({ currentProfileImage, defaultProfileImage }: Pr
     if (isDeleteProfileImage) setProfileImageUrl(defaultProfileImage);
   };
 
-  return { profileImageUrl, profileImageUrlRequest, onClickSetDefaultProfileImage };
+  return { profileImageUrl, onClickSetDefaultProfileImage };
 };
 
 export default useDefaultProfileImage;
