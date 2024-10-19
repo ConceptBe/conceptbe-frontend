@@ -13,6 +13,7 @@ import {
 import { MouseEventHandler, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { identifyAbbreviationBadge } from '../../../../../utils/parsing';
 import { useDeleteBookmarkIdea } from '../../../../Feed/hooks/mutations/useDeleteBookmarkIdea';
 import { usePostBookmarkIdea } from '../../../../Feed/hooks/mutations/usePostBookmarkIdea';
 import { useContentContext, useIdeaIdContext, useProfileContext } from '../../NewIdeaCardContext';
@@ -42,23 +43,6 @@ const Content = ({ onClick }: Props) => {
   const unbookmarkIdea: MouseEventHandler<SVGSVGElement> = (e) => {
     e.stopPropagation();
     deleteBookmarkIdea(ideaId);
-  };
-
-  const SkillCategoriesBadges = (skillCategories: string[]) => {
-    const badges = skillCategories.map((teamRecruitment, idx) => (
-      <Badge key={`${teamRecruitment}-${idx}`} radius={50}>
-        {teamRecruitment}
-      </Badge>
-    ));
-
-    return badges.length > 5
-      ? [
-          ...badges.slice(0, 5),
-          <Badge key="모집중" radius={50}>
-            +{badges.length - 5} 모집중
-          </Badge>,
-        ]
-      : badges;
   };
 
   const toggleDropdown: MouseEventHandler<SVGSVGElement> = (e) => {
@@ -113,7 +97,11 @@ const Content = ({ onClick }: Props) => {
           <Spacer size={14} />
           <TagWrapper>
             <Flex wrap="wrap" gap={6}>
-              {SkillCategoriesBadges(skillCategories)}
+              {identifyAbbreviationBadge(skillCategories, 15).map((category) => (
+                <Badge key={category} backgroundColor="bg1" radius={50}>
+                  {category}
+                </Badge>
+              ))}
             </Flex>
           </TagWrapper>
         </>
