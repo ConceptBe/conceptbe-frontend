@@ -11,10 +11,12 @@ export const AdditionalText = ({ isEmpty }: Props) => {
     <div
       css={{
         width: '100%',
-        height: '300px',
+        height: '260px',
+        marginBottom: `${isEmpty ? '0px' : '65px'}`,
+        paddingTop: `${isEmpty ? '0px' : '42px'}`,
         display: 'flex',
+        alignItems: `${isEmpty ? 'center' : 'start'}`,
         justifyContent: 'center',
-        alignItems: 'center',
         backgroundColor: theme.color.bg1,
       }}
     >
