@@ -45,6 +45,13 @@ const IdeaSection = ({ userId }: Props) => {
       {ideas.map((idea) => {
         const isMine = true;
 
+        const profile = {
+          profileImageUrl: '',
+          nickname: '',
+          mainSkill: '',
+          isBookmarked: false,
+          createdAt: 'testTvalue',
+        };
         const content = {
           canEdit: isMine,
           branches: idea.branches,
@@ -61,8 +68,8 @@ const IdeaSection = ({ userId }: Props) => {
 
         return (
           <Wrapper key={idea.id}>
-            <NewIdeaCard id={idea.id} content={content} footer={footer}>
-              <NewIdeaCard.Content onClickDelete={() => handleDeleteIdea(idea.id)} />
+            <NewIdeaCard id={idea.id} profile={profile} content={content} footer={footer}>
+              <NewIdeaCard.Content onClick={() => handleDeleteIdea(idea.id)} />
               <NewIdeaCard.Footer />
             </NewIdeaCard>
             <Spacer size={20} />

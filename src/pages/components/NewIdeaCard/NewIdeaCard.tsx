@@ -5,8 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import Content from './compound/Content/Content';
 import Footer from './compound/Footer/Footer';
-import Profile from './compound/Profile/Profile';
-import { NewIdeaCardContextType, NewIdeaCardContext } from './NewIdeaCardContext';
+import { NewIdeaCardContext, NewIdeaCardContextType } from './NewIdeaCardContext';
 
 export interface Props extends NewIdeaCardContextType {}
 
@@ -20,7 +19,6 @@ const NewIdeaCard = ({ id, profile, content, footer, children }: PropsWithChildr
   );
 };
 
-NewIdeaCard.Profile = Profile;
 NewIdeaCard.Content = Content;
 NewIdeaCard.Footer = Footer;
 

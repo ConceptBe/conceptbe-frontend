@@ -1,4 +1,5 @@
 import { createContext, useContext } from 'react';
+import { identifyAbbreviationBadge } from '../../../utils/parsing';
 
 export interface NewIdeaCardContextType {
   id: number;
@@ -57,7 +58,7 @@ export const useContentContext = () => {
   const context = useNewIdeaCardContext();
   const { content } = context;
 
-  return content;
+  return { branch: identifyAbbreviationBadge(content.branches), ...content };
 };
 
 export const useFooterContext = () => {
