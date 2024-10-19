@@ -30,7 +30,6 @@ import useDefaultProfileImage from './hooks/useDefaultProfileImage.ts';
 import useSetDetailSkills from './hooks/useSetDetailSkills.ts';
 import useSignUpMutation from './hooks/useSignUpMutation.ts';
 import useSignUpQuery from './hooks/useSignUpQuery.ts';
-import useValidateUserInfo from './hooks/useValidateUserInfo.ts';
 import { DropdownValue, FieldValue } from './types';
 
 interface CheckboxValue {
@@ -74,7 +73,7 @@ const SignUpPage = () => {
     defaultProfileImage: PNGDefaultProfileInfo100,
   });
 
-  useValidateUserInfo(memberInfo);
+  // useValidateUserInfo(memberInfo);
   useCheckDuplicateNickname({ nickname: fieldValue.nickname, setFieldErrorValue });
 
   const validateInput = () => {
@@ -293,7 +292,7 @@ const SignUpPage = () => {
                 <Flex wrap="wrap" gap={6}>
                   {selectedSkillDepths.map((skill, idx) => {
                     return (
-                      <Tag key={idx} onDelete={onDeleteSkill}>
+                      <Tag key={idx} onDelete={onDeleteSkill} css={{ borderRadius: 50 }}>
                         {skill.name}
                       </Tag>
                     );

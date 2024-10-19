@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
-import { Badge, Flex, Spacer, Text, theme, SVGMore24 } from 'concept-be-design-system';
+import { Badge, Flex, Spacer, SVGMore24, Text, theme } from 'concept-be-design-system';
 import { MouseEventHandler, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import ContentEditDropdown from './ContentEditDropdown';
 import { useContentContext, useIdeaIdContext } from '../../NewIdeaCardContext';
+import ContentEditDropdown from './ContentEditDropdown';
 
 type Props = {
   onClickDelete?: () => void;
@@ -20,11 +20,18 @@ const Content = ({ onClickDelete }: Props) => {
 
   const SkillCategoriesBadges = (skillCategories: string[]) => {
     const badges = skillCategories.map((teamRecruitment, idx) => (
-      <Badge key={`${teamRecruitment}-${idx}`}>{teamRecruitment}</Badge>
+      <Badge key={`${teamRecruitment}-${idx}`} radius={50}>
+        {teamRecruitment}
+      </Badge>
     ));
 
     return badges.length > 5
-      ? [...badges.slice(0, 5), <Badge key="모집중">+{badges.length - 5} 모집중</Badge>]
+      ? [
+          ...badges.slice(0, 5),
+          <Badge key="모집중" radius={50}>
+            +{badges.length - 5} 모집중
+          </Badge>,
+        ]
       : badges;
   };
 

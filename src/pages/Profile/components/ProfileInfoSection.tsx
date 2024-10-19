@@ -72,7 +72,7 @@ const ProfileInfoSection = ({ memberInfo }: Props) => {
           <TagWrapper>
             <Flex wrap="wrap" gap={6}>
               {skills.map(({ skillId, skillName, level }) => (
-                <Badge key={skillId} backgroundColor="c1" fontColor="w1">
+                <Badge key={skillId} backgroundColor="c1" fontColor="w1" radius={50}>
                   {`${skillName}, ${level}`}
                 </Badge>
               ))}
@@ -85,7 +85,7 @@ const ProfileInfoSection = ({ memberInfo }: Props) => {
           <TagWrapper>
             <Flex wrap="wrap" gap={6}>
               {joinPurposes.map((badge) => (
-                <Badge key={badge} fontColor="b4">
+                <Badge key={badge} fontColor="b4" radius={50}>
                   {badge}
                 </Badge>
               ))}

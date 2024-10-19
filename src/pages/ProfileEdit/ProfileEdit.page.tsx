@@ -299,7 +299,7 @@ const ProfileEdit = () => {
               <Flex wrap="wrap" gap={6}>
                 {selectedSkillDepths.map((skill, idx) => {
                   return (
-                    <Tag key={idx} onDelete={onDeleteSkill}>
+                    <Tag key={idx} onDelete={onDeleteSkill} css={{ borderRadius: 50 }}>
                       {skill.name}
                     </Tag>
                   );

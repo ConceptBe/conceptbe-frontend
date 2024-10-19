@@ -19,7 +19,7 @@ const Navbar = () => {
   const { id: userIdFromParams } = useParams();
   const { hasMatched } = useRouteMatched();
   const navigate = useNavigate();
-  const isShowNavigation = hasMatched('/', '/profile/:id');
+  const isShowNavigation = hasMatched('/', '/profile/:id', '/notification');
 
   return (
     <>

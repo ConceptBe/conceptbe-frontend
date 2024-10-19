@@ -118,7 +118,7 @@ const FeedDetailPage = () => {
           <Spacer size={12} />
           <Flex wrap="wrap" gap={6}>
             {branchList.map((badge) => (
-              <Badge key={badge} fontColor="b4">
+              <Badge key={badge} fontColor="b4" radius={50}>
                 {badge}
               </Badge>
             ))}
@@ -132,7 +132,7 @@ const FeedDetailPage = () => {
           <Spacer size={12} />
           <Flex wrap="wrap" gap={6}>
             {purposeList.map((badge) => (
-              <Badge key={badge} fontColor="b4">
+              <Badge key={badge} fontColor="b4" radius={50}>
                 {badge}
               </Badge>
             ))}
@@ -164,7 +164,7 @@ const FeedDetailPage = () => {
           <Spacer size={12} />
           <Flex wrap="wrap" gap={6}>
             {skillCategories.map((badge) => (
-              <Badge key={badge} fontColor="b4">
+              <Badge key={badge} fontColor="b4" radius={50}>
                 {badge}
               </Badge>
             ))}
