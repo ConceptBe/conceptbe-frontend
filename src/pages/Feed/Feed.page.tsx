@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Box, Header, Spacer, SVGFeedWrite40, SVGHeaderFilter, Text, theme } from 'concept-be-design-system';
+import { Button, Header, Spacer, SVGHeaderFilter, SVGWritePencil, Text, theme } from 'concept-be-design-system';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -39,12 +39,9 @@ const Feed = () => {
 
       <Wrapper>
         <FeedFixBox>
-          <SVGFeedWrite40 onClick={() => navigate('/write')} cursor="pointer" />
-
-          <Spacer size={27} />
           <FeedFixTextWrapper>
             <Text font="suit22sb" color="w1">
-              {getUserNickname() || 'Guest1234'}
+              {getUserNickname() || 'Guest'}
             </Text>
             <Text font="suit22r" color="w1">
               님,
@@ -53,13 +50,21 @@ const Feed = () => {
 
           <Spacer size={8} />
           <WordBreakText font="suit22r" color="w1">
-            재밌는 아이디어를 들려주세요!
+            재밌있는 아이디어가 있으신가요?
           </WordBreakText>
-          <Spacer size={14} />
 
-          <Box onClick={() => navigate('/write')} cursor="pointer">
-            <Text font="suit15r" color="w2">{`아이디어 적으러 가기 >`}</Text>
-          </Box>
+          <Spacer size={16} />
+
+          <Button
+            padding="0"
+            css={{ width: 110, height: 34, backgroundColor: theme.color.w1 }}
+            onClick={() => navigate('/write')}
+          >
+            <SVGWritePencil css={{ marginRight: 6 }} />
+            <Text font="suit14sb" color="b2">
+              글쓰러 가기
+            </Text>
+          </Button>
         </FeedFixBox>
         <IdeaSectionBox>
           <BestIdeaCardListSection />
