@@ -1,12 +1,10 @@
 import styled from '@emotion/styled';
-import { Text } from 'concept-be-design-system';
+import { Text, theme } from 'concept-be-design-system';
 import { Fragment } from 'react';
 
-import { ColorKeyType, FontKeyType } from '../../../styles/theme';
-
 interface Props {
-  font: FontKeyType;
-  color: ColorKeyType;
+  font: keyof typeof theme.font;
+  color: keyof typeof theme.color;
   lineHeight?: string;
   children: string;
 }

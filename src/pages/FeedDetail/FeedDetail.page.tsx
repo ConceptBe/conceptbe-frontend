@@ -92,7 +92,7 @@ const FeedDetailPage = () => {
           </div>
         </Box>
         <Divider color="l3" top={16} bottom={16} />
-        <HyperLinkText font="suit15ra" color="b6" lineHeight="24px">
+        <HyperLinkText font="suit15r" color="b6" lineHeight="24px">
           {introduce}
         </HyperLinkText>
       </Box>

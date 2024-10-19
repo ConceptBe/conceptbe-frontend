@@ -1,15 +1,15 @@
 import styled from '@emotion/styled';
-import { Header, Spacer, Text, theme, SVGHeaderFilter, SVGFeedWrite40, Box } from 'concept-be-design-system';
+import { Box, Header, Spacer, SVGFeedWrite40, SVGHeaderFilter, Text, theme } from 'concept-be-design-system';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import SEOMeta from '../../components/SEOMeta/SEOMeta';
+import Logo from '../../layouts/Logo';
+import { useWritingInfoQuery } from '../Write/hooks/queries/useWritingInfoQuery';
 import BestIdeaCardListSection from './components/BestIdeaCardListSection/BestIdeaCardListSection';
 import FilterBottomSheet from './components/FilterBottomSheet/FilterBottomSheet';
 import NewIdeaCardListSection from './components/NewIdeaCardListSection/NewIdeaCardListSection';
 import { getUserNickname } from './utils/getUserNickname';
-import SEOMeta from '../../components/SEOMeta/SEOMeta';
-import Logo from '../../layouts/Logo';
-import { useWritingInfoQuery } from '../Write/hooks/queries/useWritingInfoQuery';
 
 const Feed = () => {
   const navigate = useNavigate();
@@ -58,7 +58,7 @@ const Feed = () => {
           <Spacer size={14} />
 
           <Box onClick={() => navigate('/write')} cursor="pointer">
-            <Text font="suit15ra" color="w2">{`아이디어 적으러 가기 >`}</Text>
+            <Text font="suit15r" color="w2">{`아이디어 적으러 가기 >`}</Text>
           </Box>
         </FeedFixBox>
         <IdeaSectionBox>
