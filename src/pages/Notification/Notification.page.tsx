@@ -1,9 +1,11 @@
 import { NotificationContainer } from './containers/NotificationContainer';
 
-export const NotificationPage = () => {
+const NotificationPage = () => {
   return (
     <div>
       <NotificationContainer />
     </div>
   );
 };
+
+export default NotificationPage;

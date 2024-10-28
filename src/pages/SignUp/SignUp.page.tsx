@@ -19,7 +19,7 @@ import {
   useField,
 } from 'concept-be-design-system';
 import { FormEvent } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import SEOMeta from '../../components/SEOMeta/SEOMeta.tsx';
 import { NICKNAME_REG_EXP } from '../../constants/index.ts';
@@ -31,6 +31,7 @@ import useSetDetailSkills from './hooks/useSetDetailSkills.ts';
 import useSignUpMutation from './hooks/useSignUpMutation.ts';
 import useSignUpQuery from './hooks/useSignUpQuery.ts';
 import { DropdownValue, FieldValue } from './types';
+import { generateQueryString } from './utils/manageQueryString.ts';
 
 interface CheckboxValue {
   goal: CheckboxOption[];
@@ -43,6 +44,7 @@ interface CheckboxOption {
 }
 
 const SignUpPage = () => {
+  const navigate = useNavigate();
   const openAlert = useAlert();
   const { state: memberInfo }: { state: OauthMemberInfo | null } = useLocation();
   const { postSignUp } = useSignUpMutation();
@@ -72,6 +74,20 @@ const SignUpPage = () => {
     currentProfileImage: memberInfo?.profileImageUrl || '',
     defaultProfileImage: PNGDefaultProfileInfo100,
   });
+
+  const formData = {
+    nickname: fieldValue.nickname,
+    mainSkillId: mainSkills.find(({ name }) => dropdownValue.mainSkill === name)?.id || 0,
+    profileImageUrl: profileImageUrl === PNGDefaultProfileInfo100 ? null : memberInfo?.profileImageUrl || '',
+    skills: selectedSkillDepths.map(({ id, name }) => ({ skillId: id, level: name.split(', ')[1] })),
+    joinPurposes: selectedCheckboxId.goal,
+    livingPlaceId: regions.find((place) => place.name === dropdownValue.region)?.id || 1,
+    workingPlace: fieldValue.company,
+    introduction: fieldValue.intro,
+    email: memberInfo?.email || '',
+    oauthId: memberInfo?.oauthId || '',
+    oauthServerType: memberInfo?.oauthServerType || '',
+  };
 
   // useValidateUserInfo(memberInfo);
   useCheckDuplicateNickname({ nickname: fieldValue.nickname, setFieldErrorValue });
@@ -146,7 +162,7 @@ const SignUpPage = () => {
           </Header.Item>
         </Header>
 
-        <MainWrapper onSubmit={onSubmit}>
+        <MainWrapper>
           <Spacer size={20} />
           <Box
             marginTop={100}
@@ -348,7 +364,7 @@ const SignUpPage = () => {
             </Field>
           </Box>
           <Box padding="0 22px" backgroundColor="w1">
-            <Button>프로필 저장하기</Button>
+            <Button onClick={() => navigate(`/sign-up-match?${generateQueryString(formData)}`)}>다음으로</Button>
           </Box>
         </MainWrapper>
       </Box>

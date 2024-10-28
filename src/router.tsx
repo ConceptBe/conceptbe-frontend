@@ -4,7 +4,6 @@ import { createBrowserRouter } from 'react-router-dom';
 
 import ApiErrorBoundary from './components/ErrorBoundary/ApiErrorBoundary';
 import MobileView from './layouts/MobileView';
-import { NotificationPage } from './pages/Notification/Notification.page';
 import More from './pages/Profile/More.page';
 
 const Feed = lazy(() => import('./pages/Feed/Feed.page'));
@@ -19,6 +18,8 @@ const Profile = lazy(() => import('./pages/Profile/Profile.page'));
 const ProfileEdit = lazy(() => import('./pages/ProfileEdit/ProfileEdit.page'));
 const SignUpPage = lazy(() => import('./pages/SignUp/SignUp.page'));
 const NeedAuth = lazy(() => import('./pages/NeedAuth'));
+const SignUpMatchPage = lazy(() => import('./pages/SignUp/SignUpMatch.page'));
+const NotificationPage = lazy(() => import('./pages/Notification/Notification.page'));
 
 interface RouteElement {
   path: string;
@@ -91,6 +92,10 @@ const routes: RouteElement[] = [
       {
         path: '/sign-up',
         element: withAsyncBoundary(<SignUpPage />),
+      },
+      {
+        path: '/sign-up-match',
+        element: withAsyncBoundary(<SignUpMatchPage />),
       },
       {
         path: '/notification',
