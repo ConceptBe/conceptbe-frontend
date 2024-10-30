@@ -1,11 +1,15 @@
 import styled from '@emotion/styled';
 import {
   Box,
+  Button,
   CheckboxContainer,
   Flex,
   Header,
   RadioContainer,
   Spacer,
+  SVGGoldBell,
+  SVGRadioCheck24,
+  SVGRadioUncheck24,
   Text,
   theme,
   useCheckbox,
@@ -15,7 +19,15 @@ import { FormEvent, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import useAlert from '../../hooks/useAlert';
 import { OauthMemberInfo } from '../../types/login';
+import {
+  Sheet_Left,
+  Sheet_leftItem,
+  Sheet_radioDiv,
+  Sheet_right,
+  TwoDepthBottomSheet,
+} from '../Write/components/TwoDepthBottomSheet';
 import { useWritingInfoQuery } from '../Write/hooks/queries/useWritingInfoQuery';
+import { get2DepthCountsBy1Depth } from '../Write/utils/get2DepthCountsBy1Depth';
 import useSignUpMutation from './hooks/useSignUpMutation';
 import { parseQueryString } from './utils/manageQueryString';
 
@@ -46,6 +58,7 @@ const SignUpMatchPage = () => {
   const openAlert = useAlert();
   const { state: memberInfo }: { state: OauthMemberInfo | null } = useLocation();
 
+  const [isOpenBranchBottomSheet, setIsOpenBranchBottomSheet] = useState(false);
   const [prevFormData, _] = useState(parseQueryString<QueryStringProps>);
 
   const { branches, purposes, recruitmentPlaces, cooperationWays, skillCategoryResponses } = useWritingInfoQuery();
@@ -58,6 +71,9 @@ const SignUpMatchPage = () => {
   const { radioValue, selectedRadioName, onChangeRadio } = useRadio({
     cooperationWays,
   });
+
+  const branchBottomSheetLeftItems = [] as any;
+  const branchBottomSheetRightItems = [] as any;
 
   // useValidateUserInfo(memberInfo);
 
@@ -91,10 +107,21 @@ const SignUpMatchPage = () => {
 
       <MainWrapper>
         <Spacer size={100} />
+
+        <Flex direction="column" justifyContent="center" alignItems="center" gap={4}>
+          <SVGGoldBell />
+          <Text font="suit14m" color="w1">
+            참여하고자 하는 프로젝트 조건을 등록해주세요.
+          </Text>
+          <Text font="suit14m" color="w1">
+            딱 맞는 모집 공고가 뜨면 알려드릴게요!
+          </Text>
+        </Flex>
+
         <Box
           marginTop={100}
           position="relative"
-          padding="0 22px 25px 22px"
+          padding="32px 22px 25px 22px"
           borderRadius="16px 16px 0 0"
           backgroundColor="w1"
         >
@@ -109,6 +136,8 @@ const SignUpMatchPage = () => {
             />
           </Flex>
 
+          <Spacer size={24} />
+
           <RadioContainer
             label="협업 방식"
             radioKey="cooperationWays"
@@ -118,13 +147,77 @@ const SignUpMatchPage = () => {
             required
           />
 
-          {/* <CheckboxContainer
-            label="분야"
-            checkboxKey="branches"
-            options={checkboxValue.branches}
-            onChange={onChangeCheckbox}
-            required
-          /> */}
+          <Spacer size={24} />
+
+          <Box>
+            <Flex justifyContent="space-between">
+              <Text font="suit15m" color="b9">
+                분야
+              </Text>
+              <div
+                onClick={() => {
+                  setIsOpenBranchBottomSheet(true);
+                }}
+              >
+                <Flex
+                  padding="8px 12px"
+                  border="1px solid #e5e5e5"
+                  borderRadius={6}
+                  justifyContent="center"
+                  alignItems="center"
+                  cursor="pointer"
+                >
+                  <Text font="suit13m" color="b4" style={{ lineHeight: '20px' }}>
+                    + 추가하기
+                  </Text>
+                </Flex>
+              </div>
+            </Flex>
+
+            <TwoDepthBottomSheet
+              title="분야 선택"
+              isOpen={isOpenBranchBottomSheet}
+              onClose={() => setIsOpenBranchBottomSheet(false)}
+            >
+              <Sheet_Left>
+                {branchBottomSheetLeftItems.map((item: any) => {
+                  return (
+                    <Sheet_leftItem
+                      key={item}
+                      onClick={() => setSelectedTeamRecruitment1Depth(item)}
+                      checked={selectedTeamRecruitment1Depth === item}
+                    >
+                      <Text font="suit14m" color={selectedTeamRecruitment1Depth === item ? 'b2' : 'ba'}>
+                        {item}
+                      </Text>
+                      <Spacer size={3} />
+                      <Text font="suit14m" color={selectedTeamRecruitment1Depth === item ? 'c1' : 'ba'}>
+                        {get2DepthCountsBy1Depth(selectedSkillResponses, skillCategoryResponses)[item]}
+                      </Text>
+                    </Sheet_leftItem>
+                  );
+                })}
+              </Sheet_Left>
+              <Sheet_right>
+                {branchBottomSheetRightItems.map((item: any) => {
+                  return (
+                    <Sheet_radioDiv key={item.name} onClick={() => onClickTeamRecruitment(item)}>
+                      <Text font="suit14m" color="b4">
+                        {item.name}
+                      </Text>
+                      {selectedSkillResponses.includes(item) ? <SVGRadioCheck24 /> : <SVGRadioUncheck24 />}
+                    </Sheet_radioDiv>
+                  );
+                })}
+              </Sheet_right>
+            </TwoDepthBottomSheet>
+          </Box>
+
+          <Spacer size={100} />
+        </Box>
+
+        <Box padding="0 22px" backgroundColor="w1">
+          <Button onClick={() => {}}>프로필 설정 완료</Button>
         </Box>
       </MainWrapper>
     </Box>
