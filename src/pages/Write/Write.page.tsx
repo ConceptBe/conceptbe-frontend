@@ -1,14 +1,11 @@
 import styled from '@emotion/styled';
 import {
-  BottomSheet,
   Box,
   CheckboxContainer,
   Divider,
   Flex,
   RadioContainer,
-  SVGAdd24,
   SVGCancel,
-  SVGHeaderCheck24,
   SVGRadioCheck24,
   SVGRadioUncheck24,
   Spacer,
@@ -25,6 +22,13 @@ import AddImages from './components/AddImages';
 import Header from './components/Header';
 import RecruitmentPlaceSection from './components/RecruitmentPlaceSection';
 import TitleAndIntroduceSection from './components/TitleAndIntroduceSection';
+import {
+  Sheet_Left,
+  Sheet_leftItem,
+  Sheet_radioDiv,
+  Sheet_right,
+  TwoDepthBottomSheet,
+} from './components/TwoDepthBottomSheet';
 import { usePostIdeasMutation } from './hooks/mutations/usePostIdeasMutation';
 import { useWritingInfoQuery } from './hooks/queries/useWritingInfoQuery';
 import { Info, PostIdeasRequest } from './types';
@@ -37,7 +41,8 @@ const WritePage = () => {
 
   const [title, setTitle] = useState('');
   const [introduce, setIntroduce] = useState('');
-  const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
+  const [isOpenTeamMateBottomSheet, setIsOpenTeamMateBottomSheet] = useState(false);
+  const [isOpenBranchBottomSheet, setIsOpenBranchBottomSheet] = useState(false);
   const [selectedTeamRecruitment1Depth, setSelectedTeamRecruitment1Depth] = useState(skillCategoryResponses[0].name);
   const [selectedSkillResponses, setSelectedSkillResponses] = useState<Info[]>([]);
   const [images, setImages] = useState<File[]>([]);
@@ -53,16 +58,19 @@ const WritePage = () => {
     recruitmentPlace: '',
   });
 
-  const sheetLeftItems = skillCategoryResponses.map((item) => item.name);
-  const sheetRightItems = skillCategoryResponses.find((item) => item.name === selectedTeamRecruitment1Depth)
-    ?.skillResponses;
+  const branchBottomSheetLeftItems = [] as any;
+  const branchBottomSheetRightItems = [] as any;
+  const teamMateBottomSheetLeftItems = skillCategoryResponses.map((item) => item.name);
+  const teamMateBottomSheetRightItems = skillCategoryResponses.find(
+    (item) => item.name === selectedTeamRecruitment1Depth,
+  )?.skillResponses;
 
   const canSubmit =
     selectedCheckboxId.branches.length > 0 &&
     selectedCheckboxId.purposes.length > 0 &&
     !!selectedRadioName.cooperationWays;
 
-  if (!sheetRightItems) {
+  if (!teamMateBottomSheetRightItems) {
     console.error('sheetRightItems is null');
     return null;
   }
@@ -168,13 +176,67 @@ const WritePage = () => {
 
         <BottomWrapper>
           <Box>
-            <CheckboxContainer
-              label="분야"
-              checkboxKey="branches"
-              options={checkboxValue.branches}
-              onChange={onChangeCheckbox}
-              required
-            />
+            <Flex justifyContent="space-between">
+              <Text font="suit15m" color="b9">
+                분야
+              </Text>
+              <div
+                onClick={() => {
+                  setIsOpenBranchBottomSheet(true);
+                }}
+              >
+                <Flex
+                  padding="8px 12px"
+                  border="1px solid #e5e5e5"
+                  borderRadius={6}
+                  justifyContent="center"
+                  alignItems="center"
+                  cursor="pointer"
+                >
+                  <Text font="suit13m" color="b4" style={{ lineHeight: '20px' }}>
+                    + 추가하기
+                  </Text>
+                </Flex>
+              </div>
+            </Flex>
+
+            <TwoDepthBottomSheet
+              title="분야 선택"
+              isOpen={isOpenBranchBottomSheet}
+              onClose={() => setIsOpenBranchBottomSheet(false)}
+            >
+              <Sheet_Left>
+                {branchBottomSheetLeftItems.map((item: any) => {
+                  return (
+                    <Sheet_leftItem
+                      key={item}
+                      onClick={() => setSelectedTeamRecruitment1Depth(item)}
+                      checked={selectedTeamRecruitment1Depth === item}
+                    >
+                      <Text font="suit14m" color={selectedTeamRecruitment1Depth === item ? 'b2' : 'ba'}>
+                        {item}
+                      </Text>
+                      <Spacer size={3} />
+                      <Text font="suit14m" color={selectedTeamRecruitment1Depth === item ? 'c1' : 'ba'}>
+                        {get2DepthCountsBy1Depth(selectedSkillResponses, skillCategoryResponses)[item]}
+                      </Text>
+                    </Sheet_leftItem>
+                  );
+                })}
+              </Sheet_Left>
+              <Sheet_right>
+                {branchBottomSheetRightItems.map((item: any) => {
+                  return (
+                    <Sheet_radioDiv key={item.name} onClick={() => onClickTeamRecruitment(item)}>
+                      <Text font="suit14m" color="b4">
+                        {item.name}
+                      </Text>
+                      {selectedSkillResponses.includes(item) ? <SVGRadioCheck24 /> : <SVGRadioUncheck24 />}
+                    </Sheet_radioDiv>
+                  );
+                })}
+              </Sheet_right>
+            </TwoDepthBottomSheet>
           </Box>
           <Box>
             <CheckboxContainer
@@ -204,24 +266,29 @@ const WritePage = () => {
           </Box>
 
           <Box height={144}>
-            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+            <Flex justifyContent="space-between">
               <Text font="suit15m" color="b9">
                 팀원 모집
               </Text>
               <div
                 onClick={() => {
-                  setIsOpenBottomSheet(true);
+                  setIsOpenTeamMateBottomSheet(true);
                 }}
               >
-                <Text font="suit13m" color="b9" style={{ lineHeight: '20px' }}>
-                  <Flex alignItems="center" cursor="pointer">
-                    <SVGAdd24 />
-                    <Spacer size={6} />
-                    팀원 추가
-                  </Flex>
-                </Text>
+                <Flex
+                  padding="8px 12px"
+                  border="1px solid #e5e5e5"
+                  borderRadius={6}
+                  justifyContent="center"
+                  alignItems="center"
+                  cursor="pointer"
+                >
+                  <Text font="suit13m" color="b4" style={{ lineHeight: '20px' }}>
+                    + 팀원 추가
+                  </Text>
+                </Flex>
               </div>
-            </div>
+            </Flex>
 
             <Spacer size={12} />
             <TeamLabelBox>
@@ -239,60 +306,43 @@ const WritePage = () => {
           </Box>
         </BottomWrapper>
 
-        <BottomSheet isOpen={isOpenBottomSheet} onClose={() => setIsOpenBottomSheet(false)}>
-          <Sheet_TopBox>
-            <SVGCancel
-              width={24}
-              height={24}
-              onClick={() => {
-                setIsOpenBottomSheet(false);
-              }}
-              cursor="pointer"
-            />
-            <Text font="suit16sb" color="b4">
-              팀원 선택
-            </Text>
-            <SVGHeaderCheck24
-              onClick={() => {
-                setIsOpenBottomSheet(false);
-              }}
-              cursor="pointer"
-            />
-          </Sheet_TopBox>
-          <Sheet_BodyBox>
-            <Sheet_Left>
-              {sheetLeftItems.map((item) => {
-                return (
-                  <Sheet_leftItem
-                    key={item}
-                    onClick={() => setSelectedTeamRecruitment1Depth(item)}
-                    checked={selectedTeamRecruitment1Depth === item}
-                  >
-                    <Text font="suit14m" color={selectedTeamRecruitment1Depth === item ? 'b2' : 'ba'}>
-                      {item}
-                    </Text>
-                    <Spacer size={3} />
-                    <Text font="suit14m" color={selectedTeamRecruitment1Depth === item ? 'c1' : 'ba'}>
-                      {get2DepthCountsBy1Depth(selectedSkillResponses, skillCategoryResponses)[item]}
-                    </Text>
-                  </Sheet_leftItem>
-                );
-              })}
-            </Sheet_Left>
-            <Sheet_right>
-              {sheetRightItems.map((item) => {
-                return (
-                  <Sheet_radioDiv key={item.name} onClick={() => onClickTeamRecruitment(item)}>
-                    <Text font="suit14m" color="b4">
-                      {item.name}
-                    </Text>
-                    {selectedSkillResponses.includes(item) ? <SVGRadioCheck24 /> : <SVGRadioUncheck24 />}
-                  </Sheet_radioDiv>
-                );
-              })}
-            </Sheet_right>
-          </Sheet_BodyBox>
-        </BottomSheet>
+        <TwoDepthBottomSheet
+          title="팀원 선택"
+          isOpen={isOpenTeamMateBottomSheet}
+          onClose={() => setIsOpenTeamMateBottomSheet(false)}
+        >
+          <Sheet_Left>
+            {teamMateBottomSheetLeftItems.map((item) => {
+              return (
+                <Sheet_leftItem
+                  key={item}
+                  onClick={() => setSelectedTeamRecruitment1Depth(item)}
+                  checked={selectedTeamRecruitment1Depth === item}
+                >
+                  <Text font="suit14m" color={selectedTeamRecruitment1Depth === item ? 'b2' : 'ba'}>
+                    {item}
+                  </Text>
+                  <Spacer size={3} />
+                  <Text font="suit14m" color={selectedTeamRecruitment1Depth === item ? 'c1' : 'ba'}>
+                    {get2DepthCountsBy1Depth(selectedSkillResponses, skillCategoryResponses)[item]}
+                  </Text>
+                </Sheet_leftItem>
+              );
+            })}
+          </Sheet_Left>
+          <Sheet_right>
+            {teamMateBottomSheetRightItems.map((item) => {
+              return (
+                <Sheet_radioDiv key={item.name} onClick={() => onClickTeamRecruitment(item)}>
+                  <Text font="suit14m" color="b4">
+                    {item.name}
+                  </Text>
+                  {selectedSkillResponses.includes(item) ? <SVGRadioCheck24 /> : <SVGRadioUncheck24 />}
+                </Sheet_radioDiv>
+              );
+            })}
+          </Sheet_right>
+        </TwoDepthBottomSheet>
       </MainWrapper>
     </>
   );
@@ -309,57 +359,6 @@ const BottomWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 35px;
-`;
-
-const Sheet_TopBox = styled.div`
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  height: 54px;
-  padding: 0 22px;
-`;
-const Sheet_BodyBox = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-`;
-
-const Sheet_Left = styled.div`
-  width: 38%;
-  cursor: pointer;
-`;
-
-const Sheet_leftItem = styled.div<{ checked: boolean }>`
-  padding: 10px 22px;
-
-  background-color: ${({ checked }) => (checked ? '' : theme.color.bg1)};
-  display: flex;
-  flex-direction: row;
-  justify-content: start;
-  align-items: center;
-
-  height: 34px;
-`;
-const Sheet_right = styled.div`
-  width: 62%;
-  box-sizing: border-box;
-  padding: 0 22px;
-`;
-
-const Sheet_radioDiv = styled.div`
-  width: 100%;
-
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-
-  height: 54px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  cursor: pointer;
 `;
 
 const TeamLabelBox = styled.div`
