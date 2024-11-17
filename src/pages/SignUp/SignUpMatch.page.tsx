@@ -106,10 +106,11 @@ const SignUpMatchPage = () => {
       </Header>
 
       <MainWrapper>
-        <Spacer size={100} />
+        <Spacer size={80} />
 
         <Flex direction="column" justifyContent="center" alignItems="center" gap={4}>
           <SVGGoldBell />
+          <Spacer size={16} />
           <Text font="suit14m" color="w1">
             참여하고자 하는 프로젝트 조건을 등록해주세요.
           </Text>
@@ -119,7 +120,7 @@ const SignUpMatchPage = () => {
         </Flex>
 
         <Box
-          marginTop={100}
+          marginTop={24}
           position="relative"
           padding="32px 22px 25px 22px"
           borderRadius="16px 16px 0 0"
@@ -136,7 +137,7 @@ const SignUpMatchPage = () => {
             />
           </Flex>
 
-          <Spacer size={24} />
+          <Spacer size={35} />
 
           <RadioContainer
             label="협업 방식"
@@ -147,7 +148,7 @@ const SignUpMatchPage = () => {
             required
           />
 
-          <Spacer size={24} />
+          <Spacer size={35} />
 
           <Box>
             <Flex justifyContent="space-between">
