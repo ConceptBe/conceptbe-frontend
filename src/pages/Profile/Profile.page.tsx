@@ -1,10 +1,10 @@
 import { useParams } from 'react-router-dom';
 
+import SEOMeta from '../../components/SEOMeta/SEOMeta';
 import MyProfile from './components/MyProfile/MyProfile.page';
 import OtherProfile from './components/OtherProfile/OtherProfile.page';
 import { useMemberInfoQuery } from './hooks/queries/useMemberInfoQuery';
 import { getUserId } from './utils/getUserId';
-import SEOMeta from '../../components/SEOMeta/SEOMeta';
 
 const Profile = () => {
   const { id: userIdFromParams } = useParams();

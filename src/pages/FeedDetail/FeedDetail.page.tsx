@@ -92,7 +92,7 @@ const FeedDetailPage = () => {
           </div>
         </Box>
         <Divider color="l3" top={16} bottom={16} />
-        <HyperLinkText font="suit15ra" color="b6" lineHeight="24px">
+        <HyperLinkText font="suit15r" color="b6" lineHeight="24px">
           {introduce}
         </HyperLinkText>
       </Box>
@@ -118,7 +118,7 @@ const FeedDetailPage = () => {
           <Spacer size={12} />
           <Flex wrap="wrap" gap={6}>
             {branchList.map((badge) => (
-              <Badge key={badge} fontColor="b4">
+              <Badge key={badge} fontColor="b4" radius={50}>
                 {badge}
               </Badge>
             ))}
@@ -132,7 +132,7 @@ const FeedDetailPage = () => {
           <Spacer size={12} />
           <Flex wrap="wrap" gap={6}>
             {purposeList.map((badge) => (
-              <Badge key={badge} fontColor="b4">
+              <Badge key={badge} fontColor="b4" radius={50}>
                 {badge}
               </Badge>
             ))}
@@ -164,7 +164,7 @@ const FeedDetailPage = () => {
           <Spacer size={12} />
           <Flex wrap="wrap" gap={6}>
             {skillCategories.map((badge) => (
-              <Badge key={badge} fontColor="b4">
+              <Badge key={badge} fontColor="b4" radius={50}>
                 {badge}
               </Badge>
             ))}

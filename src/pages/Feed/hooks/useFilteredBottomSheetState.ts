@@ -63,11 +63,11 @@ const useFilteredBottomSheetState = ({
   const filteredSkillCategory1Depth =
     filterParams?.skillCategoryIds?.[0] !== undefined
       ? getSkillCategory1DepthFrom2DepthSkillId(filterParams?.skillCategoryIds?.[0]).name
-      : undefined ?? '';
+      : '';
   const filteredSkillCategory2Depth =
     filterParams?.skillCategoryIds?.[0] !== undefined
       ? get2DepthNameFrom2DepthId(filterParams?.skillCategoryIds?.[0])
-      : undefined ?? '';
+      : '';
 
   return {
     filteredBranches,

@@ -2,21 +2,19 @@ import styled from '@emotion/styled';
 import { SVGProfileMessageDots, Spacer, Text } from 'concept-be-design-system';
 import { Fragment, Suspense, useRef } from 'react';
 
-import NewIdeaCardListSkeleton from './NewIdeaCardListSkeleton';
 import useConfirm from '../../../../hooks/useConfirm';
 import { useDeleteIdea } from '../../../components/NewIdeaCard/hooks/mutations/useDeleteIdea';
 import NewIdeaCard from '../../../components/NewIdeaCard/NewIdeaCard';
-import useNavigatePage from '../../../hooks/useNavigatePage';
 import EmptyTabContentSection from '../../../Profile/components/EmptyTabContentSection';
 import { useFilterParams } from '../../context/filterContext';
 import { useIdeasQuery } from '../../hooks/queries/useIdeasQuery';
 import { useFeedInfiniteFetch } from '../../hooks/useFeedInfiniteFetch';
 import { getUserNickname } from '../../utils/getUserNickname';
+import NewIdeaCardListSkeleton from './NewIdeaCardListSkeleton';
 
 const CardList = () => {
   const { filterParams } = useFilterParams();
   const { ideas, fetchNextPage } = useIdeasQuery(filterParams);
-  const { goProfilePage } = useNavigatePage();
   const { deleteIdea } = useDeleteIdea();
   const openConfirm = useConfirm();
   const nickname = getUserNickname();
@@ -66,13 +64,12 @@ const CardList = () => {
         return (
           <Fragment key={idx}>
             {isMine ? (
-              <NewIdeaCard id={idea.id} content={content} footer={footer}>
-                <NewIdeaCard.Content onClickDelete={() => handleDeleteIdea(idea.id)} />
+              <NewIdeaCard id={idea.id} profile={profile} content={content} footer={footer}>
+                <NewIdeaCard.Content onClick={() => handleDeleteIdea(idea.id)} />
                 <NewIdeaCard.Footer />
               </NewIdeaCard>
             ) : (
               <NewIdeaCard id={idea.id} profile={profile} content={content} footer={footer}>
-                <NewIdeaCard.Profile onClickProfile={() => goProfilePage(idea.memberResponse.id)} />
                 <NewIdeaCard.Content />
                 <NewIdeaCard.Footer />
               </NewIdeaCard>

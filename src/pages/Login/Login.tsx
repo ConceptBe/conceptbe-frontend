@@ -1,10 +1,9 @@
 import styled from '@emotion/styled';
-import { Spacer, Text, theme, SVGLoginKakao, SVGLoginNaver, SVGLoginLogo, Flex } from 'concept-be-design-system';
+import { Flex, Spacer, SVGLoginKakao, SVGLoginLogo, SVGLoginNaver, Text, theme } from 'concept-be-design-system';
 import { useNavigate } from 'react-router-dom';
 
 import SEOMeta from '../../components/SEOMeta/SEOMeta';
 import { BASE_URL } from '../../constants';
-import useAlert from '../../hooks/useAlert';
 
 const KAKAO_REQUEST_URL = `${BASE_URL}/oauth/kakao`;
 const NAVER_REQUEST_URL = `${BASE_URL}/oauth/naver`;
@@ -32,7 +31,7 @@ const Login = () => {
             <SVGLoginKakao />
           </LogoBox>
           <TextWrapper>
-            <Text font="suit15rb">카카오 로그인</Text>
+            <Text font="suit15r">카카오 로그인</Text>
           </TextWrapper>
         </ButtonWrapper>
 
@@ -44,7 +43,7 @@ const Login = () => {
             <SVGLoginNaver />
           </LogoBox>
           <TextWrapper>
-            <Text font="suit15rb">네이버 로그인</Text>
+            <Text font="suit15r">네이버 로그인</Text>
           </TextWrapper>
         </ButtonWrapper>
 

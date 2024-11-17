@@ -57,13 +57,13 @@ const ProfileInfoSection = ({ memberInfo }: Props) => {
             <Spacer size={6} />
             <Text font="suit22sb">{nickname}</Text>
             <Spacer size={6} />
-            <Text font="suit15rb" color="b9">
+            <Text font="suit15r" color="b9">
               {renderWorkingAndLivingPlace()}
             </Text>
           </div>
           {isMyProfile === true && <EditButton onClick={() => navigate(`/profile-edit`)}>프로필 수정</EditButton>}
         </ProfileMainBox>
-        <HyperLinkText font="suit15rb" color="b4" lineHeight="22px">
+        <HyperLinkText font="suit15r" color="b4" lineHeight="22px">
           {introduction}
         </HyperLinkText>
         <div>
@@ -72,7 +72,7 @@ const ProfileInfoSection = ({ memberInfo }: Props) => {
           <TagWrapper>
             <Flex wrap="wrap" gap={6}>
               {skills.map(({ skillId, skillName, level }) => (
-                <Badge key={skillId} backgroundColor="c1" fontColor="w1">
+                <Badge key={skillId} backgroundColor="c1" fontColor="w1" radius={50}>
                   {`${skillName}, ${level}`}
                 </Badge>
               ))}
@@ -85,7 +85,7 @@ const ProfileInfoSection = ({ memberInfo }: Props) => {
           <TagWrapper>
             <Flex wrap="wrap" gap={6}>
               {joinPurposes.map((badge) => (
-                <Badge key={badge} fontColor="b4">
+                <Badge key={badge} fontColor="b4" radius={50}>
                   {badge}
                 </Badge>
               ))}

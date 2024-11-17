@@ -115,7 +115,7 @@ class ErrorBoundary extends Component<Props, State> {
       return (
         <>
           <StayDuringRoutingAlert content="삭제된 글이거나 탈퇴한 회원의 페이지입니다." />
-          <Navigate to="/" />;
+          <Navigate to="/" />
         </>
       );
     }
