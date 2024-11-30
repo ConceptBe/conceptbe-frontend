@@ -2,6 +2,7 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { http } from '../../../../api/http';
 import { Idea } from '../../types';
+import { BRANCH_DTO } from './temp/tempBranches';
 
 const cooperations = [
   { id: 1, name: '상관없음' },
@@ -18,7 +19,8 @@ export const useWritingInfoQuery = () => {
     queryKey: ['writingInfo'],
     queryFn: getWritingInfo,
     select: (data) => {
-      const branches = data.branches.map((properties) => ({ checked: false, ...properties }));
+      // TODO: API 연동 후 수정
+      const branches = BRANCH_DTO;
       const purposes = data.purposes.map((properties) => ({ checked: false, ...properties }));
       const cooperationWays = cooperations.map((properties) =>
         properties.id === 1 ? { checked: true, ...properties } : { checked: false, ...properties },

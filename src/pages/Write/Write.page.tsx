@@ -5,12 +5,11 @@ import {
   Divider,
   Flex,
   RadioContainer,
-  SVGCancel,
   SVGRadioCheck24,
   SVGRadioUncheck24,
   Spacer,
+  Tag,
   Text,
-  theme,
   useCheckbox,
   useDropdown,
   useRadio,
@@ -45,10 +44,11 @@ const WritePage = () => {
   const [isOpenBranchBottomSheet, setIsOpenBranchBottomSheet] = useState(false);
   const [selectedTeamRecruitment1Depth, setSelectedTeamRecruitment1Depth] = useState(skillCategoryResponses[0].name);
   const [selectedSkillResponses, setSelectedSkillResponses] = useState<Info[]>([]);
+  const [selectedBranch1Depth, setSelectedBranch1Depth] = useState(branches[0].name);
+  const [selectedBranchResponses, setSelectedBranchResponses] = useState<Info[]>([]);
   const [images, setImages] = useState<File[]>([]);
 
   const { checkboxValue, selectedCheckboxId, onChangeCheckbox } = useCheckbox({
-    branches,
     purposes,
   });
   const { radioValue, selectedRadioName, onChangeRadio } = useRadio({
@@ -58,17 +58,15 @@ const WritePage = () => {
     recruitmentPlace: '',
   });
 
-  const branchBottomSheetLeftItems = [] as any;
-  const branchBottomSheetRightItems = [] as any;
   const teamMateBottomSheetLeftItems = skillCategoryResponses.map((item) => item.name);
   const teamMateBottomSheetRightItems = skillCategoryResponses.find(
     (item) => item.name === selectedTeamRecruitment1Depth,
   )?.skillResponses;
+  const branchBottomSheetLeftItems = branches.map((item) => item.name);
+  const branchBottomSheetRightItems = branches.find((item) => item.name === selectedBranch1Depth)?.skillResponses;
 
   const canSubmit =
-    selectedCheckboxId.branches.length > 0 &&
-    selectedCheckboxId.purposes.length > 0 &&
-    !!selectedRadioName.cooperationWays;
+    selectedBranchResponses.length > 0 && selectedCheckboxId.purposes.length > 0 && !!selectedRadioName.cooperationWays;
 
   if (!teamMateBottomSheetRightItems) {
     console.error('sheetRightItems is null');
@@ -76,7 +74,6 @@ const WritePage = () => {
   }
 
   const writeIdea = () => {
-    // TODO: 글쓰기 필수 조건 누락 시 토스트 띄워주기 (alert -> toast)
     if (!title) {
       openAlert({ content: '제목을 입력해 주세요.' });
       return;
@@ -85,7 +82,7 @@ const WritePage = () => {
       openAlert({ content: '본문 내용을 10자 이상 입력해 주세요.' });
       return;
     }
-    if (!selectedCheckboxId.branches.length) {
+    if (!selectedBranchResponses.length) {
       openAlert({ content: '분야를 1개 이상 선택해 주세요.' });
       return;
     }
@@ -104,7 +101,7 @@ const WritePage = () => {
       introduce,
       recruitmentPlaceId: recruitmentPlaces.find((place) => place.name === dropdownValue.recruitmentPlace)?.id || 1,
       cooperationWay: selectedRadioName.cooperationWays,
-      branchIds: selectedCheckboxId.branches,
+      branchIds: selectedBranchResponses.map((branchResponse) => branchResponse.id),
       purposeIds: selectedCheckboxId.purposes,
       skillCategoryIds: selectedSkillResponses.map((selectedSkillResponse) => selectedSkillResponse.id),
     };
@@ -143,12 +140,27 @@ const WritePage = () => {
     setSelectedSkillResponses((prev) => prev.filter((item) => item.id !== id));
   };
 
+  const onClickBranch = (selected: Info) => {
+    if (selectedBranchResponses.length >= 10) {
+      openAlert({ content: '최대 10개까지 선택할 수 있습니다.' });
+      return;
+    }
+
+    setSelectedBranchResponses((prev) =>
+      selectedBranchResponses.includes(selected) ? prev.filter((item) => item.id !== selected.id) : [...prev, selected],
+    );
+  };
+
+  const onDeleteBranch = (id: number) => {
+    setSelectedBranchResponses((prev) => prev.filter((item) => item.id !== id));
+  };
+
   // 글 작성중인지 여부: 뒤로가기 시 경고창 띄우기
   const isWritingActive =
     title !== '' ||
     introduce !== '' ||
     selectedSkillResponses.length > 0 ||
-    selectedCheckboxId.branches.length > 0 ||
+    selectedBranchResponses.length > 0 ||
     selectedCheckboxId.purposes.length > 0 ||
     selectedRadioName.cooperationWays !== '상관없음' ||
     !!dropdownValue.recruitmentPlace;
@@ -177,7 +189,7 @@ const WritePage = () => {
         <BottomWrapper>
           <Box>
             <Flex justifyContent="space-between">
-              <Text font="suit15m" color="b9">
+              <Text font="suit15m" color="b9" required>
                 분야
               </Text>
               <div
@@ -200,6 +212,17 @@ const WritePage = () => {
               </div>
             </Flex>
 
+            <Spacer size={12} />
+            <TeamLabelBox>
+              {selectedBranchResponses.map((item) => {
+                return (
+                  <Tag key={item.id} onDelete={() => onDeleteBranch(item.id)} style={{ borderRadius: 100 }}>
+                    {item.name}
+                  </Tag>
+                );
+              })}
+            </TeamLabelBox>
+
             <TwoDepthBottomSheet
               title="분야 선택"
               isOpen={isOpenBranchBottomSheet}
@@ -210,28 +233,28 @@ const WritePage = () => {
                   return (
                     <Sheet_leftItem
                       key={item}
-                      onClick={() => setSelectedTeamRecruitment1Depth(item)}
-                      checked={selectedTeamRecruitment1Depth === item}
+                      onClick={() => setSelectedBranch1Depth(item)}
+                      checked={selectedBranch1Depth === item}
                     >
-                      <Text font="suit14m" color={selectedTeamRecruitment1Depth === item ? 'b2' : 'ba'}>
+                      <Text font="suit14m" color={selectedBranch1Depth === item ? 'b2' : 'ba'}>
                         {item}
                       </Text>
                       <Spacer size={3} />
-                      <Text font="suit14m" color={selectedTeamRecruitment1Depth === item ? 'c1' : 'ba'}>
-                        {get2DepthCountsBy1Depth(selectedSkillResponses, skillCategoryResponses)[item]}
+                      <Text font="suit14m" color={selectedBranch1Depth === item ? 'c1' : 'ba'}>
+                        {get2DepthCountsBy1Depth(selectedBranchResponses, branches)[item]}
                       </Text>
                     </Sheet_leftItem>
                   );
                 })}
               </Sheet_Left>
               <Sheet_right>
-                {branchBottomSheetRightItems.map((item: any) => {
+                {branchBottomSheetRightItems?.map((item: any) => {
                   return (
-                    <Sheet_radioDiv key={item.name} onClick={() => onClickTeamRecruitment(item)}>
+                    <Sheet_radioDiv key={item.name} onClick={() => onClickBranch(item)}>
                       <Text font="suit14m" color="b4">
                         {item.name}
                       </Text>
-                      {selectedSkillResponses.includes(item) ? <SVGRadioCheck24 /> : <SVGRadioUncheck24 />}
+                      {selectedBranchResponses.includes(item) ? <SVGRadioCheck24 /> : <SVGRadioUncheck24 />}
                     </Sheet_radioDiv>
                   );
                 })}
@@ -294,10 +317,9 @@ const WritePage = () => {
             <TeamLabelBox>
               {selectedSkillResponses.map((item) => {
                 return (
-                  <TeamLabel key={item.id}>
+                  <Tag key={item.id} onDelete={() => onDeleteTeamRecruitment(item.id)} style={{ borderRadius: 100 }}>
                     {item.name}
-                    <SVGCancel onClick={() => onDeleteTeamRecruitment(item.id)} cursor="pointer" />
-                  </TeamLabel>
+                  </Tag>
                 );
               })}
             </TeamLabelBox>
@@ -365,21 +387,4 @@ const TeamLabelBox = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-`;
-
-const TeamLabel = styled.label`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 11px 16px 12px;
-  height: 40px;
-  box-sizing: border-box;
-  border: 1px solid ${theme.color.l2};
-  border-radius: 6px;
-  background-color: ${theme.color.c1};
-  color: ${theme.color.w1};
-  font-size: 14px;
-  font-weight: 500;
-  width: fit-content;
-  gap: 14px;
 `;

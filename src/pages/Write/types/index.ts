@@ -19,14 +19,17 @@ export type Info = {
 };
 
 export type Idea = {
-  branches: Info[]; // 분야
-  purposes: Info[]; // 목적
-  regions: Info[]; // 팀원 모집 지역
-  skillCategoryResponses: {
-    // 팀원 모집 종류
+  purposes: Info[];
+  regions: Info[];
+  branches: {
     id: number;
-    name: string; // 기획
-    skillResponses: Info[]; // IT기획, 게임기획, 제품기획, 사업기획
+    name: string;
+    skillResponses: Info[];
+  }[];
+  skillCategoryResponses: {
+    id: number;
+    name: string;
+    skillResponses: Info[];
   }[];
 };
 
