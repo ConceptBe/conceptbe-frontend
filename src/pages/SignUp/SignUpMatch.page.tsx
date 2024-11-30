@@ -10,6 +10,7 @@ import {
   SVGGoldBell,
   SVGRadioCheck24,
   SVGRadioUncheck24,
+  Tag,
   Text,
   theme,
   useCheckbox,
@@ -27,6 +28,7 @@ import {
   TwoDepthBottomSheet,
 } from '../Write/components/TwoDepthBottomSheet';
 import { useWritingInfoQuery } from '../Write/hooks/queries/useWritingInfoQuery';
+import { Info } from '../Write/types';
 import { get2DepthCountsBy1Depth } from '../Write/utils/get2DepthCountsBy1Depth';
 import useSignUpMutation from './hooks/useSignUpMutation';
 import { parseQueryString } from './utils/manageQueryString';
@@ -61,7 +63,7 @@ const SignUpMatchPage = () => {
   const [isOpenBranchBottomSheet, setIsOpenBranchBottomSheet] = useState(false);
   const [prevFormData, _] = useState(parseQueryString<QueryStringProps>);
 
-  const { branches, purposes, recruitmentPlaces, cooperationWays, skillCategoryResponses } = useWritingInfoQuery();
+  const { branches, purposes, cooperationWays } = useWritingInfoQuery();
 
   const { postSignUp } = useSignUpMutation();
 
@@ -72,20 +74,56 @@ const SignUpMatchPage = () => {
     cooperationWays,
   });
 
-  const branchBottomSheetLeftItems = [] as any;
-  const branchBottomSheetRightItems = [] as any;
+  const [selectedBranch1Depth, setSelectedBranch1Depth] = useState(branches[0].name);
+  const [selectedBranchResponses, setSelectedBranchResponses] = useState<Info[]>([]);
 
+  const branchBottomSheetLeftItems = branches.map((item) => item.name);
+  const branchBottomSheetRightItems = branches.find((item) => item.name === selectedBranch1Depth)?.skillResponses;
+
+  // TODO: QA 이후 복원
   // useValidateUserInfo(memberInfo);
+
+  const onClickBranch = (selected: Info) => {
+    if (selectedBranchResponses.length >= 10) {
+      openAlert({ content: '최대 10개까지 선택할 수 있습니다.' });
+      return;
+    }
+
+    setSelectedBranchResponses((prev) =>
+      selectedBranchResponses.includes(selected) ? prev.filter((item) => item.id !== selected.id) : [...prev, selected],
+    );
+  };
+
+  const onDeleteBranch = (id: number) => {
+    setSelectedBranchResponses((prev) => prev.filter((item) => item.id !== id));
+  };
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!memberInfo) return openAlert({ content: '유저 정보가 없습니다. 잘못된 접근 방법입니다.' });
 
+    if (!selectedCheckboxId.goal.length) {
+      openAlert({ content: '가입 목적을 1개 이상 선택해 주세요.' });
+      return;
+    }
+
+    if (!selectedBranchResponses.length) {
+      openAlert({ content: '분야를 1개 이상 선택해 주세요.' });
+      return;
+    }
+
+    if (!selectedRadioName.cooperationWays) {
+      openAlert({ content: '협업 방식을 선택해 주세요.' });
+      return;
+    }
+
     postSignUp({
       ...memberInfo,
       ...prevFormData,
       joinPurposes: selectedCheckboxId.goal,
+      branches: selectedBranchResponses.map((item) => item.id),
+      workingPlace: selectedRadioName.cooperationWays,
     });
   };
 
@@ -105,7 +143,7 @@ const SignUpMatchPage = () => {
         </Header.Item>
       </Header>
 
-      <MainWrapper>
+      <MainWrapper onSubmit={onSubmit}>
         <Spacer size={80} />
 
         <Flex direction="column" justifyContent="center" alignItems="center" gap={4}>
@@ -152,9 +190,10 @@ const SignUpMatchPage = () => {
 
           <Box>
             <Flex justifyContent="space-between">
-              <Text font="suit15m" color="b9">
+              <Text font="suit15m" color="b9" required>
                 분야
               </Text>
+
               <div
                 onClick={() => {
                   setIsOpenBranchBottomSheet(true);
@@ -185,28 +224,28 @@ const SignUpMatchPage = () => {
                   return (
                     <Sheet_leftItem
                       key={item}
-                      onClick={() => setSelectedTeamRecruitment1Depth(item)}
-                      checked={selectedTeamRecruitment1Depth === item}
+                      onClick={() => setSelectedBranch1Depth(item)}
+                      checked={selectedBranch1Depth === item}
                     >
-                      <Text font="suit14m" color={selectedTeamRecruitment1Depth === item ? 'b2' : 'ba'}>
+                      <Text font="suit14m" color={selectedBranch1Depth === item ? 'b2' : 'ba'}>
                         {item}
                       </Text>
                       <Spacer size={3} />
-                      <Text font="suit14m" color={selectedTeamRecruitment1Depth === item ? 'c1' : 'ba'}>
-                        {get2DepthCountsBy1Depth(selectedSkillResponses, skillCategoryResponses)[item]}
+                      <Text font="suit14m" color={selectedBranch1Depth === item ? 'c1' : 'ba'}>
+                        {get2DepthCountsBy1Depth(selectedBranchResponses, branches)[item]}
                       </Text>
                     </Sheet_leftItem>
                   );
                 })}
               </Sheet_Left>
               <Sheet_right>
-                {branchBottomSheetRightItems.map((item: any) => {
+                {branchBottomSheetRightItems?.map((item: any) => {
                   return (
-                    <Sheet_radioDiv key={item.name} onClick={() => onClickTeamRecruitment(item)}>
+                    <Sheet_radioDiv key={item.name} onClick={() => onClickBranch(item)}>
                       <Text font="suit14m" color="b4">
                         {item.name}
                       </Text>
-                      {selectedSkillResponses.includes(item) ? <SVGRadioCheck24 /> : <SVGRadioUncheck24 />}
+                      {selectedBranchResponses.includes(item) ? <SVGRadioCheck24 /> : <SVGRadioUncheck24 />}
                     </Sheet_radioDiv>
                   );
                 })}
@@ -214,20 +253,37 @@ const SignUpMatchPage = () => {
             </TwoDepthBottomSheet>
           </Box>
 
+          <Spacer size={12} />
+          <TeamLabelBox>
+            {selectedBranchResponses.map((item) => {
+              return (
+                <Tag key={item.id} onDelete={() => onDeleteBranch(item.id)} style={{ borderRadius: 100 }}>
+                  {item.name}
+                </Tag>
+              );
+            })}
+          </TeamLabelBox>
+
           <Spacer size={100} />
         </Box>
 
         <Box padding="0 22px" backgroundColor="w1">
-          <Button onClick={() => {}}>프로필 설정 완료</Button>
+          <Button type="submit">프로필 설정 완료</Button>
         </Box>
       </MainWrapper>
     </Box>
   );
 };
 
+export default SignUpMatchPage;
+
 const MainWrapper = styled.form`
   background-color: ${theme.color.c1};
   height: 100%;
 `;
 
-export default SignUpMatchPage;
+const TeamLabelBox = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+`;

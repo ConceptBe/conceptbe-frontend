@@ -17,6 +17,7 @@ export interface PostSignUp {
     level: string;
   }[];
   joinPurposes: number[];
+  branches: number[];
   livingPlaceId: number;
   workingPlace: string | null;
   introduction: string | null;
