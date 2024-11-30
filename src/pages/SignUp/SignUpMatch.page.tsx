@@ -7,7 +7,6 @@ import {
   Header,
   RadioContainer,
   Spacer,
-  SVGGoldBell,
   SVGRadioCheck24,
   SVGRadioUncheck24,
   Tag,
@@ -30,6 +29,7 @@ import {
 import { useWritingInfoQuery } from '../Write/hooks/queries/useWritingInfoQuery';
 import { Info } from '../Write/types';
 import { get2DepthCountsBy1Depth } from '../Write/utils/get2DepthCountsBy1Depth';
+import { SVGBellCircle } from './assets/SVGBellCircle';
 import useSignUpMutation from './hooks/useSignUpMutation';
 import { parseQueryString } from './utils/manageQueryString';
 
@@ -147,7 +147,7 @@ const SignUpMatchPage = () => {
         <Spacer size={80} />
 
         <Flex direction="column" justifyContent="center" alignItems="center" gap={4}>
-          <SVGGoldBell />
+          <SVGBellCircle />
           <Spacer size={16} />
           <Text font="suit14m" color="w1">
             참여하고자 하는 프로젝트 조건을 등록해주세요.
