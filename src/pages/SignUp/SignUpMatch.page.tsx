@@ -31,6 +31,7 @@ import { Info } from '../Write/types';
 import { get2DepthCountsBy1Depth } from '../Write/utils/get2DepthCountsBy1Depth';
 import { SVGBellCircle } from './assets/SVGBellCircle';
 import useSignUpMutation from './hooks/useSignUpMutation';
+import { WorkingPlaceType } from './types';
 import { parseQueryString } from './utils/manageQueryString';
 
 interface QueryStringProps {
@@ -55,6 +56,12 @@ interface CheckboxOption {
   name: string;
   checked: boolean;
 }
+
+const WORKING_PLACE_MAP = {
+  상관없음: 'NO_MATTER',
+  온라인: 'ONLINE',
+  오프라인: 'OFFLINE',
+} as const;
 
 const SignUpMatchPage = () => {
   const openAlert = useAlert();
@@ -123,7 +130,9 @@ const SignUpMatchPage = () => {
       ...prevFormData,
       joinPurposes: selectedCheckboxId.goal,
       branches: selectedBranchResponses.map((item) => item.id),
-      workingPlace: selectedRadioName.cooperationWays,
+      workingPlace: WORKING_PLACE_MAP[
+        selectedRadioName.cooperationWays as keyof typeof WORKING_PLACE_MAP
+      ] as WorkingPlaceType,
     });
   };
 
