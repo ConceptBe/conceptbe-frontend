@@ -16,9 +16,13 @@ import {
   useRadio,
 } from 'concept-be-design-system';
 import { FormEvent, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import useAlert from '../../hooks/useAlert';
-import { OauthMemberInfo } from '../../types/login';
+import { useMemberInfoQuery } from '../Profile/hooks/queries/useMemberInfoQuery';
+import { getUserId } from '../Profile/utils/getUserId';
+import { SVGBellCircle } from '../SignUp/assets/SVGBellCircle';
+import { WORKING_PLACE_MAP } from '../SignUp/SignUpMatch.page';
+import { WorkingPlaceType } from '../SignUp/types';
+import { parseQueryString } from '../SignUp/utils/manageQueryString';
 import {
   Sheet_Left,
   Sheet_leftItem,
@@ -29,10 +33,7 @@ import {
 import { useWritingInfoQuery } from '../Write/hooks/queries/useWritingInfoQuery';
 import { Info } from '../Write/types';
 import { get2DepthCountsBy1DepthBranches } from '../Write/utils/get2DepthCountBy1DepthBranches';
-import { SVGBellCircle } from './assets/SVGBellCircle';
-import useSignUpMutation from './hooks/useSignUpMutation';
-import { WorkingPlaceType } from './types';
-import { parseQueryString } from './utils/manageQueryString';
+import usePutProfileMutation from './hooks/usePutProfileMutation';
 
 interface QueryStringProps {
   nickname: string;
@@ -41,12 +42,11 @@ interface QueryStringProps {
     skillId: number;
     level: string;
   }[];
-  joinPurposes: number[];
+  profileImageUrl: string | null;
   livingPlaceId: number;
   workingPlace: string;
   introduction: string;
 }
-
 interface CheckboxValue {
   goal: CheckboxOption[];
 }
@@ -57,25 +57,22 @@ interface CheckboxOption {
   checked: boolean;
 }
 
-export const WORKING_PLACE_MAP = {
-  상관없음: 'NO_MATTER',
-  온라인: 'ONLINE',
-  오프라인: 'OFFLINE',
-} as const;
-
-const SignUpMatchPage = () => {
+export default function ProfileEditMatchPage() {
   const openAlert = useAlert();
-  const { state: memberInfo }: { state: OauthMemberInfo | null } = useLocation();
 
   const [isOpenBranchBottomSheet, setIsOpenBranchBottomSheet] = useState(false);
   const [prevFormData, _] = useState(parseQueryString<QueryStringProps>);
 
+  const my = useMemberInfoQuery(getUserId());
   const { branches, purposes, cooperationWays } = useWritingInfoQuery();
 
-  const { postSignUp } = useSignUpMutation();
+  const { putProfile } = usePutProfileMutation(getUserId(), prevFormData.nickname);
 
   const { checkboxValue, selectedCheckboxId, onChangeCheckbox } = useCheckbox<CheckboxValue>({
-    goal: purposes,
+    goal: purposes.map((purpose) => ({
+      ...purpose,
+      checked: my.joinPurposes.includes(purpose.name),
+    })),
   });
   const { radioValue, selectedRadioName, onChangeRadio } = useRadio({
     cooperationWays,
@@ -87,8 +84,33 @@ const SignUpMatchPage = () => {
   const branchBottomSheetLeftItems = branches.map((item) => item.name);
   const branchBottomSheetRightItems = branches.find((item) => item.name === selectedBranch1Depth)?.branchResponses;
 
-  // TODO: QA 이후 복원
-  // useValidateUserInfo(memberInfo);
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (selectedCheckboxId.goal.length === 0) {
+      openAlert({ content: '가입 목적을 하나 이상 선택해 주세요.' });
+      return;
+    }
+
+    if (!selectedBranchResponses.length) {
+      openAlert({ content: '분야를 1개 이상 선택해 주세요.' });
+      return;
+    }
+
+    if (!selectedRadioName.cooperationWays) {
+      openAlert({ content: '협업 방식을 선택해 주세요.' });
+      return;
+    }
+
+    putProfile({
+      ...prevFormData,
+      joinPurposes: selectedCheckboxId.goal,
+      branches: selectedBranchResponses.map((item) => item.id),
+      workingPlace: WORKING_PLACE_MAP[
+        selectedRadioName.cooperationWays as keyof typeof WORKING_PLACE_MAP
+      ] as WorkingPlaceType,
+    });
+  };
 
   const onClickBranch = (selected: Info) => {
     if (selectedBranchResponses.length >= 10) {
@@ -105,37 +127,6 @@ const SignUpMatchPage = () => {
     setSelectedBranchResponses((prev) => prev.filter((item) => item.id !== id));
   };
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (!memberInfo) return openAlert({ content: '유저 정보가 없습니다. 잘못된 접근 방법입니다.' });
-
-    if (!selectedCheckboxId.goal.length) {
-      openAlert({ content: '가입 목적을 1개 이상 선택해 주세요.' });
-      return;
-    }
-
-    if (!selectedBranchResponses.length) {
-      openAlert({ content: '분야를 1개 이상 선택해 주세요.' });
-      return;
-    }
-
-    if (!selectedRadioName.cooperationWays) {
-      openAlert({ content: '협업 방식을 선택해 주세요.' });
-      return;
-    }
-
-    postSignUp({
-      ...memberInfo,
-      ...prevFormData,
-      joinPurposes: selectedCheckboxId.goal,
-      branches: selectedBranchResponses.map((item) => item.id),
-      workingPlace: WORKING_PLACE_MAP[
-        selectedRadioName.cooperationWays as keyof typeof WORKING_PLACE_MAP
-      ] as WorkingPlaceType,
-    });
-  };
-
   return (
     <Box paddingBottom={34}>
       <Header main>
@@ -144,7 +135,7 @@ const SignUpMatchPage = () => {
         </Header.Item>
         <Header.Item>
           <Text font="suit16sb" color="w1">
-            프로젝트 매칭 설정
+            프로젝트 매칭 수정
           </Text>
         </Header.Item>
         <Header.Item>
@@ -198,7 +189,7 @@ const SignUpMatchPage = () => {
           <Spacer size={24} />
 
           <Box>
-            <Flex justifyContent="space-between">
+            <Flex justifyContent="space-between" alignItems="end">
               <Text font="suit15m" color="b9" required>
                 분야
               </Text>
@@ -277,14 +268,12 @@ const SignUpMatchPage = () => {
         </Box>
 
         <Box padding="0 22px" backgroundColor="w1">
-          <Button type="submit">프로필 설정 완료</Button>
+          <Button type="submit">프로필 수정 완료</Button>
         </Box>
       </MainWrapper>
     </Box>
   );
-};
-
-export default SignUpMatchPage;
+}
 
 const MainWrapper = styled.form`
   background-color: ${theme.color.c1};

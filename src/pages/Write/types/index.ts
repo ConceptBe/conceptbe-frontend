@@ -20,21 +20,27 @@ export type Info = {
   name: string;
 };
 
-export type WrappedInfo = {
+export type WrappedSkillInfo = {
   id: number;
   name: string;
   skillResponses: Info[];
 };
 
+export type WrappedBranchInfo = {
+  id: number;
+  name: string;
+  branchResponses: Info[];
+};
+
 export type Idea = {
   purposes: Info[];
   regions: Info[];
-  branches: WrappedInfo[];
-  skillCategoryResponses: WrappedInfo[];
+  branches: WrappedBranchInfo[];
+  skillCategoryResponses: WrappedSkillInfo[];
 };
 
 export type NotificationDTO = {
   cooperationWays: WorkingPlaceType[];
   purposes: Info[];
-  branches: WrappedInfo[];
+  branches: WrappedBranchInfo[];
 };

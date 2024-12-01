@@ -2,7 +2,6 @@ import styled from '@emotion/styled';
 import {
   Box,
   Button,
-  CheckboxContainer,
   Dropdown,
   Field,
   Flex,
@@ -14,44 +13,30 @@ import {
   Tag,
   Text,
   theme,
-  useCheckbox,
   useDropdown,
   useField,
 } from 'concept-be-design-system';
-import { FormEvent } from 'react';
 
+import { useNavigate } from 'react-router-dom';
 import { ReactComponent as SVGToolTip24 } from '../../../public/assets/tool_tip_24.svg';
 import { NICKNAME_REG_EXP } from '../../constants/index.ts';
 import useAlert from '../../hooks/useAlert.tsx';
 import Back from '../../layouts/Back.tsx';
-import { getUserId } from '../Profile/utils/getUserId.ts';
 import useCheckDuplicateNickname from '../SignUp/hooks/useCheckDuplicateNickname.ts';
 import useDefaultProfileImage from '../SignUp/hooks/useDefaultProfileImage.ts';
 import useSetDetailSkills from '../SignUp/hooks/useSetDetailSkills.ts';
+import { generateQueryString } from '../SignUp/utils/manageQueryString.ts';
 import useProfileEditQuery from './hooks/useProfileEditQuery.ts';
-import usePutProfileMutation from './hooks/usePutProfileMutation.ts';
 import { DropdownValue, FieldValue } from './types';
 
-interface CheckboxValue {
-  goal: CheckboxOption[];
-}
-
-interface CheckboxOption {
-  id: number;
-  name: string;
-  checked: boolean;
-}
-
 const ProfileEdit = () => {
+  const navigate = useNavigate();
   const openAlert = useAlert();
-  const { mainSkills, detailSkills, skillLevels, regions, purposes, my } = useProfileEditQuery();
+  const { mainSkills, detailSkills, skillLevels, regions, my } = useProfileEditQuery();
   const { fieldValue, fieldErrorValue, setFieldErrorValue, onChangeField } = useField<FieldValue>({
     nickname: my.nickname ?? '',
     company: my.workingPlace ?? '',
     intro: my.introduction ?? '',
-  });
-  const { checkboxValue, selectedCheckboxId, onChangeCheckbox } = useCheckbox<CheckboxValue>({
-    goal: my.joinPurposes ?? purposes,
   });
   const { dropdownValue, onResetDropdown, onClickDropdown } = useDropdown<DropdownValue>({
     mainSkill: my.mainSkill ?? '',
@@ -72,8 +57,6 @@ const ProfileEdit = () => {
     defaultProfileImage: PNGDefaultProfileInfo100,
   });
 
-  const { putProfile } = usePutProfileMutation(getUserId(), fieldValue.nickname);
-
   useCheckDuplicateNickname({ nickname: fieldValue.nickname, setFieldErrorValue });
 
   const validateInput = () => {
@@ -89,39 +72,24 @@ const ProfileEdit = () => {
     ];
   };
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const formData = {
+    nickname: fieldValue.nickname,
+    mainSkillId: mainSkills.find(({ name }) => dropdownValue.mainSkill === name)?.id || 0,
+    profileImageUrl: profileImageUrl === PNGDefaultProfileInfo100 ? null : my.profileImageUrl,
+    skills: selectedSkillDepths.map(({ id, name }) => ({ skillId: id, level: name.split(', ')[1] })),
+    livingPlaceId: regions.find((place) => place.name === dropdownValue.region)?.id || 1,
+    workingPlace: fieldValue.company,
+    introduction: fieldValue.intro,
+  };
+
+  const onClickNextStep = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    if (!fieldValue.nickname) {
-      openAlert({ content: '닉네임을 입력해 주세요.' });
-      return;
-    }
+    if (!fieldValue.nickname) return openAlert({ content: '닉네임은 필수 값입니다.' });
+    if (!dropdownValue.mainSkill) return openAlert({ content: '대표 스킬은 필수 값입니다.' });
+    if (selectedSkillDepths.length === 0) return openAlert({ content: '세부 스킬은 최소 한 개 이상 선택해주세요.' });
 
-    if (!dropdownValue.mainSkill) {
-      openAlert({ content: '대표 스킬을 선택해 주세요.' });
-      return;
-    }
-
-    if (selectedSkillDepths.length === 0) {
-      openAlert({ content: '세부 스킬을 하나 이상 선택해 주세요.' });
-      return;
-    }
-
-    if (selectedCheckboxId.goal.length === 0) {
-      openAlert({ content: '가입 목적을 하나 이상 선택해 주세요.' });
-      return;
-    }
-
-    putProfile({
-      nickname: fieldValue.nickname,
-      mainSkillId: mainSkills.find(({ name }) => dropdownValue.mainSkill === name)?.id || 0,
-      profileImageUrl: profileImageUrl === PNGDefaultProfileInfo100 ? null : my.profileImageUrl,
-      skills: selectedSkillDepths.map(({ id, name }) => ({ skillId: id, level: name.split(', ')[1] })),
-      joinPurposes: selectedCheckboxId.goal,
-      livingPlaceId: regions.find((place) => place.name === dropdownValue.region)?.id || 1,
-      workingPlace: fieldValue.company,
-      introduction: fieldValue.intro,
-    });
+    navigate(`/profile-edit-match?${generateQueryString(formData)}`);
   };
 
   return (
@@ -140,7 +108,7 @@ const ProfileEdit = () => {
         </Header.Item>
       </Header>
 
-      <MainWrapper onSubmit={onSubmit}>
+      <MainWrapper>
         <Spacer size={20} />
         <Box
           marginTop={100}
@@ -311,19 +279,6 @@ const ProfileEdit = () => {
           <Spacer size={35} />
 
           <Flex direction="column" gap={13}>
-            <CheckboxContainer
-              label="가입 목적 (최대 3개)"
-              checkboxKey="goal"
-              options={checkboxValue.goal}
-              onChange={onChangeCheckbox}
-              maxCount={3}
-              required
-            />
-          </Flex>
-
-          <Spacer size={35} />
-
-          <Flex direction="column" gap={13}>
             <Text font="suit15m" color="b9">
               지역
             </Text>
@@ -367,7 +322,7 @@ const ProfileEdit = () => {
           </Field>
         </Box>
         <Box padding="0 22px" backgroundColor="w1">
-          <Button>프로필 수정하기</Button>
+          <Button onClick={onClickNextStep}>다음으로</Button>
         </Box>
       </MainWrapper>
     </Box>

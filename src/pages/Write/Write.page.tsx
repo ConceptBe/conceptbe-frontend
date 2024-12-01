@@ -31,7 +31,8 @@ import {
 import { usePostIdeasMutation } from './hooks/mutations/usePostIdeasMutation';
 import { useWritingInfoQuery } from './hooks/queries/useWritingInfoQuery';
 import { Info, PostIdeasRequest } from './types';
-import { get2DepthCountsBy1Depth } from './utils/get2DepthCountsBy1Depth';
+import { get2DepthCountsBy1DepthBranches } from './utils/get2DepthCountBy1DepthBranches';
+import { get2DepthCountsBy1DepthSkills } from './utils/get2DepthCountsBy1DepthSkills';
 
 const WritePage = () => {
   const openAlert = useAlert();
@@ -63,7 +64,7 @@ const WritePage = () => {
     (item) => item.name === selectedTeamRecruitment1Depth,
   )?.skillResponses;
   const branchBottomSheetLeftItems = branches.map((item) => item.name);
-  const branchBottomSheetRightItems = branches.find((item) => item.name === selectedBranch1Depth)?.skillResponses;
+  const branchBottomSheetRightItems = branches.find((item) => item.name === selectedBranch1Depth)?.branchResponses;
 
   const canSubmit =
     selectedBranchResponses.length > 0 && selectedCheckboxId.purposes.length > 0 && !!selectedRadioName.cooperationWays;
@@ -241,7 +242,7 @@ const WritePage = () => {
                       </Text>
                       <Spacer size={3} />
                       <Text font="suit14m" color={selectedBranch1Depth === item ? 'c1' : 'ba'}>
-                        {get2DepthCountsBy1Depth(selectedBranchResponses, branches)[item]}
+                        {get2DepthCountsBy1DepthBranches(selectedBranchResponses, branches)[item]}
                       </Text>
                     </Sheet_leftItem>
                   );
@@ -346,7 +347,7 @@ const WritePage = () => {
                   </Text>
                   <Spacer size={3} />
                   <Text font="suit14m" color={selectedTeamRecruitment1Depth === item ? 'c1' : 'ba'}>
-                    {get2DepthCountsBy1Depth(selectedSkillResponses, skillCategoryResponses)[item]}
+                    {get2DepthCountsBy1DepthSkills(selectedSkillResponses, skillCategoryResponses)[item]}
                   </Text>
                 </Sheet_leftItem>
               );
