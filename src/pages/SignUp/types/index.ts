@@ -18,10 +18,7 @@ export interface PostSignUp {
     skillId: number;
     level: string;
   }[];
-  joinPurposes: number[];
-  branches: number[];
   livingPlaceId: number;
-  workingPlace: WorkingPlaceType | null;
   introduction: string | null;
   email: string;
   oauthId: string;

@@ -30,6 +30,7 @@ import { useWritingInfoQuery } from '../Write/hooks/queries/useWritingInfoQuery'
 import { Info } from '../Write/types';
 import { get2DepthCountsBy1DepthBranches } from '../Write/utils/get2DepthCountBy1DepthBranches';
 import { SVGBellCircle } from './assets/SVGBellCircle';
+import { useNotificationSettingsMutation } from './hooks/useNotificationSettingsMutation';
 import useSignUpMutation from './hooks/useSignUpMutation';
 import { WorkingPlaceType } from './types';
 import { parseQueryString } from './utils/manageQueryString';
@@ -73,9 +74,10 @@ const SignUpMatchPage = () => {
   const { branches, purposes, cooperationWays } = useWritingInfoQuery();
 
   const { postSignUp } = useSignUpMutation();
+  const { postNotificationSettings } = useNotificationSettingsMutation();
 
   const { checkboxValue, selectedCheckboxId, onChangeCheckbox } = useCheckbox<CheckboxValue>({
-    goal: purposes,
+    goal: purposes.map((purpose) => ({ checked: false, ...purpose })),
   });
   const { radioValue, selectedRadioName, onChangeRadio } = useRadio({
     cooperationWays,
@@ -125,15 +127,23 @@ const SignUpMatchPage = () => {
       return;
     }
 
-    postSignUp({
-      ...memberInfo,
-      ...prevFormData,
-      joinPurposes: selectedCheckboxId.goal,
-      branches: selectedBranchResponses.map((item) => item.id),
-      workingPlace: WORKING_PLACE_MAP[
-        selectedRadioName.cooperationWays as keyof typeof WORKING_PLACE_MAP
-      ] as WorkingPlaceType,
-    });
+    postSignUp(
+      {
+        ...memberInfo,
+        ...prevFormData,
+      },
+      {
+        onSuccess: () => {
+          postNotificationSettings({
+            purposeIds: selectedCheckboxId.goal,
+            branchIds: selectedBranchResponses.map((item) => item.id),
+            cooperationWay: WORKING_PLACE_MAP[
+              selectedRadioName.cooperationWays as keyof typeof WORKING_PLACE_MAP
+            ] as WorkingPlaceType,
+          });
+        },
+      },
+    );
   };
 
   return (

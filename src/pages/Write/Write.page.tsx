@@ -50,7 +50,7 @@ const WritePage = () => {
   const [images, setImages] = useState<File[]>([]);
 
   const { checkboxValue, selectedCheckboxId, onChangeCheckbox } = useCheckbox({
-    purposes,
+    purposes: purposes.map((purpose) => ({ checked: false, ...purpose })),
   });
   const { radioValue, selectedRadioName, onChangeRadio } = useRadio({
     cooperationWays,

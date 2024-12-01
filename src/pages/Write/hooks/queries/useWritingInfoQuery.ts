@@ -14,7 +14,7 @@ export const COOPERATION_OPTIONS = COOPERATIONS.map((properties) =>
 );
 
 const getWritingInfo = async () => {
-  return http.get<Idea>('/ideas/writing');
+  return http.get<Idea>('/writing');
 };
 
 export const useWritingInfoQuery = () => {
@@ -22,7 +22,7 @@ export const useWritingInfoQuery = () => {
     queryKey: ['writingInfo'],
     queryFn: getWritingInfo,
     select: (data) => {
-      const purposes = data.purposes.map((properties) => ({ checked: false, ...properties }));
+      const purposes = data.purposesResponses.map((properties) => ({ checked: false, ...properties }));
       const cooperationWays = COOPERATION_OPTIONS;
 
       return {
@@ -33,12 +33,13 @@ export const useWritingInfoQuery = () => {
     },
   });
 
-  const { branches, purposes, regions: recruitmentPlaces, cooperationWays, skillCategoryResponses } = writingInfo;
+  const { branchesResponses, purposesResponses, regionsResponses, cooperationWays, skillCategoryResponses } =
+    writingInfo;
 
   return {
-    branches,
-    purposes,
-    recruitmentPlaces,
+    branches: branchesResponses,
+    purposes: purposesResponses,
+    recruitmentPlaces: regionsResponses,
     cooperationWays,
     skillCategoryResponses,
     ...rest,

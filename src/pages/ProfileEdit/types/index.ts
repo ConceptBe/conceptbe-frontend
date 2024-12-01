@@ -13,10 +13,7 @@ export interface PutSignUp {
   mainSkillId: number;
   profileImageUrl: string | null;
   skills: Omit<ProfileSkill, 'skillName'>[];
-  joinPurposes: number[];
-  branches: number[];
   livingPlaceId: number;
-  workingPlace: string | null;
   introduction: string | null;
 }
 

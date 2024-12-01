@@ -33,9 +33,9 @@ export type WrappedBranchInfo = {
 };
 
 export type Idea = {
-  purposes: Info[];
-  regions: Info[];
-  branches: WrappedBranchInfo[];
+  purposesResponses: Info[];
+  regionsResponses: Info[];
+  branchesResponses: WrappedBranchInfo[];
   skillCategoryResponses: WrappedSkillInfo[];
 };
 

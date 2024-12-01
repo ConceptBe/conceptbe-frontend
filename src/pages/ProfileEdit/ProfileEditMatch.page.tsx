@@ -20,6 +20,7 @@ import useAlert from '../../hooks/useAlert';
 import { useMemberInfoQuery } from '../Profile/hooks/queries/useMemberInfoQuery';
 import { getUserId } from '../Profile/utils/getUserId';
 import { SVGBellCircle } from '../SignUp/assets/SVGBellCircle';
+import { useNotificationSettingsMutation } from '../SignUp/hooks/useNotificationSettingsMutation';
 import { WORKING_PLACE_MAP } from '../SignUp/SignUpMatch.page';
 import { WorkingPlaceType } from '../SignUp/types';
 import { parseQueryString } from '../SignUp/utils/manageQueryString';
@@ -67,6 +68,7 @@ export default function ProfileEditMatchPage() {
   const { branches, purposes, cooperationWays } = useWritingInfoQuery();
 
   const { putProfile } = usePutProfileMutation(getUserId(), prevFormData.nickname);
+  const { postNotificationSettings } = useNotificationSettingsMutation();
 
   const { checkboxValue, selectedCheckboxId, onChangeCheckbox } = useCheckbox<CheckboxValue>({
     goal: purposes.map((purpose) => ({
@@ -102,14 +104,22 @@ export default function ProfileEditMatchPage() {
       return;
     }
 
-    putProfile({
-      ...prevFormData,
-      joinPurposes: selectedCheckboxId.goal,
-      branches: selectedBranchResponses.map((item) => item.id),
-      workingPlace: WORKING_PLACE_MAP[
-        selectedRadioName.cooperationWays as keyof typeof WORKING_PLACE_MAP
-      ] as WorkingPlaceType,
-    });
+    putProfile(
+      {
+        ...prevFormData,
+      },
+      {
+        onSuccess: () => {
+          postNotificationSettings({
+            purposeIds: selectedCheckboxId.goal,
+            branchIds: selectedBranchResponses.map((item) => item.id),
+            cooperationWay: WORKING_PLACE_MAP[
+              selectedRadioName.cooperationWays as keyof typeof WORKING_PLACE_MAP
+            ] as WorkingPlaceType,
+          });
+        },
+      },
+    );
   };
 
   const onClickBranch = (selected: Info) => {

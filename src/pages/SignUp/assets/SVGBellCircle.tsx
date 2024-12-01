@@ -8,10 +8,10 @@ export const SVGBellCircle = () => {
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
     >
-      <circle cx="42.5" cy="42.5" r="42.5" fill="white" fill-opacity="0.05" />
-      <circle cx="42.5" cy="42.5" r="37.5" fill="white" fill-opacity="0.06" />
-      <circle cx="42.5" cy="42.5" r="32.5" fill="white" fill-opacity="0.14" />
-      <g clip-path="url(#clip0_5399_8678)">
+      <circle cx="42.5" cy="42.5" r="42.5" fill="white" fillOpacity="0.05" />
+      <circle cx="42.5" cy="42.5" r="37.5" fill="white" fillOpacity="0.06" />
+      <circle cx="42.5" cy="42.5" r="32.5" fill="white" fillOpacity="0.14" />
+      <g clipPath="url(#clip0_5399_8678)">
         <rect x="23" y="21" width="40" height="40" fill="url(#pattern0_5399_8678)" />
       </g>
       <defs>
