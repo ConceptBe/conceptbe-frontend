@@ -12,6 +12,7 @@ import {
   SVGRadioCheck24,
   SVGRadioUncheck24,
   Spacer,
+  Tag,
   Text,
   theme,
   useCheckbox,
@@ -22,6 +23,8 @@ import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import useAlert from '../../hooks/useAlert';
+import { TwoDepthBottomSheet } from '../Write/components/TwoDepthBottomSheet';
+import { get2DepthCountsBy1DepthBranches } from '../Write/utils/get2DepthCountBy1DepthBranches';
 import Header from './components/Header';
 import RecruitmentPlaceSection from './components/RecruitmentPlaceSection';
 import TitleAndIntroduceSection from './components/TitleAndIntroduceSection';
@@ -38,8 +41,14 @@ const WriteEditPage = () => {
   const location = useLocation();
   const { putIdea } = usePutIdea();
 
-  const { ideaDetail, branches, purposes, recruitmentPlaces, cooperationWays, skillCategoryResponses } =
-    useWritingEditInfoQuery(Number(location.state.ideaId));
+  const {
+    ideaDetail,
+    branchesResponses,
+    purposesResponses,
+    recruitmentPlaces,
+    cooperationWays,
+    skillCategoryResponses,
+  } = useWritingEditInfoQuery(Number(location.state.ideaId));
 
   const [title, setTitle] = useState(ideaDetail.title);
   const [introduce, setIntroduce] = useState(ideaDetail.introduce);
@@ -53,9 +62,13 @@ const WriteEditPage = () => {
       .filter((item) => ideaDetail.skillCategories.includes(item.name)),
   );
 
+  const [isOpenBranchBottomSheet, setIsOpenBranchBottomSheet] = useState(false);
+  // TODO: ideaDetail branchList API DTO 수정 후 진행
+  const [selectedBranch1Depth, setSelectedBranch1Depth] = useState(branchesResponses[0].name);
+  const [selectedBranchResponses, setSelectedBranchResponses] = useState<Info[]>([]);
+
   const { checkboxValue, selectedCheckboxId, onChangeCheckbox } = useCheckbox({
-    branches,
-    purposes,
+    purposes: purposesResponses.map((item) => ({ checked: ideaDetail.purposeList.includes(item.name), ...item })),
   });
   const { radioValue, selectedRadioName, onChangeRadio } = useRadio({
     cooperationWays,
@@ -68,10 +81,12 @@ const WriteEditPage = () => {
   const sheetRightItems = skillCategoryResponses.find((item) => item.name === selectedTeamRecruitment1Depth)
     ?.skillResponses;
 
+  const branchBottomSheetLeftItems = branchesResponses.map((item) => item.name);
+  const branchBottomSheetRightItems = branchesResponses.find((item) => item.name === selectedBranch1Depth)
+    ?.branchResponses;
+
   const canSubmit =
-    selectedCheckboxId.branches.length > 0 &&
-    selectedCheckboxId.purposes.length > 0 &&
-    !!selectedRadioName.cooperationWays;
+    selectedBranchResponses.length > 0 && selectedCheckboxId.purposes.length > 0 && !!selectedRadioName.cooperationWays;
 
   if (!sheetRightItems) {
     console.error('sheetRightItems is null');
@@ -88,7 +103,7 @@ const WriteEditPage = () => {
       openAlert({ content: '본문 내용을 10자 이상 입력해 주세요.' });
       return;
     }
-    if (!selectedCheckboxId.branches.length) {
+    if (!selectedBranchResponses.length) {
       openAlert({ content: '분야를 1개 이상 선택해 주세요.' });
       return;
     }
@@ -111,7 +126,7 @@ const WriteEditPage = () => {
       introduce,
       recruitmentPlaceId: recruitmentPlaces.find((place) => place.name === dropdownValue.recruitmentPlace)?.id || 1,
       cooperationWay: selectedRadioName.cooperationWays,
-      branchIds: selectedCheckboxId.branches,
+      branchIds: selectedBranchResponses.map((branch) => branch.id),
       purposeIds: selectedCheckboxId.purposes,
       skillCategoryIds: selectedSkillResponses.map((selectedSkillResponse) => selectedSkillResponse.id),
       imageIds: alreadyUploadedImages.map((image) => image.id),
@@ -164,6 +179,21 @@ const WriteEditPage = () => {
     setImages(deletedImages);
   };
 
+  const onClickBranch = (selected: Info) => {
+    if (selectedBranchResponses.length >= 10) {
+      openAlert({ content: '최대 10개까지 선택할 수 있습니다.' });
+      return;
+    }
+
+    setSelectedBranchResponses((prev) =>
+      selectedBranchResponses.includes(selected) ? prev.filter((item) => item.id !== selected.id) : [...prev, selected],
+    );
+  };
+
+  const onDeleteBranch = (id: number) => {
+    setSelectedBranchResponses((prev) => prev.filter((item) => item.id !== id));
+  };
+
   return (
     <MainWrapper>
       <Header onClickCheckButton={writeIdea} isCheckButtonEnabled={canSubmit} />
@@ -184,14 +214,80 @@ const WriteEditPage = () => {
 
       <BottomWrapper>
         <Box>
-          <CheckboxContainer
-            label="분야"
-            checkboxKey="branches"
-            options={checkboxValue.branches}
-            onChange={onChangeCheckbox}
-            required
-          />
+          <Flex justifyContent="space-between">
+            <Text font="suit15m" color="b9" required>
+              분야
+            </Text>
+            <div
+              onClick={() => {
+                setIsOpenBranchBottomSheet(true);
+              }}
+            >
+              <Flex
+                padding="8px 12px"
+                border="1px solid #e5e5e5"
+                borderRadius={6}
+                justifyContent="center"
+                alignItems="center"
+                cursor="pointer"
+              >
+                <Text font="suit13m" color="b4" style={{ lineHeight: '20px' }}>
+                  + 추가하기
+                </Text>
+              </Flex>
+            </div>
+          </Flex>
+
+          <Spacer size={12} />
+          <TeamLabelBox>
+            {selectedBranchResponses.map((item) => {
+              return (
+                <Tag key={item.id} onDelete={() => onDeleteBranch(item.id)} style={{ borderRadius: 100 }}>
+                  {item.name}
+                </Tag>
+              );
+            })}
+          </TeamLabelBox>
+
+          <TwoDepthBottomSheet
+            title="분야 선택"
+            isOpen={isOpenBranchBottomSheet}
+            onClose={() => setIsOpenBranchBottomSheet(false)}
+          >
+            <Sheet_Left>
+              {branchBottomSheetLeftItems.map((item: any) => {
+                return (
+                  <Sheet_leftItem
+                    key={item}
+                    onClick={() => setSelectedBranch1Depth(item)}
+                    checked={selectedBranch1Depth === item}
+                  >
+                    <Text font="suit14m" color={selectedBranch1Depth === item ? 'b2' : 'ba'}>
+                      {item}
+                    </Text>
+                    <Spacer size={3} />
+                    <Text font="suit14m" color={selectedBranch1Depth === item ? 'c1' : 'ba'}>
+                      {get2DepthCountsBy1DepthBranches(selectedBranchResponses, branchesResponses)[item]}
+                    </Text>
+                  </Sheet_leftItem>
+                );
+              })}
+            </Sheet_Left>
+            <Sheet_right>
+              {branchBottomSheetRightItems?.map((item: any) => {
+                return (
+                  <Sheet_radioDiv key={item.name} onClick={() => onClickBranch(item)}>
+                    <Text font="suit14m" color="b4">
+                      {item.name}
+                    </Text>
+                    {selectedBranchResponses.includes(item) ? <SVGRadioCheck24 /> : <SVGRadioUncheck24 />}
+                  </Sheet_radioDiv>
+                );
+              })}
+            </Sheet_right>
+          </TwoDepthBottomSheet>
         </Box>
+
         <Box>
           <CheckboxContainer
             label="목적"
