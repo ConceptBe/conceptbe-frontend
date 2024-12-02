@@ -131,6 +131,7 @@ const SignUpMatchPage = () => {
       {
         ...memberInfo,
         ...prevFormData,
+        joinPurposes: selectedCheckboxId.goal,
       },
       {
         onSuccess: () => {

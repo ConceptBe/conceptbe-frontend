@@ -107,6 +107,7 @@ export default function ProfileEditMatchPage() {
     putProfile(
       {
         ...prevFormData,
+        joinPurposes: selectedCheckboxId.goal,
       },
       {
         onSuccess: () => {

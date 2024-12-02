@@ -23,6 +23,7 @@ export interface PostSignUp {
   email: string;
   oauthId: string;
   oauthServerType: string;
+  joinPurposes: number[];
 }
 
 export interface Skill {
