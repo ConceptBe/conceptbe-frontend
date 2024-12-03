@@ -81,7 +81,7 @@ const Content = ({ onClick }: Props) => {
       <Spacer size={12} />
 
       <div css={{ display: 'flex', gap: 4 }}>
-        {branches.map((branch) => (
+        {identifyAbbreviationBadge(branches, 13).map((branch) => (
           <Badge backgroundColor="c1" fontColor="w1" key={branch}>
             {branch}
           </Badge>
@@ -97,7 +97,7 @@ const Content = ({ onClick }: Props) => {
           <Spacer size={14} />
           <TagWrapper>
             <Flex wrap="wrap" gap={6}>
-              {identifyAbbreviationBadge(skillCategories, 15).map((category) => (
+              {identifyAbbreviationBadge(skillCategories, 13).map((category) => (
                 <Badge key={category} backgroundColor="bg1" radius={50}>
                   {category}
                 </Badge>
