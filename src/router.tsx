@@ -20,6 +20,7 @@ const SignUpPage = lazy(() => import('./pages/SignUp/SignUp.page'));
 const NeedAuth = lazy(() => import('./pages/NeedAuth'));
 const SignUpMatchPage = lazy(() => import('./pages/SignUp/SignUpMatch.page'));
 const NotificationPage = lazy(() => import('./pages/Notification/Notification.page'));
+const ProfileEditMatchPage = lazy(() => import('./pages/ProfileEdit/ProfileEditMatch.page'));
 
 interface RouteElement {
   path: string;
@@ -80,6 +81,10 @@ const routes: RouteElement[] = [
       {
         path: '/profile-edit',
         element: withAsyncBoundary(<ProfileEdit />),
+      },
+      {
+        path: '/profile-edit-match',
+        element: withAsyncBoundary(<ProfileEditMatchPage />),
       },
       {
         path: '/profile/:id/more',

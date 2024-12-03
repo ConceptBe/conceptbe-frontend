@@ -71,6 +71,7 @@ const SignUpPage = () => {
     oauthServerType: memberInfo?.oauthServerType || '',
   };
 
+  // TODO: QA 이후 복원
   // useValidateUserInfo(memberInfo);
   useCheckDuplicateNickname({ nickname: fieldValue.nickname, setFieldErrorValue });
 

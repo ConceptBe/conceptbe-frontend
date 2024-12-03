@@ -14,11 +14,17 @@ export const parseQueryString = <T extends Record<string, any>>() => {
   const searchParams = new URLSearchParams(window.location.search);
   const searchParamsObject = Object.fromEntries(searchParams.entries());
 
-  Object.keys(searchParamsObject).forEach((key) => {
-    if (key === 'skills') {
-      searchParamsObject[key] = JSON.parse(searchParamsObject[key]);
-    }
-  });
+  const parsedObject = Object.entries(searchParamsObject).reduce(
+    (acc, [key, value]) => {
+      try {
+        acc[key] = JSON.parse(value);
+      } catch {
+        acc[key] = value;
+      }
+      return acc;
+    },
+    {} as Record<string, any>,
+  );
 
-  return Object.fromEntries(searchParams.entries()) as T;
+  return parsedObject as T;
 };

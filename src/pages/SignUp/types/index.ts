@@ -1,3 +1,5 @@
+export type WorkingPlaceType = 'NO_MATTER' | 'ONLINE' | 'OFFLINE';
+
 export interface DropdownValue {
   mainSkill: string;
   skillDepthOne: string;
@@ -16,13 +18,12 @@ export interface PostSignUp {
     skillId: number;
     level: string;
   }[];
-  joinPurposes: number[];
   livingPlaceId: number;
-  workingPlace: string | null;
   introduction: string | null;
   email: string;
   oauthId: string;
   oauthServerType: string;
+  joinPurposes: number[];
 }
 
 export interface Skill {

@@ -1,8 +1,16 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
 
-import { useIdeaDetailQuery } from './useIdeaDetailQuery';
 import { http } from '../../../../api/http';
-import { Idea } from '../../types';
+import { WrappedBranchInfo, WrappedSkillInfo } from '../../../Write/types';
+import { Info } from '../../types';
+import { useIdeaDetailQuery } from './useIdeaDetailQuery';
+
+type Idea = {
+  purposesResponses: Info[];
+  regionsResponses: Info[];
+  branchesResponses: WrappedBranchInfo[];
+  skillCategoryResponses: WrappedSkillInfo[];
+};
 
 const cooperations = [
   { id: 1, name: '상관없음' },
@@ -11,7 +19,7 @@ const cooperations = [
 ];
 
 const getWritingInfo = async () => {
-  return http.get<Idea>('/ideas/writing');
+  return http.get<Idea>('/writing');
 };
 
 export const useWritingEditInfoQuery = (ideaId: number) => {
@@ -20,12 +28,12 @@ export const useWritingEditInfoQuery = (ideaId: number) => {
     queryKey: ['writingInfo'],
     queryFn: getWritingInfo,
     select: (data) => {
-      const branches = data.branches.map((properties) =>
+      const branches = data.branchesResponses.map((properties) =>
         ideaDetail.branchList.includes(properties.name)
           ? { checked: true, ...properties }
           : { checked: false, ...properties },
       );
-      const purposes = data.purposes.map((properties) =>
+      const purposes = data.purposesResponses.map((properties) =>
         ideaDetail.purposeList.includes(properties.name)
           ? { checked: true, ...properties }
           : { checked: false, ...properties },
@@ -45,7 +53,16 @@ export const useWritingEditInfoQuery = (ideaId: number) => {
     },
   });
 
-  const { branches, purposes, regions: recruitmentPlaces, cooperationWays, skillCategoryResponses } = writingInfo;
+  const { branchesResponses, purposesResponses, regionsResponses, cooperationWays, skillCategoryResponses } =
+    writingInfo;
 
-  return { ideaDetail, branches, purposes, recruitmentPlaces, cooperationWays, skillCategoryResponses, ...rest };
+  return {
+    ideaDetail,
+    branchesResponses,
+    purposesResponses,
+    recruitmentPlaces: regionsResponses,
+    cooperationWays,
+    skillCategoryResponses,
+    ...rest,
+  };
 };

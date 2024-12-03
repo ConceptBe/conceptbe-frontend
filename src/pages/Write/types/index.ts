@@ -1,3 +1,5 @@
+import { WorkingPlaceType } from '../../SignUp/types';
+
 // 글쓰기 요청 body 타입
 export interface PostIdeasRequest extends FormData {
   request: {
@@ -18,20 +20,27 @@ export type Info = {
   name: string;
 };
 
-export type Idea = {
-  branches: Info[]; // 분야
-  purposes: Info[]; // 목적
-  regions: Info[]; // 팀원 모집 지역
-  skillCategoryResponses: {
-    // 팀원 모집 종류
-    id: number;
-    name: string; // 기획
-    skillResponses: Info[]; // IT기획, 게임기획, 제품기획, 사업기획
-  }[];
-};
-
-export type CooperationWay = {
+export type WrappedSkillInfo = {
   id: number;
   name: string;
-  checked: boolean;
+  skillResponses: Info[];
+};
+
+export type WrappedBranchInfo = {
+  id: number;
+  name: string;
+  branchResponses: Info[];
+};
+
+export type Idea = {
+  purposesResponses: Info[];
+  regionsResponses: Info[];
+  branchesResponses: WrappedBranchInfo[];
+  skillCategoryResponses: WrappedSkillInfo[];
+};
+
+export type NotificationDTO = {
+  cooperationWays: WorkingPlaceType[];
+  purposes: Info[];
+  branches: WrappedBranchInfo[];
 };

@@ -3,14 +3,18 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { http } from '../../../../api/http';
 import { Idea } from '../../types';
 
-const cooperations = [
+const COOPERATIONS = [
   { id: 1, name: '상관없음' },
   { id: 2, name: '온라인' },
   { id: 3, name: '오프라인' },
 ];
 
+export const COOPERATION_OPTIONS = COOPERATIONS.map((properties) =>
+  properties.id === 1 ? { checked: true, ...properties } : { checked: false, ...properties },
+);
+
 const getWritingInfo = async () => {
-  return http.get<Idea>('/ideas/writing');
+  return http.get<Idea>('/writing');
 };
 
 export const useWritingInfoQuery = () => {
@@ -18,27 +22,24 @@ export const useWritingInfoQuery = () => {
     queryKey: ['writingInfo'],
     queryFn: getWritingInfo,
     select: (data) => {
-      const branches = data.branches.map((properties) => ({ checked: false, ...properties }));
-      const purposes = data.purposes.map((properties) => ({ checked: false, ...properties }));
-      const cooperationWays = cooperations.map((properties) =>
-        properties.id === 1 ? { checked: true, ...properties } : { checked: false, ...properties },
-      );
+      const purposes = data.purposesResponses.map((properties) => ({ checked: false, ...properties }));
+      const cooperationWays = COOPERATION_OPTIONS;
 
       return {
         ...data,
-        branches,
         purposes,
         cooperationWays,
       };
     },
   });
 
-  const { branches, purposes, regions: recruitmentPlaces, cooperationWays, skillCategoryResponses } = writingInfo;
+  const { branchesResponses, purposesResponses, regionsResponses, cooperationWays, skillCategoryResponses } =
+    writingInfo;
 
   return {
-    branches,
-    purposes,
-    recruitmentPlaces,
+    branches: branchesResponses,
+    purposes: purposesResponses,
+    recruitmentPlaces: regionsResponses,
     cooperationWays,
     skillCategoryResponses,
     ...rest,
