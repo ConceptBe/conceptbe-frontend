@@ -63,9 +63,13 @@ const WriteEditPage = () => {
   );
 
   const [isOpenBranchBottomSheet, setIsOpenBranchBottomSheet] = useState(false);
-  // TODO: ideaDetail branchList API DTO 수정 후 진행
   const [selectedBranch1Depth, setSelectedBranch1Depth] = useState(branchesResponses[0].name);
-  const [selectedBranchResponses, setSelectedBranchResponses] = useState<Info[]>([]);
+  const [selectedBranchResponses, setSelectedBranchResponses] = useState<Info[]>(
+    branchesResponses
+      .map((item) => item.branchResponses)
+      .flat()
+      .filter((item) => ideaDetail.branchList.includes(item.name)),
+  );
 
   const { checkboxValue, selectedCheckboxId, onChangeCheckbox } = useCheckbox({
     purposes: purposesResponses.map((item) => ({ checked: ideaDetail.purposeList.includes(item.name), ...item })),
