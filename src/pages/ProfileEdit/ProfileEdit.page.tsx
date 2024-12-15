@@ -25,25 +25,40 @@ import Back from '../../layouts/Back.tsx';
 import useCheckDuplicateNickname from '../SignUp/hooks/useCheckDuplicateNickname.ts';
 import useDefaultProfileImage from '../SignUp/hooks/useDefaultProfileImage.ts';
 import useSetDetailSkills from '../SignUp/hooks/useSetDetailSkills.ts';
-import { generateQueryString } from '../SignUp/utils/manageQueryString.ts';
+import { getSessionData, setSessionData } from '../SignUp/utils/manageQueryString.ts';
 import useProfileEditQuery from './hooks/useProfileEditQuery.ts';
 import { DropdownValue, FieldValue } from './types';
 
+interface QueryStringProps {
+  nickname: string;
+  mainSkillId: number;
+  skills: {
+    skillId: number;
+    level: string;
+  }[];
+  profileImageUrl: string | null;
+  livingPlaceId: number;
+  workingPlace: string;
+  introduction: string;
+}
+
 const ProfileEdit = () => {
+  const prevInputtedData = getSessionData('profileEditData') as QueryStringProps;
+
   const navigate = useNavigate();
   const openAlert = useAlert();
   const { mainSkills, detailSkills, skillLevels, regions, my } = useProfileEditQuery();
   const { fieldValue, fieldErrorValue, setFieldErrorValue, onChangeField } = useField<FieldValue>({
-    nickname: my.nickname ?? '',
-    company: my.workingPlace ?? '',
-    intro: my.introduction ?? '',
+    nickname: prevInputtedData.nickname ?? my.nickname ?? '',
+    company: prevInputtedData.workingPlace ?? my.workingPlace ?? '',
+    intro: prevInputtedData.introduction ?? my.introduction ?? '',
   });
   const { dropdownValue, onResetDropdown, onClickDropdown } = useDropdown<DropdownValue>({
-    mainSkill: my.mainSkill ?? '',
+    mainSkill: mainSkills.find(({ id }) => id === prevInputtedData.mainSkillId)?.name ?? my.mainSkill ?? '',
     skillDepthOne: '',
     skillDepthTwo: '',
     skillDepthThree: '',
-    region: my.livingPlace ?? '',
+    region: regions.find((place) => place.id === prevInputtedData.livingPlaceId)?.name ?? my.livingPlace ?? '',
   });
   const { skillDepthOneId, selectedSkillDepths, onDeleteSkill } = useSetDetailSkills({
     initialValue: my.skills,
@@ -89,7 +104,8 @@ const ProfileEdit = () => {
     if (!dropdownValue.mainSkill) return openAlert({ content: '대표 스킬은 필수 값입니다.' });
     if (selectedSkillDepths.length === 0) return openAlert({ content: '세부 스킬은 최소 한 개 이상 선택해주세요.' });
 
-    navigate(`/profile-edit-match?${generateQueryString(formData)}`);
+    setSessionData('profileEditData', formData);
+    navigate('/profile-edit-match');
   };
 
   return (

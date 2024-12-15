@@ -23,7 +23,7 @@ import { SVGBellCircle } from '../SignUp/assets/SVGBellCircle';
 import { useUpdateNotificationSettings } from '../SignUp/hooks/useUpdateNotificationSettings';
 import { WORKING_PLACE_MAP } from '../SignUp/SignUpMatch.page';
 import { WorkingPlaceType } from '../SignUp/types';
-import { parseQueryString } from '../SignUp/utils/manageQueryString';
+import { clearSessionData, getSessionData } from '../SignUp/utils/manageQueryString';
 import {
   Sheet_Left,
   Sheet_leftItem,
@@ -48,6 +48,7 @@ interface QueryStringProps {
   workingPlace: string;
   introduction: string;
 }
+
 interface CheckboxValue {
   goal: CheckboxOption[];
 }
@@ -59,11 +60,13 @@ interface CheckboxOption {
 }
 
 export default function ProfileEditMatchPage() {
+  const prevInputtedData = getSessionData('profileEditData');
+
   const openAlert = useAlert();
   const userId = getUserId();
 
   const [isOpenBranchBottomSheet, setIsOpenBranchBottomSheet] = useState(false);
-  const [prevFormData, _] = useState(parseQueryString<QueryStringProps>);
+  const [prevFormData, _] = useState(prevInputtedData as QueryStringProps);
 
   const my = useMemberInfoQuery(userId);
   const { branches, purposes, cooperationWays } = useWritingInfoQuery();
@@ -112,13 +115,20 @@ export default function ProfileEditMatchPage() {
       },
       {
         onSuccess: () => {
-          patchNotificationSettings({
-            purposeIds: selectedCheckboxId.goal,
-            branchIds: selectedBranchResponses.map((item) => item.id),
-            cooperationWay: WORKING_PLACE_MAP[
-              selectedRadioName.cooperationWays as keyof typeof WORKING_PLACE_MAP
-            ] as WorkingPlaceType,
-          });
+          patchNotificationSettings(
+            {
+              purposeIds: selectedCheckboxId.goal,
+              branchIds: selectedBranchResponses.map((item) => item.id),
+              cooperationWay: WORKING_PLACE_MAP[
+                selectedRadioName.cooperationWays as keyof typeof WORKING_PLACE_MAP
+              ] as WorkingPlaceType,
+            },
+            {
+              onSuccess: () => {
+                clearSessionData('profileEditData');
+              },
+            },
+          );
         },
       },
     );

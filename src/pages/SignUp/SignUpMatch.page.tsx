@@ -32,8 +32,9 @@ import { get2DepthCountsBy1DepthBranches } from '../Write/utils/get2DepthCountBy
 import { SVGBellCircle } from './assets/SVGBellCircle';
 import { useNotificationSettingsMutation } from './hooks/useNotificationSettingsMutation';
 import useSignUpMutation from './hooks/useSignUpMutation';
+import useValidateUserInfo from './hooks/useValidateUserInfo';
 import { WorkingPlaceType } from './types';
-import { parseQueryString } from './utils/manageQueryString';
+import { clearSessionData, getSessionData } from './utils/manageQueryString';
 
 interface QueryStringProps {
   nickname: string;
@@ -65,11 +66,13 @@ export const WORKING_PLACE_MAP = {
 } as const;
 
 const SignUpMatchPage = () => {
+  const prevInputtedData = getSessionData('signUpData');
+
   const openAlert = useAlert();
   const { state: memberInfo }: { state: OauthMemberInfo | null } = useLocation();
 
   const [isOpenBranchBottomSheet, setIsOpenBranchBottomSheet] = useState(false);
-  const [prevFormData, _] = useState(parseQueryString<QueryStringProps>);
+  const [prevFormData, _] = useState(prevInputtedData as QueryStringProps);
 
   const { branches, purposes, cooperationWays } = useWritingInfoQuery();
 
@@ -89,8 +92,7 @@ const SignUpMatchPage = () => {
   const branchBottomSheetLeftItems = branches.map((item) => item.name);
   const branchBottomSheetRightItems = branches.find((item) => item.name === selectedBranch1Depth)?.branchResponses;
 
-  // TODO: QA 이후 복원
-  // useValidateUserInfo(memberInfo);
+  useValidateUserInfo(memberInfo);
 
   const onClickBranch = (selected: Info) => {
     if (selectedBranchResponses.length >= 10) {
@@ -135,13 +137,20 @@ const SignUpMatchPage = () => {
       },
       {
         onSuccess: () => {
-          postNotificationSettings({
-            purposeIds: selectedCheckboxId.goal,
-            branchIds: selectedBranchResponses.map((item) => item.id),
-            cooperationWay: WORKING_PLACE_MAP[
-              selectedRadioName.cooperationWays as keyof typeof WORKING_PLACE_MAP
-            ] as WorkingPlaceType,
-          });
+          postNotificationSettings(
+            {
+              purposeIds: selectedCheckboxId.goal,
+              branchIds: selectedBranchResponses.map((item) => item.id),
+              cooperationWay: WORKING_PLACE_MAP[
+                selectedRadioName.cooperationWays as keyof typeof WORKING_PLACE_MAP
+              ] as WorkingPlaceType,
+            },
+            {
+              onSuccess: () => {
+                clearSessionData('signUpData');
+              },
+            },
+          );
         },
       },
     );

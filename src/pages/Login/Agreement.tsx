@@ -1,13 +1,13 @@
 import styled from '@emotion/styled';
 import {
   BottomSheet,
+  Box,
   Button,
+  Flex,
+  ImageView,
+  PNGAgreementBackground,
   Spacer,
   Text,
-  PNGAgreementBackground,
-  Flex,
-  Box,
-  ImageView,
 } from 'concept-be-design-system';
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';

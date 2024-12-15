@@ -26,26 +26,42 @@ import useCheckDuplicateNickname from './hooks/useCheckDuplicateNickname.ts';
 import useDefaultProfileImage from './hooks/useDefaultProfileImage.ts';
 import useSetDetailSkills from './hooks/useSetDetailSkills.ts';
 import useSignUpQuery from './hooks/useSignUpQuery.ts';
+import useValidateUserInfo from './hooks/useValidateUserInfo.ts';
 import { DropdownValue, FieldValue } from './types';
-import { generateQueryString } from './utils/manageQueryString.ts';
+import { getSessionData, setSessionData } from './utils/manageQueryString.ts';
+
+interface QueryStringProps {
+  nickname: string;
+  mainSkillId: number;
+  skills: {
+    skillId: number;
+    level: string;
+  }[];
+  joinPurposes: number[];
+  livingPlaceId: number;
+  workingPlace: string;
+  introduction: string;
+}
 
 const SignUpPage = () => {
+  const prevInputtedData = getSessionData('signUpData') as QueryStringProps;
+
   const navigate = useNavigate();
   const openAlert = useAlert();
   const { state: memberInfo }: { state: OauthMemberInfo | null } = useLocation();
 
   const { mainSkills, detailSkills, skillLevels, regions } = useSignUpQuery();
   const { fieldValue, fieldErrorValue, setFieldErrorValue, onChangeField } = useField<FieldValue>({
-    nickname: '',
-    company: '',
-    intro: '',
+    nickname: prevInputtedData.nickname ?? '',
+    company: prevInputtedData.workingPlace ?? '',
+    intro: prevInputtedData.introduction ?? '',
   });
   const { dropdownValue, onResetDropdown, onClickDropdown } = useDropdown<DropdownValue>({
-    mainSkill: '',
+    mainSkill: mainSkills.find(({ id }) => id === prevInputtedData.mainSkillId)?.name ?? '',
     skillDepthOne: '',
     skillDepthTwo: '',
     skillDepthThree: '',
-    region: '',
+    region: regions.find((place) => place.id === prevInputtedData.livingPlaceId)?.name ?? '',
   });
   const { skillDepthOneId, selectedSkillDepths, onDeleteSkill } = useSetDetailSkills({
     mainSkills,
@@ -71,8 +87,7 @@ const SignUpPage = () => {
     oauthServerType: memberInfo?.oauthServerType || '',
   };
 
-  // TODO: QA 이후 복원
-  // useValidateUserInfo(memberInfo);
+  useValidateUserInfo(memberInfo);
   useCheckDuplicateNickname({ nickname: fieldValue.nickname, setFieldErrorValue });
 
   const validateInput = () => {
@@ -95,7 +110,8 @@ const SignUpPage = () => {
     if (!dropdownValue.mainSkill) return openAlert({ content: '대표 스킬은 필수 값입니다.' });
     if (selectedSkillDepths.length === 0) return openAlert({ content: '세부 스킬은 최소 한 개 이상 선택해주세요.' });
 
-    navigate(`/sign-up-match?${generateQueryString(formData)}`);
+    setSessionData('signUpData', formData);
+    navigate('/sign-up-match', { state: memberInfo });
   };
 
   return (
