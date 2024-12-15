@@ -16,7 +16,8 @@ import {
 } from 'concept-be-design-system';
 
 import RecruitmentPlaceSection from '../../../Write/components/RecruitmentPlaceSection';
-import { CooperationWay, Idea } from '../../../Write/types';
+import { COOPERATION_OPTIONS } from '../../../Write/hooks/queries/useWritingInfoQuery';
+import { Idea } from '../../../Write/types';
 import { useFilterParams } from '../../context/filterContext';
 import useFilteredBottomSheetState from '../../hooks/useFilteredBottomSheetState';
 
@@ -24,10 +25,10 @@ type Props = {
   open: boolean;
   onClose: () => void;
   onApply: () => void;
-  branches: Idea['branches'];
-  purposes: Idea['purposes'];
-  cooperationWays: CooperationWay[];
-  recruitmentPlaces: Idea['regions'];
+  branches: Idea['branchesResponses'];
+  purposes: Idea['purposesResponses'];
+  recruitmentPlaces: typeof COOPERATION_OPTIONS;
+  cooperationWays: typeof COOPERATION_OPTIONS;
   skillCategoryResponses: Idea['skillCategoryResponses'];
 };
 

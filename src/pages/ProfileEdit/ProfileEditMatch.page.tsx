@@ -20,7 +20,7 @@ import useAlert from '../../hooks/useAlert';
 import { useMemberInfoQuery } from '../Profile/hooks/queries/useMemberInfoQuery';
 import { getUserId } from '../Profile/utils/getUserId';
 import { SVGBellCircle } from '../SignUp/assets/SVGBellCircle';
-import { useNotificationSettingsMutation } from '../SignUp/hooks/useNotificationSettingsMutation';
+import { useUpdateNotificationSettings } from '../SignUp/hooks/useUpdateNotificationSettings';
 import { WORKING_PLACE_MAP } from '../SignUp/SignUpMatch.page';
 import { WorkingPlaceType } from '../SignUp/types';
 import { parseQueryString } from '../SignUp/utils/manageQueryString';
@@ -60,15 +60,16 @@ interface CheckboxOption {
 
 export default function ProfileEditMatchPage() {
   const openAlert = useAlert();
+  const userId = getUserId();
 
   const [isOpenBranchBottomSheet, setIsOpenBranchBottomSheet] = useState(false);
   const [prevFormData, _] = useState(parseQueryString<QueryStringProps>);
 
-  const my = useMemberInfoQuery(getUserId());
+  const my = useMemberInfoQuery(userId);
   const { branches, purposes, cooperationWays } = useWritingInfoQuery();
 
-  const { putProfile } = usePutProfileMutation(getUserId(), prevFormData.nickname);
-  const { postNotificationSettings } = useNotificationSettingsMutation();
+  const { putProfile } = usePutProfileMutation(userId, prevFormData.nickname);
+  const { patchNotificationSettings } = useUpdateNotificationSettings(userId);
 
   const { checkboxValue, selectedCheckboxId, onChangeCheckbox } = useCheckbox<CheckboxValue>({
     goal: purposes.map((purpose) => ({
@@ -111,7 +112,7 @@ export default function ProfileEditMatchPage() {
       },
       {
         onSuccess: () => {
-          postNotificationSettings({
+          patchNotificationSettings({
             purposeIds: selectedCheckboxId.goal,
             branchIds: selectedBranchResponses.map((item) => item.id),
             cooperationWay: WORKING_PLACE_MAP[

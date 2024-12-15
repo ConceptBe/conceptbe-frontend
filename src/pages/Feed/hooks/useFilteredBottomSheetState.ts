@@ -1,12 +1,13 @@
-import { CooperationWay, Idea } from '../../Write/types';
+import { COOPERATION_OPTIONS } from '../../Write/hooks/queries/useWritingInfoQuery';
+import { Idea } from '../../Write/types';
 import { FilterParams } from '../context/filterContext';
 
 interface Props {
   filterParams: FilterParams | undefined;
-  branches: Idea['branches'];
-  purposes: Idea['purposes'];
-  recruitmentPlaces: Idea['regions'];
-  cooperationWays: CooperationWay[];
+  branches: Idea['branchesResponses'];
+  purposes: Idea['purposesResponses'];
+  recruitmentPlaces: typeof COOPERATION_OPTIONS;
+  cooperationWays: typeof COOPERATION_OPTIONS;
   skillCategoryResponses: Idea['skillCategoryResponses'];
 }
 
