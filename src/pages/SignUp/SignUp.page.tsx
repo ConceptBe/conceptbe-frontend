@@ -44,7 +44,7 @@ interface QueryStringProps {
 }
 
 const SignUpPage = () => {
-  const prevInputtedData = getSessionData('signUpData') as QueryStringProps;
+  const prevInputtedData = getSessionData('signUpData') as QueryStringProps | undefined;
 
   const navigate = useNavigate();
   const openAlert = useAlert();
@@ -52,16 +52,16 @@ const SignUpPage = () => {
 
   const { mainSkills, detailSkills, skillLevels, regions } = useSignUpQuery();
   const { fieldValue, fieldErrorValue, setFieldErrorValue, onChangeField } = useField<FieldValue>({
-    nickname: prevInputtedData.nickname ?? '',
-    company: prevInputtedData.workingPlace ?? '',
-    intro: prevInputtedData.introduction ?? '',
+    nickname: prevInputtedData?.nickname ?? '',
+    company: prevInputtedData?.workingPlace ?? '',
+    intro: prevInputtedData?.introduction ?? '',
   });
   const { dropdownValue, onResetDropdown, onClickDropdown } = useDropdown<DropdownValue>({
-    mainSkill: mainSkills.find(({ id }) => id === prevInputtedData.mainSkillId)?.name ?? '',
+    mainSkill: mainSkills.find(({ id }) => id === prevInputtedData?.mainSkillId)?.name ?? '',
     skillDepthOne: '',
     skillDepthTwo: '',
     skillDepthThree: '',
-    region: regions.find((place) => place.id === prevInputtedData.livingPlaceId)?.name ?? '',
+    region: regions.find((place) => place.id === prevInputtedData?.livingPlaceId)?.name ?? '',
   });
   const { skillDepthOneId, selectedSkillDepths, onDeleteSkill } = useSetDetailSkills({
     mainSkills,

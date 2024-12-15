@@ -43,22 +43,22 @@ interface QueryStringProps {
 }
 
 const ProfileEdit = () => {
-  const prevInputtedData = getSessionData('profileEditData') as QueryStringProps;
+  const prevInputtedData = getSessionData('profileEditData') as QueryStringProps | undefined;
 
   const navigate = useNavigate();
   const openAlert = useAlert();
   const { mainSkills, detailSkills, skillLevels, regions, my } = useProfileEditQuery();
   const { fieldValue, fieldErrorValue, setFieldErrorValue, onChangeField } = useField<FieldValue>({
-    nickname: prevInputtedData.nickname ?? my.nickname ?? '',
-    company: prevInputtedData.workingPlace ?? my.workingPlace ?? '',
-    intro: prevInputtedData.introduction ?? my.introduction ?? '',
+    nickname: prevInputtedData?.nickname ?? my.nickname ?? '',
+    company: prevInputtedData?.workingPlace ?? my.workingPlace ?? '',
+    intro: prevInputtedData?.introduction ?? my.introduction ?? '',
   });
   const { dropdownValue, onResetDropdown, onClickDropdown } = useDropdown<DropdownValue>({
-    mainSkill: mainSkills.find(({ id }) => id === prevInputtedData.mainSkillId)?.name ?? my.mainSkill ?? '',
+    mainSkill: mainSkills.find(({ id }) => id === prevInputtedData?.mainSkillId)?.name ?? my.mainSkill ?? '',
     skillDepthOne: '',
     skillDepthTwo: '',
     skillDepthThree: '',
-    region: regions.find((place) => place.id === prevInputtedData.livingPlaceId)?.name ?? my.livingPlace ?? '',
+    region: regions.find((place) => place.id === prevInputtedData?.livingPlaceId)?.name ?? my.livingPlace ?? '',
   });
   const { skillDepthOneId, selectedSkillDepths, onDeleteSkill } = useSetDetailSkills({
     initialValue: my.skills,
