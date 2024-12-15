@@ -5,14 +5,12 @@ import { useNavigate } from 'react-router-dom';
 
 import NewIdeaCard from '../../../components/NewIdeaCard/NewIdeaCard';
 import { useFeedInfiniteFetch } from '../../../Feed/hooks/useFeedInfiniteFetch';
-import useNavigatePage from '../../../hooks/useNavigatePage';
 import { useBookmarkedIdeasQuery } from '../../hooks/queries/useBookmarkedIdeasQuery';
 import EmptyTabContentSection from '../EmptyTabContentSection';
 
 const BookmarkSection = () => {
   const navigate = useNavigate();
   const { bookmarkedIdeas, fetchNextPage } = useBookmarkedIdeasQuery();
-  const { goProfilePage } = useNavigatePage();
 
   const intersectionRef = useRef(null);
 
@@ -57,7 +55,6 @@ const BookmarkSection = () => {
         return (
           <Wrapper key={idea.id}>
             <NewIdeaCard id={idea.id} profile={profile} content={content} footer={footer}>
-              <NewIdeaCard.Profile onClickProfile={() => goProfilePage(idea.memberResponse.id)} />
               <NewIdeaCard.Content />
               <NewIdeaCard.Footer />
             </NewIdeaCard>

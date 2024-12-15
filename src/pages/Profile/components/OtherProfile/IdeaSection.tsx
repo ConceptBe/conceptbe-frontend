@@ -27,6 +27,14 @@ const IdeaSection = ({ userId }: Props) => {
       {ideas.map((idea) => {
         const isMine = false;
 
+        // TODO: isBookmarked 가져와야함
+        const profile = {
+          profileImageUrl: '',
+          nickname: '',
+          mainSkill: '',
+          isBookmarked: false,
+          createdAt: 'testTvalue',
+        };
         const content = {
           canEdit: isMine,
           branches: idea.branches,
@@ -43,7 +51,7 @@ const IdeaSection = ({ userId }: Props) => {
 
         return (
           <Wrapper key={idea.id}>
-            <NewIdeaCard id={idea.id} content={content} footer={footer}>
+            <NewIdeaCard id={idea.id} profile={profile} content={content} footer={footer}>
               <NewIdeaCard.Content />
               <NewIdeaCard.Footer />
             </NewIdeaCard>

@@ -63,6 +63,7 @@ const SignUpPage = () => {
     skillDepthThree: '',
     region: regions.find((place) => place.id === prevInputtedData?.livingPlaceId)?.name ?? '',
   });
+  // TODO: initialValue로 skills 세부 스킬 이전값(prevInputtedData)으로 기억해야함
   const { skillDepthOneId, selectedSkillDepths, onDeleteSkill } = useSetDetailSkills({
     mainSkills,
     detailSkills,
