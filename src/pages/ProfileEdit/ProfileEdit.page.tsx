@@ -17,7 +17,8 @@ import {
   useField,
 } from 'concept-be-design-system';
 
-import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ReactComponent as SVGToolTip24 } from '../../../public/assets/tool_tip_24.svg';
 import { NICKNAME_REG_EXP } from '../../constants/index.ts';
 import useAlert from '../../hooks/useAlert.tsx';
@@ -25,7 +26,7 @@ import Back from '../../layouts/Back.tsx';
 import useCheckDuplicateNickname from '../SignUp/hooks/useCheckDuplicateNickname.ts';
 import useDefaultProfileImage from '../SignUp/hooks/useDefaultProfileImage.ts';
 import useSetDetailSkills from '../SignUp/hooks/useSetDetailSkills.ts';
-import { getSessionData, setSessionData } from '../SignUp/utils/manageQueryString.ts';
+import { clearSessionData, getSessionData, setSessionData } from '../SignUp/utils/manageQueryString.ts';
 import useProfileEditQuery from './hooks/useProfileEditQuery.ts';
 import { DropdownValue, FieldValue } from './types';
 
@@ -43,6 +44,7 @@ interface QueryStringProps {
 }
 
 const ProfileEdit = () => {
+  const { state: urlState }: { state: { isInit: boolean } } = useLocation();
   const prevInputtedData = getSessionData('profileEditData') as QueryStringProps | undefined;
 
   const navigate = useNavigate();
@@ -74,6 +76,12 @@ const ProfileEdit = () => {
   });
 
   useCheckDuplicateNickname({ nickname: fieldValue.nickname, setFieldErrorValue });
+
+  useEffect(() => {
+    if (urlState?.isInit) {
+      clearSessionData('profileEditData');
+    }
+  }, []);
 
   const validateInput = () => {
     return [

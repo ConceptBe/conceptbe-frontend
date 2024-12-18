@@ -17,6 +17,7 @@ import {
 } from 'concept-be-design-system';
 import { FormEvent, useState } from 'react';
 import useAlert from '../../hooks/useAlert';
+import Back from '../../layouts/Back';
 import { useMemberInfoQuery } from '../Profile/hooks/queries/useMemberInfoQuery';
 import { getUserId } from '../Profile/utils/getUserId';
 import { SVGBellCircle } from '../SignUp/assets/SVGBellCircle';
@@ -71,7 +72,7 @@ export default function ProfileEditMatchPage() {
   const my = useMemberInfoQuery(userId);
   const { branches, purposes, cooperationWays } = useWritingInfoQuery();
 
-  const { putProfile } = usePutProfileMutation(userId, prevFormData.nickname);
+  const { putProfile } = usePutProfileMutation(userId, prevFormData?.nickname);
   const { patchNotificationSettings } = useUpdateNotificationSettings(userId);
 
   const { checkboxValue, selectedCheckboxId, onChangeCheckbox } = useCheckbox<CheckboxValue>({
@@ -153,7 +154,7 @@ export default function ProfileEditMatchPage() {
     <Box paddingBottom={34}>
       <Header main>
         <Header.Item>
-          <Spacer size={24} />
+          <Back />
         </Header.Item>
         <Header.Item>
           <Text font="suit16sb" color="w1">

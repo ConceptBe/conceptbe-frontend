@@ -61,7 +61,9 @@ const ProfileInfoSection = ({ memberInfo }: Props) => {
               {renderWorkingAndLivingPlace()}
             </Text>
           </div>
-          {isMyProfile === true && <EditButton onClick={() => navigate(`/profile-edit`)}>프로필 수정</EditButton>}
+          {isMyProfile === true && (
+            <EditButton onClick={() => navigate(`/profile-edit`, { state: { isInit: true } })}>프로필 수정</EditButton>
+          )}
         </ProfileMainBox>
         <HyperLinkText font="suit15r" color="b4" lineHeight="22px">
           {introduction}

@@ -14,7 +14,7 @@ const Back = ({ confirmBeforeNavigate = false }: Props) => {
   const openConfirm = useConfirm();
   const navigate = useNavigate();
 
-  const isMatchedWhiteStyle = hasMatched('/feed/:id', '/profile-edit');
+  const isMatchedWhiteStyle = hasMatched('/feed/:id', '/profile-edit', '/profile-edit-match');
 
   const handleBackClick = async () => {
     // confirmBeforeNavigate가 true일 경우, confirm 대화 상자 표시
