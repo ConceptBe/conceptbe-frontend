@@ -22,6 +22,7 @@ import SEOMeta from '../../components/SEOMeta/SEOMeta.tsx';
 import { NICKNAME_REG_EXP } from '../../constants/index.ts';
 import useAlert from '../../hooks/useAlert.tsx';
 import { OauthMemberInfo } from '../../types/login.ts';
+import { convertSelectedSkills } from '../ProfileEdit/service/convertProfileQuery.ts';
 import useCheckDuplicateNickname from './hooks/useCheckDuplicateNickname.ts';
 import useDefaultProfileImage from './hooks/useDefaultProfileImage.ts';
 import useSetDetailSkills from './hooks/useSetDetailSkills.ts';
@@ -63,8 +64,20 @@ const SignUpPage = () => {
     skillDepthThree: '',
     region: regions.find((place) => place.id === prevInputtedData?.livingPlaceId)?.name ?? '',
   });
-  // TODO: initialValue로 skills 세부 스킬 이전값(prevInputtedData)으로 기억해야함
+
+  const initialDetailSkills = convertSelectedSkills(
+    prevInputtedData?.skills.map((skill) => ({
+      ...skill,
+      skillName:
+        Object.values(detailSkills)
+          .flat()
+          .find(({ id }) => id === skill.skillId)
+          ?.name.split(',')[0] ?? 'unknown',
+    })),
+  );
+
   const { skillDepthOneId, selectedSkillDepths, onDeleteSkill } = useSetDetailSkills({
+    initialValue: initialDetailSkills,
     mainSkills,
     detailSkills,
     dropdownValue,

@@ -28,6 +28,7 @@ import useDefaultProfileImage from '../SignUp/hooks/useDefaultProfileImage.ts';
 import useSetDetailSkills from '../SignUp/hooks/useSetDetailSkills.ts';
 import { clearSessionData, getSessionData, setSessionData } from '../SignUp/utils/manageQueryString.ts';
 import useProfileEditQuery from './hooks/useProfileEditQuery.ts';
+import { convertSelectedSkills } from './service/convertProfileQuery.ts';
 import { DropdownValue, FieldValue } from './types';
 
 interface QueryStringProps {
@@ -62,9 +63,20 @@ const ProfileEdit = () => {
     skillDepthThree: '',
     region: regions.find((place) => place.id === prevInputtedData?.livingPlaceId)?.name ?? my.livingPlace ?? '',
   });
-  // TODO: initialValue로 skills 세부 스킬 이전값(prevInputtedData)으로 기억해야함
+
+  const initialDetailSkills = convertSelectedSkills(
+    prevInputtedData?.skills.map((skill) => ({
+      ...skill,
+      skillName:
+        Object.values(detailSkills)
+          .flat()
+          .find(({ id }) => id === skill.skillId)
+          ?.name.split(',')[0] ?? 'unknown',
+    })),
+  );
+
   const { skillDepthOneId, selectedSkillDepths, onDeleteSkill } = useSetDetailSkills({
-    initialValue: my.skills,
+    initialValue: initialDetailSkills.length > 0 ? initialDetailSkills : my.skills,
     mainSkills,
     detailSkills,
     dropdownValue,

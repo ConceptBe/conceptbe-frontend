@@ -72,8 +72,8 @@ export default function ProfileEditMatchPage() {
   const my = useMemberInfoQuery(userId);
   const { branches, purposes, cooperationWays } = useWritingInfoQuery();
 
-  const { putProfile } = usePutProfileMutation(userId, prevFormData?.nickname);
-  const { patchNotificationSettings } = useUpdateNotificationSettings(userId);
+  const { putProfile } = usePutProfileMutation(userId);
+  const { patchNotificationSettings } = useUpdateNotificationSettings(userId, prevFormData?.nickname);
 
   const { checkboxValue, selectedCheckboxId, onChangeCheckbox } = useCheckbox<CheckboxValue>({
     goal: purposes.map((purpose) => ({
