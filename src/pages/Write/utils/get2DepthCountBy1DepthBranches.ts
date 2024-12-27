@@ -3,7 +3,7 @@ import { Idea, Info } from '../types';
 // 선택된 항목을 기반으로 카테고리(1depth)별 선택된 스킬(2depth) 수를 계산하는 함수
 export const get2DepthCountsBy1DepthBranches = (
   selectedSkillResponses: Info[],
-  teamRecruitmentCategories: Idea['branches'],
+  teamRecruitmentCategories: Idea['branchesResponses'],
 ) => {
   const categoryCount: Record<string, number> = {};
   const selectedIds = selectedSkillResponses.map((item) => item.id);
