@@ -21,6 +21,10 @@ const Navbar = () => {
   const navigate = useNavigate();
   const isShowNavigation = hasMatched('/', '/profile/:id', '/notification');
 
+  // const { notifications } = usePollingNotification();
+
+  // const unReadNotifications = notifications.filter(({ read }) => !read);
+
   return (
     <>
       {isShowNavigation && (
@@ -41,7 +45,8 @@ const Navbar = () => {
               글쓰기
             </Text>
           </Navigation.Item>
-          <Navigation.Item onClick={() => navigate('/notification')}>
+          <Navigation.Item onClick={() => navigate('/notification')} style={{ position: 'relative' }}>
+            {/* <NotificationPop>{unReadNotifications.length}</NotificationPop> */}
             {location.pathname.startsWith('/notification') || location.pathname === '/notification' ? (
               <SVGNavAlarmFilled />
             ) : (
@@ -64,3 +69,18 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+// const NotificationPop = styled.div`
+//   height: 16px;
+//   border-radius: 100px;
+//   background-color: #f34444;
+//   position: absolute;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   padding: 0 8px;
+//   color: #fff;
+//   font-size: 12px;
+//   top: -9%;
+//   right: 23%;
+// `;

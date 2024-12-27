@@ -2,7 +2,7 @@ import { Badge, SVGGoldBell, Text } from 'concept-be-design-system';
 import { useNavigate } from 'react-router-dom';
 import { NotificationDTO } from '../types';
 
-export const NotificationItem = ({ feedId, title, createAt, badges }: Omit<NotificationDTO, 'id'>) => {
+export const NotificationItem = ({ feedId, title, createAt, badges }: Omit<NotificationDTO, 'id' | 'read'>) => {
   const navigate = useNavigate();
 
   return (
