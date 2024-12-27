@@ -86,7 +86,15 @@ export default function ProfileEditMatchPage() {
   });
 
   const [selectedBranch1Depth, setSelectedBranch1Depth] = useState(branches[0].name);
-  const [selectedBranchResponses, setSelectedBranchResponses] = useState<Info[]>([]);
+  const [selectedBranchResponses, setSelectedBranchResponses] = useState<Info[]>(
+    branches
+      .map((item) => item.branchResponses)
+      .flat()
+      .filter((item) => {
+        my.joinPurposes.includes(item.name);
+        console.log(item.name);
+      }),
+  );
 
   const branchBottomSheetLeftItems = branches.map((item) => item.name);
   const branchBottomSheetRightItems = branches.find((item) => item.name === selectedBranch1Depth)?.branchResponses;
