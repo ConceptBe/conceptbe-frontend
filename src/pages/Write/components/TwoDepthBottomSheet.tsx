@@ -6,9 +6,10 @@ interface Props {
   title: string;
   isOpen: boolean;
   onClose: () => void;
+  onConfirm: () => void;
 }
 
-export const TwoDepthBottomSheet = ({ title, isOpen, onClose, children }: PropsWithChildren<Props>) => {
+export const TwoDepthBottomSheet = ({ title, isOpen, onClose, onConfirm, children }: PropsWithChildren<Props>) => {
   return (
     <BottomSheet isOpen={isOpen} onClose={onClose}>
       <Sheet_TopBox>
@@ -16,7 +17,7 @@ export const TwoDepthBottomSheet = ({ title, isOpen, onClose, children }: PropsW
         <Text font="suit16sb" color="b4">
           {title}
         </Text>
-        <SVGHeaderCheck24 onClick={onClose} cursor="pointer" />
+        <SVGHeaderCheck24 onClick={onConfirm} cursor="pointer" />
       </Sheet_TopBox>
       <Sheet_BodyBox>{children}</Sheet_BodyBox>
     </BottomSheet>
