@@ -20,7 +20,7 @@ export const NotificationItem = ({ title, createAt, badges, isAlreadyRead, putNo
         </Text>
         <div css={{ width: '3px', height: '3px', backgroundColor: '#DDDDDD', borderRadius: 100 }} />
         <Text font="suit14r" color="b6" css={{ wordBreak: 'keep-all' }}>
-          {createAt}
+          {`${createAt.split('T')[0]} ${createAt.split('T')[1]?.substring(0, 5)}`}
         </Text>
       </div>
       <div css={{ marginBottom: 8 }}>
