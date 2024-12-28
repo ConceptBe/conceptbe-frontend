@@ -4,5 +4,5 @@ export interface NotificationDTO {
   title: string;
   createAt: string;
   badges: string[];
-  read: boolean;
+  isAlreadyRead: boolean;
 }

@@ -1,14 +1,17 @@
 import { Badge, SVGGoldBell, Text } from 'concept-be-design-system';
-import { useNavigate } from 'react-router-dom';
 import { NotificationDTO } from '../types';
 
-export const NotificationItem = ({ feedId, title, createAt, badges }: Omit<NotificationDTO, 'id' | 'read'>) => {
-  const navigate = useNavigate();
+type Props = Omit<NotificationDTO, 'id' | 'feedId' | 'read'> & {
+  putNotificationRead: () => void;
+};
+
+export const NotificationItem = ({ title, createAt, badges, isAlreadyRead, putNotificationRead }: Props) => {
+  const opacity = isAlreadyRead ? 0.5 : 1;
 
   return (
     <div
-      css={{ padding: 24, borderBottom: '1px solid #E5E5E5', cursor: 'pointer' }}
-      onClick={() => navigate(`/feed/${feedId}`)}
+      css={{ padding: 24, borderBottom: '1px solid #E5E5E5', cursor: 'pointer', opacity }}
+      onClick={putNotificationRead}
     >
       <div css={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: 12 }}>
         <SVGGoldBell css={{ width: '20px', height: '20px' }} />
