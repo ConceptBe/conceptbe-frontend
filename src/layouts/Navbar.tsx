@@ -25,7 +25,7 @@ const Navbar = () => {
 
   const { notifications } = usePollingNotification();
 
-  const unReadNotifications = notifications.filter(({ isAlreadyRead }) => !isAlreadyRead);
+  const unReadNotifications = notifications?.filter(({ isAlreadyRead }) => !isAlreadyRead) ?? [];
 
   return (
     <>

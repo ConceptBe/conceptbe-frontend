@@ -26,7 +26,7 @@ export const NotificationContainer = () => {
 
   return (
     <section>
-      {notifications.map(({ id, feedId, title, createAt, badges, isAlreadyRead }) => (
+      {notifications?.map(({ id, feedId, title, createAt, badges, isAlreadyRead }) => (
         <NotificationItem
           key={id}
           title={title}
@@ -36,7 +36,7 @@ export const NotificationContainer = () => {
           putNotificationRead={() => onClickPutNotification(id, feedId)}
         />
       ))}
-      <AdditionalText isEmpty={notifications.length === 0} />
+      <AdditionalText isEmpty={notifications?.length === 0} />
     </section>
   );
 };
