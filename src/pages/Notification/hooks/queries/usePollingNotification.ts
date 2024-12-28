@@ -10,7 +10,7 @@ export const usePollingNotification = () => {
   const { data: notifications, ...rest } = useSuspenseQuery({
     queryKey: [NOTIFICATION_LIST_QUERY_KEY],
     queryFn: () => _getNotificationList(),
-    refetchInterval: 30000,
+    refetchInterval: 60000,
   });
 
   return { notifications, ...rest };
