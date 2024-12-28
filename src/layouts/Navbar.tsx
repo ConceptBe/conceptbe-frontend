@@ -12,7 +12,9 @@ import {
 } from 'concept-be-design-system';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import styled from '@emotion/styled';
 import useRouteMatched from '../hooks/useRouteMatch';
+import { usePollingNotification } from '../pages/Notification/hooks/queries/usePollingNotification';
 import { getUserId } from '../pages/Profile/utils/getUserId';
 
 const Navbar = () => {
@@ -21,9 +23,9 @@ const Navbar = () => {
   const navigate = useNavigate();
   const isShowNavigation = hasMatched('/', '/profile/:id', '/notification');
 
-  // const { notifications } = usePollingNotification();
+  const { notifications } = usePollingNotification();
 
-  // const unReadNotifications = notifications.filter(({ read }) => !read);
+  const unReadNotifications = notifications.filter(({ isAlreadyRead }) => !isAlreadyRead);
 
   return (
     <>
@@ -46,7 +48,7 @@ const Navbar = () => {
             </Text>
           </Navigation.Item>
           <Navigation.Item onClick={() => navigate('/notification')} style={{ position: 'relative' }}>
-            {/* <NotificationPop>{unReadNotifications.length}</NotificationPop> */}
+            {unReadNotifications.length > 0 && <NotificationPop>{unReadNotifications.length}</NotificationPop>}
             {location.pathname.startsWith('/notification') || location.pathname === '/notification' ? (
               <SVGNavAlarmFilled />
             ) : (
@@ -70,17 +72,17 @@ const Navbar = () => {
 
 export default Navbar;
 
-// const NotificationPop = styled.div`
-//   height: 16px;
-//   border-radius: 100px;
-//   background-color: #f34444;
-//   position: absolute;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   padding: 0 8px;
-//   color: #fff;
-//   font-size: 12px;
-//   top: -9%;
-//   right: 23%;
-// `;
+const NotificationPop = styled.div`
+  height: 16px;
+  border-radius: 100px;
+  background-color: #f34444;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 8px;
+  color: #fff;
+  font-size: 12px;
+  top: -10%;
+  right: 25%;
+`;
