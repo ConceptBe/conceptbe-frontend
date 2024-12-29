@@ -18,6 +18,7 @@ import {
 import { FormEvent, useState } from 'react';
 import useAlert from '../../hooks/useAlert';
 import Back from '../../layouts/Back';
+import { getBranchBottomSheetRightItems, getIsSelectedAllOption, isAllBranchesSelected } from '../../utils/parsing';
 import { useMemberInfoQuery } from '../Profile/hooks/queries/useMemberInfoQuery';
 import { getUserId } from '../Profile/utils/getUserId';
 import { SVGBellCircle } from '../SignUp/assets/SVGBellCircle';
@@ -94,7 +95,7 @@ export default function ProfileEditMatchPage() {
   );
 
   const branchBottomSheetLeftItems = branches.map((item) => item.name);
-  const branchBottomSheetRightItems = branches.find((item) => item.name === selectedBranch1Depth)?.branchResponses;
+  const branchBottomSheetRightItems = getBranchBottomSheetRightItems(branches, selectedBranch1Depth);
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -141,10 +142,17 @@ export default function ProfileEditMatchPage() {
   };
 
   const onClickBranch = (selected: Info) => {
-    // if (selectedBranchResponses.length >= 10) {
-    //   openAlert({ content: '최대 10개까지 선택할 수 있습니다.' });
-    //   return;
-    // }
+    if (
+      getIsSelectedAllOption({
+        branches,
+        selectedBranch1Depth,
+        selectedBranchResponses,
+        setSelectedBranchResponses,
+        selected,
+      })
+    ) {
+      return;
+    }
 
     setSelectedBranchResponses((prev) =>
       selectedBranchResponses.includes(selected) ? prev.filter((item) => item.id !== selected.id) : [...prev, selected],
@@ -273,13 +281,18 @@ export default function ProfileEditMatchPage() {
                 })}
               </Sheet_Left>
               <Sheet_right>
-                {branchBottomSheetRightItems?.map((item: any) => {
+                {branchBottomSheetRightItems?.map((item, idx) => {
+                  const isAllSelectOption = item.id < 0;
+                  const showChecked = isAllSelectOption
+                    ? isAllBranchesSelected({ branches, categoryName: selectedBranch1Depth, selectedBranchResponses })
+                    : selectedBranchResponses.includes(item);
+
                   return (
                     <Sheet_radioDiv key={item.name} onClick={() => onClickBranch(item)}>
-                      <Text font="suit14m" color="b4">
+                      <Text font="suit14m" color="b4" id={idx === 0 ? 'branch-right-option' : ''}>
                         {item.name}
                       </Text>
-                      {selectedBranchResponses.includes(item) ? <SVGRadioCheck24 /> : <SVGRadioUncheck24 />}
+                      {showChecked ? <SVGRadioCheck24 /> : <SVGRadioUncheck24 />}
                     </Sheet_radioDiv>
                   );
                 })}

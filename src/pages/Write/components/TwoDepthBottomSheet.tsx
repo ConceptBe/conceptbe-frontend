@@ -62,12 +62,6 @@ export const Sheet_right = styled.div`
   width: 62%;
   box-sizing: border-box;
   padding: 0 22px;
-
-  & > div:first-of-type {
-    & > span {
-      color: ${theme.color.c1};
-    }
-  }
 `;
 
 export const Sheet_radioDiv = styled.div`
@@ -81,4 +75,8 @@ export const Sheet_radioDiv = styled.div`
   height: 54px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   cursor: pointer;
+
+  & > #branch-right-option {
+    color: ${theme.color.c1};
+  }
 `;

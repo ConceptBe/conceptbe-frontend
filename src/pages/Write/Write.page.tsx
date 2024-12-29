@@ -17,6 +17,7 @@ import {
 import { useState } from 'react';
 import SEOMeta from '../../components/SEOMeta/SEOMeta';
 import useAlert from '../../hooks/useAlert';
+import { getBranchBottomSheetRightItems, getIsSelectedAllOption, isAllBranchesSelected } from '../../utils/parsing';
 import AddImages from './components/AddImages';
 import Header from './components/Header';
 import RecruitmentPlaceSection from './components/RecruitmentPlaceSection';
@@ -65,7 +66,7 @@ const WritePage = () => {
   )?.skillResponses;
 
   const branchBottomSheetLeftItems = branches.map((item) => item.name);
-  const branchBottomSheetRightItems = branches.find((item) => item.name === selectedBranch1Depth)?.branchResponses;
+  const branchBottomSheetRightItems = getBranchBottomSheetRightItems(branches, selectedBranch1Depth);
 
   const canSubmit =
     selectedBranchResponses.length > 0 && selectedCheckboxId.purposes.length > 0 && !!selectedRadioName.cooperationWays;
@@ -143,11 +144,20 @@ const WritePage = () => {
   };
 
   const onClickBranch = (selected: Info) => {
-    // if (selectedBranchResponses.length >= 10) {
-    //   openAlert({ content: '최대 10개까지 선택할 수 있습니다.' });
-    //   return;
-    // }
+    // 전체 선택인 경우
+    if (
+      getIsSelectedAllOption({
+        branches,
+        selectedBranch1Depth,
+        selectedBranchResponses,
+        setSelectedBranchResponses,
+        selected,
+      })
+    ) {
+      return;
+    }
 
+    // 기존 개별 선택 로직
     setSelectedBranchResponses((prev) =>
       selectedBranchResponses.includes(selected) ? prev.filter((item) => item.id !== selected.id) : [...prev, selected],
     );
@@ -256,13 +266,18 @@ const WritePage = () => {
                 })}
               </Sheet_Left>
               <Sheet_right>
-                {branchBottomSheetRightItems?.map((item) => {
+                {branchBottomSheetRightItems?.map((item, idx) => {
+                  const isAllSelectOption = item.id < 0;
+                  const showChecked = isAllSelectOption
+                    ? isAllBranchesSelected({ branches, categoryName: selectedBranch1Depth, selectedBranchResponses })
+                    : selectedBranchResponses.includes(item);
+
                   return (
                     <Sheet_radioDiv key={item.name} onClick={() => onClickBranch(item)}>
-                      <Text font="suit14m" color="b4">
+                      <Text font="suit14m" color="b4" id={idx === 0 ? 'branch-right-option' : ''}>
                         {item.name}
                       </Text>
-                      {selectedBranchResponses.includes(item) ? <SVGRadioCheck24 /> : <SVGRadioUncheck24 />}
+                      {showChecked ? <SVGRadioCheck24 /> : <SVGRadioUncheck24 />}
                     </Sheet_radioDiv>
                   );
                 })}
