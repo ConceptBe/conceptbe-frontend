@@ -90,10 +90,7 @@ export default function ProfileEditMatchPage() {
     branches
       .map((item) => item.branchResponses)
       .flat()
-      .filter((item) => {
-        my.joinPurposes.includes(item.name);
-        console.log(item.name);
-      }),
+      .filter((item) => my.joinPurposes.includes(item.name)),
   );
 
   const branchBottomSheetLeftItems = branches.map((item) => item.name);
@@ -144,10 +141,10 @@ export default function ProfileEditMatchPage() {
   };
 
   const onClickBranch = (selected: Info) => {
-    if (selectedBranchResponses.length >= 10) {
-      openAlert({ content: '최대 10개까지 선택할 수 있습니다.' });
-      return;
-    }
+    // if (selectedBranchResponses.length >= 10) {
+    //   openAlert({ content: '최대 10개까지 선택할 수 있습니다.' });
+    //   return;
+    // }
 
     setSelectedBranchResponses((prev) =>
       selectedBranchResponses.includes(selected) ? prev.filter((item) => item.id !== selected.id) : [...prev, selected],
@@ -248,7 +245,13 @@ export default function ProfileEditMatchPage() {
             <TwoDepthBottomSheet
               title="분야 선택"
               isOpen={isOpenBranchBottomSheet}
-              onClose={() => setIsOpenBranchBottomSheet(false)}
+              onClose={() => {
+                setIsOpenBranchBottomSheet(false);
+                setSelectedBranchResponses([]);
+              }}
+              onConfirm={() => {
+                setIsOpenBranchBottomSheet(false);
+              }}
             >
               <Sheet_Left>
                 {branchBottomSheetLeftItems.map((item: any) => {

@@ -95,10 +95,10 @@ const SignUpMatchPage = () => {
   useValidateUserInfo(memberInfo);
 
   const onClickBranch = (selected: Info) => {
-    if (selectedBranchResponses.length >= 10) {
-      openAlert({ content: '최대 10개까지 선택할 수 있습니다.' });
-      return;
-    }
+    // if (selectedBranchResponses.length >= 10) {
+    //   openAlert({ content: '최대 10개까지 선택할 수 있습니다.' });
+    //   return;
+    // }
 
     setSelectedBranchResponses((prev) =>
       selectedBranchResponses.includes(selected) ? prev.filter((item) => item.id !== selected.id) : [...prev, selected],
@@ -246,7 +246,13 @@ const SignUpMatchPage = () => {
             <TwoDepthBottomSheet
               title="분야 선택"
               isOpen={isOpenBranchBottomSheet}
-              onClose={() => setIsOpenBranchBottomSheet(false)}
+              onClose={() => {
+                setIsOpenBranchBottomSheet(false);
+                setSelectedBranchResponses([]);
+              }}
+              onConfirm={() => {
+                setIsOpenBranchBottomSheet(false);
+              }}
             >
               <Sheet_Left>
                 {branchBottomSheetLeftItems.map((item: any) => {
@@ -268,7 +274,7 @@ const SignUpMatchPage = () => {
                 })}
               </Sheet_Left>
               <Sheet_right>
-                {branchBottomSheetRightItems?.map((item: any) => {
+                {branchBottomSheetRightItems?.map((item) => {
                   return (
                     <Sheet_radioDiv key={item.name} onClick={() => onClickBranch(item)}>
                       <Text font="suit14m" color="b4">

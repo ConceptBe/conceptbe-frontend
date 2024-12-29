@@ -184,10 +184,10 @@ const WriteEditPage = () => {
   };
 
   const onClickBranch = (selected: Info) => {
-    if (selectedBranchResponses.length >= 10) {
-      openAlert({ content: '최대 10개까지 선택할 수 있습니다.' });
-      return;
-    }
+    // if (selectedBranchResponses.length >= 10) {
+    //   openAlert({ content: '최대 10개까지 선택할 수 있습니다.' });
+    //   return;
+    // }
 
     setSelectedBranchResponses((prev) =>
       selectedBranchResponses.includes(selected) ? prev.filter((item) => item.id !== selected.id) : [...prev, selected],
@@ -256,10 +256,16 @@ const WriteEditPage = () => {
           <TwoDepthBottomSheet
             title="분야 선택"
             isOpen={isOpenBranchBottomSheet}
-            onClose={() => setIsOpenBranchBottomSheet(false)}
+            onClose={() => {
+              setIsOpenBranchBottomSheet(false);
+              setSelectedBranchResponses([]);
+            }}
+            onConfirm={() => {
+              setIsOpenBranchBottomSheet(false);
+            }}
           >
             <Sheet_Left>
-              {branchBottomSheetLeftItems.map((item: any) => {
+              {branchBottomSheetLeftItems.map((item) => {
                 return (
                   <Sheet_leftItem
                     key={item}
@@ -362,6 +368,7 @@ const WriteEditPage = () => {
             height={24}
             onClick={() => {
               setIsOpenBottomSheet(false);
+              setSelectedSkillResponses([]);
             }}
             cursor="pointer"
           />
